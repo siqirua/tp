@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="Address App" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
@@ -46,11 +47,27 @@
           </padding>
         </StackPane>
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+        <VBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="600" prefHeight="600">
+          <children>
+            <HBox fx:id="ppl2" minWidth="450" prefWidth="740" HBox.hgrow="ALWAYS" styleClass="pane-with-border" VBox.vgrow="ALWAYS" >
+              <children>
+                <VBox fx:id="personList" styleClass="pane-with-border" minWidth="225"  prefWidth="370" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+                  <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                  </padding>
+                  <children>
+                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                  </children>
+                </VBox>
+                <VBox fx:id="personList2" styleClass="pane-with-border" minWidth="225" prefWidth="370" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+                  <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                  </padding>
+                  <StackPane fx:id="personListPanelPlaceholder2" VBox.vgrow="ALWAYS"/>
+                </VBox>
+              </children>
+            </HBox>
+          </children>
         </VBox>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
