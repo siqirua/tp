@@ -123,7 +123,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only the student ID is searched.
 
 Examples:
-* `find a0123456` returns the data of the student with student id `a0123456`
+* `find a0123456` returns the data (including the grades) of the student with student id `a0123456`
 
 ### Deleting a person : `delete`
 
