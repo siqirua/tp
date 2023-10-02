@@ -3,9 +3,10 @@
   title: "Edison Siow's Project Portfolio Page"
 ---
 
-### Project: ModuLight Level 3
+### Project: ModuLight
 
-ModuLight is a lightweight application for educators to manage and perform statistical analysis on the educational records of students. 
+ModuLight is a lightweight application for educators to manage and 
+perform statistical analysis on the educational records of students. 
 Given below are my contributions to the project.
 
 * **New Feature**: to be added
