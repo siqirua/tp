@@ -109,23 +109,17 @@ Format: `listStudents [t/TUTORIAL_GRP …]`
 Examples:
 * `listStudents t/02 03`
 
-### Locating persons by name: `find`
+### Locating students by student ID: `find`
 
-Finds persons whose names contain any of the given keywords.
+Retrieves a student's data based on his/her Student ID.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case-insensitive. e.g. `a0123456` will match `A0123456`
+* Only the student ID is searched.
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find a0123456` returns the data (including the grades) of the student with student id `a0123456`
 
 ### Clearing all entries : `clear`
 
