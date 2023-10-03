@@ -5,12 +5,12 @@
 
 ### Project: ModuLight
 
-ModuLight is a lightweight application for educators to manage and 
-perform statistical analysis on the educational records of students. 
+ModuLight is a lightweight application for educators to manage and
+perform statistical analysis on the educational records of students.
 
 Given below are my contributions to the project.
 
-* **Code contributed**: 
+* **Code contributed**:
   * to be added
 
 * **Enhancements implemented**:

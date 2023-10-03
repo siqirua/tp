@@ -80,7 +80,7 @@ Valid student numbers start and end with an upper-case alphabet, and have 7 nume
 
 Format: `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [t/TUTORIAL_GRP]…​`
 
-Examples: 
+Examples:
 * `addStu s/A1234567Y n/Andy t/03` Adds a student with student number A1234567Y, name Andy, belonging to tutorial group 03 to the database.
 
 ### Edit a student : `editStu`
@@ -89,7 +89,7 @@ Edit student information. If it succeeds, it shows an acknowledgement message an
 
 Format: `editStu s/STUDENT_NO [t/TUTORIAL_GRP][n/NAME][e/EMAIL]…​`
 
-Examples: 
+Examples:
 * `editStu n/Megan Chan t/03` Edits a student to have name Megan Chan and be in tutorial group 03.
 
 ### Delete a student : `deleteStu`
@@ -98,7 +98,7 @@ Valid student numbers start and end with an upper-case  alphabet, and have 7 num
 
 Format: `deleteStu s/STUDENT_NO`
 
-Examples: 
+Examples:
 * `deleteStu s/A1234567Y`
 
 ### List all students : `listStudents`
