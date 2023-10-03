@@ -285,15 +285,22 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
+| Priority | As a …​ | I want to …​                                      | So that I can…​                                                                                                |
+|----------|---------|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `* * *`  | user    | add a new student                                 | track all students taking my course.                                                                           |
+| `* * *`  | user    | add a new graded component                        | track all graded components in my course thus far.                                                             |
+| `* * *`  | user    | add a new student score                           | track individual student performance on this module's graded components.                                       |
+| `* * *`  | user    | delete a student                                  | remove students dropping the course/wrongly assigned.                                                          |
+| `* * *`  | user    | delete a graded component                         | remove a graded component if I feel it is no longer necessary.                                                 |
+| `* * *`  | user    | delete a student score                            |                                                                                                                |
+| `* * *`  | user    | save changes made                                 | so I can update student grade information throughout the semester.                                             |
+| `* * *`  | user    | load information                                  | so I can update student grade information throughout the semester.                                             |
+| `* *`    | user    | edit a student                                    | update outdated student information or correct mistakes.                                                       |
+| `* *`    | user    | edit a graded component                           | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
+| `* *`    | user    | edit a student score                              | regrade student scripts or correct mistakes.                                                                   |
+| `* *`    | user    | find student and associated scores by ID          | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | user    | find graded component and associated scores by ID | quickly find information about a graded component and student scores without having to search through the list |
+| `*`      | user    | toggle between dark and light mode                | have a pleasant user experience.                                                                               |
 *{More to be added}*
 
 ### Use cases
