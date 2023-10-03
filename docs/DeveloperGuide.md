@@ -298,16 +298,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `LumiNUS (Reborn)` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `ModuLight` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a student and the associated scores**
 
 **MSS**
 
 1.  User requests to list persons
-2.  LumiNUS (Reborn) shows a list of persons
+2.  ModuLight shows a list of persons
 3.  User requests to delete a specific student in the list
-4.  LumiNUS (Reborn)) deletes the person
+4.  ModuLight deletes the person
 
     Use case ends.
 
@@ -319,7 +319,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. LumiNUS (Reborn) shows an error message.
+    * 3a1. ModuLight shows an error message.
 
       Use case resumes at step 2.
 
