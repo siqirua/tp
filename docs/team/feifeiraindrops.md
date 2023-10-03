@@ -6,11 +6,11 @@ title: "Yufei Sun's Project Portfolio Page"
 ### Project: LumiNUS
 
 
-* **New Feature**: 
+* **New Feature**:
 
-* **New Feature**: 
+* **New Feature**:
 
-* **Code contributed**: 
+* **Code contributed**:
 
 * **Project management**:
  
