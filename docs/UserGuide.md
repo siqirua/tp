@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # LumiNUS User Guide
@@ -17,15 +17,15 @@ LumiNUS is a **desktop app for managing students' grades, optimized for use via 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `luminus.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `luminus.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
@@ -38,7 +38,7 @@ LumiNUS is a **desktop app for managing students' grades, optimized for use via 
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +100,35 @@ Format: `deleteStu s/STUDENT_NO`
 
 Examples:
 * `deleteStu s/A1234567Y`
+
+### Add a student mark: `addStuMark`
+Assign a student’s mark for a certain graded component. Throws an error if the Student or the graded component does not exist, or the mark provided is negative. If the mark exceeds the maximum mark, it will show up on the panel as such, but for internal calculations it will be treated as the maximum mark. (This is for users to indicate bonus marks)
+Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
+
+Format: `addStuMark s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]`
+
+Examples: 
+* `addStuMark s/A1234567Y c/Midterm m/57`
+Assigns a mark of 57 to the graded component Midterm for the student with student number A123567Y.
+
+### Edit student mark: `editStuMark`
+Edit a student’s mark or comments. Throws an error if student or graded component does not exist, or if marks is negative.  If it succeeds, it shows an acknowledgement message and saves the edited information, and throws an error otherwise.
+0 or more optional fields need to be provided, and all the information will be edited concurrently.
+
+Format: `editStuMark s/STUDENT_NO c/COMP_NAME [m/MARKS] [x/comments]`
+
+Examples: 
+* `editComp s/A1234567Y c/Midterm x/Q4 answer is debatable. Discuss in next staff meeting. associates the given comment to A1234567Y’s Midterm mark.`
+ Edits the comments of the student mark.
+
+### Delete student mark: `deleteStuMark`
+Delete a student mark in the database. If it succeeds, it shows an acknowledgement message and deletes the student mark from the database (“Student mark deleted successfully”). Throws an error if student mark does not exist (“Something went wrong while deleting the student”).
+Valid student numbers start and end with an upper-case  alphabet, and have 7 numeric symbols in between.
+
+Format: `deleteStuMark s/STUDENT_NO c/COMP_NAME`
+
+Examples:
+* `deleteStuMark s/A1234567Y c/Midterm`
 
 ### List all students : `listStudents`
 Shows a list of all students and associated student marks in separate panels respectively. The lists may be additionally filtered by optional arguments tutorial group. (can have more than 1)
@@ -176,12 +205,13 @@ _Details coming soon ..._
 |--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add a student**              | `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [t/TUTORIAL_GRP]…` <br> e.g., `addStu s/A1234567Y n/Andy t/03`                                                             |
 | **Add a graded component**     | `addComp c/COMP_NAME w/WEIGHTAGE m/MAX_MARKS…` <br> e.g., `addComp c/Midterm w/30 m/70`                                                                            |
-| **Add a student mark**         | `addStuMark s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]…` <br> e.g., `addStuMark s/A1234567Y c/Midterm m/57 `                                                    |
+| **Add a student mark**<br/>    | `addStuMark s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]…` <br> e.g., `addStuMark s/A1234567Y c/Midterm m/57 `                                                    |
 | **Edit a student**             | `editStu s/STUDENT_NO [t/TUTORIAL_GRP][n/NAME][e/EMAIL]…​` <br> e.g., `editStu n/Megan Chan t/03`                                                                  |
 | **Edit a graded component**    | `editComp c/COMP_NAME [w/WEIGHTAGE] [m/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                                                          |
 | **Edit a student mark**        | `editStuMark s/STUDENT_NO c/COMP_NAME [m/MARKS] [x/comments]` <br> e.g., `editComp s/A1234567Y c/Midterm x/Q4 answer is debatable. Discuss in next staff meeting.` |
 | **Delete a student**           | `deleteStu s/STUDENT_NO` <br> e.g., `deleteStu s/A1234567Y`                                                                                                        |
 | **Delete a graded component**  | `deleteComp s/Optional Project` <br> e.g., `deleteComp s/Optional Project`                                                                                         |
+| **Delete a student mark**      | `deleteStuMark s/STUDENT_NO c/COMP_NAME` <br> e.g., `deleteStuMark s/A1234567Y c/Midterm`                                                                          |
 | **Clear**                      | `clear`                                                                                                                                                            |
 | **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                         |
 | **List all students**          | ` listStudents [t/TUTORIAL_GRP …]` <br> e.g., `listStudents t/02 03`                                                                                               |
