@@ -334,9 +334,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 students, 10000 student scores and 10 graded components without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
+2. Should be able to hold up to 1000 students, 10000 student scores and 10 graded components without a noticeable sluggishness in performance for typical usage. 
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. Should respond to user requests within 2 seconds. 
+5. The user interface shall be intuitive and user-friendly.
+6. Should allow edit only by authorized users.
+7. Should not take more than 256MB memory while in operation.
 
 *{More to be added}*
 
