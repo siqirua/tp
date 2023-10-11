@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedComponent.GcName;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 
 
@@ -36,6 +37,13 @@ public class StudentScore {
 
     public float getScore() {
         return this.score;
+    }
+    /**
+     * Returns true if both scores have the same StudentId and GcName
+     */
+    public boolean isSameScore(StudentScore other) {
+        // to change
+        return this.equals(other);
     }
 
     /**
