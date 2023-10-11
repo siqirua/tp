@@ -1,4 +1,4 @@
-package seedu.address.model.util;
+package seedu.address.model.studentScore;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.studentScore.StudentScore;
+
 
 
 /**
@@ -22,7 +22,7 @@ import seedu.address.model.studentScore.StudentScore;
  *
  * @see StudentScore#isSameScore(StudentScore)
  */
-public class AssociatedScoreList implements Iterable<StudentScore> {
+public class UniqueScoreList implements Iterable<StudentScore> {
 
     private final ObservableList<StudentScore> internalList = FXCollections.observableArrayList();
     private final ObservableList<StudentScore> internalUnmodifiableList =
@@ -82,7 +82,7 @@ public class AssociatedScoreList implements Iterable<StudentScore> {
         }
     }
 
-    public void setPersons(seedu.address.model.util.AssociatedScoreList replacement) {
+    public void setPersons(seedu.address.model.studentScore.UniqueScoreList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -120,12 +120,12 @@ public class AssociatedScoreList implements Iterable<StudentScore> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof seedu.address.model.util.AssociatedScoreList)) {
+        if (!(other instanceof seedu.address.model.studentScore.UniqueScoreList)) {
             return false;
         }
 
-        seedu.address.model.util.AssociatedScoreList otherUniquePersonList =
-                (seedu.address.model.util.AssociatedScoreList) other;
+        seedu.address.model.studentScore.UniqueScoreList otherUniquePersonList =
+                (seedu.address.model.studentScore.UniqueScoreList) other;
         return internalList.equals(otherUniquePersonList.internalList);
     }
 
