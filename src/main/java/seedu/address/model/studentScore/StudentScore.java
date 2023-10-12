@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedComponent.GcName;
-import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 
 
