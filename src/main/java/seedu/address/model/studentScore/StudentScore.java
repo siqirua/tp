@@ -39,16 +39,22 @@ public class StudentScore {
         return this.score;
     }
     /**
-     * Returns true if both scores have the same StudentId and GcName
+     * Returns true if both student scores have the same StudentId and GcName.
+     * This defines a weaker notion of equality between two student scores.
      */
-    public boolean isSameScore(StudentScore other) {
-        // to change
-        return this.equals(other);
+    public boolean isSameScore(StudentScore otherScore) {
+        if (otherScore == this) {
+            return true;
+        }
+
+        return otherScore != null
+                && otherScore.getStudentId().equals(getStudentId())
+                && otherScore.getGcName().equals(getGcName());
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both student scores have the same identity and data fields.
+     * This defines a stronger notion of equality between two student scores.
      */
     @Override
     public boolean equals(Object other) {

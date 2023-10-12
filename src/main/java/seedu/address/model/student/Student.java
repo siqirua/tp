@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.Person;
 
 
 /**
@@ -24,12 +25,25 @@ public class Student {
         this.sid = sid;
     }
 
-    public StudentId getSid() {
+    public StudentId getStudentId() {
         return this.sid;
     }
+
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both students have the same student ID.
+     * This defines a weaker notion of equality between two students.
+     */
+    public boolean isSameStudent(Student otherStudent) {
+        if (otherStudent == this) {
+            return true;
+        }
+
+        return otherStudent != null
+                && otherStudent.getStudentId().equals(getStudentId());
+    }
+    /**
+     * Returns true if both students have the same identity and data fields.
+     * This defines a stronger notion of equality between two students.
      */
     @Override
     public boolean equals(Object other) {
@@ -57,6 +71,7 @@ public class Student {
         return new ToStringBuilder(this)
                 .add("student id", sid)
                 .toString();
+
     }
 
 }

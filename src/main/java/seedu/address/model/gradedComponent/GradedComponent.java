@@ -5,10 +5,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.student.Student;
 
 
 /**
- * Represents a Student in the address book.
+ * Represents a graded component in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class GradedComponent {
@@ -24,8 +25,20 @@ public class GradedComponent {
         this.name = name;
     }
 
-    public GcName getSid() {
-        return this.name;
+    public GcName getName() {
+        return name;
+    }
+    /**
+     * Returns true if both persons have the same name.
+     * This defines a weaker notion of equality between two persons.
+     */
+    public boolean isSameGc(GradedComponent otherGc) {
+        if (otherGc == this) {
+            return true;
+        }
+
+        return otherGc != null
+                && otherGc.getName().equals(getName());
     }
     /**
      * Returns true if both persons have the same identity and data fields.
@@ -42,8 +55,8 @@ public class GradedComponent {
             return false;
         }
 
-        GradedComponent otherPerson = (GradedComponent) other;
-        return name.equals(otherPerson.name);
+        GradedComponent otherGc = (GradedComponent) other;
+        return otherGc.getName().equals(getName());
     }
 
     @Override

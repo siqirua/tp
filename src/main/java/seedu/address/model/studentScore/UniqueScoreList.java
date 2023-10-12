@@ -29,7 +29,7 @@ public class UniqueScoreList implements Iterable<StudentScore> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent student score as the given argument.
      */
     public boolean contains(StudentScore toCheck) {
         requireNonNull(toCheck);
@@ -37,8 +37,8 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a student score to the list.
+     * The student score must not already exist in the list.
      */
     public void add(StudentScore toAdd) {
         requireNonNull(toAdd);
@@ -50,9 +50,10 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the student score {@code target} in the list with {@code editedScore}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The student score identity of {@code editedScore} must not be the same as another existing
+     * student score in the list.
      */
     public void setPerson(StudentScore target, StudentScore editedScore) {
         requireAllNonNull(target, editedScore);
@@ -72,8 +73,8 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent student score from the list.
+     * The student score must exist in the list.
      */
     public void remove(StudentScore toRemove) {
         requireNonNull(toRemove);
@@ -88,8 +89,8 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code scores}.
+     * {@code scores} must not contain duplicate scores.
      */
     public void setPersons(List<StudentScore> scores) {
         requireAllNonNull(scores);
@@ -140,12 +141,12 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code persons} contains only unique student scores.
      */
-    private boolean scoresAreUnique(List<StudentScore> persons) {
-        for (int i = 0; i < persons.size() - 1; i++) {
-            for (int j = i + 1; j < persons.size(); j++) {
-                if (persons.get(i).isSameScore(persons.get(j))) {
+    private boolean scoresAreUnique(List<StudentScore> scores) {
+        for (int i = 0; i < scores.size() - 1; i++) {
+            for (int j = i + 1; j < scores.size(); j++) {
+                if (scores.get(i).isSameScore(scores.get(j))) {
                     return false;
                 }
             }
