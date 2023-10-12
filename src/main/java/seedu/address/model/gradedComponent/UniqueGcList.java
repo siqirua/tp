@@ -11,8 +11,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 
 /**
- * A list of graded components that enforces uniqueness between i ts elements and does not allow nulls.
- *  * A graded component is considered unique by comparing using {s@code GradedComponent#isSameGc(Person)}.
+ * A list of graded components that enforces uniqueness between its elements and does not allow nulls.
+ *  A graded component is considered unique by comparing using {@code GradedComponent#isSameGc(Person)}.
  * As such, adding and updating of persons uses GradedComponent#isSameGc(Person) for equality
  * to ensure that the person being added or updated is unique in terms of identity in the
  * UniqueGcList. However, the removal of a person uses GradedComponent#equals(Object)
