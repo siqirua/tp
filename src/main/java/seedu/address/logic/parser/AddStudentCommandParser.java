@@ -1,18 +1,20 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.AddStudentCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.student.Student;
-import seedu.address.model.student.StudentId;
-import seedu.address.model.student.StudentName;
-import seedu.address.model.student.StudentEmail;
-import seedu.address.model.student.TutorialGroup;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
 
 import java.util.stream.Stream;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
-
+import seedu.address.logic.commands.AddStudentCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentId;
+import seedu.address.model.student.StudentName;
+import seedu.address.model.student.TutorialGroup;
 
 /**
  * Parses input arguments and creates a new AddCommand object
