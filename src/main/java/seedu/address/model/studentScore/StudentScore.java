@@ -31,6 +31,13 @@ public class StudentScore {
         // Add student name based on the student id
     }
 
+    /**
+     * Construct a StudentScore
+     *
+     * @param sid A valid student score
+     * @param gcName A valid Graded Component
+     * @param score the score
+     */
     public StudentScore(StudentId sid, GcName gcName, float score) {
         this.sid = sid;
         this.gcName = gcName;

@@ -1,13 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.student.Student;
 import seedu.address.model.studentScore.StudentScore;
 
-import static java.util.Objects.requireNonNull;
 
+/**
+ * Command Class for adding Student Score.
+ */
 public class AddStudentScoreCommand extends Command {
     public static final String COMMAND_WORD = "addStuScore";
     // to expand
