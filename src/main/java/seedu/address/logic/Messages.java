@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.student.Student;
+import seedu.address.model.studentScore.StudentScore;
 
 /**
  * Container for user visible messages.
@@ -43,6 +44,25 @@ public class Messages {
                 .append(student.getEmail())
                 .append("; Tutorial Group: ")
                 .append(student.getTutorial());
+        return builder.toString();
+    }
+
+    /**
+     * Formats the Student Score for display to the user.
+     * @param studentScore the studentScore
+     * @return String
+     */
+    public static String format(StudentScore studentScore) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(studentScore.getStudentId())
+                .append("; Name: ")
+                .append(studentScore.getName())
+                .append("; Component: ")
+                .append(studentScore.getGcName())
+                .append("; Score: ")
+                .append(studentScore.getScore())
+                .append("; Comment: ")
+                .append(studentScore.getComment());
         return builder.toString();
     }
 
