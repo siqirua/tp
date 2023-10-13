@@ -41,14 +41,14 @@ public class StudentScore {
      * Returns true if both student scores have the same StudentId and GcName.
      * This defines a weaker notion of equality between two student scores.
      */
-    public boolean isSameScore(StudentScore otherScore) {
-        if (otherScore == this) {
+    public boolean isSameScore(StudentScore otherscore) {
+        if (otherscore == this) {
             return true;
         }
 
-        return otherScore != null
-                && otherScore.getStudentId().equals(getStudentId())
-                && otherScore.getGcName().equals(getGcName());
+        return otherscore != null
+                && otherscore.getStudentId().equals(getStudentId())
+                && otherscore.getGcName().equals(getGcName());
     }
 
     /**
