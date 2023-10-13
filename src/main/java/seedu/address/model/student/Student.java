@@ -16,18 +16,36 @@ public class Student {
     // Identity fields
     private final StudentId sid;
 
+    private StudentName name;
+    private StudentEmail email;
+    private TutorialGroup tg;
+
     /**
      * Every field must be present and not null.
      */
-    public Student(StudentId sid) {
-        requireAllNonNull(sid);
+    public Student(StudentId sid, StudentName name, StudentEmail email, TutorialGroup tg) {
+        requireAllNonNull(sid, name, email, tg);
         this.sid = sid;
+        this.name = name;
+        this.email = email;
+        this.tg = tg;
     }
 
     public StudentId getStudentId() {
         return this.sid;
     }
 
+    public StudentEmail getEmail() {
+        return this.email;
+    }
+
+    public StudentName getName() {
+        return this.name;
+    }
+
+    public TutorialGroup getTutorial() {
+        return this.tg;
+    }
     /**
      * Returns true if both students have the same student ID.
      * This defines a weaker notion of equality between two students.
