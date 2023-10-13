@@ -340,7 +340,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4. Should respond to user requests within 2 seconds. 
 5. The user interface shall be intuitive and user-friendly.
 6. Should allow edit only by authorized users.
-7. Should not take more than 256MB memory while in operation.
+7. Should not take more than 128MB memory while in operation.
 
 *{More to be added}*
 
