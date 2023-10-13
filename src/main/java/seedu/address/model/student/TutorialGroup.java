@@ -16,6 +16,8 @@ public class TutorialGroup {
     /**
      * The constant VALIDATION_REGEX.
      */
+
+    //to check, original regex didn't seem to work
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String groupName;
