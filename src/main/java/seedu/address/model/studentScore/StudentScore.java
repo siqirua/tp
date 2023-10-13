@@ -5,6 +5,7 @@ import java.util.Objects;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedComponent.GcName;
 import seedu.address.model.student.StudentId;
+import seedu.address.model.student.StudentName;
 
 
 /**
@@ -13,21 +14,36 @@ import seedu.address.model.student.StudentId;
  */
 public class StudentScore {
     private StudentId sid;
+    private StudentName name;
     private GcName gcName;
     private float score;
+    private String comment = "";
     /**
      * Constructs a {@code studentScore}.
      *
      * @param sid A valid student score.
      */
+    public StudentScore(StudentId sid, GcName gcName, float score, String comment) {
+        this.sid = sid;
+        this.gcName = gcName;
+        this.score = score;
+        this.comment = comment;
+        // Add student name based on the student id
+    }
+
     public StudentScore(StudentId sid, GcName gcName, float score) {
         this.sid = sid;
         this.gcName = gcName;
         this.score = score;
+        // Add student name based on the student id
     }
 
     public StudentId getStudentId() {
         return this.sid;
+    }
+
+    public StudentName getName() {
+        return this.name;
     }
 
     public GcName getGcName() {
@@ -36,6 +52,10 @@ public class StudentScore {
 
     public float getScore() {
         return this.score;
+    }
+
+    public String getComment() {
+        return this.comment;
     }
     /**
      * Returns true if both student scores have the same StudentId and GcName.
@@ -80,8 +100,10 @@ public class StudentScore {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("student id", sid)
+                .add("student name", name)
                 .add("component name", gcName)
                 .add("score", score)
+                .add("comment", comment)
                 .toString();
     }
 
