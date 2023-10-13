@@ -23,7 +23,7 @@ import javafx.collections.ObservableList;
  *
  * @see StudentScore#isSameScore(StudentScore)
  */
-public class UniqueScoreList implements Iterable<StudentScore> {
+public class UniqueStudentScoreList implements Iterable<StudentScore> {
 
     private final ObservableList<StudentScore> internalList = FXCollections.observableArrayList();
     private final ObservableList<StudentScore> internalUnmodifiableList =
@@ -56,7 +56,7 @@ public class UniqueScoreList implements Iterable<StudentScore> {
      * The student score identity of {@code editedScore} must not be the same as another existing
      * student score in the list.
      */
-    public void setPerson(StudentScore target, StudentScore editedScore) {
+    public void setStudentScore(StudentScore target, StudentScore editedScore) {
         requireAllNonNull(target, editedScore);
 
         int index = internalList.indexOf(target);
@@ -84,7 +84,7 @@ public class UniqueScoreList implements Iterable<StudentScore> {
         }
     }
 
-    public void setPersons(seedu.address.model.studentScore.UniqueScoreList replacement) {
+    public void setStudentScores(seedu.address.model.studentScore.UniqueStudentScoreList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -93,9 +93,9 @@ public class UniqueScoreList implements Iterable<StudentScore> {
      * Replaces the contents of this list with {@code scores}.
      * {@code scores} must not contain duplicate scores.
      */
-    public void setPersons(List<StudentScore> scores) {
+    public void setStudentScores(List<StudentScore> scores) {
         requireAllNonNull(scores);
-        if (!scoresAreUnique(scores)) {
+        if (!studentScoresAreUnique(scores)) {
             // to change
             throw new RuntimeException();
         }
@@ -122,12 +122,12 @@ public class UniqueScoreList implements Iterable<StudentScore> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof seedu.address.model.studentScore.UniqueScoreList)) {
+        if (!(other instanceof seedu.address.model.studentScore.UniqueStudentScoreList)) {
             return false;
         }
 
-        seedu.address.model.studentScore.UniqueScoreList otherUniquePersonList =
-                (seedu.address.model.studentScore.UniqueScoreList) other;
+        seedu.address.model.studentScore.UniqueStudentScoreList otherUniquePersonList =
+                (seedu.address.model.studentScore.UniqueStudentScoreList) other;
         return internalList.equals(otherUniquePersonList.internalList);
     }
 
@@ -144,7 +144,7 @@ public class UniqueScoreList implements Iterable<StudentScore> {
     /**
      * Returns true if {@code persons} contains only unique student scores.
      */
-    private boolean scoresAreUnique(List<StudentScore> scores) {
+    private boolean studentScoresAreUnique(List<StudentScore> scores) {
         for (int i = 0; i < scores.size() - 1; i++) {
             for (int j = i + 1; j < scores.size(); j++) {
                 if (scores.get(i).isSameScore(scores.get(j))) {

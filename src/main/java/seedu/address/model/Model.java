@@ -1,18 +1,20 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
-import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.Person;
+import seedu.address.model.gradedComponent.GradedComponent;
+import seedu.address.model.gradedComponent.model.GradedComponentBook;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
+import seedu.address.model.studentScore.StudentScore;
+import seedu.address.model.studentScore.model.StudentScoreBook;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -35,53 +37,33 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' application file path.
      */
-    Path getAddressBookFilePath();
+    Path getApplicationFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' application file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setApplicationFilePath(Path applicationFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Returns the student data with the data in {@code studentBook}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
-
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    StudentBook getStudentBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns the student score data with the data in {@code studentScoreBook}.
      */
-    boolean hasPerson(Person person);
+    StudentScoreBook getStudentScoreBook();
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Returns the graded component data with the data in {@code gradedComponentBook}.
      */
-    void deletePerson(Person target);
+    GradedComponentBook getGradedComponentBook();
 
-    /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
-     */
-    void addPerson(Person person);
+    ObservableList<Student> getFilteredStudentList();
 
-    /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
-     */
-    void setPerson(Person target, Person editedPerson);
+    ObservableList<GradedComponent> getFilteredGradedComponentList();
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
-
-    /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    ObservableList<StudentScore> getFilteredStudentScoreList();
 }

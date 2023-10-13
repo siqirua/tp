@@ -15,17 +15,17 @@ import javafx.collections.ObservableList;
 
 /**
  * A list of graded components that enforces uniqueness between its elements and does not allow nulls.
- *  A graded component is considered unique by comparing using {@code GradedComponent#isSameGc(Person)}.
- * As such, adding and updating of persons uses GradedComponent#isSameGc(Person) for equality
- * to ensure that the person being added or updated is unique in terms of identity in the
- * UniqueGcList. However, the removal of a person uses GradedComponent#equals(Object)
- * to ensure that the person with exactly the same fields will be removed.
+ *  A graded component is considered unique by comparing using {@code GradedComponent#isSameGc(GradedComponent)}.
+ * As such, adding and updating of graded components uses GradedComponent#isSameGc(GradedComponent) for equality
+ * to ensure that the graded component being added or updated is unique in terms of identity in the
+ * UniqueGradedComponentList. However, the removal of a graded component uses GradedComponent#equals(Object)
+ * to ensure that the graded component with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
  * @see GradedComponent#isSameGc(GradedComponent)
  */
-public class UniqueGcList implements Iterable<GradedComponent> {
+public class UniqueGradedComponentList implements Iterable<GradedComponent> {
 
     private final ObservableList<GradedComponent> internalList = FXCollections.observableArrayList();
     private final ObservableList<GradedComponent> internalUnmodifiableList =
@@ -53,12 +53,12 @@ public class UniqueGcList implements Iterable<GradedComponent> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedGc}.
+     * Replaces the graded component {@code target} in the list with {@code editedGc}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedGc} must not be the same as another existing graded
+     * The graded component identity of {@code editedGc} must not be the same as another existing graded
      * component in the list.
      */
-    public void setPerson(GradedComponent target, GradedComponent editedGc) {
+    public void setGradedComponent(GradedComponent target, GradedComponent editedGc) {
         requireAllNonNull(target, editedGc);
 
         int index = internalList.indexOf(target);
@@ -86,7 +86,7 @@ public class UniqueGcList implements Iterable<GradedComponent> {
         }
     }
 
-    public void setPersons(UniqueGcList replacement) {
+    public void setGradedComponents(UniqueGradedComponentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -95,9 +95,9 @@ public class UniqueGcList implements Iterable<GradedComponent> {
      * Replaces the contents of this list with {@code comps}.
      * {@code comps} must not contain duplicate graded components.
      */
-    public void setPersons(List<GradedComponent> comps) {
+    public void setGradedComponents(List<GradedComponent> comps) {
         requireAllNonNull(comps);
-        if (!gcsAreUnique(comps)) {
+        if (!gradedComponentsAreUnique(comps)) {
             // to change
             throw new RuntimeException();
         }
@@ -124,13 +124,13 @@ public class UniqueGcList implements Iterable<GradedComponent> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UniqueGcList)) {
+        if (!(other instanceof UniqueGradedComponentList)) {
             return false;
         }
 
-        UniqueGcList otherUniquePersonList =
-                (UniqueGcList) other;
-        return internalList.equals(otherUniquePersonList.internalList);
+        UniqueGradedComponentList otherUniqueGradedComponentList =
+                (UniqueGradedComponentList) other;
+        return internalList.equals(otherUniqueGradedComponentList.internalList);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class UniqueGcList implements Iterable<GradedComponent> {
     /**
      * Returns true if {@code comps} contains only unique graded components.
      */
-    private boolean gcsAreUnique(List<GradedComponent> comps) {
+    private boolean gradedComponentsAreUnique(List<GradedComponent> comps) {
         for (int i = 0; i < comps.size() - 1; i++) {
             for (int j = i + 1; j < comps.size(); j++) {
                 if (comps.get(i).isSameGc(comps.get(j))) {

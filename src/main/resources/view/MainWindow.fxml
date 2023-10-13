@@ -47,7 +47,7 @@
           </padding>
         </StackPane>
 
-        <VBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="600" prefHeight="600">
+        <VBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="500">
           <children>
             <HBox fx:id="ppl2" minWidth="450" prefWidth="740" HBox.hgrow="ALWAYS" styleClass="pane-with-border" VBox.vgrow="ALWAYS" >
               <children>
@@ -70,7 +70,7 @@
           </children>
         </VBox>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"  />
       </VBox>
     </Scene>
   </scene>

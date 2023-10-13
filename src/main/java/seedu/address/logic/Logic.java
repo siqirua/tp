@@ -7,8 +7,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.gradedComponent.GradedComponent;
+import seedu.address.model.student.Student;
+import seedu.address.model.studentScore.StudentScore;
+
 
 /**
  * API of the Logic component
@@ -23,20 +25,20 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /**
-     * Returns the AddressBook.
-     *
-     * @see seedu.address.model.Model#getAddressBook()
-     */
-    ReadOnlyAddressBook getAddressBook();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of students */
+    ObservableList<Student> getFilteredStudentList();
+
+    /** Returns an unmodifiable view of the filtered list of graded components */
+    ObservableList<GradedComponent> getFilteredGradedComponentList();
+
+    /** Returns an unmodifiable view of the filtered list of student scores */
+    ObservableList<StudentScore> getFilteredStudentScoreList();
 
     /**
      * Returns the user prefs' address book file path.
      */
-    Path getAddressBookFilePath();
+    Path getApplicationFilePath();
 
     /**
      * Returns the user prefs' GUI settings.
