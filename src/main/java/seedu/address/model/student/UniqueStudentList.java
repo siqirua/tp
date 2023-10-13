@@ -14,10 +14,10 @@ import javafx.collections.ObservableList;
 
 /**
  * A list of students that enforces uniqueness between its elements and does not allow nulls.
- * A student is considered unique by comparing using {@code Student#isSameStudent(Student)}. As such, adding
- * and updating of persons uses Student#isSameStudent(Student) for equality  to ensure that the student being added
- * or updated is unique in terms of identity in the UniqueStudentList. However, the removal of a student uses
- * Student#equals(Object) to ensure that the person with exactly the same fields will be removed.
+ * A student is considered unique by comparing using {@code Student#isSameStudent(Student)}. As such, adding and updating of
+ * persons uses Student#isSameStudent(Student) for equality  to ensure that the student being added or updated is
+ * unique in terms of identity in the UniqueStudentList. However, the removal of a student uses Student#equals(Object)
+ * to ensure that the person with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
