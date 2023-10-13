@@ -36,7 +36,13 @@ public class Messages {
      */
     public static String format(Student student) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(student.getStudentId());
+        builder.append(student.getStudentId())
+                .append("; Name: ")
+                .append(student.getName())
+                .append("; Email: ")
+                .append(student.getEmail())
+                .append("; Tutorial Group: ")
+                .append(student.getTutorial());
         return builder.toString();
     }
 

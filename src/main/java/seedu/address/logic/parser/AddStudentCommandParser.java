@@ -4,6 +4,9 @@ import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
+import seedu.address.model.student.StudentName;
+import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.TutorialGroup;
 
 import java.util.stream.Stream;
 
@@ -23,18 +26,21 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
      */
     public AddStudentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID);
+                ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID)
+        if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
         StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+        StudentName name = new StudentName(argMultimap.getValue(PREFIX_NAME).get());
+        StudentEmail email = new StudentEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        TutorialGroup tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
 
-        Student student = new Student(sid);
 
+        Student student = new Student(sid, name, email, tg);
         return new AddStudentCommand(student);
     }
 

@@ -32,6 +32,12 @@ public class StudentCard extends UiPart<Region> {
     private Label sid;
     @FXML
     private Label id;
+    @FXML
+    private Label studentName;
+    @FXML
+    private Label studentEmail;
+    @FXML
+    private Label tutorialGroup;
 
 
     /**
@@ -40,8 +46,10 @@ public class StudentCard extends UiPart<Region> {
     public StudentCard(Student student, int displayedIndex) {
         super(FXML);
         this.student = student;
-        System.out.println(student);
         id.setText(displayedIndex + ". ");
         sid.setText(student.getStudentId().sid);
+        studentName.setText(student.getName().fullName);
+        studentEmail.setText(student.getEmail().value);
+        tutorialGroup.setText(student.getTutorial().groupName);
     }
 }

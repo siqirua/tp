@@ -14,14 +14,14 @@ import seedu.address.model.student.Student;
 public class AddStudentCommand extends Command {
 
     public static final String COMMAND_WORD = "addStu";
-
+    // to expand
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the database.\n"
             + "Example: " + COMMAND_WORD + " s/A1234567Z";
 
-    private Student toAdd;
-
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the database";
+
+    private Student toAdd;
 
     /**
      * Creates an AddStudentCommand to add the specified {@code Student}

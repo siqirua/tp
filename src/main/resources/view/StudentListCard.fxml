@@ -27,6 +27,10 @@
         </Label>
         <Label fx:id="sid" text="\$first" styleClass="cell_big_label" />
       </HBox>
+
+      <Label fx:id="studentName" text="\$studentName" styleClass="cell_small_label" />
+      <Label fx:id="studentEmail" text="\$studentEmail" styleClass="cell_small_label" />
+      <Label fx:id="tutorialGroup" text="\$tutorialGroup" styleClass="cell_small_label" />
     </VBox>
   </GridPane>
 </HBox>
