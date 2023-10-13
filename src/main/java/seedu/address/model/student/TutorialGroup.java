@@ -2,10 +2,20 @@ package seedu.address.model.student;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * The type Tutorial group.
+ */
 public class TutorialGroup {
+    /**
+     * The constant MESSAGE_CONSTRAINTS.
+     */
     public static final String MESSAGE_CONSTRAINTS =
             "Tutorial groups should only contain a capital letter and a 2 digit number, and it should not be blank";
 
+    /**
+     * The constant VALIDATION_REGEX.
+     */
     public static final String VALIDATION_REGEX = "^[A-Z]\\\\d{2}";
 
     private final String groupName;
@@ -23,6 +33,9 @@ public class TutorialGroup {
 
     /**
      * Returns true if a given string is a valid name.
+     *
+     * @param test the test
+     * @return the boolean
      */
     public static boolean isValidTutorial(String test) {
         return test.matches(VALIDATION_REGEX);
