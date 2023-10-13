@@ -15,9 +15,9 @@ import javafx.collections.ObservableList;
 /**
  * A list of students that enforces uniqueness between its elements and does not allow nulls.
  * A student is considered unique by comparing using {@code Student#isSameStudent(Student)}. As such, adding
- * and updating of persons uses Student#isSameStudent(Student) for equality  to ensure that the student being added
+ * and updating of students uses Student#isSameStudent(Student) for equality  to ensure that the student being added
  * or updated is unique in terms of identity in the UniqueStudentList. However, the removal of a student uses
- * Student#equals(Object) to ensure that the person with exactly the same fields will be removed.
+ * Student#equals(Object) to ensure that the student with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -51,12 +51,12 @@ public class UniqueStudentList implements Iterable<Student> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedStudent}.
+     * Replaces the student {@code target} in the list with {@code editedStudent}.
      * {@code target} must exist in the list.
      * The student identity of {@code editedStudent} must not be the same as another existing
      * student in the list.
      */
-    public void setPerson(Student target, Student editedStudent) {
+    public void setStudent(Student target, Student editedStudent) {
         requireAllNonNull(target, editedStudent);
 
         int index = internalList.indexOf(target);
@@ -84,7 +84,7 @@ public class UniqueStudentList implements Iterable<Student> {
         }
     }
 
-    public void setPersons(UniqueStudentList replacement) {
+    public void setStudents(UniqueStudentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -93,7 +93,7 @@ public class UniqueStudentList implements Iterable<Student> {
      * Replaces the contents of this list with {@code students}.
      * {@code students} must not contain duplicate students.
      */
-    public void setPersons(List<Student> students) {
+    public void setStudents(List<Student> students) {
         requireAllNonNull(students);
         if (!studentsAreUnique(students)) {
             // to change
@@ -126,9 +126,9 @@ public class UniqueStudentList implements Iterable<Student> {
             return false;
         }
 
-        UniqueStudentList otherUniquePersonList =
+        UniqueStudentList otherUniqueStudentList =
                 (UniqueStudentList) other;
-        return internalList.equals(otherUniquePersonList.internalList);
+        return internalList.equals(otherUniqueStudentList.internalList);
     }
 
     @Override

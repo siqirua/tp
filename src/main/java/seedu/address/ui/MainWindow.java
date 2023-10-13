@@ -31,8 +31,8 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
-    private PersonListPanel personListPanel2;
+    private StudentListPanel studentListPanel;
+    private StudentScoreListPanel studentScoreListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -114,16 +114,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
+        personListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
 
-        personListPanel2 = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder2.getChildren().add(personListPanel2.getRoot());
+        studentScoreListPanel = new StudentScoreListPanel(logic.getFilteredStudentScoreList());
+        personListPanelPlaceholder2.getChildren().add(studentScoreListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getApplicationFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -170,8 +170,12 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public StudentListPanel getStudentListPanel() {
+        return studentListPanel;
+    }
+
+    public StudentScoreListPanel getStudentScoreListPanel() {
+        return studentScoreListPanel;
     }
 
     /**

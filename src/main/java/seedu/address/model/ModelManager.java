@@ -4,43 +4,68 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.gradedComponent.GradedComponent;
+import seedu.address.model.gradedComponent.model.GradedComponentBook;
 import seedu.address.model.person.Person;
-
+import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
+import seedu.address.model.studentScore.StudentScore;
+import seedu.address.model.studentScore.model.StudentScoreBook;
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the application data.
  */
 public class ModelManager implements Model {
+
+    public static final Object PREDICATE_SHOW_ALL_PERSONS = "";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final StudentBook studentBook;
+    private final StudentScoreBook studentScoreBook;
+    private final GradedComponentBook gradedComponentBook;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
+
+    private final FilteredList<Student> filteredStudentList;
+    private final FilteredList<GradedComponent> filteredGradedComponentList;
+    private final FilteredList<StudentScore> filteredStudentScoreList;
+
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a UnifiedBookManager with the given studentBook, gradedComponentBook,
+     * studentScoreBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(StudentBook studentBook, StudentScoreBook studentScoreBook,
+                               GradedComponentBook gradedComponentBook, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(studentBook, studentScoreBook, gradedComponentBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with students: " + studentBook
+                + "student scores: " + studentScoreBook
+                + "graded components: " + gradedComponentBook
+                + "and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.studentBook = studentBook;
+        this.gradedComponentBook = gradedComponentBook;
+        this.studentScoreBook = studentScoreBook;
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.filteredStudentList = new FilteredList<>(this.studentBook.getStudentList());
+        this.filteredGradedComponentList = new FilteredList<>(this.gradedComponentBook.getGradedComponentList());
+        this.filteredStudentScoreList = new FilteredList<>(this.studentScoreBook.getStudentScoreList());
     }
 
+
+    /**
+     * Initializes a UnifiedBookManager with an empty studentBook, gradedComponentBook,
+     * studentScoreBook and userPrefs.
+     */
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new StudentBook(), new StudentScoreBook(),
+                new GradedComponentBook(), new UserPrefs());
     }
-
-    //=========== UserPrefs ==================================================================================
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -65,67 +90,41 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
+    public Path getApplicationFilePath() {
         return userPrefs.getAddressBookFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
-    }
-
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public void setApplicationFilePath(Path applicationFilePath) {
+        requireNonNull(applicationFilePath);
+        userPrefs.setAddressBookFilePath(applicationFilePath);
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public StudentBook getStudentBook() {
+        return studentBook;
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public StudentScoreBook getStudentScoreBook() {
+        return studentScoreBook;
     }
 
     @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+    public GradedComponentBook getGradedComponentBook() {
+        return gradedComponentBook;
     }
 
-    @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public ObservableList<Student> getFilteredStudentList() {
+        return filteredStudentList;
     }
 
-    @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.setPerson(target, editedPerson);
+    public ObservableList<GradedComponent> getFilteredGradedComponentList() {
+        return filteredGradedComponentList;
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+    public ObservableList<StudentScore> getFilteredStudentScoreList() {
+        return filteredStudentScoreList;
     }
 
     @Override
@@ -140,9 +139,13 @@ public class ModelManager implements Model {
         }
 
         ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
+        return studentBook.equals(otherModelManager.studentBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && gradedComponentBook.equals(otherModelManager.gradedComponentBook)
+                && studentScoreBook.equals(otherModelManager.studentScoreBook);
     }
 
+    public ObservableList<Person> updateFilteredPersonList(Object p) {
+        return null;
+    }
 }
