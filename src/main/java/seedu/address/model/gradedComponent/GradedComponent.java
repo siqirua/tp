@@ -16,16 +16,30 @@ public class GradedComponent {
     // Identity fields
     private final GcName name;
 
+    // Data fields
+    private final MaxMarks maxMarks;
+    private final Weightage weightage;
+
     /**
      * Every field must be present and not null.
      */
-    public GradedComponent(GcName name) {
+    public GradedComponent(GcName name, MaxMarks maxMarks, Weightage weightage) {
         requireAllNonNull(name);
         this.name = name;
+        this.maxMarks = maxMarks;
+        this.weightage = weightage;
     }
 
     public GcName getName() {
         return name;
+    }
+
+    public MaxMarks getMaxMarks() {
+        return maxMarks;
+    }
+
+    public Weightage getWeightage() {
+        return weightage;
     }
     /**
      * Returns true if both persons have the same name.

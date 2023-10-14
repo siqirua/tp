@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -12,7 +13,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.gradedComponent.GradedComponent;
 import seedu.address.model.gradedComponent.model.GradedComponentBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentScore.StudentScore;
@@ -22,7 +22,6 @@ import seedu.address.model.studentScore.model.StudentScoreBook;
  */
 public class ModelManager implements Model {
 
-    public static final Object PREDICATE_SHOW_ALL_PERSONS = "";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final StudentBook studentBook;
@@ -145,7 +144,21 @@ public class ModelManager implements Model {
                 && studentScoreBook.equals(otherModelManager.studentScoreBook);
     }
 
-    public ObservableList<Person> updateFilteredPersonList(Object p) {
-        return null;
+    @Override
+    public void updateFilteredStudentList(Predicate<Student> predicate) {
+        requireNonNull(predicate);
+        filteredStudentList.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredStudentScoreList(Predicate<StudentScore> predicate) {
+        requireNonNull(predicate);
+        filteredStudentScoreList.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredGradedComponentList(Predicate<GradedComponent> predicate) {
+        requireNonNull(predicate);
+        filteredGradedComponentList.setPredicate(predicate);
     }
 }

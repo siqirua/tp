@@ -6,9 +6,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.gradedComponent.GcName;
+import seedu.address.model.gradedComponent.MaxMarks;
+import seedu.address.model.gradedComponent.Weightage;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -49,6 +53,22 @@ public class ParserUtil {
         }
         return new Name(trimmedName);
     }
+
+    /**
+     * Parses a {@code String name} into a {@code GcName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static GcName parseGcName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Name.isValidName(trimmedName)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new GcName(trimmedName);
+    }
+
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
@@ -121,4 +141,30 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    /**
+     * Parses {@code String s} into a {@code Weightage}, if possible.
+     * If not, throws a parse error.
+     */
+    public static Weightage parseWeightage(String s) throws ParseException {
+        checkStringParsableToDouble(s);
+        return new Weightage(Double.parseDouble(s));
+    }
+
+    /**
+     * Parses {@code String s} into a {@code MaxMarks}, if possible.
+     * If not, throws an error with {@code varName}
+     */
+    public static MaxMarks parseMaxMarks(String s) throws ParseException {
+        checkStringParsableToDouble(s);
+        return new MaxMarks(Double.parseDouble(s));
+    }
+
+    private static void checkStringParsableToDouble(String s) throws ParseException {
+        try {
+            Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            throw new ParseException("A value could not be parsed into a number.");
+        }
+    }
+
 }

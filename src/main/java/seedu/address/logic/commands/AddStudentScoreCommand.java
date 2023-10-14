@@ -39,6 +39,6 @@ public class AddStudentScoreCommand extends Command {
         }
 
         model.getStudentScoreBook().addStudentScore(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatStudentScore(toAdd)));
     }
 }
