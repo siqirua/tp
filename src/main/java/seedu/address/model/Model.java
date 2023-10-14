@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -15,6 +16,10 @@ import seedu.address.model.studentScore.model.StudentScoreBook;
  * The API of the Model component.
  */
 public interface Model {
+
+    Predicate<Student> PREDICATE_SHOW_ALL_STUDENTS = unused -> true;
+    Predicate<GradedComponent> PREDICATE_SHOW_ALL_GRADED_COMPONENTS = unused -> true;
+    Predicate<StudentScore> PREDICATE_SHOW_ALL_STUDENT_SCORES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -66,4 +71,12 @@ public interface Model {
     ObservableList<GradedComponent> getFilteredGradedComponentList();
 
     ObservableList<StudentScore> getFilteredStudentScoreList();
+
+    void updateFilteredStudentList(Predicate<Student> predicate);
+
+    void updateFilteredGradedComponentList(Predicate<GradedComponent> predicate);
+
+    void updateFilteredStudentScoreList(Predicate<StudentScore> predicate);
+
+
 }

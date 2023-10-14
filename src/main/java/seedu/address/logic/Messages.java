@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.gradedComponent.GradedComponent;
 import seedu.address.model.student.Student;
 
 /**
@@ -43,6 +44,19 @@ public class Messages {
                 .append(student.getEmail())
                 .append("; Tutorial Group: ")
                 .append(student.getTutorial());
+        return builder.toString();
+    }
+
+    /**
+     * Formats the {@code graded component} for display to the user.
+     */
+    public static String formatGradedComponent(GradedComponent gc) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(gc.getName())
+                .append("; Maximum Marks: ")
+                .append(gc.getMaxMarks())
+                .append("; Weightage: ")
+                .append(gc.getWeightage());
         return builder.toString();
     }
 
