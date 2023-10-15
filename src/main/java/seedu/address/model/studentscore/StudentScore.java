@@ -26,9 +26,10 @@ public class StudentScore {
     public StudentScore(StudentId sid, GcName gcName, float score, String comment) {
         this.sid = sid;
         this.gcName = gcName;
-        this.score = score;
+        this.score = score; //add also max marks for the score
         this.comment = comment;
         // Add student name based on the student id
+        this.name = new StudentName("test name"); //test name
     }
 
     /**
@@ -68,14 +69,14 @@ public class StudentScore {
      * Returns true if both student scores have the same StudentId and GcName.
      * This defines a weaker notion of equality between two student scores.
      */
-    public boolean isSameScore(StudentScore otherscore) {
-        if (otherscore == this) {
+    public boolean isSameScore(StudentScore otherScore) {
+        if (otherScore == this) {
             return true;
         }
 
-        return otherscore != null
-                && otherscore.getStudentId().equals(getStudentId())
-                && otherscore.getGcName().equals(getGcName());
+        return otherScore != null
+                && otherScore.getStudentId().equals(getStudentId())
+                && otherScore.getGcName().equals(getGcName());
     }
 
     /**
