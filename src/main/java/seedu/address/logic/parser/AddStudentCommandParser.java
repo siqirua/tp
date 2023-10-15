@@ -1,5 +1,17 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.Student;
@@ -10,19 +22,6 @@ import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
-
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
-
-;
 
 /**
  * Parses input arguments and creates a new AddCommand object
