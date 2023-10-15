@@ -1,4 +1,4 @@
-package seedu.address.model.gradedComponent.model;
+package seedu.address.model.gradedcomponent.model;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,8 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.gradedComponent.GradedComponent;
-import seedu.address.model.gradedComponent.UniqueGradedComponentList;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.UniqueGradedComponentList;
 
 /**
  * Wraps all data at the address-book level

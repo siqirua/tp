@@ -1,4 +1,4 @@
-package seedu.address.model.studentScore.model;
+package seedu.address.model.studentscore.model;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,8 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.studentScore.StudentScore;
-import seedu.address.model.studentScore.UniqueStudentScoreList;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.UniqueStudentScoreList;
 
 /**
  * Wraps all data at the address-book level

@@ -1,4 +1,4 @@
-package seedu.address.model.studentScore;
+package seedu.address.model.studentscore;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -84,7 +84,7 @@ public class UniqueStudentScoreList implements Iterable<StudentScore> {
         }
     }
 
-    public void setStudentScores(seedu.address.model.studentScore.UniqueStudentScoreList replacement) {
+    public void setStudentScores(seedu.address.model.studentscore.UniqueStudentScoreList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -122,12 +122,12 @@ public class UniqueStudentScoreList implements Iterable<StudentScore> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof seedu.address.model.studentScore.UniqueStudentScoreList)) {
+        if (!(other instanceof seedu.address.model.studentscore.UniqueStudentScoreList)) {
             return false;
         }
 
-        seedu.address.model.studentScore.UniqueStudentScoreList otherUniquePersonList =
-                (seedu.address.model.studentScore.UniqueStudentScoreList) other;
+        seedu.address.model.studentscore.UniqueStudentScoreList otherUniquePersonList =
+                (seedu.address.model.studentscore.UniqueStudentScoreList) other;
         return internalList.equals(otherUniquePersonList.internalList);
     }
 

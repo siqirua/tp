@@ -1,9 +1,9 @@
-package seedu.address.model.studentScore;
+package seedu.address.model.studentscore;
 
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.gradedComponent.GcName;
+import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 

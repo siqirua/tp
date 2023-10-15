@@ -1,10 +1,9 @@
 package seedu.address.model.student;
 
-import seedu.address.commons.util.ToStringBuilder;
-
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.ToStringBuilder;
 /**
  * Tests that a {@code Student}'s {@code StudentId} matches any of the Student IDs given.
  */
@@ -32,7 +31,8 @@ public class StudentIdMatchPredicate implements Predicate<Student> {
             return false;
         }
 
-        seedu.address.model.student.StudentIdMatchPredicate otherStudentIdMatchPredicate = (seedu.address.model.student.StudentIdMatchPredicate) other;
+        seedu.address.model.student.StudentIdMatchPredicate otherStudentIdMatchPredicate =
+                (seedu.address.model.student.StudentIdMatchPredicate) other;
         return keywords.equals(otherStudentIdMatchPredicate.keywords);
     }
 

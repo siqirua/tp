@@ -1,7 +1,7 @@
-package seedu.address.model.gradedComponent.model;
+package seedu.address.model.gradedcomponent.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.gradedComponent.GradedComponent;
+import seedu.address.model.gradedcomponent.GradedComponent;
 
 /**
  * Unmodifiable view of an address book
