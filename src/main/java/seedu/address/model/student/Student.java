@@ -2,9 +2,16 @@ package seedu.address.model.student;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -16,19 +23,25 @@ public class Student {
     // Identity fields
     private final StudentId sid;
 
-    private StudentName name;
-    private StudentEmail email;
-    private TutorialGroup tg;
+    private final StudentName name;
+    private final StudentEmail email;
+    private final TutorialGroup tg;
+    private final List<StudentScore> scoreList = new ArrayList<>();
+
+    private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Student(StudentId sid, StudentName name, StudentEmail email, TutorialGroup tg) {
+    public Student(StudentId sid, StudentName name, StudentEmail email, TutorialGroup tg,
+                   List<StudentScore> scores, Set<Tag> tagSet) {
         requireAllNonNull(sid, name, email, tg);
         this.sid = sid;
         this.name = name;
         this.email = email;
         this.tg = tg;
+        this.scoreList.addAll(scores);
+        this.tags.addAll(tagSet);
     }
 
     public StudentId getStudentId() {
@@ -46,6 +59,26 @@ public class Student {
     public TutorialGroup getTutorial() {
         return this.tg;
     }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
+
+    public List<StudentScore> getScores() {
+        return Collections.unmodifiableList(scoreList);
+    }
+    public void addScoreToStudent(StudentScore score) {
+        scoreList.add(score);
+    }
+
+    public void deleteScoreFromStudent(StudentScore score) {
+        scoreList.remove(score);
+    }
+
     /**
      * Returns true if both students have the same student ID.
      * This defines a weaker notion of equality between two students.

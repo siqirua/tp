@@ -1,22 +1,25 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddGradedComponentCommand;
 import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteGradedComponentCommand;
+import seedu.address.logic.commands.DeleteStudentCommand;
 import seedu.address.logic.commands.EditGradedComponentCommand;
+import seedu.address.logic.commands.EditStudentCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindByStudentIdCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.FindByStudentIdCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 /**
  * Parses user input.
@@ -53,6 +56,10 @@ public class AddressBookParser {
         switch (commandWord) {
         case AddStudentCommand.COMMAND_WORD:
             return new AddStudentCommandParser().parse(arguments);
+        case EditStudentCommand.COMMAND_WORD:
+            return new EditStudentCommandParser().parse(arguments);
+        case DeleteStudentCommand.COMMAND_WORD:
+            return new DeleteStudentCommandParser().parse(arguments);
         case AddGradedComponentCommand.COMMAND_WORD:
             return new AddGradedComponentCommandParser().parse(arguments);
         case EditGradedComponentCommand.COMMAND_WORD:

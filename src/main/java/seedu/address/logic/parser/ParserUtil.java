@@ -16,6 +16,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentId;
+import seedu.address.model.student.StudentName;
+import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,13 +48,28 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
-    public static Name parseName(String name) throws ParseException {
+    public static StudentId parseId(String sid) throws ParseException {
+        requireNonNull(sid);
+        String trimmedId = sid.trim();
+        if (!Name.isValidName(trimmedId)) {
+            throw new ParseException(StudentId.MESSAGE_CONSTRAINTS);
+        }
+        return new StudentId(trimmedId);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static StudentName parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
-        return new Name(trimmedName);
+        return new StudentName(trimmedName);
     }
 
     /**
@@ -105,13 +124,13 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code email} is invalid.
      */
-    public static Email parseEmail(String email) throws ParseException {
+    public static StudentEmail parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new StudentEmail(trimmedEmail);
     }
 
     /**
@@ -127,6 +146,21 @@ public class ParserUtil {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
         return new Tag(trimmedTag);
+    }
+
+    /**
+     * Parses a {@code String tutorial group} into a {@code TutorialGroup}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code tag} is invalid.
+     */
+    public static TutorialGroup parseTg(String tg) throws ParseException {
+        requireNonNull(tg);
+        String trimmedTg = tg.trim();
+        if (!Tag.isValidTagName(trimmedTg)) {
+            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        }
+        return new TutorialGroup(trimmedTg);
     }
 
     /**
