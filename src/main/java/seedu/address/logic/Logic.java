@@ -7,9 +7,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.gradedComponent.GradedComponent;
+import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.Student;
-import seedu.address.model.studentScore.StudentScore;
+import seedu.address.model.studentscore.StudentScore;
 
 
 /**

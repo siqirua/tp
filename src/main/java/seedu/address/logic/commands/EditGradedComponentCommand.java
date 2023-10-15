@@ -16,11 +16,11 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.gradedComponent.GcName;
-import seedu.address.model.gradedComponent.GradedComponent;
-import seedu.address.model.gradedComponent.MaxMarks;
-import seedu.address.model.gradedComponent.Weightage;
-import seedu.address.model.gradedComponent.model.GradedComponentBook;
+import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.MaxMarks;
+import seedu.address.model.gradedcomponent.Weightage;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 
 /**
  * Edits the details of an existing gradedComponent in the address book.

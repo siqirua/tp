@@ -1,7 +1,7 @@
-package seedu.address.model.studentScore.model;
+package seedu.address.model.studentscore.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.studentScore.StudentScore;
+import seedu.address.model.studentscore.StudentScore;
 
 /**
  * Unmodifiable view of an address book

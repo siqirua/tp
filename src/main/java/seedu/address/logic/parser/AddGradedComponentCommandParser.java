@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddGradedComponentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.gradedComponent.GcName;
-import seedu.address.model.gradedComponent.GradedComponent;
-import seedu.address.model.gradedComponent.MaxMarks;
-import seedu.address.model.gradedComponent.Weightage;
+import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.MaxMarks;
+import seedu.address.model.gradedcomponent.Weightage;
 
 /**
  * Parses input arguments and creates a new AddCommand object

@@ -1,4 +1,4 @@
-package seedu.address.model.gradedComponent;
+package seedu.address.model.gradedcomponent;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 

@@ -5,12 +5,12 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.gradedComponent.GradedComponent;
-import seedu.address.model.gradedComponent.model.GradedComponentBook;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
-import seedu.address.model.studentScore.StudentScore;
-import seedu.address.model.studentScore.model.StudentScoreBook;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
  * The API of the Model component.
