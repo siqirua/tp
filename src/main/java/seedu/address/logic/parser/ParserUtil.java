@@ -192,9 +192,28 @@ public class ParserUtil {
         return new MaxMarks(Double.parseDouble(s));
     }
 
+    /**
+     * Parse Score in string to Float
+     * @param s the string
+     * @return float
+     * @throws ParseException if not Parsable
+     */
+    public static float parseScore(String s) throws ParseException {
+        checkStringParsableToFloat(s);
+        return Float.parseFloat(s);
+    }
+
     private static void checkStringParsableToDouble(String s) throws ParseException {
         try {
             Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            throw new ParseException("A value could not be parsed into a number.");
+        }
+    }
+
+    private static void checkStringParsableToFloat(String s) throws ParseException {
+        try {
+            Float.parseFloat(s);
         } catch (NumberFormatException e) {
             throw new ParseException("A value could not be parsed into a number.");
         }
