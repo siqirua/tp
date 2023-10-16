@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.commands.AddStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.gradedcomponent.GcName;
@@ -32,7 +31,8 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
         if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID,
                 PREFIX_COMPONENT_NAME, PREFIX_MARKS, PREFIX_COMMENT)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddStudentScoreCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID,

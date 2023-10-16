@@ -78,19 +78,19 @@ Format: `help`
 Adds a student to the database. Throws error if student with same student number already exists. If it succeeds, an acknowledgement message (“Student was added successfully”) is shown to the user and data is saved. If it fails, show an error message instead. (“Something went wrong while adding student”)
 Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
 
-Format: `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [t/TUTORIAL_GRP]…​`
+Format: `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP]…​`
 
 Examples:
-* `addStu s/A1234567Y n/Andy t/03` Adds a student with student number A1234567Y, name Andy, belonging to tutorial group 03 to the database.
+* `addStu s/A1234567Y n/Andy g/03` Adds a student with student number A1234567Y, name Andy, belonging to tutorial group 03 to the database.
 
 ### Edit a student : `editStu`
 Edit student information. If it succeeds, it shows an acknowledgement message and saves the edited information (“Student information edited successfully”). Throws an error if student does not exist (“Something went wrong while editing student information”). Note that the student number cannot be edited as it is a unique identifier. In such a case, the student should be deleted.
 0 or more optional fields should be provided, and all the optional fields will be edited concurrently. Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
 
-Format: `editStu s/STUDENT_NO [t/TUTORIAL_GRP][n/NAME][e/EMAIL]…​`
+Format: `editStu s/STUDENT_NO [g/TUTORIAL_GRP][n/NAME][e/EMAIL]…​`
 
 Examples:
-* `editStu n/Megan Chan t/03` Edits a student to have name Megan Chan and be in tutorial group 03.
+* `editStu n/Megan Chan g/03` Edits a student to have name Megan Chan and be in tutorial group 03.
 
 ### Delete a student : `deleteStu`
 Delete a student in the database. If it succeeds, it shows an acknowledgement message and deletes the student from the database (“Student information deleted successfully”). Throws an error if student does not exist (“Something went wrong while deleting the student”). All associated student scores will also be deleted.
@@ -133,10 +133,10 @@ Examples:
 ### List all students : `listStudents`
 Shows a list of all students and associated student scores in separate panels respectively. The lists may be additionally filtered by optional arguments tutorial group. (can have more than 1)
 
-Format: `listStudents [t/TUTORIAL_GRP …]`
+Format: `listStudents [g/TUTORIAL_GRP …]`
 
 Examples:
-* `listStudents t/02 03`
+* `listStudents g/02 03`
 
 ### Locating students by student ID: `find`
 
@@ -203,17 +203,17 @@ _Details coming soon ..._
 
 | Action                         | Format, Examples                                                                                                                                                    |
 |--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add a student**              | `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [t/TUTORIAL_GRP]…` <br> e.g., `addStu s/A1234567Y n/Andy t/03`                                                              |
+| **Add a student**              | `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP]…` <br> e.g., `addStu s/A1234567Y n/Andy g/03`                                                              |
 | **Add a graded component**     | `addComp c/COMP_NAME w/WEIGHTAGE m/MAX_MARKS…` <br> e.g., `addComp c/Midterm w/30 m/70`                                                                             |
 | **Add a student score**<br/>   | `addStuScore s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]…` <br> e.g., `addStuScore s/A1234567Y c/Midterm m/57 `                                                   |
-| **Edit a student**             | `editStu s/STUDENT_NO [t/TUTORIAL_GRP][n/NAME][e/EMAIL]…​` <br> e.g., `editStu n/Megan Chan t/03`                                                                   |
-| **Edit a graded component**    | `editComp c/COMP_NAME [w/WEIGHTAGE] [m/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                                                           |
+| **Edit a student**             | `editStu s/STUDENT_NO [g/TUTORIAL_GRP][n/NAME][e/EMAIL]…​` <br> e.g., `editStu n/Megan Chan g/03`                                                                   |
+| **Edit a graded component**    | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                                                          |
 | **Edit a student score**       | `editStuScore s/STUDENT_NO c/COMP_NAME [m/MARKS] [x/comments]` <br> e.g., `editComp s/A1234567Y c/Midterm x/Q4 answer is debatable. Discuss in next staff meeting.` |
 | **Delete a student**           | `deleteStu s/STUDENT_NO` <br> e.g., `deleteStu s/A1234567Y`                                                                                                         |
 | **Delete a graded component**  | `deleteComp s/Optional Project` <br> e.g., `deleteComp s/Optional Project`                                                                                          |
 | **Delete a student score**     | `deleteStuScore s/STUDENT_NO c/COMP_NAME` <br> e.g., `deleteStuScore s/A1234567Y c/Midterm`                                                                         |
 | **Clear**                      | `clear`                                                                                                                                                             |
 | **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                          |
-| **List all students**          | ` listStudents [t/TUTORIAL_GRP …]` <br> e.g., `listStudents t/02 03`                                                                                                |
+| **List all students**          | ` listStudents [g/TUTORIAL_GRP …]` <br> e.g., `listStudents g/02 03`                                                                                                |
 | **List all graded components** | ` listComps [c/COMP_NAME …]` <br> e.g., `listComps c/CA1 CA2`                                                                                                       |
 | **Help**                       | `help`                                                                                                                                                              |
