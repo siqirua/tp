@@ -13,6 +13,7 @@ import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.commands.AddStudentScoreCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteGradedComponentCommand;
+import seedu.address.logic.commands.DeleteStudentScoreCommand;
 import seedu.address.logic.commands.EditGradedComponentCommand;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -65,6 +66,8 @@ public class AddressBookParser {
             return new AddStudentScoreCommandParser().parse(arguments);
         case EditStudentScoreCommand.COMMAND_WORD:
             return new EditStudentScoreCommandParser().parse(arguments);
+        case DeleteStudentScoreCommand.COMMAND_WORD:
+            return new DeleteStudentScoreCommandParser().parse(arguments);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
         case HelpCommand.COMMAND_WORD:
