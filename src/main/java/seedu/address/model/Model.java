@@ -78,5 +78,4 @@ public interface Model {
 
     void updateFilteredStudentScoreList(Predicate<StudentScore> predicate);
 
-
 }
