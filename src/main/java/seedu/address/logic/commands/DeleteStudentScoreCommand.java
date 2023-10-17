@@ -47,10 +47,10 @@ public class DeleteStudentScoreCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        StudentScore studentScoretToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.getStudentScoreBook().removeStudentScore(studentScoretToDelete);
+        StudentScore studentScoreToDelete = lastShownList.get(targetIndex.getZeroBased());
+        model.getStudentScoreBook().removeStudentScore(studentScoreToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SCORE_SUCCESS,
-                Messages.formatStudentScore(studentScoretToDelete)));
+                Messages.formatStudentScore(studentScoreToDelete)));
     }
 
     @Override

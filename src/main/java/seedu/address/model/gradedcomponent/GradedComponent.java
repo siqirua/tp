@@ -20,6 +20,7 @@ public class GradedComponent {
     private final MaxMarks maxMarks;
     private final Weightage weightage;
 
+
     /**
      * Every field must be present and not null.
      */
