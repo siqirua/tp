@@ -14,6 +14,9 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 
+/**
+ * A class to access StudentBook data stored as a json file on the hard disk.
+ */
 public class JsonStudentBookStorage implements StudentBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonStudentBookStorage.class);

@@ -1,5 +1,10 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,10 +17,6 @@ import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Jackson-friendly version of {@link Student}.
@@ -33,8 +34,8 @@ public class JsonAdaptedStudent {
      */
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("studentId") String studentId,
-            @JsonProperty("studentName") String studentName,
-            @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup) {
+        @JsonProperty("studentName") String studentName,
+        @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentEmail = studentEmail;
@@ -58,7 +59,8 @@ public class JsonAdaptedStudent {
      */
     public Student toModelType() throws IllegalValueException {
         if (studentId == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StudentId.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                StudentId.class.getSimpleName()));
         }
         if (!StudentId.isValidName(studentId)) {
             throw new IllegalValueException(StudentId.MESSAGE_CONSTRAINTS);
@@ -66,7 +68,8 @@ public class JsonAdaptedStudent {
         final StudentId modelStudentId = new StudentId(studentId);
 
         if (studentName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StudentName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                StudentName.class.getSimpleName()));
         }
         if (!StudentName.isValidName(studentName)) {
             throw new IllegalValueException(StudentName.MESSAGE_CONSTRAINTS);
@@ -74,7 +77,8 @@ public class JsonAdaptedStudent {
         final StudentName modelStudentName = new StudentName(studentName);
 
         if (studentEmail == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StudentEmail.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                StudentEmail.class.getSimpleName()));
         }
         if (!StudentEmail.isValidEmail(studentEmail)) {
             throw new IllegalValueException(StudentEmail.MESSAGE_CONSTRAINTS);
@@ -82,7 +86,8 @@ public class JsonAdaptedStudent {
         final StudentEmail modelStudentEmail = new StudentEmail(studentEmail);
 
         if (tutorialGroup == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, TutorialGroup.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                TutorialGroup.class.getSimpleName()));
         }
         if (!TutorialGroup.isValidTutorial(tutorialGroup)) {
             throw new IllegalValueException(TutorialGroup.MESSAGE_CONSTRAINTS);
@@ -94,7 +99,7 @@ public class JsonAdaptedStudent {
         final List<StudentScore> modelStudentScores = new ArrayList<>();
 
         return new Student(modelStudentId, modelStudentName, modelStudentEmail, modelTutorialGroup,
-                modelStudentScores, modelTags);
+            modelStudentScores, modelTags);
     }
 
 }

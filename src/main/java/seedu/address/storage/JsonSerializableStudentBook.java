@@ -9,9 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
+
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
