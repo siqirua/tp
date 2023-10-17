@@ -17,6 +17,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 /**
  * Represents the in-memory model of the application data.
@@ -39,7 +40,7 @@ public class ModelManager implements Model {
      * Initializes a UnifiedBookManager with the given studentBook, gradedComponentBook,
      * studentScoreBook and userPrefs.
      */
-    public ModelManager(ReadOnlyStudentBook studentBook, StudentScoreBook studentScoreBook,
+    public ModelManager(ReadOnlyStudentBook studentBook, ReadOnlyStudentScoreBook studentScoreBook,
                                GradedComponentBook gradedComponentBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(studentBook, studentScoreBook, gradedComponentBook, userPrefs);
 
@@ -50,7 +51,7 @@ public class ModelManager implements Model {
 
         this.studentBook = new StudentBook(studentBook);
         this.gradedComponentBook = gradedComponentBook;
-        this.studentScoreBook = studentScoreBook;
+        this.studentScoreBook = new StudentScoreBook(studentScoreBook);
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredStudentList = new FilteredList<>(this.studentBook.getStudentList());
         this.filteredGradedComponentList = new FilteredList<>(this.gradedComponentBook.getGradedComponentList());
