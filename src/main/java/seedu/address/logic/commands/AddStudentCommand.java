@@ -1,6 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -14,9 +19,20 @@ import seedu.address.model.student.Student;
 public class AddStudentCommand extends Command {
 
     public static final String COMMAND_WORD = "addStu";
-    // to expand
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the database.\n"
-            + "Example: " + COMMAND_WORD + " s/A1234567Z";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the address book. \n"
+            + "Parameters: "
+            + PREFIX_STUDENT_ID + "STUDENT ID"
+            + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_TUTORIAL_GROUP + "TUTORIAL GROUP] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_STUDENT_ID + "A1234567Z "
+            + PREFIX_NAME + "John "
+            + PREFIX_EMAIL + "John@example.com "
+            + PREFIX_TUTORIAL_GROUP + "T05 "
+            + PREFIX_TAG + "Potential TA";
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the database";
