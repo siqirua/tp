@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
@@ -48,15 +50,15 @@ public class LogicManager implements Logic {
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
-        /* implement this Vedant k thanks
+
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveStudentBook(model.getStudentBook());
         } catch (AccessDeniedException e) {
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
             throw new CommandException(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()), ioe);
         }
-        */
+
 
         return commandResult;
     }

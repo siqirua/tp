@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
@@ -38,7 +39,7 @@ public class ModelManager implements Model {
      * Initializes a UnifiedBookManager with the given studentBook, gradedComponentBook,
      * studentScoreBook and userPrefs.
      */
-    public ModelManager(StudentBook studentBook, StudentScoreBook studentScoreBook,
+    public ModelManager(ReadOnlyStudentBook studentBook, StudentScoreBook studentScoreBook,
                                GradedComponentBook gradedComponentBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(studentBook, studentScoreBook, gradedComponentBook, userPrefs);
 
@@ -47,7 +48,7 @@ public class ModelManager implements Model {
                 + "graded components: " + gradedComponentBook
                 + "and user prefs " + userPrefs);
 
-        this.studentBook = studentBook;
+        this.studentBook = new StudentBook(studentBook);
         this.gradedComponentBook = gradedComponentBook;
         this.studentScoreBook = studentScoreBook;
         this.userPrefs = new UserPrefs(userPrefs);

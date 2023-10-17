@@ -20,13 +20,15 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.model.util.SampleStudentDataUtil;
+import seedu.address.storage.JsonStudentBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.StudentBookStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
@@ -58,8 +60,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StudentBookStorage studentBookStorage = new JsonStudentBookStorage(userPrefs.getAddressBookFilePath());
+        storage = new StorageManager(studentBookStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -74,24 +76,25 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
-        /*
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        logger.info("Using data file : " + storage.getStudentBookFilePath());
+
+        Optional<ReadOnlyStudentBook> studentBookOptional;
+        ReadOnlyStudentBook initialStudentData;
+
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
+            studentBookOptional = storage.readStudentBook();
+            if (!studentBookOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getStudentBookFilePath()
                         + " populated with a sample AddressBook.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialStudentData = studentBookOptional.orElseGet(SampleStudentDataUtil::getSampleStudentBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
+            logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            initialStudentData = new StudentBook();
         }
-        */
-        StudentBook initialStudentData = new StudentBook();
+
+        //StudentBook initialStudentData = new StudentBook();
         StudentScoreBook initialStudentScoreData = new StudentScoreBook();
         GradedComponentBook initialGradedComponentData = new GradedComponentBook();
 
