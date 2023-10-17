@@ -37,7 +37,7 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP)
+        if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentCommand.MESSAGE_USAGE));
         }
@@ -46,10 +46,12 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
         StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
         StudentName name = new StudentName(argMultimap.getValue(PREFIX_NAME).get());
         StudentEmail email = new StudentEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        TutorialGroup tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
         List<StudentScore> scores = new ArrayList<>();
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
+        TutorialGroup tg = new TutorialGroup("T00");
+        if (arePrefixesPresent(argMultimap, PREFIX_TUTORIAL_GROUP)) {
+            tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        }
         Student student = new Student(sid, name, email, tg, scores, tagList);
         return new AddStudentCommand(student);
     }

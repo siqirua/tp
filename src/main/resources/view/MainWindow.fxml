@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="Address App" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
@@ -48,26 +49,40 @@
         </StackPane>
 
         <VBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="500">
-          <children>
-            <HBox fx:id="ppl2" minWidth="450" prefWidth="740" HBox.hgrow="ALWAYS" styleClass="pane-with-border" VBox.vgrow="ALWAYS" >
-              <children>
-                <VBox fx:id="personList" styleClass="pane-with-border" minWidth="225"  prefWidth="370" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+            <VBox VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+              <HBox minHeight="40" maxHeight="40" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                <VBox styleClass="pane-with-border-custom" minWidth="120" prefWidth="220" alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <Label text="Graded Components" styleClass="pane-header-text"></Label>
+                </VBox>
+                <VBox styleClass="pane-with-border-custom" minWidth="200" prefWidth="300" alignment="BASELINE_CENTER"  HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <Label text="Students" styleClass="pane-header-text"></Label>
+                </VBox>
+                <VBox styleClass="pane-with-border-custom" minWidth="200" prefWidth="300" alignment="BASELINE_CENTER"  HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <Label text="Student Scores" styleClass="pane-header-text" ></Label>
+                </VBox>
+              </HBox>
+              <HBox fx:id="ppl2" minWidth="520" prefWidth="820" HBox.hgrow="ALWAYS" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                <VBox fx:id="gradedComponentList" styleClass="pane-with-border" minWidth="120"  prefWidth="220" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
                   <padding>
                     <Insets top="10" right="10" bottom="10" left="10" />
                   </padding>
-                  <children>
-                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                  </children>
+                  <StackPane fx:id="gradedComponentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                 </VBox>
-                <VBox fx:id="personList2" styleClass="pane-with-border" minWidth="225" prefWidth="370" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+                <VBox fx:id="studentList" styleClass="pane-with-border" minWidth="200"  prefWidth="300" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
                   <padding>
                     <Insets top="10" right="10" bottom="10" left="10" />
                   </padding>
-                  <StackPane fx:id="personListPanelPlaceholder2" VBox.vgrow="ALWAYS"/>
+                  <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                 </VBox>
-              </children>
-            </HBox>
-          </children>
+                <VBox fx:id="studentScoreList" styleClass="pane-with-border" minWidth="200"  prefWidth="300" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+                  <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                  </padding>
+                  <StackPane fx:id="studentScoreListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                </VBox>
+              </HBox>
+            </VBox>
+
         </VBox>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"  />

@@ -10,6 +10,8 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
  * Deletes a gradedComponent identified using it's displayed index from the address book.
@@ -43,6 +45,14 @@ public class DeleteGradedComponentCommand extends Command {
 
         GradedComponent gradedComponentToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.getGradedComponentBook().removeGradedComponent(gradedComponentToDelete);
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
+        for (int i = studentScoreList.size() - 1; i >= 0; i--) {
+            if (studentScoreList.get(i).getGcName().equals(gradedComponentToDelete.getName())) {
+                // somewhat inefficient, to change
+                studentScoreBook.removeStudentScore(studentScoreList.get(i));
+            }
+        }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.formatGradedComponent(gradedComponentToDelete)));
     }
