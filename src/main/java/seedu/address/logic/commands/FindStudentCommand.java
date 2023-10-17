@@ -5,13 +5,13 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.student.StudentIdMatchPredicate;
+import seedu.address.model.student.StudentMatchPredicate;
 
 /**
  * Finds the student(s) and the associated scores whose student id is matching the given Student IDs exactly.
  * Keyword matching is case insensitive.
  */
-public class FindByStudentIdCommand extends Command {
+public class FindStudentCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose Student IDs match any of "
@@ -19,9 +19,9 @@ public class FindByStudentIdCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " s/A1234567Z";
 
-    private final StudentIdMatchPredicate predicate;
+    private final StudentMatchPredicate predicate;
 
-    public FindByStudentIdCommand(StudentIdMatchPredicate predicate) {
+    public FindStudentCommand(StudentMatchPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -40,11 +40,11 @@ public class FindByStudentIdCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindByStudentIdCommand)) {
+        if (!(other instanceof FindStudentCommand)) {
             return false;
         }
 
-        FindByStudentIdCommand otherFindCommand = (FindByStudentIdCommand) other;
+        FindStudentCommand otherFindCommand = (FindStudentCommand) other;
         return predicate.equals(otherFindCommand.predicate);
     }
 
