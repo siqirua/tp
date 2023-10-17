@@ -28,9 +28,15 @@ public class StudentScoreCard extends UiPart<Region> {
     @FXML
     private Label sid;
     @FXML
+    private Label studentName;
+    @FXML
     private Label gcName;
     @FXML
     private Label id;
+    @FXML
+    private Label score;
+    @FXML
+    private Label comment;
 
 
     /**
@@ -40,7 +46,10 @@ public class StudentScoreCard extends UiPart<Region> {
         super(FXML);
         this.studentScore = studentScore;
         id.setText(displayedIndex + ". ");
-        sid.setText(studentScore.getStudentId().sid + ": " + studentScore.getGcName().gcName);
-        gcName.setText("Score: " + studentScore.getScore());
+        sid.setText(studentScore.getStudentId().sid + " - " + studentScore.getGcName().gcName);
+        studentName.setText("Name: " + studentScore.getName().fullName);
+        gcName.setText("Component: " + studentScore.getGcName());
+        score.setText("Score: " + studentScore.getScore());
+        comment.setText("Comment: " + studentScore.getComment());
     }
 }

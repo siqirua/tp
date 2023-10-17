@@ -161,4 +161,5 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredGradedComponentList.setPredicate(predicate);
     }
+
 }
