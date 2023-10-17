@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.studentscore.StudentScore;
 
 /**
@@ -28,15 +29,11 @@ public class StudentScoreCard extends UiPart<Region> {
     @FXML
     private Label sid;
     @FXML
-    private Label studentName;
-    @FXML
-    private Label gcName;
-    @FXML
     private Label id;
     @FXML
     private Label score;
     @FXML
-    private Label comment;
+    private VBox studentScoreBox;
 
 
     /**
@@ -47,9 +44,10 @@ public class StudentScoreCard extends UiPart<Region> {
         this.studentScore = studentScore;
         id.setText(displayedIndex + ". ");
         sid.setText(studentScore.getStudentId().sid + " - " + studentScore.getGcName().gcName);
-        studentName.setText("Name: " + studentScore.getName().fullName);
-        gcName.setText("Component: " + studentScore.getGcName());
         score.setText("Score: " + studentScore.getScore());
-        comment.setText("Comment: " + studentScore.getComment());
+        if (!studentScore.getComment().isEmpty()) {
+            studentScoreBox.getChildren().add(new Label("Comment: " + studentScore.getComment()));
+        }
+
     }
 }

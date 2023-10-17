@@ -33,6 +33,9 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private StudentListPanel studentListPanel;
     private StudentScoreListPanel studentScoreListPanel;
+    private GradedComponentListPanel gradedComponentListPanel;
+
+
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -43,10 +46,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane studentListPanelPlaceholder;
 
     @FXML
-    private StackPane personListPanelPlaceholder2;
+    private StackPane studentScoreListPanelPlaceholder;
+
+    @FXML
+    private StackPane gradedComponentListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -115,10 +121,13 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
-        personListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
+        studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
 
         studentScoreListPanel = new StudentScoreListPanel(logic.getFilteredStudentScoreList());
-        personListPanelPlaceholder2.getChildren().add(studentScoreListPanel.getRoot());
+        studentScoreListPanelPlaceholder.getChildren().add(studentScoreListPanel.getRoot());
+
+        gradedComponentListPanel = new GradedComponentListPanel(logic.getFilteredGradedComponentList());
+        gradedComponentListPanelPlaceholder.getChildren().add(gradedComponentListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
