@@ -67,10 +67,11 @@ public class Messages {
      */
     public static String formatStudentScore(StudentScore sc) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(sc.getStudentId())
-                .append("; Student ID: ")
-                .append(sc.getGcName())
+        builder.append("; Student ID: ")
+                .append(sc.getStudentId())
                 .append("; Graded component name: ")
+                .append(sc.getGcName())
+                .append("; Score: ")
                 .append(sc.getScore());
 
         return builder.toString();

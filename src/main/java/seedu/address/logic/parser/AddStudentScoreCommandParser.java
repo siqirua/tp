@@ -29,7 +29,7 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
                         PREFIX_MARKS, PREFIX_COMMENT);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID,
-                PREFIX_COMPONENT_NAME, PREFIX_MARKS, PREFIX_COMMENT)
+                PREFIX_COMPONENT_NAME, PREFIX_MARKS)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddStudentScoreCommand.MESSAGE_USAGE));

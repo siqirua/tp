@@ -5,12 +5,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHTAGE;
 
+import java.util.List;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
-
+import seedu.address.model.student.Student;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
  * Format full help instructions for every command for display.
@@ -53,6 +57,11 @@ public class AddGradedComponentCommand extends Command {
         }
 
         model.getGradedComponentBook().addGradedComponent(toAdd);
+        List<Student> students = model.getStudentBook().getStudentList();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        for (Student student : students) {
+            studentScoreBook.addStudentScore(new StudentScore(student.getStudentId(), toAdd.getName(), 0));
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatGradedComponent(toAdd)));
     }
 
