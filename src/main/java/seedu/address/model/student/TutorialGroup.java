@@ -17,9 +17,7 @@ public class TutorialGroup {
      * The constant VALIDATION_REGEX.
      */
 
-    //to check, original regex didn't seem to work
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-
+    public static final String VALIDATION_REGEX = "[A-Z]\\d{2}";
     public final String groupName;
 
     /**

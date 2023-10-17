@@ -12,10 +12,7 @@ public class StudentId {
     public static final String MESSAGE_CONSTRAINTS =
             "Student IDs must start and end with a capital letter, have 7 numbers in between, and should not be blank";
 
-    /*
-     * to fix regex
-     */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[A-Z]\\d{7}[A-Z]";
 
     public final String sid;
 
