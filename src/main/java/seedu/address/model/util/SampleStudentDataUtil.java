@@ -43,7 +43,7 @@ public class SampleStudentDataUtil {
                 new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000005Y"), new StudentName("OPQ"), new StudentEmail("flexyeoh@example"
                 + ".com"),
-                new TutorialGroup("T03"), scoreList, tags)
+                new TutorialGroup("G03"), scoreList, tags)
         };
     }
 
