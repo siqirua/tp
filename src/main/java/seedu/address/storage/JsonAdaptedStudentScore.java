@@ -1,10 +1,5 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,10 +8,9 @@ import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.gradedcomponent.Weightage;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.student.StudentEmail;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
+import seedu.address.model.studentscore.StudentScore;
 
 
 /**
@@ -99,7 +93,7 @@ public class JsonAdaptedStudentScore {
         //check validity of scores
         final float modelScore = Float.parseFloat(score);
 
-        final String modelComment= comment;
+        final String modelComment = comment;
 
         return new StudentScore(modelStudentId, newGcName, modelScore, modelComment);
     }
