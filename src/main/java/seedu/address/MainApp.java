@@ -21,9 +21,8 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.student.model.StudentBook;
+import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.util.SampleStudentDataUtil;
 import seedu.address.model.util.SampleStudentScoreDataUtil;
@@ -101,8 +100,8 @@ public class MainApp extends Application {
                         + " populated with a sample AddressBook.");
             }
             initialStudentData = studentBookOptional.orElseGet(SampleStudentDataUtil::getSampleStudentBook);
-            initialStudentScoreData = studentScoreBookOptional.
-                    orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
+            initialStudentScoreData = studentScoreBookOptional
+                .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
