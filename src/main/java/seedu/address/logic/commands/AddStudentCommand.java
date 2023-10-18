@@ -7,10 +7,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
 
+import java.util.List;
+
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.Student;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
+
+
 
 
 /**
@@ -56,6 +63,11 @@ public class AddStudentCommand extends Command {
         }
 
         model.getStudentBook().addStudent(toAdd);
+        List<GradedComponent> gcs = model.getGradedComponentBook().getGradedComponentList();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        for (GradedComponent gc : gcs) {
+            studentScoreBook.addStudentScore(new StudentScore(toAdd.getStudentId(), gc.getName(), 0));
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 }

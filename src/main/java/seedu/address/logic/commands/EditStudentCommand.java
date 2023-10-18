@@ -29,6 +29,7 @@ import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.tag.Tag;
 
 
@@ -83,11 +84,22 @@ public class EditStudentCommand extends Command {
         Student studentToEdit = lastShownList.get(index.getZeroBased());
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
-        if (!studentToEdit.isSameStudent(editedStudent) && model.getStudentBook().hasStudent(editedStudent)) {
+        StudentBook sModel = model.getStudentBook();
+        if (!studentToEdit.isSameStudent(editedStudent) && sModel.hasStudent(editedStudent)) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        StudentBook sModel = model.getStudentBook();
+        StudentScoreBook ssb = model.getStudentScoreBook();
+        List<StudentScore> ssList = ssb.getStudentScoreList();
+        for (int i = 0; i < ssList.size(); i++) {
+            StudentScore sc = ssList.get(i);
+            if (sc.getStudentId().equals(studentToEdit.getStudentId())) {
+                EditStudentScoreCommand.EditStudentScoreDescriptor scd =
+                        new EditStudentScoreCommand.EditStudentScoreDescriptor();
+                scd.setStudentId(editedStudent.getStudentId());
+                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+            }
+        }
 
         sModel.setStudent(studentToEdit, editedStudent);
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
