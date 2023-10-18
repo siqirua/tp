@@ -97,8 +97,6 @@ public class ArgumentTokenizer {
         PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());
         prefixPositions.add(endPositionMarker);
 
-        System.out.println(prefixPositions);
-
         // Map prefixes to their argument values (if any)
         ArgumentMultimap argMultimap = new ArgumentMultimap();
         for (int i = 0; i < prefixPositions.size() - 1; i++) {
