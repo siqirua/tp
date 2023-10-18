@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.tag.Tag;
 
 
