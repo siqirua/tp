@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
+import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -18,13 +19,16 @@ public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private StudentBookStorage studentBookStorage;
+    private StudentScoreBookStorage studentScoreBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(StudentBookStorage studentBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(StudentBookStorage studentBookStorage, StudentScoreBookStorage studentScoreBookStorage,
+                          UserPrefsStorage userPrefsStorage) {
         this.studentBookStorage = studentBookStorage;
+        this.studentScoreBookStorage = studentScoreBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -54,6 +58,11 @@ public class StorageManager implements Storage {
     }
 
     @Override
+    public Path getStudentScoreBookFilePath() {
+        return studentScoreBookStorage.getStudentScoreBookFilePath();
+    }
+
+    @Override
     public Optional<ReadOnlyStudentBook> readStudentBook() throws DataLoadingException {
         return readStudentBook(studentBookStorage.getStudentBookFilePath());
     }
@@ -73,6 +82,28 @@ public class StorageManager implements Storage {
     public void saveStudentBook(ReadOnlyStudentBook studentBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         studentBookStorage.saveStudentBook(studentBook, filePath);
+    }
+
+    @Override
+    public Optional<ReadOnlyStudentScoreBook> readStudentScoreBook() throws DataLoadingException {
+        return readStudentScoreBook(studentScoreBookStorage.getStudentScoreBookFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyStudentScoreBook> readStudentScoreBook(Path filePath) throws DataLoadingException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return studentScoreBookStorage.readStudentScoreBook(filePath);
+    }
+
+    @Override
+    public void saveStudentScoreBook(ReadOnlyStudentScoreBook studentScoreBook) throws IOException {
+        saveStudentScoreBook(studentScoreBook, studentScoreBookStorage.getStudentScoreBookFilePath());
+    }
+
+    @Override
+    public void saveStudentScoreBook(ReadOnlyStudentScoreBook studentScoreBook, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        studentScoreBookStorage.saveStudentScoreBook(studentScoreBook, filePath);
     }
 
 }

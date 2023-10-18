@@ -22,13 +22,17 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
+import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.util.SampleStudentDataUtil;
+import seedu.address.model.util.SampleStudentScoreDataUtil;
 import seedu.address.storage.JsonStudentBookStorage;
+import seedu.address.storage.JsonStudentScoreBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.StudentBookStorage;
+import seedu.address.storage.StudentScoreBookStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
@@ -60,8 +64,10 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        StudentBookStorage studentBookStorage = new JsonStudentBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(studentBookStorage, userPrefsStorage);
+        StudentBookStorage studentBookStorage = new JsonStudentBookStorage(userPrefs.getStudentBookFilePath());
+        StudentScoreBookStorage studentScoreBookStorage =
+                new JsonStudentScoreBookStorage(userPrefs.getStudentScoreBookFilePath());
+        storage = new StorageManager(studentBookStorage, studentScoreBookStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -79,23 +85,32 @@ public class MainApp extends Application {
         logger.info("Using data file : " + storage.getStudentBookFilePath());
 
         Optional<ReadOnlyStudentBook> studentBookOptional;
-        ReadOnlyStudentBook initialStudentData;
-
+        Optional<ReadOnlyStudentScoreBook> studentScoreBookOptional;
+        ReadOnlyStudentBook initialStudentData = new StudentBook();
+        ReadOnlyStudentScoreBook initialStudentScoreData;
         try {
             studentBookOptional = storage.readStudentBook();
+            studentScoreBookOptional = storage.readStudentScoreBook();
             if (!studentBookOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getStudentBookFilePath()
                         + " populated with a sample AddressBook.");
             }
+            if (!studentScoreBookOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getStudentBookFilePath()
+                        + " populated with a sample AddressBook.");
+            }
             initialStudentData = studentBookOptional.orElseGet(SampleStudentDataUtil::getSampleStudentBook);
+            initialStudentScoreData = studentScoreBookOptional
+                .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
             initialStudentData = new StudentBook();
+            initialStudentScoreData = new StudentScoreBook();
         }
 
         //StudentBook initialStudentData = new StudentBook();
-        StudentScoreBook initialStudentScoreData = new StudentScoreBook();
+
         GradedComponentBook initialGradedComponentData = new GradedComponentBook();
 
         return new ModelManager(initialStudentData, initialStudentScoreData,
