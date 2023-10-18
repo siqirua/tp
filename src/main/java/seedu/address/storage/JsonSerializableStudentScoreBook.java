@@ -1,16 +1,17 @@
 package seedu.address.storage;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
-import seedu.address.model.studentscore.model.StudentScoreBook;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 
 /**
@@ -27,7 +28,8 @@ public class JsonSerializableStudentScoreBook {
      * Constructs a {@code JsonSerializableStudentScoreBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableStudentScoreBook(@JsonProperty("studentScores") List<JsonAdaptedStudentScore> studentScores) {
+    public JsonSerializableStudentScoreBook(@JsonProperty("studentScores") 
+                            List<JsonAdaptedStudentScore> studentScores) {
         this.studentScores.addAll(studentScores);
     }
 
@@ -37,7 +39,8 @@ public class JsonSerializableStudentScoreBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableStudentBook}.
      */
     public JsonSerializableStudentScoreBook(ReadOnlyStudentScoreBook source) {
-        studentScores.addAll(source.getStudentScoreList().stream().map(JsonAdaptedStudentScore::new).collect(Collectors.toList()));
+        studentScores.addAll(source.getStudentScoreList().stream().map(JsonAdaptedStudentScore::new)
+                             .collect(Collectors.toList()));
     }
 
     /**
