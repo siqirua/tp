@@ -28,7 +28,7 @@ public class JsonSerializableStudentScoreBook {
      * Constructs a {@code JsonSerializableStudentScoreBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableStudentScoreBook(@JsonProperty("studentScores") 
+    public JsonSerializableStudentScoreBook(@JsonProperty("studentScores")
                             List<JsonAdaptedStudentScore> studentScores) {
         this.studentScores.addAll(studentScores);
     }
