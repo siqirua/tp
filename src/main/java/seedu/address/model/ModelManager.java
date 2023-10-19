@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
@@ -41,7 +42,7 @@ public class ModelManager implements Model {
      * studentScoreBook and userPrefs.
      */
     public ModelManager(ReadOnlyStudentBook studentBook, ReadOnlyStudentScoreBook studentScoreBook,
-                               GradedComponentBook gradedComponentBook, ReadOnlyUserPrefs userPrefs) {
+                               ReadOnlyGradedComponentBook gradedComponentBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(studentBook, studentScoreBook, gradedComponentBook, userPrefs);
 
         logger.fine("Initializing with students: " + studentBook
@@ -50,7 +51,7 @@ public class ModelManager implements Model {
                 + "and user prefs " + userPrefs);
 
         this.studentBook = new StudentBook(studentBook);
-        this.gradedComponentBook = gradedComponentBook;
+        this.gradedComponentBook = new GradedComponentBook(gradedComponentBook);
         this.studentScoreBook = new StudentScoreBook(studentScoreBook);
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredStudentList = new FilteredList<>(this.studentBook.getStudentList());
