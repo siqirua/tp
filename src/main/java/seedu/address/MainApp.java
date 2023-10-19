@@ -20,12 +20,16 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
+import seedu.address.model.util.SampleGcDataUtil;
 import seedu.address.model.util.SampleStudentDataUtil;
 import seedu.address.model.util.SampleStudentScoreDataUtil;
+import seedu.address.storage.GradedComponentBookStorage;
+import seedu.address.storage.JsonGradedComponentBookStorage;
 import seedu.address.storage.JsonStudentBookStorage;
 import seedu.address.storage.JsonStudentScoreBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -67,7 +71,10 @@ public class MainApp extends Application {
         StudentBookStorage studentBookStorage = new JsonStudentBookStorage(userPrefs.getStudentBookFilePath());
         StudentScoreBookStorage studentScoreBookStorage =
                 new JsonStudentScoreBookStorage(userPrefs.getStudentScoreBookFilePath());
-        storage = new StorageManager(studentBookStorage, studentScoreBookStorage, userPrefsStorage);
+        GradedComponentBookStorage gradedComponentBookStorage =
+            new JsonGradedComponentBookStorage(userPrefs.getGcBookFilePath());
+        storage = new StorageManager(studentBookStorage, studentScoreBookStorage, gradedComponentBookStorage,
+            userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -86,11 +93,14 @@ public class MainApp extends Application {
 
         Optional<ReadOnlyStudentBook> studentBookOptional;
         Optional<ReadOnlyStudentScoreBook> studentScoreBookOptional;
+        Optional<ReadOnlyGradedComponentBook> gradedComponentBookOptional;
         ReadOnlyStudentBook initialStudentData = new StudentBook();
         ReadOnlyStudentScoreBook initialStudentScoreData;
+        ReadOnlyGradedComponentBook initialGradedComponentData;
         try {
             studentBookOptional = storage.readStudentBook();
             studentScoreBookOptional = storage.readStudentScoreBook();
+            gradedComponentBookOptional = storage.readGradedComponentBook();
             if (!studentBookOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getStudentBookFilePath()
                         + " populated with a sample AddressBook.");
@@ -99,19 +109,23 @@ public class MainApp extends Application {
                 logger.info("Creating a new data file " + storage.getStudentBookFilePath()
                         + " populated with a sample AddressBook.");
             }
+            if (!gradedComponentBookOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getGcBookFilePath()
+                    + " populated with a sample " + "GradedComponentBook");
+            }
+
             initialStudentData = studentBookOptional.orElseGet(SampleStudentDataUtil::getSampleStudentBook);
             initialStudentScoreData = studentScoreBookOptional
                 .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
+            initialGradedComponentData = gradedComponentBookOptional
+                .orElseGet(SampleGcDataUtil::getSampleGcBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
             initialStudentData = new StudentBook();
             initialStudentScoreData = new StudentScoreBook();
+            initialGradedComponentData = new GradedComponentBook();
         }
-
-        //StudentBook initialStudentData = new StudentBook();
-
-        GradedComponentBook initialGradedComponentData = new GradedComponentBook();
 
         return new ModelManager(initialStudentData, initialStudentScoreData,
                 initialGradedComponentData, userPrefs);
