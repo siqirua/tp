@@ -15,6 +15,7 @@ import seedu.address.model.gradedcomponent.Weightage;
  * Jackson-friendly version of {@link GradedComponent}.
  */
 public class JsonAdaptedGradedComponent {
+
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "GradedComponent's %s field is missing!";
     private final String gcName;
     private final String gcMaxMarks;
@@ -77,7 +78,5 @@ public class JsonAdaptedGradedComponent {
         return new GradedComponent(modelGcName, modelMaxMarks, modelWeightage);
 
     }
-
-
 
 }
