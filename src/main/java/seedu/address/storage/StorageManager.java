@@ -132,7 +132,7 @@ public class StorageManager implements Storage {
 
     @Override
     public void saveGradedComponentBook(ReadOnlyGradedComponentBook gradedComponentBook, Path filePath)
-        throws IOException {
+            throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         gradedComponentBookStorage.saveGradedComponentBook(gradedComponentBook, filePath);
     }
