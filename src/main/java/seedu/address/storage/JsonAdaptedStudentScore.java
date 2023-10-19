@@ -34,12 +34,12 @@ public class JsonAdaptedStudentScore {
      */
     @JsonCreator
     public JsonAdaptedStudentScore(@JsonProperty("studentId") String studentId,
-                                   @JsonProperty("studentName") String studentName,
-                                   @JsonProperty("gradedComponentName") String gcName,
-                                   @JsonProperty("gradedComponentMaximumMarks") String gcMax,
-                                   @JsonProperty("gradedComponentWeightage") String gcWeightage,
-                                   @JsonProperty("score") String score,
-                                   @JsonProperty("comment") String comment) {
+        @JsonProperty("studentName") String studentName,
+        @JsonProperty("gradedComponentName") String gcName,
+        @JsonProperty("gradedComponentMaximumMarks") String gcMax,
+        @JsonProperty("gradedComponentWeightage") String gcWeightage,
+        @JsonProperty("score") String score,
+        @JsonProperty("comment") String comment) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.gcName = gcName;
