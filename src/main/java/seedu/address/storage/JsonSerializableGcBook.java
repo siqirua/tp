@@ -12,8 +12,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.StudentScoreBook;
 
 
 /**
@@ -44,5 +42,22 @@ public class JsonSerializableGcBook {
         gradedComponents.addAll(source.getGradedComponentList().stream().map(JsonAdaptedGradedComponent::new)
             .collect(Collectors.toList()));
     }
-    
+
+    /**
+     * Converts this address book into the model's {@code AddressBook} object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated.
+     */
+    public GradedComponentBook toModelType() throws IllegalValueException {
+        GradedComponentBook gradedComponentBook = new GradedComponentBook();
+        for (JsonAdaptedGradedComponent jsonAdaptedGradedComponent : gradedComponents) {
+            GradedComponent gradedComponent = jsonAdaptedGradedComponent.toModelType();
+            if (gradedComponentBook.hasGradedComponent(gradedComponent)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_COMPONENT);
+            }
+            gradedComponentBook.addGradedComponent(gradedComponent);
+        }
+        return gradedComponentBook;
+    }
+
 }
