@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddGradedComponentCommand;
 import seedu.address.logic.commands.AddStudentCommand;
+import seedu.address.logic.commands.AddStudentScoreCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteGradedComponentCommand;
 import seedu.address.logic.commands.DeleteStudentCommand;
@@ -17,8 +18,9 @@ import seedu.address.logic.commands.EditGradedComponentCommand;
 import seedu.address.logic.commands.EditStudentCommand;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindByStudentIdCommand;
+import seedu.address.logic.commands.FindStudentCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListStudentsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -67,14 +69,18 @@ public class AddressBookParser {
             return new EditGradedComponentCommandParser().parse(arguments);
         case DeleteGradedComponentCommand.COMMAND_WORD:
             return new DeleteGradedComponentCommandParser().parse(arguments);
+        case AddStudentScoreCommand.COMMAND_WORD:
+            return new AddStudentScoreCommandParser().parse(arguments);
         case EditStudentScoreCommand.COMMAND_WORD:
             return new EditStudentScoreCommandParser().parse(arguments);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
-        case FindByStudentIdCommand.COMMAND_WORD:
-            return new FindByStudentIdCommandParser().parse(arguments);
+        case FindStudentCommand.COMMAND_WORD:
+            return new FindStudentCommandParser().parse(arguments);
+        case ListStudentsCommand.COMMAND_WORD:
+            return new ListStudentsCommand();
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

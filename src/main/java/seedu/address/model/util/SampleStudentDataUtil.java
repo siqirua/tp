@@ -28,22 +28,22 @@ public class SampleStudentDataUtil {
         return new Student[]{
             new Student(new StudentId("A0000000Y"), new StudentName("ABC"),
                 new StudentEmail("alexyeoh@example.com"),
-                new TutorialGroup("03"), scoreList, tags),
+                new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000001Y"), new StudentName("DEF"), new StudentEmail("blexyeoh@example"
                 + ".com"),
-                new TutorialGroup("03"), scoreList, tags),
+                new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000002Y"), new StudentName("GHI"), new StudentEmail("clexyeoh@example"
                 + ".com"),
-                new TutorialGroup("03"), scoreList, tags),
+                new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000003Y"), new StudentName("JKL"), new StudentEmail("dlexyeoh@example"
                 + ".com"),
-                new TutorialGroup("03"), scoreList, tags),
+                new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000004Y"), new StudentName("LMN"), new StudentEmail("elexyeoh@example"
                 + ".com"),
-                new TutorialGroup("03"), scoreList, tags),
+                new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000005Y"), new StudentName("OPQ"), new StudentEmail("flexyeoh@example"
                 + ".com"),
-                new TutorialGroup("03"), scoreList, tags)
+                new TutorialGroup("G03"), scoreList, tags)
         };
     }
 
