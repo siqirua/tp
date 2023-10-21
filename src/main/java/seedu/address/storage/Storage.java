@@ -7,13 +7,15 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends StudentBookStorage, UserPrefsStorage, StudentScoreBookStorage {
+public interface Storage extends StudentBookStorage, UserPrefsStorage, StudentScoreBookStorage,
+    GradedComponentBookStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataLoadingException;
@@ -38,5 +40,14 @@ public interface Storage extends StudentBookStorage, UserPrefsStorage, StudentSc
 
     @Override
     void saveStudentScoreBook(ReadOnlyStudentScoreBook addressBook) throws IOException;
+
+    @Override
+    Path getGcBookFilePath();
+
+    @Override
+    Optional<ReadOnlyGradedComponentBook> readGradedComponentBook() throws DataLoadingException;
+
+    @Override
+    void saveGradedComponentBook(ReadOnlyGradedComponentBook gradedComponentBook) throws IOException;
 
 }

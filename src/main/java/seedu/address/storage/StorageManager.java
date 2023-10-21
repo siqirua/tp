@@ -9,6 +9,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 
@@ -20,15 +21,17 @@ public class StorageManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private StudentBookStorage studentBookStorage;
     private StudentScoreBookStorage studentScoreBookStorage;
+    private GradedComponentBookStorage gradedComponentBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
      */
     public StorageManager(StudentBookStorage studentBookStorage, StudentScoreBookStorage studentScoreBookStorage,
-                          UserPrefsStorage userPrefsStorage) {
+        GradedComponentBookStorage gradedComponentBookStorage, UserPrefsStorage userPrefsStorage) {
         this.studentBookStorage = studentBookStorage;
         this.studentScoreBookStorage = studentScoreBookStorage;
+        this.gradedComponentBookStorage = gradedComponentBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -60,6 +63,11 @@ public class StorageManager implements Storage {
     @Override
     public Path getStudentScoreBookFilePath() {
         return studentScoreBookStorage.getStudentScoreBookFilePath();
+    }
+
+    @Override
+    public Path getGcBookFilePath() {
+        return gradedComponentBookStorage.getGcBookFilePath();
     }
 
     @Override
@@ -104,6 +112,29 @@ public class StorageManager implements Storage {
     public void saveStudentScoreBook(ReadOnlyStudentScoreBook studentScoreBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         studentScoreBookStorage.saveStudentScoreBook(studentScoreBook, filePath);
+    }
+
+    @Override
+    public Optional<ReadOnlyGradedComponentBook> readGradedComponentBook() throws DataLoadingException {
+        return readGradedComponentBook(gradedComponentBookStorage.getGcBookFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyGradedComponentBook> readGradedComponentBook(Path filePath) throws DataLoadingException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return gradedComponentBookStorage.readGradedComponentBook(filePath);
+    }
+
+    @Override
+    public void saveGradedComponentBook(ReadOnlyGradedComponentBook gradedComponentBook) throws IOException {
+        saveGradedComponentBook(gradedComponentBook, gradedComponentBookStorage.getGcBookFilePath());
+    }
+
+    @Override
+    public void saveGradedComponentBook(ReadOnlyGradedComponentBook gradedComponentBook, Path filePath)
+            throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        gradedComponentBookStorage.saveGradedComponentBook(gradedComponentBook, filePath);
     }
 
 }
