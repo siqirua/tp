@@ -87,14 +87,19 @@ public class EditStudentScoreCommand extends Command {
                                                             EditStudentScoreDescriptor editStudentScoreDescriptor) {
         assert studentScoreToEdit != null;
 
+        StudentId updatedSid = editStudentScoreDescriptor.getStudentId()
+                .orElse(studentScoreToEdit.getStudentId());
+        GcName updatedGcName = editStudentScoreDescriptor.getGcName()
+                .orElse(studentScoreToEdit.getGcName());
+
         float updatedScore = editStudentScoreDescriptor.getScore()
                 .orElse(studentScoreToEdit.getScore());
         String updatedComment = editStudentScoreDescriptor.getComment()
                 .orElse(studentScoreToEdit.getComment());
 
 
-        return new StudentScore(studentScoreToEdit.getStudentId(),
-                studentScoreToEdit.getGcName(), updatedScore, updatedComment);
+        return new StudentScore(updatedSid,
+                updatedGcName, updatedScore, updatedComment);
     }
 
     @Override

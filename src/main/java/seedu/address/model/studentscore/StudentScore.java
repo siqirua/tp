@@ -46,6 +46,7 @@ public class StudentScore {
         // Add student name based on the student id
     }
 
+
     public StudentId getStudentId() {
         return this.sid;
     }
@@ -64,6 +65,10 @@ public class StudentScore {
 
     public String getComment() {
         return this.comment;
+    }
+
+    public void setGcName(GcName newName) {
+        this.gcName = newName;
     }
     /**
      * Returns true if both student scores have the same StudentId and GcName.

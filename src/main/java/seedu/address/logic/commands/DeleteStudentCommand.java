@@ -10,7 +10,8 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.student.Student;
-
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 
 /**
@@ -43,6 +44,14 @@ public class DeleteStudentCommand extends Command {
 
         Student studentToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.getStudentBook().removeStudent(studentToDelete);
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
+        for (int i = studentScoreList.size() - 1; i >= 0; i--) {
+            if (studentScoreList.get(i).getStudentId().equals(studentToDelete.getStudentId())) {
+                // somewhat inefficient, to change
+                studentScoreBook.removeStudentScore(studentScoreList.get(i));
+            }
+        }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(studentToDelete)));
     }
 
@@ -58,6 +67,7 @@ public class DeleteStudentCommand extends Command {
         }
 
         DeleteStudentCommand otherDeleteCommand = (DeleteStudentCommand) other;
+
         return targetIndex.equals(otherDeleteCommand.targetIndex);
     }
 

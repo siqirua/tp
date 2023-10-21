@@ -21,6 +21,8 @@ import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.gradedcomponent.Weightage;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
  * Edits the details of an existing gradedComponent in the address book.
@@ -78,6 +80,18 @@ public class EditGradedComponentCommand extends Command {
         if (!gradedComponentToEdit.isSameGc(editedGradedComponent)
                 && gModel.hasGradedComponent(editedGradedComponent)) {
             throw new CommandException(MESSAGE_DUPLICATE_GRADED_COMPONENT);
+        }
+
+        StudentScoreBook ssb = model.getStudentScoreBook();
+        List<StudentScore> ssList = ssb.getStudentScoreList();
+        for (int i = 0; i < ssList.size(); i++) {
+            StudentScore sc = ssList.get(i);
+            if (sc.getGcName().equals(gradedComponentToEdit.getName())) {
+                EditStudentScoreCommand.EditStudentScoreDescriptor scd =
+                        new EditStudentScoreCommand.EditStudentScoreDescriptor();
+                scd.setGcName(editedGradedComponent.getName());
+                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+            }
         }
 
         gModel.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
