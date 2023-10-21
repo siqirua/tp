@@ -70,7 +70,7 @@ public class JsonGradedComponentBookStorage implements GradedComponentBookStorag
      * @param filePath location of the data. Cannot be null.
      */
     public void saveGradedComponentBook(ReadOnlyGradedComponentBook gradedComponentBook, Path filePath)
-        throws IOException {
+            throws IOException {
         requireNonNull(gradedComponentBook);
         requireNonNull(filePath);
 
