@@ -7,7 +7,6 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedcomponent.GcName;
-import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.UniqueStudentScoreList;
