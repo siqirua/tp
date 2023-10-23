@@ -96,6 +96,13 @@ public class StudentBook implements ReadOnlyStudentBook {
         students.remove(key);
     }
 
+    /**
+     * Clears all data from this {@code StudentBook}.
+     */
+    public void clearStudent() {
+        students.clear();
+    }
+
     //// util methods
 
     @Override
