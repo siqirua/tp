@@ -8,6 +8,8 @@ import seedu.address.model.Model;
 import seedu.address.model.studentscore.StudentScore;
 
 
+
+
 /**
  * Command Class for adding Student Score.
  */
@@ -42,4 +44,7 @@ public class AddStudentScoreCommand extends Command {
         // ADD to list of studentscore in students as well
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatStudentScore(toAdd)));
     }
+
+
+
 }

@@ -6,6 +6,9 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.UniqueStudentScoreList;
 
@@ -93,6 +96,15 @@ public class StudentScoreBook implements ReadOnlyStudentScoreBook {
      */
     public void removeStudentScore(StudentScore key) {
         studentScores.remove(key);
+    }
+
+    public StudentScore getScoreByIdAndName(StudentId studentId, GcName gcName) {
+        for (StudentScore sc : studentScores) {
+            if (sc.getStudentId().equals(studentId) && sc.getGcName().equals(gcName)) {
+                return sc;
+            }
+        }
+        return null;
     }
 
     //// util methods

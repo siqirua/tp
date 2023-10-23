@@ -5,10 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENT_SCORES;
 
-import java.util.List;
 import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,12 +24,12 @@ public class EditStudentScoreCommand extends Command {
     public static final String COMMAND_WORD = "editStuScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the StudentScore identified "
-            + "by the index number used in the displayed StudentScore list. "
+            + "by the student ID and graded component name  used in the displayed StudentScore list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
             + "[" + PREFIX_MARKS + "SCORE] "
             + "[" + PREFIX_COMMENT + "COMMENT] "
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_MARKS + "35.4 "
             + PREFIX_COMMENT + "Good JOB!";
 
@@ -39,34 +37,34 @@ public class EditStudentScoreCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_SCORE = "This studentScore already "
             + "exists in the address book.";
+    public static final String STUDENT_SCORE_NOT_FOUND = "The studentScore with provided Student ID "
+            + "and Graded Component name does not exist.";
 
-    private final Index index;
     private final EditStudentScoreDescriptor editStudentScoreDescriptor;
 
     /**
      * Constructor for EditStudentScoreCommand.
      *
-     * @param index the Index of the StudentScore that want to be edited
      * @param editStudentScoreDescriptor the editStudentScoreDescriptor
      */
-    public EditStudentScoreCommand(Index index, EditStudentScoreDescriptor editStudentScoreDescriptor) {
-        requireNonNull(index);
+    public EditStudentScoreCommand(EditStudentScoreDescriptor editStudentScoreDescriptor) {
         requireNonNull(editStudentScoreDescriptor);
 
-        this.index = index;
         this.editStudentScoreDescriptor = editStudentScoreDescriptor;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        StudentId sid = editStudentScoreDescriptor.getStudentId().orElse(null);
+        GcName gcName = editStudentScoreDescriptor.getGcName().orElse(null);
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+
+        StudentScore studentScoreToEdit = studentScoreBook.getScoreByIdAndName(sid, gcName);
+        if (studentScoreToEdit == null) {
+            throw new CommandException(STUDENT_SCORE_NOT_FOUND);
         }
-
-        StudentScore studentScoreToEdit = lastShownList.get(index.getZeroBased());
         StudentScore editedStudentScore = createEditedStudentScore(studentScoreToEdit,
                 editStudentScoreDescriptor);
 
@@ -113,14 +111,12 @@ public class EditStudentScoreCommand extends Command {
         }
 
         EditStudentScoreCommand otherEditCommand = (EditStudentScoreCommand) other;
-        return index.equals(otherEditCommand.index)
-                && editStudentScoreDescriptor.equals(otherEditCommand.editStudentScoreDescriptor);
+        return editStudentScoreDescriptor.equals(otherEditCommand.editStudentScoreDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("index", index)
                 .add("editStudentScoreDescriptor", editStudentScoreDescriptor)
                 .toString();
     }

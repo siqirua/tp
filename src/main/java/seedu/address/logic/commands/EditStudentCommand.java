@@ -97,7 +97,7 @@ public class EditStudentCommand extends Command {
                 EditStudentScoreCommand.EditStudentScoreDescriptor scd =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
                 scd.setStudentId(editedStudent.getStudentId());
-                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+                new EditStudentScoreCommand(scd).execute(model);
             }
         }
 

@@ -90,7 +90,7 @@ public class EditGradedComponentCommand extends Command {
                 EditStudentScoreCommand.EditStudentScoreDescriptor scd =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
                 scd.setGcName(editedGradedComponent.getName());
-                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+                new EditStudentScoreCommand(scd).execute(model);
             }
         }
 
