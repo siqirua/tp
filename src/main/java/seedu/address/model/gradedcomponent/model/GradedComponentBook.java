@@ -95,6 +95,12 @@ public class GradedComponentBook implements ReadOnlyGradedComponentBook {
         gradedComponents.remove(key);
     }
 
+    /**
+     * Clears the existing data of this {@code GradedComponentBook}.
+     */
+    public void clearGradedComponent() {
+        gradedComponents.clear();
+    }
 
     //// util methods
 

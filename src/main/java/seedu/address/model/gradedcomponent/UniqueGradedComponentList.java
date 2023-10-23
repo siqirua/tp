@@ -86,6 +86,13 @@ public class UniqueGradedComponentList implements Iterable<GradedComponent> {
         }
     }
 
+    /**
+     * Clears the Graded Component List.
+     */
+    public void clear() {
+        internalList.clear();
+    }
+
     public void setGradedComponents(UniqueGradedComponentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);

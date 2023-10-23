@@ -95,6 +95,13 @@ public class StudentScoreBook implements ReadOnlyStudentScoreBook {
         studentScores.remove(key);
     }
 
+    /**
+     * Clears all data from this {@code StudentScoreBook}.
+     */
+    public void clearStudentScore() {
+        studentScores.clear();
+    }
+
     //// util methods
 
     @Override

@@ -84,6 +84,13 @@ public class UniqueStudentList implements Iterable<Student> {
         }
     }
 
+    /**
+     * Clears the Student list.
+     */
+    public void clear() {
+        internalList.clear();
+    }
+
     public void setStudents(UniqueStudentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);

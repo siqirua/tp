@@ -84,6 +84,13 @@ public class UniqueStudentScoreList implements Iterable<StudentScore> {
         }
     }
 
+    /**
+     * Clears the all student scores from the list.
+     */
+    public void clear() {
+        internalList.clear();
+    }
+
     public void setStudentScores(seedu.address.model.studentscore.UniqueStudentScoreList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
