@@ -103,6 +103,13 @@ public class StudentBook implements ReadOnlyStudentBook {
         students.clear();
     }
 
+    /**
+     * Sorts all students from this {@code StudentBook}.
+     */
+    public void sortStudent() {
+        students.sort();
+    }
+
     //// util methods
 
     @Override

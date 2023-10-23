@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -8,15 +9,20 @@ import seedu.address.model.Model;
 import seedu.address.model.student.StudentMatchPredicate;
 
 /**
- * Finds the student(s) and the associated scores whose student id is matching the given Student IDs exactly.
+ * Finds the student(s) whose student id is matching the given Student IDs exactly.
  * Keyword matching is case insensitive.
  */
 public class FindStudentCommand extends Command {
-    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD = "findStu";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose Student IDs match any of "
             + "the specified Student IDs (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Parameters: (all parameters are optional)\n"
+            + PREFIX_STUDENT_ID + "STUDENT ID"
+            + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_TUTORIAL_GROUP + "TUTORIAL GROUP] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " s/A1234567Z";
 
     private final StudentMatchPredicate predicate;
