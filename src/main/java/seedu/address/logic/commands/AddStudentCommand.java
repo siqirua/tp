@@ -76,6 +76,8 @@ public class AddStudentCommand extends Command {
             sc.setStudent(toAdd);
             toAdd.addScore(sc);
             gc.addScore(sc);
+            gradedComponentBook.setGradedComponent(gc, gc);
+            studentBook.setStudent(toAdd, toAdd);
             studentScoreBook.addStudentScore(sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));

@@ -53,7 +53,10 @@ public class AddStudentScoreCommand extends Command {
         toAdd.setStudent(student);
         student.addScore(toAdd);
         gc.addScore(toAdd);
+        gradedComponentBook.setGradedComponent(gc, gc);
+        studentBook.setStudent(student, student);
         studentScoreBook.addStudentScore(toAdd);
+
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatStudentScore(toAdd)));
     }

@@ -140,7 +140,7 @@ public class GradedComponentBook implements ReadOnlyGradedComponentBook {
     public GradedComponent getGradedComponentByName(GcName gcName) {
         requireNonNull(gcName);
         for (GradedComponent gc : gradedComponents) {
-            if (gc.getName().equals(gc.getName())) {
+            if (gc.getName().equals(gcName)) {
                 return gc;
             }
         }

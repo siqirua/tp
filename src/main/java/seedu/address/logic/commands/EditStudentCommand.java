@@ -102,7 +102,7 @@ public class EditStudentCommand extends Command {
                 newDescriptor.setStudentId(editedStudent.getStudentId());
                 StudentId sid = sc.getStudentId();
                 GcName gcName = sc.getGcName();
-                new EditStudentScoreCommand(sid, gcName, newDescriptor).execute(model);
+                new EditStudentScoreCommand(Index.fromZeroBased(i), newDescriptor).execute(model);
             }
         }
 

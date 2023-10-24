@@ -49,14 +49,14 @@ public class StudentCard extends UiPart<Region> {
         this.student = student;
         id.setText(displayedIndex + ". ");
         sid.setText(student.getStudentId().sid);
-        studentName.setText(student.getName().fullName);
-        studentEmail.setText(student.getEmail().value);
-        tutorialGroup.setText(student.getTutorial().groupName);
-        /*
+        studentName.setText("Name: " + student.getName().fullName);
+        studentEmail.setText("Email: " + student.getEmail().value);
+        tutorialGroup.setText("Tutorial Group: " + student.getTutorial().groupName);
+
         student.recalculateScores();
-        Label totalScoreLabel = new Label("Total Score: " + student.getTotalScore());
+        Label totalScoreLabel = new Label("Total Score: " + student.getTotalScore() + "%");
         totalScoreLabel.getStyleClass().add("cell_small_label");
         studentBox.getChildren().add(totalScoreLabel);
-        */
+
     }
 }

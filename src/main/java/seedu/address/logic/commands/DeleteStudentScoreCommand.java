@@ -59,6 +59,8 @@ public class DeleteStudentScoreCommand extends Command {
         GradedComponent gc = gradedComponentBook.getGradedComponentByName(studentScoreToDelete.getGcName());
         student.deleteScore(studentScoreToDelete);
         gc.deleteScore(studentScoreToDelete);
+        studentBook.setStudent(student, student);
+        gradedComponentBook.setGradedComponent(gc, gc);
         studentScoreBook.removeStudentScore(studentScoreToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SCORE_SUCCESS,
                 Messages.formatStudentScore(studentScoreToDelete)));

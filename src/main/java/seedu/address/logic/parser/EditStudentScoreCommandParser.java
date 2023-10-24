@@ -1,10 +1,12 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.gradedcomponent.GcName;
@@ -29,6 +31,16 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
                 PREFIX_MARKS, PREFIX_COMMENT);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditStudentScoreCommand.MESSAGE_USAGE), pe);
+        }
+
         EditStudentScoreCommand.EditStudentScoreDescriptor editStudentScoreDescriptor =
                 new EditStudentScoreCommand.EditStudentScoreDescriptor();
 
@@ -56,10 +68,7 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
                     argMultimap.getValue(PREFIX_COMMENT).get());
         }
 
-        StudentId sid = editStudentScoreDescriptor.getStudentId().orElse(null);
-        GcName gcName = editStudentScoreDescriptor.getGcName().orElse(null);
-
-        return new EditStudentScoreCommand(sid, gcName, editStudentScoreDescriptor);
+        return new EditStudentScoreCommand(index, editStudentScoreDescriptor);
     }
 
 }

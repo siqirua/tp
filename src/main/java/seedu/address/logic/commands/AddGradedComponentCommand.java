@@ -68,6 +68,8 @@ public class AddGradedComponentCommand extends Command {
             sc.setStudent(student);
             student.addScore(sc);
             toAdd.addScore(sc);
+            gradedComponentBook.setGradedComponent(toAdd, toAdd);
+            studentBook.setStudent(student, student);
             studentScoreBook.addStudentScore(sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatGradedComponent(toAdd)));

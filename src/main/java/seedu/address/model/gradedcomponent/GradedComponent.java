@@ -111,7 +111,7 @@ public class GradedComponent {
         }
 
         return otherGc != null
-                && otherGc.getName().equals(getName());
+                && otherGc.name.equals(name);
     }
     /**
      * Returns true if both persons have the same identity and data fields.
@@ -129,7 +129,7 @@ public class GradedComponent {
         }
 
         GradedComponent otherGc = (GradedComponent) other;
-        return otherGc.getName().equals(getName());
+        return otherGc.name.equals(name);
     }
 
     @Override

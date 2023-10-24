@@ -124,7 +124,7 @@ public class StudentScore {
         }
 
         StudentScore otherScore = (StudentScore) other;
-        return sid.equals(otherScore.sid) && gcName.equals(((StudentScore) other).gcName);
+        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName);
     }
 
     @Override

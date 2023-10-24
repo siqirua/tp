@@ -59,6 +59,7 @@ public class DeleteGradedComponentCommand extends Command {
                 // somewhat inefficient, to change
                 Student student = studentBook.getStudentById(curScore.getStudentId());
                 student.deleteScore(curScore);
+                studentBook.setStudent(student, student);
                 studentScoreBook.removeStudentScore(curScore);
             }
         }

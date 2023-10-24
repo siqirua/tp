@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
 
+import java.util.List;
 import java.util.Optional;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,16 +22,17 @@ import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
+
 /**
  * Command Class for editing StudentScore
  */
 public class EditStudentScoreCommand extends Command {
-    public static final String COMMAND_WORD = "editStuScore";
+    public static final String COMMAND_WORD = "editScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the StudentScore identified "
             + "by the student ID and graded component name  used in the displayed StudentScore list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: "
+            + "Parameters: " + "INDEX "
             + "[" + PREFIX_MARKS + "SCORE] "
             + "[" + PREFIX_COMMENT + "COMMENT] "
             + "Example: " + COMMAND_WORD + " "
@@ -43,20 +46,20 @@ public class EditStudentScoreCommand extends Command {
     public static final String STUDENT_SCORE_NOT_FOUND = "The studentScore with provided Student ID "
             + "and Graded Component name does not exist.";
 
-    private final StudentId sid;
-    private final GcName gcName;
     private final EditStudentScoreDescriptor editStudentScoreDescriptor;
+    private final Index index;
 
     /**
      * Constructor for EditStudentScoreCommand.
      *
+     * @param index the Index of the StudentScore that want to be edited
      * @param editStudentScoreDescriptor the editStudentScoreDescriptor
      */
-    public EditStudentScoreCommand(StudentId sid, GcName gcName,
-                                   EditStudentScoreDescriptor editStudentScoreDescriptor) {
+    public EditStudentScoreCommand(Index index, EditStudentScoreDescriptor editStudentScoreDescriptor) {
+        requireNonNull(index);
         requireNonNull(editStudentScoreDescriptor);
-        this.sid = sid;
-        this.gcName = gcName;
+
+        this.index = index;
         this.editStudentScoreDescriptor = editStudentScoreDescriptor;
     }
 
@@ -67,31 +70,32 @@ public class EditStudentScoreCommand extends Command {
         StudentBook studentBook = model.getStudentBook();
         GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
-        StudentScore studentScoreToEdit = studentScoreBook.getScoreByIdAndName(sid, gcName);
-
-
-
-        if (studentScoreToEdit == null) {
-            throw new CommandException(STUDENT_SCORE_NOT_FOUND);
+        List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        StudentScore studentScoreToEdit = lastShownList.get(index.getZeroBased());
         StudentScore editedStudentScore = createEditedStudentScore(studentScoreToEdit,
                 editStudentScoreDescriptor);
-
 
         if (!studentScoreToEdit.isSameScore(editedStudentScore)
                 && studentScoreBook.hasStudentScore(editedStudentScore)) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT_SCORE);
         }
 
-        GradedComponent gc = gradedComponentBook.getGradedComponentByName(gcName);
-        Student student = studentBook.getStudentById(sid);
+        GradedComponent gc = gradedComponentBook.getGradedComponentByName(editedStudentScore.getGcName());
+        Student student = studentBook.getStudentById(editedStudentScore.getStudentId());
+
+        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
 
         gc.deleteScore(studentScoreToEdit);
         student.deleteScore(studentScoreToEdit);
         gc.addScore(editedStudentScore);
         student.addScore(editedStudentScore);
 
-        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
+        studentBook.setStudent(student, student);
+        gradedComponentBook.setGradedComponent(gc, gc);
+
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore)));
