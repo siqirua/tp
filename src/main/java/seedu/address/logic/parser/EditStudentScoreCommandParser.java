@@ -7,8 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-
+import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.student.StudentId;
 
 
 /**
@@ -31,6 +31,7 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
                 PREFIX_MARKS, PREFIX_COMMENT);
         EditStudentScoreCommand.EditStudentScoreDescriptor editStudentScoreDescriptor =
                 new EditStudentScoreCommand.EditStudentScoreDescriptor();
+
 
         if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
             editStudentScoreDescriptor.setStudentId(
@@ -55,7 +56,10 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
                     argMultimap.getValue(PREFIX_COMMENT).get());
         }
 
-        return new EditStudentScoreCommand(editStudentScoreDescriptor);
+        StudentId sid = editStudentScoreDescriptor.getStudentId().orElse(null);
+        GcName gcName = editStudentScoreDescriptor.getGcName().orElse(null);
+
+        return new EditStudentScoreCommand(sid, gcName, editStudentScoreDescriptor);
     }
 
 }

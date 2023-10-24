@@ -44,7 +44,7 @@ public class StudentScoreCard extends UiPart<Region> {
         this.studentScore = studentScore;
         id.setText(displayedIndex + ". ");
         sid.setText(studentScore.getStudentId().sid + " - " + studentScore.getGcName().gcName);
-        score.setText("Score: " + studentScore.getScore());
+        score.setText("Score: " + studentScore.getScore() + "/" + studentScore.getGradedComponent().getMaxMarks());
         if (!studentScore.getComment().isEmpty()) {
             studentScoreBox.getChildren().add(new Label("Comment: " + studentScore.getComment()));
         }

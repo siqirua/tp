@@ -74,7 +74,7 @@ public class JsonAdaptedStudentScore {
 
         final GcName newGcName = new GcName(gcName);
         final GradedComponent gradedComponent = new GradedComponent(newGcName,
-                new MaxMarks(Double.parseDouble(gcMaxMarks)), new Weightage(Double.parseDouble(gcWeightage)));
+                new MaxMarks(Float.parseFloat(gcMaxMarks)), new Weightage(Float.parseFloat(gcWeightage)));
 
         //check validity of scores
         final float modelScore = Float.parseFloat(score);

@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddStudentScoreCommand;
+import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.StudentId;
@@ -35,12 +36,19 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
                     AddStudentScoreCommand.MESSAGE_USAGE));
         }
 
+        EditStudentScoreCommand.EditStudentScoreDescriptor descriptor = new EditStudentScoreCommand.EditStudentScoreDescriptor();
+
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID,
                 PREFIX_COMPONENT_NAME, PREFIX_MARKS, PREFIX_COMMENT);
         StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+        descriptor.setStudentId(sid);
         GcName gcname = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
+        descriptor.setGcName(gcname);
         float score = Float.parseFloat(argMultimap.getValue(PREFIX_MARKS).orElse("0"));
+        descriptor.setScore(score);
         String comment = argMultimap.getValue(PREFIX_COMMENT).orElse("");
+        descriptor.setComment(comment);
+
 
         StudentScore studentScore = new StudentScore(sid, gcname, score, comment);
         return new AddStudentScoreCommand(studentScore);

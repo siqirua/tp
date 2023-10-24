@@ -2,9 +2,13 @@ package seedu.address.model.gradedcomponent;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.studentscore.StudentScore;
 
 
 /**
@@ -19,6 +23,12 @@ public class GradedComponent {
     // Data fields
     private final MaxMarks maxMarks;
     private final Weightage weightage;
+
+    private final List<StudentScore> scoreList = new ArrayList<>();
+
+    private float meanAbsoluteScore;
+    private float meanRelativeScore;
+
 
 
     /**
@@ -42,6 +52,54 @@ public class GradedComponent {
     public Weightage getWeightage() {
         return weightage;
     }
+    /**
+     * Returns true if both persons have the same name.
+     * This defines a weaker notion of equality between two persons.
+     */
+
+    public List<StudentScore> getScores() {
+        return Collections.unmodifiableList(scoreList);
+    }
+    public void addScore(StudentScore score) {
+        scoreList.add(score);
+    }
+
+    public void deleteScore(StudentScore score) {
+        scoreList.remove(score);
+    }
+
+    private float calcMeanAbsoluteScore() {
+        float totalScore = 0;
+        for (StudentScore sc : scoreList) {
+            totalScore += sc.getScore();
+        }
+        float size = scoreList.size();
+        return totalScore / size;
+    }
+
+
+    private float calcMeanRelativeScore() {
+        float totalScore = 0;
+        for (StudentScore sc : scoreList) {
+            totalScore += sc.calcRelativeScore();
+        }
+        float size = scoreList.size();
+        return totalScore / size;
+    }
+
+    public float getMeanAbsoluteScore() {
+        return this.meanAbsoluteScore;
+    }
+
+    public float getMeanRelativeScore() {
+        return this.meanRelativeScore;
+    }
+
+    public void recalculateScores() {
+        this.meanAbsoluteScore = calcMeanAbsoluteScore();
+        this.meanRelativeScore = calcMeanRelativeScore();
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.

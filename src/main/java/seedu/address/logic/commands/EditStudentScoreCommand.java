@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENT_SCORES;
+import static seedu.address.model.Model.*;
 
 import java.util.Optional;
 
@@ -12,8 +12,12 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
@@ -40,6 +44,8 @@ public class EditStudentScoreCommand extends Command {
     public static final String STUDENT_SCORE_NOT_FOUND = "The studentScore with provided Student ID "
             + "and Graded Component name does not exist.";
 
+    private final StudentId sid;
+    private final GcName gcName;
     private final EditStudentScoreDescriptor editStudentScoreDescriptor;
 
     /**
@@ -47,9 +53,11 @@ public class EditStudentScoreCommand extends Command {
      *
      * @param editStudentScoreDescriptor the editStudentScoreDescriptor
      */
-    public EditStudentScoreCommand(EditStudentScoreDescriptor editStudentScoreDescriptor) {
+    public EditStudentScoreCommand(StudentId sid, GcName gcName,
+                                   EditStudentScoreDescriptor editStudentScoreDescriptor) {
         requireNonNull(editStudentScoreDescriptor);
-
+        this.sid = sid;
+        this.gcName = gcName;
         this.editStudentScoreDescriptor = editStudentScoreDescriptor;
     }
 
@@ -57,26 +65,33 @@ public class EditStudentScoreCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        StudentId sid = editStudentScoreDescriptor.getStudentId().orElse(null);
-        GcName gcName = editStudentScoreDescriptor.getGcName().orElse(null);
+        StudentBook studentBook = model.getStudentBook();
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
-
         StudentScore studentScoreToEdit = studentScoreBook.getScoreByIdAndName(sid, gcName);
+
+
+
         if (studentScoreToEdit == null) {
             throw new CommandException(STUDENT_SCORE_NOT_FOUND);
         }
         StudentScore editedStudentScore = createEditedStudentScore(studentScoreToEdit,
                 editStudentScoreDescriptor);
 
-        StudentScoreBook ssModel = model.getStudentScoreBook();
 
         if (!studentScoreToEdit.isSameScore(editedStudentScore)
-                && ssModel.hasStudentScore(editedStudentScore)) {
+                && studentScoreBook.hasStudentScore(editedStudentScore)) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT_SCORE);
         }
 
-        ssModel.setStudentScore(studentScoreToEdit, editedStudentScore);
-        model.updateFilteredStudentScoreList(PREDICATE_SHOW_ALL_STUDENT_SCORES);
+        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
+        GradedComponent gc = gradedComponentBook.getGradedComponentByName(gcName);
+        Student student = studentBook.getStudentById(sid);
+        gc.deleteScore(studentScoreToEdit);
+        student.deleteScore(studentScoreToEdit);
+        gc.addScore(editedStudentScore);
+        student.addScore(editedStudentScore);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore)));
     }
@@ -89,15 +104,16 @@ public class EditStudentScoreCommand extends Command {
                 .orElse(studentScoreToEdit.getStudentId());
         GcName updatedGcName = editStudentScoreDescriptor.getGcName()
                 .orElse(studentScoreToEdit.getGcName());
-
         float updatedScore = editStudentScoreDescriptor.getScore()
                 .orElse(studentScoreToEdit.getScore());
         String updatedComment = editStudentScoreDescriptor.getComment()
                 .orElse(studentScoreToEdit.getComment());
 
-
-        return new StudentScore(updatedSid,
+        StudentScore sc = new StudentScore(updatedSid,
                 updatedGcName, updatedScore, updatedComment);
+        sc.setStudent(studentScoreToEdit.getStudent());
+        sc.setGradedComponent(studentScoreToEdit.getGradedComponent());
+        return sc;
     }
 
     @Override

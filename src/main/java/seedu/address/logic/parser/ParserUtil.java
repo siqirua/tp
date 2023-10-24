@@ -179,8 +179,8 @@ public class ParserUtil {
      * If not, throws a parse error.
      */
     public static Weightage parseWeightage(String s) throws ParseException {
-        checkStringParsableToDouble(s);
-        return new Weightage(Double.parseDouble(s));
+        checkStringParsableToFloat(s);
+        return new Weightage(Float.parseFloat(s));
     }
 
     /**
@@ -188,8 +188,8 @@ public class ParserUtil {
      * If not, throws an error with {@code varName}
      */
     public static MaxMarks parseMaxMarks(String s) throws ParseException {
-        checkStringParsableToDouble(s);
-        return new MaxMarks(Double.parseDouble(s));
+        checkStringParsableToFloat(s);
+        return new MaxMarks(Float.parseFloat(s));
     }
 
     /**

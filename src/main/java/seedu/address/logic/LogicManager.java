@@ -19,6 +19,8 @@ import seedu.address.model.student.Student;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.storage.Storage;
 
+import static seedu.address.model.Model.*;
+
 /**
  * The main LogicManager of the app.
  */
@@ -50,6 +52,10 @@ public class LogicManager implements Logic {
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
+
+        model.updateFilteredStudentScoreList(PREDICATE_SHOW_ALL_STUDENT_SCORES);
+        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+        model.updateFilteredGradedComponentList(PREDICATE_SHOW_ALL_GRADED_COMPONENTS);
 
         try {
             storage.saveStudentBook(model.getStudentBook());

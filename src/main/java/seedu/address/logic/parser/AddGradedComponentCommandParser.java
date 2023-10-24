@@ -41,8 +41,8 @@ public class AddGradedComponentCommandParser implements Parser<AddGradedComponen
 
         checkStringParsableToDouble(weightageString, "Weightage");
         checkStringParsableToDouble(maxMarksString, "Maximum marks");
-        Weightage weightage = new Weightage(Double.parseDouble(weightageString));
-        MaxMarks maxMarks = new MaxMarks(Double.parseDouble(maxMarksString));
+        Weightage weightage = new Weightage(Float.parseFloat(weightageString));
+        MaxMarks maxMarks = new MaxMarks(Float.parseFloat(maxMarksString));
 
         GradedComponent student = new GradedComponent(name, maxMarks, weightage);
         return new AddGradedComponentCommand(student);
