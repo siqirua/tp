@@ -10,6 +10,9 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
@@ -37,6 +40,10 @@ public class DeleteGradedComponentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentBook studentBook = model.getStudentBook();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         List<GradedComponent> lastShownList = model.getFilteredGradedComponentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -44,13 +51,15 @@ public class DeleteGradedComponentCommand extends Command {
         }
 
         GradedComponent gradedComponentToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.getGradedComponentBook().removeGradedComponent(gradedComponentToDelete);
-        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        gradedComponentBook.removeGradedComponent(gradedComponentToDelete);
         List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
         for (int i = studentScoreList.size() - 1; i >= 0; i--) {
-            if (studentScoreList.get(i).getGcName().equals(gradedComponentToDelete.getName())) {
+            StudentScore curScore = studentScoreList.get(i);
+            if (curScore.getGcName().equals(gradedComponentToDelete.getName())) {
                 // somewhat inefficient, to change
-                studentScoreBook.removeStudentScore(studentScoreList.get(i));
+                Student student = studentBook.getStudentById(curScore.getStudentId());
+                student.deleteScore(curScore);
+                studentScoreBook.removeStudentScore(curScore);
             }
         }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,

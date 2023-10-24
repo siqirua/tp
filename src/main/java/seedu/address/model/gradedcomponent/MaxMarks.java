@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a graded component's maximum marks in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidMarks(double)}
+ * Guarantees: immutable;
  */
 public class MaxMarks {
 
@@ -13,14 +13,14 @@ public class MaxMarks {
     public static final String MESSAGE_CONSTRAINTS =
             "Maximum mark argument should be an number larger than or equal to 0.";
 
-    public final Double maxMarks;
+    public final Float maxMarks;
 
     /**
      * Constructs a {@code MaxMarks}.
      *
      * @param maxMarks Maximum marks for a graded component.
      */
-    public MaxMarks(double maxMarks) {
+    public MaxMarks(float maxMarks) {
         requireNonNull(maxMarks);
         checkArgument(isValidMarks(maxMarks), MESSAGE_CONSTRAINTS);
         this.maxMarks = maxMarks;
@@ -29,7 +29,7 @@ public class MaxMarks {
     /**
      * Returns true if a given string is a valid mark.
      */
-    public static boolean isValidMarks(double m) {
+    public static boolean isValidMarks(float m) {
         return m >= 0.0;
     }
 

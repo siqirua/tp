@@ -19,6 +19,8 @@ import seedu.address.model.student.Student;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.storage.Storage;
 
+import static seedu.address.model.Model.*;
+
 /**
  * The main LogicManager of the app.
  */

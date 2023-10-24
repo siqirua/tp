@@ -13,14 +13,14 @@ public class Weightage {
     public static final String MESSAGE_CONSTRAINTS =
             "Weightage should be an number larger than or equal to 0.";
 
-    public final Double weightage;
+    public final Float weightage;
 
     /**
      * Constructs a {@code Weightage}.
      *
      * @param weightage Weightage for a weighted component for the module.
      */
-    public Weightage(double weightage) {
+    public Weightage(float weightage) {
         requireNonNull(weightage);
         checkArgument(isValidWeightage(weightage), MESSAGE_CONSTRAINTS);
         this.weightage = weightage;
@@ -29,7 +29,7 @@ public class Weightage {
     /**
      * Returns true if a given string is a valid weightage.
      */
-    public static boolean isValidWeightage(double m) {
+    public static boolean isValidWeightage(float m) {
         return m >= 0.0;
     }
 

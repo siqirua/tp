@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,10 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.StudentId;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
@@ -53,10 +57,45 @@ public class ModelManager implements Model {
         this.studentBook = new StudentBook(studentBook);
         this.gradedComponentBook = new GradedComponentBook(gradedComponentBook);
         this.studentScoreBook = new StudentScoreBook(studentScoreBook);
+        assignStudentScores(this.studentBook, this.gradedComponentBook, this.studentScoreBook);
+
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredStudentList = new FilteredList<>(this.studentBook.getStudentList());
         this.filteredGradedComponentList = new FilteredList<>(this.gradedComponentBook.getGradedComponentList());
         this.filteredStudentScoreList = new FilteredList<>(this.studentScoreBook.getStudentScoreList());
+    }
+
+    private void assignStudentScores(StudentBook studentBook, GradedComponentBook gcBook,
+                                     StudentScoreBook ssb) {
+        HashMap<StudentId, Student> studentHash = new HashMap<>();
+        HashMap<GcName, GradedComponent> gcHash = new HashMap<>();
+
+        for (Student s : studentBook.getStudentList()) {
+            studentHash.put(s.getStudentId(), s);
+        }
+
+        for (GradedComponent g : gcBook.getGradedComponentList()) {
+            gcHash.put(g.getName(), g);
+        }
+
+        for (StudentScore sc : ssb.getStudentScoreList()) {
+            Student student = studentHash.get(sc.getStudentId());
+            GradedComponent gc = gcHash.get(sc.getGcName());
+            sc.setStudent(student);
+            sc.setGradedComponent(gc);
+            student.addScore(sc);
+            gc.addScore(sc);
+        }
+
+        for (Student s : studentBook.getStudentList()) {
+            s.recalculateScores();
+        }
+
+        for (GradedComponent g : gcBook.getGradedComponentList()) {
+            g.recalculateScores();
+        }
+
+
     }
 
 

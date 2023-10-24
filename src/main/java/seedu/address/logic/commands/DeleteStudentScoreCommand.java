@@ -9,7 +9,12 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.studentscore.model.StudentScoreBook;
 
 
 /**
@@ -42,13 +47,19 @@ public class DeleteStudentScoreCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
-
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentBook studentBook = model.getStudentBook();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         StudentScore studentScoreToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.getStudentScoreBook().removeStudentScore(studentScoreToDelete);
+        Student student = studentBook.getStudentById(studentScoreToDelete.getStudentId());
+        GradedComponent gc = gradedComponentBook.getGradedComponentByName(studentScoreToDelete.getGcName());
+        student.deleteScore(studentScoreToDelete);
+        gc.deleteScore(studentScoreToDelete);
+        studentScoreBook.removeStudentScore(studentScoreToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SCORE_SUCCESS,
                 Messages.formatStudentScore(studentScoreToDelete)));
     }

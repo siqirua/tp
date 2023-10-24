@@ -13,7 +13,9 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
@@ -58,15 +60,23 @@ public class AddStudentCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.getStudentBook().hasStudent(toAdd)) {
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentBook studentBook = model.getStudentBook();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+
+        if (studentBook.hasStudent(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
         model.getStudentBook().addStudent(toAdd);
-        List<GradedComponent> gcs = model.getGradedComponentBook().getGradedComponentList();
-        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<GradedComponent> gcs = gradedComponentBook.getGradedComponentList();
         for (GradedComponent gc : gcs) {
-            studentScoreBook.addStudentScore(new StudentScore(toAdd.getStudentId(), gc.getName(), 0));
+            StudentScore sc = new StudentScore(toAdd.getStudentId(), gc.getName(), 0);
+            sc.setGradedComponent(gc);
+            sc.setStudent(toAdd);
+            toAdd.addScore(sc);
+            gc.addScore(sc);
+            studentScoreBook.addStudentScore(sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }

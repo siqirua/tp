@@ -22,6 +22,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentEmail;
 import seedu.address.model.student.StudentId;
@@ -91,17 +92,20 @@ public class EditStudentCommand extends Command {
 
         StudentScoreBook ssb = model.getStudentScoreBook();
         List<StudentScore> ssList = ssb.getStudentScoreList();
+        sModel.setStudent(studentToEdit, editedStudent);
+
         for (int i = 0; i < ssList.size(); i++) {
             StudentScore sc = ssList.get(i);
             if (sc.getStudentId().equals(studentToEdit.getStudentId())) {
-                EditStudentScoreCommand.EditStudentScoreDescriptor scd =
+                EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
-                scd.setStudentId(editedStudent.getStudentId());
-                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+                newDescriptor.setStudentId(editedStudent.getStudentId());
+                StudentId sid = sc.getStudentId();
+                GcName gcName = sc.getGcName();
+                new EditStudentScoreCommand(sid, gcName, newDescriptor).execute(model);
             }
         }
 
-        sModel.setStudent(studentToEdit, editedStudent);
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent)));
     }

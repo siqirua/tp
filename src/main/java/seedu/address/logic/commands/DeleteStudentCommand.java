@@ -9,7 +9,10 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
@@ -36,6 +39,9 @@ public class DeleteStudentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentBook studentBook = model.getStudentBook();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -43,12 +49,14 @@ public class DeleteStudentCommand extends Command {
         }
 
         Student studentToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.getStudentBook().removeStudent(studentToDelete);
-        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        studentBook.removeStudent(studentToDelete);
         List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
         for (int i = studentScoreList.size() - 1; i >= 0; i--) {
-            if (studentScoreList.get(i).getStudentId().equals(studentToDelete.getStudentId())) {
+            StudentScore curScore = studentScoreList.get(i);
+            if (curScore.getStudentId().equals(studentToDelete.getStudentId())) {
                 // somewhat inefficient, to change
+                GradedComponent gc = gradedComponentBook.getGradedComponentByName(curScore.getGcName());
+                gc.deleteScore(curScore);
                 studentScoreBook.removeStudentScore(studentScoreList.get(i));
             }
         }
