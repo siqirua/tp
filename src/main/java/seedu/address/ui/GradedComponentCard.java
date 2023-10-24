@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.text.DecimalFormat;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -7,7 +9,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.gradedcomponent.GradedComponent;
 
-import java.text.DecimalFormat;
 
 /**
  * An UI component that displays information of a {@code GradedComponent}.

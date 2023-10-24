@@ -9,9 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.gradedcomponent.GcName;
-import seedu.address.model.student.StudentId;
-
 
 /**
  * A Class to handle parsing for EditStudentScoreCommand.

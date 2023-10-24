@@ -96,6 +96,9 @@ public class GradedComponent {
         return this.meanRelativeScore;
     }
 
+    /**
+     * Recalculates all score-related fields for this GradedComponent
+     */
     public void recalculateScores() {
         this.meanAbsoluteScore = calcMeanAbsoluteScore();
         this.meanRelativeScore = calcMeanRelativeScore();

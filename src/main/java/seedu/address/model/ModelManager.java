@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -65,6 +64,15 @@ public class ModelManager implements Model {
         this.filteredStudentScoreList = new FilteredList<>(this.studentScoreBook.getStudentScoreList());
     }
 
+    /**
+     * Initializes a UnifiedBookManager with an empty studentBook, gradedComponentBook,
+     * studentScoreBook and userPrefs.
+     */
+    public ModelManager() {
+        this(new StudentBook(), new StudentScoreBook(),
+                new GradedComponentBook(), new UserPrefs());
+    }
+
     private void assignStudentScores(StudentBook studentBook, GradedComponentBook gcBook,
                                      StudentScoreBook ssb) {
         HashMap<StudentId, Student> studentHash = new HashMap<>();
@@ -94,20 +102,7 @@ public class ModelManager implements Model {
         for (GradedComponent g : gcBook.getGradedComponentList()) {
             g.recalculateScores();
         }
-
-
     }
-
-
-    /**
-     * Initializes a UnifiedBookManager with an empty studentBook, gradedComponentBook,
-     * studentScoreBook and userPrefs.
-     */
-    public ModelManager() {
-        this(new StudentBook(), new StudentScoreBook(),
-                new GradedComponentBook(), new UserPrefs());
-    }
-
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
         requireNonNull(userPrefs);
