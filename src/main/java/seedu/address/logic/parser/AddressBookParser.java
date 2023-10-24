@@ -86,7 +86,7 @@ public class AddressBookParser {
         case ClearAllCommand.COMMAND_WORD:
             return new ClearAllCommand();
         case SortStudentCommand.COMMAND_WORD:
-            return new SortStudentCommand("PLACEHOLDER");
+            return new SortStudentCommandParser().parse(arguments);
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

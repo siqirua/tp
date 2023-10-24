@@ -106,8 +106,8 @@ public class StudentBook implements ReadOnlyStudentBook {
     /**
      * Sorts all students from this {@code StudentBook}.
      */
-    public void sortStudent() {
-        students.sort();
+    public void sortStudent(String order, boolean reverse) {
+        students.sort(order, reverse);
     }
 
     //// util methods

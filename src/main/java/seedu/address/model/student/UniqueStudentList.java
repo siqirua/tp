@@ -11,8 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
-
-
 /**
  * A list of students that enforces uniqueness between its elements and does not allow nulls.
  * A student is considered unique by comparing using {@code Student#isSameStudent(Student)}. As such, adding
@@ -95,12 +93,39 @@ public class UniqueStudentList implements Iterable<Student> {
     /**
      * Sorts the Student list.
      */
-    public void sort() {
+    public void sort(String order, boolean reverse) {
         internalList.sort(new Comparator<Student>() {
             @Override
             public int compare(Student s1, Student s2) {
-                return s1.getName().toString().compareTo(
-                        s2.getName().toString());
+                String s1Value;
+                String s2Value;
+                switch (order) {
+                case "s":
+                    s1Value = s1.getStudentId().toString();
+                    s2Value = s2.getStudentId().toString();
+                    break;
+                case "n":
+                    s1Value = s1.getName().toString();
+                    s2Value = s2.getName().toString();
+                    break;
+                case "e":
+                    s1Value = s1.getEmail().toString();
+                    s2Value = s2.getEmail().toString();
+                    break;
+                case "g":
+                    s1Value = s1.getTutorial().toString();
+                    s2Value = s2.getTutorial().toString();
+                    break;
+                default:
+                    s1Value = s1.getStudentId().toString();
+                    s2Value = s2.getStudentId().toString();
+                }
+
+                if (!reverse) {
+                    return s1Value.compareTo(s2Value);
+                } else {
+                    return s2Value.compareTo(s1Value);
+                }
             }
         });
     }
