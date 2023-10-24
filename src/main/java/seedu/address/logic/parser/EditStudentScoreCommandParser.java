@@ -10,9 +10,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
-
-
 /**
  * A Class to handle parsing for EditStudentScoreCommand.
  */
@@ -28,6 +25,10 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
                         PREFIX_MARKS, PREFIX_COMMENT);
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
+                PREFIX_MARKS, PREFIX_COMMENT);
+
         Index index;
 
         try {
@@ -37,10 +38,21 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
                     EditStudentScoreCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
-                PREFIX_MARKS, PREFIX_COMMENT);
         EditStudentScoreCommand.EditStudentScoreDescriptor editStudentScoreDescriptor =
                 new EditStudentScoreCommand.EditStudentScoreDescriptor();
+
+
+        if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
+            editStudentScoreDescriptor.setStudentId(
+                    ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get())
+            );
+        }
+
+        if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
+            editStudentScoreDescriptor.setGcName(
+                    ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
+            );
+        }
 
         if (argMultimap.getValue(PREFIX_MARKS).isPresent()) {
             editStudentScoreDescriptor.setScore(

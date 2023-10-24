@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.student.Student;
 
 
@@ -36,6 +37,8 @@ public class StudentCard extends UiPart<Region> {
     private Label studentEmail;
     @FXML
     private Label tutorialGroup;
+    @FXML
+    private VBox studentBox;
 
 
     /**
@@ -46,8 +49,14 @@ public class StudentCard extends UiPart<Region> {
         this.student = student;
         id.setText(displayedIndex + ". ");
         sid.setText(student.getStudentId().sid);
-        studentName.setText(student.getName().fullName);
-        studentEmail.setText(student.getEmail().value);
-        tutorialGroup.setText(student.getTutorial().groupName);
+        studentName.setText("Name: " + student.getName().fullName);
+        studentEmail.setText("Email: " + student.getEmail().value);
+        tutorialGroup.setText("Tutorial Group: " + student.getTutorial().groupName);
+
+        student.recalculateScores();
+        Label totalScoreLabel = new Label("Total Score: " + student.getTotalScore() + "%");
+        totalScoreLabel.getStyleClass().add("cell_small_label");
+        studentBox.getChildren().add(totalScoreLabel);
+
     }
 }

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENT_SCORES;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,24 +13,29 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
+
 
 /**
  * Command Class for editing StudentScore
  */
 public class EditStudentScoreCommand extends Command {
-    public static final String COMMAND_WORD = "editStuScore";
+    public static final String COMMAND_WORD = "editScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the StudentScore identified "
-            + "by the index number used in the displayed StudentScore list. "
+            + "by the student ID and graded component name  used in the displayed StudentScore list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: " + "INDEX "
             + "[" + PREFIX_MARKS + "SCORE] "
             + "[" + PREFIX_COMMENT + "COMMENT] "
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_MARKS + "35.4 "
             + PREFIX_COMMENT + "Good JOB!";
 
@@ -39,9 +43,11 @@ public class EditStudentScoreCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_SCORE = "This studentScore already "
             + "exists in the address book.";
+    public static final String STUDENT_SCORE_NOT_FOUND = "The studentScore with provided Student ID "
+            + "and Graded Component name does not exist.";
 
-    private final Index index;
     private final EditStudentScoreDescriptor editStudentScoreDescriptor;
+    private final Index index;
 
     /**
      * Constructor for EditStudentScoreCommand.
@@ -60,25 +66,37 @@ public class EditStudentScoreCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
 
+        StudentBook studentBook = model.getStudentBook();
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
         StudentScore studentScoreToEdit = lastShownList.get(index.getZeroBased());
         StudentScore editedStudentScore = createEditedStudentScore(studentScoreToEdit,
                 editStudentScoreDescriptor);
 
-        StudentScoreBook ssModel = model.getStudentScoreBook();
-
         if (!studentScoreToEdit.isSameScore(editedStudentScore)
-                && ssModel.hasStudentScore(editedStudentScore)) {
+                && studentScoreBook.hasStudentScore(editedStudentScore)) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT_SCORE);
         }
 
-        ssModel.setStudentScore(studentScoreToEdit, editedStudentScore);
-        model.updateFilteredStudentScoreList(PREDICATE_SHOW_ALL_STUDENT_SCORES);
+        GradedComponent gc = gradedComponentBook.getGradedComponentByName(editedStudentScore.getGcName());
+        Student student = studentBook.getStudentById(editedStudentScore.getStudentId());
+
+        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        gc.deleteScore(studentScoreToEdit);
+        student.deleteScore(studentScoreToEdit);
+        gc.addScore(editedStudentScore);
+        student.addScore(editedStudentScore);
+
+        studentBook.setStudent(student, student);
+        gradedComponentBook.setGradedComponent(gc, gc);
+
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore)));
     }
@@ -91,15 +109,16 @@ public class EditStudentScoreCommand extends Command {
                 .orElse(studentScoreToEdit.getStudentId());
         GcName updatedGcName = editStudentScoreDescriptor.getGcName()
                 .orElse(studentScoreToEdit.getGcName());
-
         float updatedScore = editStudentScoreDescriptor.getScore()
                 .orElse(studentScoreToEdit.getScore());
         String updatedComment = editStudentScoreDescriptor.getComment()
                 .orElse(studentScoreToEdit.getComment());
 
-
-        return new StudentScore(updatedSid,
+        StudentScore sc = new StudentScore(updatedSid,
                 updatedGcName, updatedScore, updatedComment);
+        sc.setStudent(studentScoreToEdit.getStudent());
+        sc.setGradedComponent(studentScoreToEdit.getGradedComponent());
+        return sc;
     }
 
     @Override
@@ -113,14 +132,12 @@ public class EditStudentScoreCommand extends Command {
         }
 
         EditStudentScoreCommand otherEditCommand = (EditStudentScoreCommand) other;
-        return index.equals(otherEditCommand.index)
-                && editStudentScoreDescriptor.equals(otherEditCommand.editStudentScoreDescriptor);
+        return editStudentScoreDescriptor.equals(otherEditCommand.editStudentScoreDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("index", index)
                 .add("editStudentScoreDescriptor", editStudentScoreDescriptor)
                 .toString();
     }

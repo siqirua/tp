@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHTAGE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GRADED_COMPONENTS;
 
 import java.util.List;
 import java.util.Objects;
@@ -84,18 +83,20 @@ public class EditGradedComponentCommand extends Command {
 
         StudentScoreBook ssb = model.getStudentScoreBook();
         List<StudentScore> ssList = ssb.getStudentScoreList();
+
+
         for (int i = 0; i < ssList.size(); i++) {
             StudentScore sc = ssList.get(i);
             if (sc.getGcName().equals(gradedComponentToEdit.getName())) {
-                EditStudentScoreCommand.EditStudentScoreDescriptor scd =
+                EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
-                scd.setGcName(editedGradedComponent.getName());
-                new EditStudentScoreCommand(Index.fromOneBased(i + 1), scd).execute(model);
+                newDescriptor.setGcName(editedGradedComponent.getName());
+                new EditStudentScoreCommand(Index.fromZeroBased(i), newDescriptor).execute(model);
             }
         }
 
         gModel.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
-        model.updateFilteredGradedComponentList(PREDICATE_SHOW_ALL_GRADED_COMPONENTS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatGradedComponent(editedGradedComponent)));
     }

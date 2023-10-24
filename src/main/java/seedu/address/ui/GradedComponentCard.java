@@ -1,10 +1,14 @@
 package seedu.address.ui;
 
+import java.text.DecimalFormat;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.gradedcomponent.GradedComponent;
+
 
 /**
  * An UI component that displays information of a {@code GradedComponent}.
@@ -33,6 +37,8 @@ public class GradedComponentCard extends UiPart<Region> {
     private Label maxMarks;
     @FXML
     private Label weightage;
+    @FXML
+    private VBox gradedComponentBox;
 
 
     /**
@@ -45,5 +51,16 @@ public class GradedComponentCard extends UiPart<Region> {
         gcName.setText(gradedComponent.getName().gcName);
         maxMarks.setText("Max marks: " + gradedComponent.getMaxMarks());
         weightage.setText("Weightage: " + gradedComponent.getWeightage());
+        gradedComponent.recalculateScores();
+
+        float meanAbsoluteScore = gradedComponent.getMeanAbsoluteScore();
+        float meanRelativeScore = gradedComponent.getMeanRelativeScore();
+        DecimalFormat df = new DecimalFormat("#.#");
+        Label meanScoreLabel =
+                new Label("Mean: " + df.format(meanAbsoluteScore) + "/"
+                        + gradedComponent.getMaxMarks() + " (" + df.format(meanRelativeScore) + "%)");
+        meanScoreLabel.getStyleClass().add("cell_small_label");
+        gradedComponentBox.getChildren().add(meanScoreLabel);
+
     }
 }
