@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
-import static seedu.address.model.Model.*;
 
 import java.util.Optional;
 
@@ -84,13 +83,15 @@ public class EditStudentScoreCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT_SCORE);
         }
 
-        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
         GradedComponent gc = gradedComponentBook.getGradedComponentByName(gcName);
         Student student = studentBook.getStudentById(sid);
+
         gc.deleteScore(studentScoreToEdit);
         student.deleteScore(studentScoreToEdit);
         gc.addScore(editedStudentScore);
         student.addScore(editedStudentScore);
+
+        studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore)));

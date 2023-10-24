@@ -50,6 +50,16 @@ public class GradedComponentCard extends UiPart<Region> {
         gcName.setText(gradedComponent.getName().gcName);
         maxMarks.setText("Max marks: " + gradedComponent.getMaxMarks());
         weightage.setText("Weightage: " + gradedComponent.getWeightage());
-
+        gradedComponent.recalculateScores();
+        /*
+        float meanAbsoluteScore = gradedComponent.getMeanAbsoluteScore();
+        float meanRelativeScore = gradedComponent.getMeanRelativeScore();
+        DecimalFormat df = new DecimalFormat("#.#");
+        Label meanScoreLabel =
+                new Label("Mean: " + df.format(meanAbsoluteScore) + "/"
+                        + gradedComponent.getMaxMarks() + " (" + df.format(meanRelativeScore) + "%)");
+        meanScoreLabel.getStyleClass().add("cell_small_label");
+        gradedComponentBox.getChildren().add(meanScoreLabel);
+        */
     }
 }

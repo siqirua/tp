@@ -36,7 +36,8 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
                     AddStudentScoreCommand.MESSAGE_USAGE));
         }
 
-        EditStudentScoreCommand.EditStudentScoreDescriptor descriptor = new EditStudentScoreCommand.EditStudentScoreDescriptor();
+        EditStudentScoreCommand.EditStudentScoreDescriptor descriptor =
+                new EditStudentScoreCommand.EditStudentScoreDescriptor();
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID,
                 PREFIX_COMPONENT_NAME, PREFIX_MARKS, PREFIX_COMMENT);

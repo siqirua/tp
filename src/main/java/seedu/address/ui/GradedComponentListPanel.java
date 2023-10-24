@@ -40,13 +40,14 @@ public class GradedComponentListPanel extends UiPart<Region> {
         @Override
         protected void updateItem(GradedComponent gradedComponent, boolean empty) {
             super.updateItem(gradedComponent, empty);
-
             if (empty || gradedComponent == null) {
                 setGraphic(null);
                 setText(null);
             } else {
                 setGraphic(new GradedComponentCard(gradedComponent, getIndex() + 1).getRoot());
             }
+
+
         }
     }
 

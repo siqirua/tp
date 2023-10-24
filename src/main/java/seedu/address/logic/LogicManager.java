@@ -53,10 +53,6 @@ public class LogicManager implements Logic {
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
-        model.updateFilteredStudentScoreList(PREDICATE_SHOW_ALL_STUDENT_SCORES);
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
-        model.updateFilteredGradedComponentList(PREDICATE_SHOW_ALL_GRADED_COMPONENTS);
-
         try {
             storage.saveStudentBook(model.getStudentBook());
             storage.saveStudentScoreBook(model.getStudentScoreBook());

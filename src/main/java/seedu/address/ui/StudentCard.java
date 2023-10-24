@@ -52,5 +52,11 @@ public class StudentCard extends UiPart<Region> {
         studentName.setText(student.getName().fullName);
         studentEmail.setText(student.getEmail().value);
         tutorialGroup.setText(student.getTutorial().groupName);
+        /*
+        student.recalculateScores();
+        Label totalScoreLabel = new Label("Total Score: " + student.getTotalScore());
+        totalScoreLabel.getStyleClass().add("cell_small_label");
+        studentBox.getChildren().add(totalScoreLabel);
+        */
     }
 }
