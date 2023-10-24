@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.UniqueGradedComponentList;
 
@@ -134,5 +135,15 @@ public class GradedComponentBook implements ReadOnlyGradedComponentBook {
     @Override
     public int hashCode() {
         return gradedComponents.hashCode();
+    }
+
+    public GradedComponent getGradedComponentByName(GcName gcName) {
+        requireNonNull(gcName);
+        for (GradedComponent gc : gradedComponents) {
+            if (gc.getName().equals(gcName)) {
+                return gc;
+            }
+        }
+        return null;
     }
 }

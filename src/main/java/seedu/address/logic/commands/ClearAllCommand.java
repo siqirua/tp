@@ -19,7 +19,7 @@ public class ClearAllCommand extends Command {
             + ": Clears all data. \n "
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_CLEAR_PERSON_SUCCESS = "Clear all data successfully";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Cleared all data successfully";
 
     @Override
     public CommandResult execute(Model model) throws CommandException {

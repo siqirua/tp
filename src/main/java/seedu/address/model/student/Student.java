@@ -29,6 +29,7 @@ public class Student {
     private final List<StudentScore> scoreList = new ArrayList<>();
 
     private final Set<Tag> tags = new HashSet<>();
+    private float totalScore;
 
     /**
      * Every field must be present and not null.
@@ -71,13 +72,36 @@ public class Student {
     public List<StudentScore> getScores() {
         return Collections.unmodifiableList(scoreList);
     }
-    public void addScoreToStudent(StudentScore score) {
+    public void addScore(StudentScore score) {
         scoreList.add(score);
     }
 
-    public void deleteScoreFromStudent(StudentScore score) {
+    public void deleteScore(StudentScore score) {
         scoreList.remove(score);
     }
+
+    public float getTotalScore() {
+        return this.totalScore;
+    }
+
+    private float calcTotalScore() {
+        float totalWeightage = 0;
+        for (StudentScore sc : scoreList) {
+            totalWeightage += sc.getGradedComponent().getWeightage().weightage;
+        }
+        float totalScore = 0;
+        for (StudentScore sc : scoreList) {
+            float weight = sc.getGradedComponent().getWeightage().weightage;
+            totalScore += weight / totalWeightage * sc.calcRelativeScore();
+        }
+        return totalScore;
+    }
+
+    public void recalculateScores() {
+        this.totalScore = calcTotalScore();
+    }
+
+
 
     /**
      * Returns true if both students have the same student ID.

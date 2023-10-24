@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.StudentId;
 import seedu.address.model.student.UniqueStudentList;
 
 /**
@@ -142,5 +143,15 @@ public class StudentBook implements ReadOnlyStudentBook {
     @Override
     public int hashCode() {
         return students.hashCode();
+    }
+
+    public Student getStudentById(StudentId studentId) {
+        requireNonNull(studentId);
+        for (Student student : students) {
+            if (student.getStudentId().equals(studentId)) {
+                return student;
+            }
+        }
+        return null;
     }
 }

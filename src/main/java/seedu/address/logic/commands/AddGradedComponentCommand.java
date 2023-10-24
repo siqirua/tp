@@ -12,7 +12,9 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
@@ -55,12 +57,20 @@ public class AddGradedComponentCommand extends Command {
         if (model.getGradedComponentBook().hasGradedComponent(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_GRADED_COMPONENT);
         }
-
-        model.getGradedComponentBook().addGradedComponent(toAdd);
-        List<Student> students = model.getStudentBook().getStudentList();
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        StudentBook studentBook = model.getStudentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        gradedComponentBook.addGradedComponent(toAdd);
+        List<Student> students = studentBook.getStudentList();
         for (Student student : students) {
-            studentScoreBook.addStudentScore(new StudentScore(student.getStudentId(), toAdd.getName(), 0));
+            StudentScore sc = new StudentScore(student.getStudentId(), toAdd.getName(), 0);
+            sc.setGradedComponent(toAdd);
+            sc.setStudent(student);
+            student.addScore(sc);
+            toAdd.addScore(sc);
+            gradedComponentBook.setGradedComponent(toAdd, toAdd);
+            studentBook.setStudent(student, student);
+            studentScoreBook.addStudentScore(sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatGradedComponent(toAdd)));
     }

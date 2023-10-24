@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 
@@ -18,6 +20,8 @@ public class StudentScore {
     private GcName gcName;
     private float score;
     private String comment = "";
+    private Student student;
+    private GradedComponent gc;
     /**
      * Constructs a {@code studentScore}.
      *
@@ -70,6 +74,26 @@ public class StudentScore {
     public void setGcName(GcName newName) {
         this.gcName = newName;
     }
+    public Student getStudent() {
+        return this.student;
+    }
+    public void setStudent(Student s) {
+        this.student = s;
+    }
+    public GradedComponent getGradedComponent() {
+        return this.gc;
+    }
+    public void setGradedComponent(GradedComponent gc) {
+        this.gc = gc;
+    }
+    /**
+     * Calculates this studentScore's relative score from the GradedComponent's
+     * maximum marks.
+     */
+    public float calcRelativeScore() {
+        assert this.gc != null;
+        return score / this.gc.getMaxMarks().maxMarks * 100;
+    }
     /**
      * Returns true if both student scores have the same StudentId and GcName.
      * This defines a weaker notion of equality between two student scores.
@@ -100,7 +124,7 @@ public class StudentScore {
         }
 
         StudentScore otherScore = (StudentScore) other;
-        return sid.equals(otherScore.sid) && gcName.equals(((StudentScore) other).gcName);
+        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName);
     }
 
     @Override
