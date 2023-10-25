@@ -15,7 +15,7 @@ import seedu.address.model.studentscore.StudentScore;
 
 
 /**
- * Calculates the statics.
+ * Calculates the statistics.
  */
 public class CompStatsCommand extends Command {
     public static final String COMMAND_WORD = "compStats";
