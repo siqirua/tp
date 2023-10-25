@@ -1,11 +1,10 @@
 package seedu.address.logic.commands.statscalculator;
 
-import seedu.address.model.studentscore.StudentScore;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Calculates the statics.
+ */
 public class StatsCalculator {
     private final List<Float> scores;
 
@@ -47,10 +46,10 @@ public class StatsCalculator {
     }
 
     public float getMean() {
-        return getSum()/scores.size();
+        return getSum() / scores.size();
     }
 
     public float getStd() {
-        return getSumOfSquare()/scores.size() - getMean()*getMean();
+        return (float) Math.pow(getSumOfSquare() / scores.size() - getMean() * getMean(), 0.5);
     }
 }
