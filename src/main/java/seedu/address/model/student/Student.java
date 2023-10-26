@@ -144,6 +144,10 @@ public class Student {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("student id", sid)
+                .add("name", name)
+                .add("email", email)
+                .add("tutorial group", tg)
+                .add("tags", tags)
                 .toString();
 
     }
