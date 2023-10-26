@@ -147,8 +147,10 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* can save student data, student score data, graded component data and user preference data in JSON format, and read 
+  them back into the corresponding objects.  
+* inherits from `StudentBookStorage`, `GradedComponentBookStorage`, `StudentScoreBookStorage` and `UserPrefsStorage`,
+  which means it can be treated as any of the one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -401,8 +403,11 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Editing the data file manually.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Open `scoreBook.json`.
+   2. Edit the score field of any student in the file. 
+   3. Run the program.
+      Expected: The score field for the particular student will be updated.
 
 1. _{ more test cases …​ }_
