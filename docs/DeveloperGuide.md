@@ -336,6 +336,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+
+**Use case: Calculate the overall stats of student performance**
+
+**MSS**
+
+1.  User requests to calculate the overall stats of student performance
+2.  ModuLight shows a summary of statistics
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. There is currently no student scores.
+    * 1a1. ModuLight shows an error message.
+
+  Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
