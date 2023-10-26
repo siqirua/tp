@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
 # ModuLight Developer Guide
@@ -254,6 +254,46 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### \[Proposed\] Auto-grading 
+
+#### Proposed Implementation
+
+{Intro}
+
+Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
+
+Step 1. The user launch the application for the first time. 
+
+Step 2. The user creates the desired graded components and adds all the students in the cohort.
+
+Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile' 
+keyword indicates that Modulight grades based on the students' percentile compared to another. The value after `pg/` indicates
+the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`. 
+
+<box type="info" seamless>
+
+**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score. 
+
+</box>
+
+Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
+Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
+total score. Modulight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
+`autoGradeCommand`.
+
+
+
+#### Design considerations:
+
+**Aspect: How the assignments of grade works:**
+
+* **Alternative 1 (Current choice):** Use tags to assign the grade
+  * Pros: Easy to implement.
+  * Cons: Not ideal if we want to extend the code for more features.
+* **Alternative 2:** Create new Grade object for each student.
+  * Pros: Cleaner and extendable code implementation.
+  * Cons: require change of implementation on multiple classes.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -333,6 +373,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. ModuLight shows an error message.
 
       Use case resumes at step 2.
+
+**Use case: Add StudentScores by new graded component**
+
+**MSS**
+
+1.  User creates new Graded Component.
+2.  Modulight creates student scores correspond to the new graded component for every student. 
+3.  Modulight display the student scores list. 
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+
+    Use case ends.
+
+
+**Use case: Add StudentScores by new student **
+
+**MSS**
+
+1.  User creates new Students.
+2.  Modulight creates student scores correspond to the new student for every graded component.
+3.  Modulight display the student scores list.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The graded component list is empty.
+
+  Use case ends.
+
+
+**Use case: Edit StudentScores**
+
+**MSS**
+
+1.  User requests to edit a student score
+2.  Modulight edits the student score with score and comments
+3.  Modulight display the student score list.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a.
 
 *{More to be added}*
 
