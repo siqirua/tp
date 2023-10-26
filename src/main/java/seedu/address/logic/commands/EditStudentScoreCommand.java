@@ -3,9 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -21,6 +25,7 @@ import seedu.address.model.student.StudentName;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -30,12 +35,13 @@ public class EditStudentScoreCommand extends Command {
     public static final String COMMAND_WORD = "editScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the StudentScore identified "
-            + "by the student ID and graded component name  used in the displayed StudentScore list. "
+            + "by the index number used in the displayed StudentScore list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: " + "INDEX "
             + "[" + PREFIX_MARKS + "SCORE] "
             + "[" + PREFIX_COMMENT + "COMMENT] "
-            + "Example: " + COMMAND_WORD + " "
+            + "[" + PREFIX_TAG + "TAG]...\n "
+            + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_MARKS + "35.4 "
             + PREFIX_COMMENT + "Good JOB!";
 
@@ -113,9 +119,9 @@ public class EditStudentScoreCommand extends Command {
                 .orElse(studentScoreToEdit.getScore());
         String updatedComment = editStudentScoreDescriptor.getComment()
                 .orElse(studentScoreToEdit.getComment());
-
+        Set<Tag> updatedTags = editStudentScoreDescriptor.getTags().orElse(studentScoreToEdit.getTags());
         StudentScore sc = new StudentScore(updatedSid,
-                updatedGcName, updatedScore, updatedComment);
+                updatedGcName, updatedScore, updatedComment, updatedTags);
         sc.setStudent(studentScoreToEdit.getStudent());
         sc.setGradedComponent(studentScoreToEdit.getGradedComponent());
         return sc;
@@ -153,6 +159,8 @@ public class EditStudentScoreCommand extends Command {
         private Float score;
         private String comment;
 
+        private Set<Tag> tags;
+
         /**
          * Empty constructor for EditStudentScoreDescriptor.
          *
@@ -170,6 +178,7 @@ public class EditStudentScoreCommand extends Command {
             setGcName(toCopy.gcName);
             setScore(toCopy.score);
             setComment(toCopy.comment);
+            setTags(toCopy.tags);
         }
 
         public void setStudentId(StudentId sid) {
@@ -210,6 +219,23 @@ public class EditStudentScoreCommand extends Command {
             return Optional.ofNullable(this.comment);
         }
 
+        /**
+         * Sets {@code tags} to this object's {@code tags}.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public void setTags(Set<Tag> tags) {
+            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<Tag>> getTags() {
+            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -235,6 +261,7 @@ public class EditStudentScoreCommand extends Command {
                     .add("component name", gcName)
                     .add("score", score)
                     .add("comment", comment)
+                    .add("tags", tags)
                     .toString();
         }
     }

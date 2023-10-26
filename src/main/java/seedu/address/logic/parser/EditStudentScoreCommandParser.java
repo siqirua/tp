@@ -5,10 +5,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A Class to handle parsing for EditStudentScoreCommand.
@@ -24,7 +31,7 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
     public EditStudentScoreCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
-                        PREFIX_MARKS, PREFIX_COMMENT);
+                        PREFIX_MARKS, PREFIX_COMMENT, PREFIX_TAG);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
                 PREFIX_MARKS, PREFIX_COMMENT);
@@ -65,7 +72,24 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
                     argMultimap.getValue(PREFIX_COMMENT).get());
         }
 
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentScoreDescriptor::setTags);
+
         return new EditStudentScoreCommand(index, editStudentScoreDescriptor);
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
+     */
+    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
 }

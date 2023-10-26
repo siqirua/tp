@@ -1,7 +1,10 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -35,6 +38,9 @@ public class StudentScoreCard extends UiPart<Region> {
     @FXML
     private VBox studentScoreBox;
 
+    @FXML
+    private FlowPane tags;
+
 
     /**
      * Creates a {@code StudentScoreCard} with the given {@code StudentScore} and index to display.
@@ -45,9 +51,11 @@ public class StudentScoreCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         sid.setText(studentScore.getStudentId().sid + " - " + studentScore.getGcName().gcName);
         score.setText("Score: " + studentScore.getScore() + "/" + studentScore.getGradedComponent().getMaxMarks());
+        studentScore.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (!studentScore.getComment().isEmpty()) {
             studentScoreBox.getChildren().add(new Label("Comment: " + studentScore.getComment()));
         }
-
     }
 }
