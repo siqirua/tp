@@ -37,8 +37,10 @@ public class JsonAdaptedStudent {
      */
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("studentId") String studentId,
-        @JsonProperty("studentName") String studentName,
-        @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                              @JsonProperty("studentName") String studentName,
+                              @JsonProperty("studentEmail") String studentEmail,
+                              @JsonProperty("tutorialGroup") String tutorialGroup,
+                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentEmail = studentEmail;
