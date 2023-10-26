@@ -1,5 +1,11 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,6 +16,7 @@ import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.gradedcomponent.Weightage;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -27,6 +34,8 @@ public class JsonAdaptedStudentScore {
     private final String score;
     private final String comment;
 
+    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+
     /**
      * Constructs a {@code JsonAdaptedStudent} with the given person details.
      */
@@ -36,13 +45,17 @@ public class JsonAdaptedStudentScore {
                                    @JsonProperty("gradedComponentMaximumMarks") String gcMax,
                                    @JsonProperty("gradedComponentWeightage") String gcWeightage,
                                    @JsonProperty("score") String score,
-                                   @JsonProperty("comment") String comment) {
+                                   @JsonProperty("comment") String comment,
+                                   @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.studentId = studentId;
         this.gcName = gcName;
         this.gcMaxMarks = gcMax;
         this.gcWeightage = gcWeightage;
         this.score = score;
         this.comment = comment;
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
     }
 
     /**
@@ -55,6 +68,9 @@ public class JsonAdaptedStudentScore {
         gcWeightage = DEFAULT_WEIGHTAGE;
         score = String.valueOf(source.getScore());
         comment = source.getComment();
+        tags.addAll(source.getTags().stream()
+                .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -81,7 +97,13 @@ public class JsonAdaptedStudentScore {
 
         final String modelComment = comment;
 
-        return new StudentScore(modelStudentId, newGcName, modelScore, modelComment);
+        final List<Tag> studentScoreTags = new ArrayList<>();
+        for (JsonAdaptedTag tag : tags) {
+            studentScoreTags.add(tag.toModelType());
+        }
+        final Set<Tag> modelTags = new HashSet<>(studentScoreTags);
+
+        return new StudentScore(modelStudentId, newGcName, modelScore, modelComment, modelTags);
     }
 
 }

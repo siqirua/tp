@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,6 +29,7 @@ public class JsonAdaptedStudent {
     private final String studentName;
     private final String studentEmail;
     private final String tutorialGroup;
+    private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedStudent} with the given person details.
@@ -35,11 +37,15 @@ public class JsonAdaptedStudent {
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("studentId") String studentId,
         @JsonProperty("studentName") String studentName,
-        @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup) {
+        @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup,
+                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentEmail = studentEmail;
         this.tutorialGroup = tutorialGroup;
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
     }
 
     /**
@@ -50,6 +56,9 @@ public class JsonAdaptedStudent {
         studentName = source.getName().fullName;
         studentEmail = source.getEmail().value;
         tutorialGroup = source.getTutorial().groupName;
+        tags.addAll(source.getTags().stream()
+                .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -95,7 +104,11 @@ public class JsonAdaptedStudent {
         final TutorialGroup modelTutorialGroup = new TutorialGroup(tutorialGroup);
 
         final List<Tag> studentTags = new ArrayList<>();
+        for (JsonAdaptedTag tag : tags) {
+            studentTags.add(tag.toModelType());
+        }
         final Set<Tag> modelTags = new HashSet<>(studentTags);
+
         final List<StudentScore> modelStudentScores = new ArrayList<>();
 
         return new Student(modelStudentId, modelStudentName, modelStudentEmail, modelTutorialGroup,

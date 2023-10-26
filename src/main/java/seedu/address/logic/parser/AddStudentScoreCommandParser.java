@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddStudentScoreCommand;
@@ -15,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.model.tag.Tag;
 
 /**
  * Command Parser for StudentScore
@@ -27,7 +30,7 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
-                        PREFIX_MARKS, PREFIX_COMMENT);
+                        PREFIX_MARKS, PREFIX_COMMENT, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID,
                 PREFIX_COMPONENT_NAME, PREFIX_MARKS)
@@ -49,9 +52,9 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
         descriptor.setScore(score);
         String comment = argMultimap.getValue(PREFIX_COMMENT).orElse("");
         descriptor.setComment(comment);
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-
-        StudentScore studentScore = new StudentScore(sid, gcname, score, comment);
+        StudentScore studentScore = new StudentScore(sid, gcname, score, comment, tagList);
         return new AddStudentScoreCommand(studentScore);
     }
 
