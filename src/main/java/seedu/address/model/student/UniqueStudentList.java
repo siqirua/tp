@@ -3,13 +3,12 @@ package seedu.address.model.student;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-
 
 
 /**
@@ -89,6 +88,46 @@ public class UniqueStudentList implements Iterable<Student> {
      */
     public void clear() {
         internalList.clear();
+    }
+
+    /**
+     * Sorts the Student list.
+     */
+    public void sort(String order, boolean reverse) {
+        internalList.sort(new Comparator<Student>() {
+            @Override
+            public int compare(Student s1, Student s2) {
+                String s1Value;
+                String s2Value;
+                switch (order) {
+                case "s":
+                    s1Value = s1.getStudentId().toString();
+                    s2Value = s2.getStudentId().toString();
+                    break;
+                case "n":
+                    s1Value = s1.getName().toString();
+                    s2Value = s2.getName().toString();
+                    break;
+                case "e":
+                    s1Value = s1.getEmail().toString();
+                    s2Value = s2.getEmail().toString();
+                    break;
+                case "g":
+                    s1Value = s1.getTutorial().toString();
+                    s2Value = s2.getTutorial().toString();
+                    break;
+                default:
+                    s1Value = s1.getStudentId().toString();
+                    s2Value = s2.getStudentId().toString();
+                }
+
+                if (!reverse) {
+                    return s1Value.compareTo(s2Value);
+                } else {
+                    return s2Value.compareTo(s1Value);
+                }
+            }
+        });
     }
 
     public void setStudents(UniqueStudentList replacement) {

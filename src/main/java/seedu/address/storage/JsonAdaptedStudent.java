@@ -29,7 +29,6 @@ public class JsonAdaptedStudent {
     private final String studentName;
     private final String studentEmail;
     private final String tutorialGroup;
-
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,8 +37,7 @@ public class JsonAdaptedStudent {
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("studentId") String studentId,
                               @JsonProperty("studentName") String studentName,
-                              @JsonProperty("studentEmail") String studentEmail,
-                              @JsonProperty("tutorialGroup") String tutorialGroup,
+                              @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.studentId = studentId;
         this.studentName = studentName;
@@ -109,6 +107,7 @@ public class JsonAdaptedStudent {
             studentTags.add(tag.toModelType());
         }
         final Set<Tag> modelTags = new HashSet<>(studentTags);
+
         final List<StudentScore> modelStudentScores = new ArrayList<>();
 
         return new Student(modelStudentId, modelStudentName, modelStudentEmail, modelTutorialGroup,

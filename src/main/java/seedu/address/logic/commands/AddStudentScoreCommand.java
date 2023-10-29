@@ -1,6 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,8 +26,19 @@ public class AddStudentScoreCommand extends Command {
     public static final String COMMAND_WORD = "addStuScore";
     // to expand
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student score to the database.\n"
-            + "Example: " + COMMAND_WORD + " s/A1234567Y c/Midterm m/57";
-
+            + "Parameters: "
+            + PREFIX_STUDENT_ID + "STUDENT ID"
+            + PREFIX_NAME + "STUDENT NAME "
+            + PREFIX_COMPONENT_NAME + "GRADED COMPONENT "
+            + PREFIX_MARKS + "MARKS "
+            + "[" + PREFIX_COMMENT + "COMMENT] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_STUDENT_ID + "s/A1234567Y "
+            + PREFIX_NAME + "John "
+            + PREFIX_COMPONENT_NAME + "Midterm "
+            + PREFIX_MARKS + "57 "
+            + PREFIX_TAG + "Makeup exam";
     public static final String MESSAGE_SUCCESS = "New student score added: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENTSCORE = "This student score already exists in the database";
 

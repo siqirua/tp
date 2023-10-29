@@ -1,6 +1,11 @@
 package seedu.address.model.studentscore;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedcomponent.GcName;
@@ -8,6 +13,7 @@ import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -22,18 +28,22 @@ public class StudentScore {
     private String comment = "";
     private Student student;
     private GradedComponent gc;
+
+    private final Set<Tag> tags = new HashSet<>();
     /**
      * Constructs a {@code studentScore}.
      *
      * @param sid A valid student score.
      */
-    public StudentScore(StudentId sid, GcName gcName, float score, String comment) {
+    public StudentScore(StudentId sid, GcName gcName, float score, String comment, Set<Tag> tagSet) {
+        requireAllNonNull(sid, gcName, score);
         this.sid = sid;
         this.gcName = gcName;
         this.score = score; //add also max marks for the score
         this.comment = comment;
         // Add student name based on the student id
         this.name = new StudentName("test name"); //test name
+        this.tags.addAll(tagSet);
     }
 
     /**
@@ -44,6 +54,7 @@ public class StudentScore {
      * @param score the score
      */
     public StudentScore(StudentId sid, GcName gcName, float score) {
+        requireAllNonNull(sid, gcName, score);
         this.sid = sid;
         this.gcName = gcName;
         this.score = score;
@@ -69,6 +80,9 @@ public class StudentScore {
 
     public String getComment() {
         return this.comment;
+    }
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
     }
 
     public void setGcName(GcName newName) {
@@ -141,6 +155,7 @@ public class StudentScore {
                 .add("component name", gcName)
                 .add("score", score)
                 .add("comment", comment)
+                .add("tags", tags)
                 .toString();
     }
 

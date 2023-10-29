@@ -1,10 +1,10 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# ModuLight Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -67,11 +67,14 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2324S1-CS2103T-W08-2/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, 
+`GradedComponentListPanel`, `StudentScoreListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`,
+inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts 
+of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -80,7 +83,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Student`, `GradedComponent` and `StudentScore`objects residing in the `Model`.
 
 ### Logic component
 
@@ -90,7 +93,7 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("deleteStu 1")` API call as an example.
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
@@ -101,10 +104,14 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteStudentCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteStudentCommand`) which is executed by the `LogicManager`.
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a student).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+
+**Note:** There are three different model objects, namely the StudentBook, the StudentScore Book and the GradedComponentBook.
+The command might interact with one or more model objects. For example, when a student is deleted, the command will communicate 
+with the StudentBook to delete this student, as well as the StudentScoreBook, to delete all the student scores relevant to this student.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
@@ -112,7 +119,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* All `XYZCommandParser` classes (e.g., `AddStudentCommandParser`, `DeleteStudentCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -143,8 +150,10 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* can save student data, student score data, graded component data and user preference data in JSON format, and read 
+  them back into the corresponding objects.  
+* inherits from `StudentBookStorage`, `GradedComponentBookStorage`, `StudentScoreBookStorage` and `UserPrefsStorage`,
+  which means it can be treated as any of the one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -250,6 +259,46 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### \[Proposed\] Auto-grading 
+
+#### Proposed Implementation
+
+{Intro}
+
+Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
+
+Step 1. The user launch the application for the first time. 
+
+Step 2. The user creates the desired graded components and adds all the students in the cohort.
+
+Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile' 
+keyword indicates that Modulight grades based on the students' percentile compared to another. The value after `pg/` indicates
+the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`. 
+
+<box type="info" seamless>
+
+**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score. 
+
+</box>
+
+Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
+Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
+total score. Modulight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
+`autoGradeCommand`.
+
+
+
+#### Design considerations:
+
+**Aspect: How the assignments of grade works:**
+
+* **Alternative 1 (Current choice):** Use tags to assign the grade
+  * Pros: Easy to implement.
+  * Cons: Not ideal if we want to extend the code for more features.
+* **Alternative 2:** Create new Grade object for each student.
+  * Pros: Cleaner and extendable code implementation.
+  * Cons: require change of implementation on multiple classes.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -267,17 +316,16 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
+**Target user profile**
 
-* NUS course coordinators and tutors
-* has a need to manage a significant number of student grades
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
+NUS professors who:
+* have a need to manage a significant number of students and assessments in a single module
+* are beginners to intermediate in spreadsheet technology
+* prefer typing over interacting with the GUI with the mouse
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-* NUS course coordinators and tutors need a convenient system to manage student grades. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (eg. dropped module, potential TA etc.), alongside general GUI improvements.
+* NUS professors need a convenient system to manage students and assessments. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (eg. dropped module, potential TA etc.), alongside general GUI improvements.
 
 
 
@@ -330,6 +378,69 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+
+**Use case: Add StudentScores by new graded component**
+
+**MSS**
+
+1.  User creates new Graded Component.
+2.  Modulight creates student scores correspond to the new graded component for every student. 
+3.  Modulight display the student scores list. 
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+
+    Use case ends.
+
+
+**Use case: Add StudentScores by new student **
+
+**MSS**
+
+1.  User creates new Students.
+2.  Modulight creates student scores correspond to the new student for every graded component.
+3.  Modulight display the student scores list.
+
+
+**Use case: Calculate the overall stats of student performance**
+
+**MSS**
+
+1.  User requests to calculate the overall stats of student performance
+2.  ModuLight shows a summary of statistics
+
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. There is currently no student scores.
+    * 1a1. ModuLight shows an error message.
+
+  Use case ends.
+
+
+**Use case: Edit StudentScores**
+
+**MSS**
+
+1.  User requests to edit a student score
+2.  Modulight edits the student score with score and comments
+3.  Modulight display the student score list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given index is invalid.
+
+    * 1a1. ModuLight shows an error message.
+
+      Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
@@ -380,25 +491,28 @@ testers are expected to do more *exploratory* testing.
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all students using the `listStu` command. Multiple students in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `deleteStu 1`<br>
+      Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   1. Test case: `deleteStu 0`<br>
+      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Editing the data file manually.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Open `scoreBook.json`.
+   2. Edit the score field of any student in the file. 
+   3. Run the program.
+      Expected: The score field for the particular student will be updated.
 
 1. _{ more test cases …​ }_

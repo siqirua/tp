@@ -20,6 +20,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_COMMENT = new Prefix("x/");
 
+    public static final Prefix PREFIX_STATS = new Prefix("st/");
+
 
 
 }
