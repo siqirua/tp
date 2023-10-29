@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import seedu.address.logic.commands.statscalculator.StatsCalculator;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
@@ -17,20 +16,18 @@ import seedu.address.model.studentscore.StudentScore;
 /**
  * Calculates the statistics.
  */
-public class CompStatsCommand extends Command {
+public class CompStatsCommand extends StatsCommand {
     public static final String COMMAND_WORD = "compStats";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Calculate the statistics of a certain graded component.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Here are the statistics:\n";
+
     public static final String MESSAGE_EMPTY = "Please at that one score fulfilling the condition.\n";
     public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores."
             + "Please check if the information is correct";
 
-    private final TutorialGroup tutorialGroup;
-    private final boolean isForTut;
     private final GcName gradedComponentName;
 
     /**
@@ -38,9 +35,8 @@ public class CompStatsCommand extends Command {
      *
      * @param gradedComponentName the name of the graded component to be analyzed
      */
-    public CompStatsCommand(GcName gradedComponentName) {
-        this.isForTut = false;
-        this.tutorialGroup = null;
+    public CompStatsCommand(List<String> allStats, GcName gradedComponentName) {
+        super(allStats);
         this.gradedComponentName = gradedComponentName;
     }
 
@@ -50,9 +46,8 @@ public class CompStatsCommand extends Command {
      * @param gradedComponentName the name of the graded component to be analyzed
      * @param tutorialGroup the tutorial group to be analyzed
      */
-    public CompStatsCommand(GcName gradedComponentName, TutorialGroup tutorialGroup) {
-        this.isForTut = true;
-        this.tutorialGroup = tutorialGroup;
+    public CompStatsCommand(List<String> allStats, GcName gradedComponentName, TutorialGroup tutorialGroup) {
+        super(allStats, tutorialGroup);
         this.gradedComponentName = gradedComponentName;
     }
 
@@ -93,13 +88,7 @@ public class CompStatsCommand extends Command {
         return generateSummaryFromScores(studentScores, generateSummaryOpenning(tutGroup));
     }
 
-    private String generateSummaryFromScores(List<Float> scores, String openning) {
-        StatsCalculator st = new StatsCalculator(scores);
-        StringBuilder sb = new StringBuilder(openning);
-        sb.append(String.format("MAX = %f, MIN = %f\n", st.getMax(), st.getMin()));
-        sb.append(String.format("MEAN = %f, STD = %f\n", st.getMean(), st.getStd()));
-        return sb.toString();
-    }
+
 
     private String generateSummaryOpenning(String tutGroup) {
         StringBuilder sb = new StringBuilder(MESSAGE_SUCCESS);

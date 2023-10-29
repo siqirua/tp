@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.statscalculator;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,25 +9,22 @@ import java.util.List;
 public class StatsCalculator {
     private final List<Float> scores;
 
+    /**
+     * Constructs a stats calculator to generate various statistical measures
+     *
+     * @param scores a list of scores to be analyzed
+     */
     public StatsCalculator(List<Float> scores) {
+        Collections.sort(scores);
         this.scores = scores;
     }
 
-
     public float getMax() {
-        float max = Float.MIN_VALUE;
-        for (float score : scores) {
-            max = Math.max(max, score);
-        }
-        return max;
+        return scores.get(scores.size() - 1);
     }
 
     public float getMin() {
-        float min = Float.MAX_VALUE;
-        for (float score : scores) {
-            min = Math.min(min, score);
-        }
-        return min;
+        return scores.get(0);
     }
 
     private float getSum() {
@@ -51,5 +49,29 @@ public class StatsCalculator {
 
     public float getStd() {
         return (float) Math.pow(getSumOfSquare() / scores.size() - getMean() * getMean(), 0.5);
+    }
+
+    public float getUpperQuartile() {
+        double upperIndex = (scores.size() + 1) * 0.75 - 1;
+        int floor = (int) Math.max(0, Math.floor(upperIndex));
+        int ceiling = (int) Math.min(Math.ceil(upperIndex), scores.size() - 1);
+        return (scores.get(floor) + scores.get(ceiling)) / 2;
+    }
+
+    public float getLowerQuartile() {
+        double lowerIndex = (scores.size() + 1) * 0.25 - 1;
+        int floor = (int) Math.max(0, Math.floor(lowerIndex));
+        int ceiling = (int) Math.min(Math.ceil(lowerIndex), scores.size() - 1);
+        return (scores.get(floor) + scores.get(ceiling)) / 2;
+    }
+
+    public float getSkewness() {
+        float mean = getMean();
+        float std = getStd();
+        float sum = 0;
+        for (float score : scores) {
+            sum += (float) Math.pow(score - mean, 3);
+        }
+        return (float) (sum / Math.pow(std, 3) / (scores.size() - 1));
     }
 }

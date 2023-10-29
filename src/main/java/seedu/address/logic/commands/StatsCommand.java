@@ -24,25 +24,29 @@ public class StatsCommand extends Command {
     public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores."
             + "Please check if the information is correct";
 
-    private final TutorialGroup tutorialGroup;
-    private final boolean isForTut;
+    protected final TutorialGroup tutorialGroup;
+    protected final boolean isForTut;
+    private List<String> stats;
 
     /**
      * Creates a StatsCommand to calculate the overall stats.
      */
-    public StatsCommand() {
+    public StatsCommand(List<String> allStats) {
         this.isForTut = false;
         this.tutorialGroup = null;
+        this.stats = allStats;
     }
 
     /**
      * Creates a StatsCommand to calculate the overall stats of a given tutorial group.
      * @param tutorialGroup the tutorial group to be analyzed
      */
-    public StatsCommand(TutorialGroup tutorialGroup) {
+    public StatsCommand(List<String> allStats, TutorialGroup tutorialGroup) {
         this.isForTut = true;
         this.tutorialGroup = tutorialGroup;
+        this.stats = allStats;
     }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
@@ -70,11 +74,50 @@ public class StatsCommand extends Command {
         return generateSummaryFromScores(studentScores, generateSummaryOpenning(tutGroup));
     }
 
-    private String generateSummaryFromScores(List<Float> scores, String openning) {
+    protected String generateSummaryFromScores(List<Float> scores, String opening) {
         StatsCalculator st = new StatsCalculator(scores);
-        StringBuilder sb = new StringBuilder(openning);
-        sb.append(String.format("MAX = %f, MIN = %f\n", st.getMax(), st.getMin()));
-        sb.append(String.format("MEAN = %f, STD = %f\n", st.getMean(), st.getStd()));
+        StringBuilder sb = new StringBuilder(opening);
+        if (stats.isEmpty()) {
+            sb.append(String.format("MAX = %.2f, MIN = %.2f, MEAN = %.2f, STANDARD DEVIATION = %.2f\n",
+                    st.getMax(), st.getMin(), st.getMean(), st.getStd()));
+            sb.append(String.format("UPPER QUARTILE = %.2f, LOWER QUARTILE = %.2f, SKEWNESS= %.2f\n",
+                    st.getUpperQuartile(), st.getLowerQuartile(), st.getSkewness()));
+        } else {
+            int count = 0;
+            for (String statsMeasure : stats) {
+                switch (statsMeasure) {
+                case "max":
+                    sb.append(String.format("MAX = %.2f", st.getMax()));
+                    break;
+                case "min":
+                    sb.append(String.format("MIN = %.2f", st.getMin()));
+                    break;
+                case "mean":
+                    sb.append(String.format("MEAN = %.2f", st.getMean()));
+                    break;
+                case "standardDeviation":
+                    sb.append(String.format("STANDARD DEVIATION = %.2f", st.getStd()));
+                    break;
+                case "upperQuartile":
+                    sb.append(String.format("UPPER QUARTILE = %.2f", st.getUpperQuartile()));
+                    break;
+                case "lowerQuartile":
+                    sb.append(String.format("LOWER QUARTILE = %.2f", st.getLowerQuartile()));
+                    break;
+                case "skewness":
+                    sb.append(String.format("SKEWNESS = %.2f", st.getSkewness()));
+                    break;
+                default:
+                    sb.append(String.format("INVALID_STATS_MEASURE: %s", statsMeasure));
+                }
+                count++;
+                if (count % 4 != 0 && count != stats.size()) {
+                    sb.append(", ");
+                } else {
+                    sb.append("\n");
+                }
+            }
+        }
         return sb.toString();
     }
 
