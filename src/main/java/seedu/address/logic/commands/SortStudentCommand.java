@@ -19,7 +19,8 @@ public class SortStudentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all students by the given order.\n"
             + "Parameters:\n"
             + "Attribute to be sorted: Must be one of \"n\", \"name\", \"s\", \"studentId\", "
-            + "\"studentID\", \"e\", \"email\", \"g\", \"tutorial\", \"tut\", \"tutGroup\"\n"
+            + "\"studentID\", \"e\", \"email\", \"g\", \"tutorial\", \"tut\", \"tutGroup\", "
+            + "\"overall\", \"score\"\n"
             + "Reverse (optional): If true, the sorted list is reversed (or sorted in Descending order)\n"
             + "Example: " + COMMAND_WORD + " s true";
 
@@ -37,10 +38,12 @@ public class SortStudentCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        Predicate<Student> currentPredicate = model.getCurrentPredicate();
+        Predicate<Student> currentPredicate = model.getCurrentStudentsPredicate();
         StudentBook studentBook = model.getStudentBook();
         studentBook.sortStudent(sortingOrder, reverse);
-        model.updateFilteredStudentList(currentPredicate);
+        if (currentPredicate != null) {
+            model.updateFilteredStudentList(currentPredicate);
+        }
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
     }
