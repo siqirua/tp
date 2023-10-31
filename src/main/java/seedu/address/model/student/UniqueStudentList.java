@@ -193,7 +193,6 @@ public class UniqueStudentList implements Iterable<Student> {
         return this.internalList.size();
     }
 
-  
     public void setStudents(UniqueStudentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
