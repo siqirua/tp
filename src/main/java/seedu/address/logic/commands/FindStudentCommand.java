@@ -17,7 +17,7 @@ import seedu.address.model.student.StudentMatchPredicate;
  * Keyword matching is case insensitive.
  */
 public class FindStudentCommand extends Command {
-    public static final String COMMAND_WORD = "findStu";
+    public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose Student IDs match any of "
             + "the specified Student IDs (case-insensitive) and displays them as a list with index numbers.\n"
