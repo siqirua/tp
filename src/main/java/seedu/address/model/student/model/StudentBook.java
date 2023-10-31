@@ -119,7 +119,7 @@ public class StudentBook implements ReadOnlyStudentBook {
     public void sortStudentScore(GcName gcName, boolean reverse) {
         students.sortScore(gcName, reverse);
     }
-  
+
     public int getSize() {
         return this.students.getSize();
     }
