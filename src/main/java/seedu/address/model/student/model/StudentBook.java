@@ -111,6 +111,10 @@ public class StudentBook implements ReadOnlyStudentBook {
         students.sort(order, reverse);
     }
 
+    public int getSize() {
+        return this.students.getSize();
+    }
+
     //// util methods
 
     @Override

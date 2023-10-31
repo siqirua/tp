@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_GRADE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
@@ -25,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentGrade;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
@@ -50,7 +52,8 @@ public class EditStudentCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_TUTORIAL_GROUP + "TUTORIAL_GROUP] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]..."
+            + "[" + PREFIX_STUDENT_GRADE + "GRADE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -123,8 +126,10 @@ public class EditStudentCommand extends Command {
                         .orElse(studentToEdit.getTutorial());
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
         List<StudentScore> updatedScores = studentToEdit.getScores();
+        StudentGrade updatedGrade = editStudentDescriptor.getStudentGrade().orElse(studentToEdit.getStudentGrade());
 
-        return new Student(updatedId, updatedName, updatedEmail, updatedTutorialGroup, updatedScores, updatedTags);
+        return new Student(updatedId, updatedName, updatedEmail,
+                updatedTutorialGroup, updatedScores, updatedTags, updatedGrade);
     }
 
     @Override
@@ -162,6 +167,7 @@ public class EditStudentCommand extends Command {
         private Set<Tag> tags;
         private TutorialGroup tg;
         private List<StudentScore> scores;
+        private StudentGrade studentGrade;
 
         public EditStudentDescriptor() {}
 
@@ -176,6 +182,7 @@ public class EditStudentCommand extends Command {
             setTags(toCopy.tags);
             setScores(toCopy.scores);
             setTutorialGroup(toCopy.tg);
+            setStudentGrade(toCopy.studentGrade);
         }
 
         /**
@@ -243,6 +250,14 @@ public class EditStudentCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setStudentGrade(StudentGrade studentGrade) {
+            this.studentGrade = studentGrade;
+        }
+
+        public Optional<StudentGrade> getStudentGrade() {
+            return Optional.ofNullable(studentGrade);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -260,7 +275,8 @@ public class EditStudentCommand extends Command {
                     && Objects.equals(email, otherEditStudentDescriptor.email)
                     && Objects.equals(tg, otherEditStudentDescriptor.tg)
                     && Objects.equals(scores, otherEditStudentDescriptor.scores)
-                    && Objects.equals(tags, otherEditStudentDescriptor.tags);
+                    && Objects.equals(tags, otherEditStudentDescriptor.tags)
+                    && Objects.equals(studentGrade, otherEditStudentDescriptor.studentGrade);
         }
 
         @Override
@@ -272,6 +288,7 @@ public class EditStudentCommand extends Command {
                     .add("tutorial group", tg)
                     .add("score", scores)
                     .add("tags", tags)
+                    .add("student grade", studentGrade)
                     .toString();
         }
     }

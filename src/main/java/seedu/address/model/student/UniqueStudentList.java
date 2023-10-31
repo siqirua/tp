@@ -99,6 +99,9 @@ public class UniqueStudentList implements Iterable<Student> {
             public int compare(Student s1, Student s2) {
                 String s1Value;
                 String s2Value;
+
+                Float s1TotalScore = new Float(0);
+                Float s2TotalScore = new Float(0);
                 switch (order) {
                 case "s":
                     s1Value = s1.getStudentId().toString();
@@ -116,9 +119,23 @@ public class UniqueStudentList implements Iterable<Student> {
                     s1Value = s1.getTutorial().toString();
                     s2Value = s2.getTutorial().toString();
                     break;
+                case "ts":
+                    s1TotalScore = s1.getTotalScore();
+                    s2TotalScore = s2.getTotalScore();
+                    s1Value = s1.getStudentId().toString();
+                    s2Value = s2.getStudentId().toString();
+                    break;
                 default:
                     s1Value = s1.getStudentId().toString();
                     s2Value = s2.getStudentId().toString();
+                }
+
+                if (order.equals("ts")) {
+                    if (!reverse) {
+                        return s1TotalScore.compareTo(s2TotalScore);
+                    } else {
+                        return s2TotalScore.compareTo(s1TotalScore);
+                    }
                 }
 
                 if (!reverse) {
@@ -129,6 +146,15 @@ public class UniqueStudentList implements Iterable<Student> {
             }
         });
     }
+
+    /**
+     * Get size of the List.
+     * @return the size.
+     */
+    public int getSize() {
+        return this.internalList.size();
+    }
+
 
     public void setStudents(UniqueStudentList replacement) {
         requireNonNull(replacement);

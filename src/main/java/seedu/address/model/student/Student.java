@@ -30,6 +30,7 @@ public class Student {
 
     private final Set<Tag> tags = new HashSet<>();
     private float totalScore;
+    private final StudentGrade studentGrade;
 
     /**
      * Every field must be present and not null.
@@ -43,6 +44,22 @@ public class Student {
         this.tg = tg;
         this.scoreList.addAll(scores);
         this.tags.addAll(tagSet);
+        this.studentGrade = new StudentGrade("");
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Student(StudentId sid, StudentName name, StudentEmail email, TutorialGroup tg,
+                   List<StudentScore> scores, Set<Tag> tagSet, StudentGrade studentGrade) {
+        requireAllNonNull(sid, name, email, tg, studentGrade);
+        this.sid = sid;
+        this.name = name;
+        this.email = email;
+        this.tg = tg;
+        this.scoreList.addAll(scores);
+        this.tags.addAll(tagSet);
+        this.studentGrade = studentGrade;
     }
 
     public StudentId getStudentId() {
@@ -72,6 +89,11 @@ public class Student {
     public List<StudentScore> getScores() {
         return Collections.unmodifiableList(scoreList);
     }
+
+    public StudentGrade getStudentGrade() {
+        return this.studentGrade;
+    }
+
     public void addScore(StudentScore score) {
         scoreList.add(score);
     }
@@ -148,6 +170,7 @@ public class Student {
                 .add("email", email)
                 .add("tutorial group", tg)
                 .add("tags", tags)
+                .add("student grade", studentGrade)
                 .toString();
 
     }
