@@ -19,6 +19,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_COMMENT = new Prefix("x/");
+    public static final Prefix PREFIX_AUTOGRADE_TYPE = new Prefix("ag/");
+    public static final Prefix PREFIX_PASSING_GRADE = new Prefix("pg/");
+    public static final Prefix PREFIX_STUDENT_GRADE = new Prefix("sg/");
 
     public static final Prefix PREFIX_STATS = new Prefix("st/");
 

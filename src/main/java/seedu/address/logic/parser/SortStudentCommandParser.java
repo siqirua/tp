@@ -15,7 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class SortStudentCommandParser implements Parser<SortStudentCommand> {
     private static final List<String> ORDERS_ACCEPTABLE = Arrays.asList("n", "name", "s", "studentId", "studentID",
-            "e", "email", "g", "tutorial", "tut", "tutGroup", "overall", "score");
+            "e", "email", "g", "tutorial", "tut", "tutGroup", "ts", "totalScore", "score", "overall", "totalscore");
     private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
             "1", "0", "t", "f");
     private static final Boolean REVERSE_DEFAULT = false;
@@ -75,6 +75,8 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
                 break;
             case "overall":
             case "score":
+            case "totalscore":
+            case "totalScore":    
                 order = "o";
                 break;
             default:

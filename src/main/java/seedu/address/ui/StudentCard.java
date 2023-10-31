@@ -43,6 +43,8 @@ public class StudentCard extends UiPart<Region> {
 
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane studentGrade;
 
     @FXML
     private VBox studentBox;
@@ -68,6 +70,9 @@ public class StudentCard extends UiPart<Region> {
         Label totalScoreLabel = new Label("Total Score: " + student.getTotalScore() + "%");
         totalScoreLabel.getStyleClass().add("cell_small_label");
         studentBox.getChildren().add(totalScoreLabel);
+        if (!student.getStudentGrade().toString().isEmpty()) {
+            studentGrade.getChildren().add(new Label(student.getStudentGrade().grade));
+        }
 
     }
 }

@@ -36,8 +36,9 @@ public class JsonAdaptedStudent {
      */
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("studentId") String studentId,
-        @JsonProperty("studentName") String studentName,
-        @JsonProperty("studentEmail") String studentEmail, @JsonProperty("tutorialGroup") String tutorialGroup,
+                              @JsonProperty("studentName") String studentName,
+                              @JsonProperty("studentEmail") String studentEmail,
+                              @JsonProperty("tutorialGroup") String tutorialGroup,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.studentId = studentId;
         this.studentName = studentName;
@@ -102,7 +103,6 @@ public class JsonAdaptedStudent {
             throw new IllegalValueException(TutorialGroup.MESSAGE_CONSTRAINTS);
         }
         final TutorialGroup modelTutorialGroup = new TutorialGroup(tutorialGroup);
-
         final List<Tag> studentTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             studentTags.add(tag.toModelType());
