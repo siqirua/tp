@@ -31,6 +31,7 @@ public class FindStudentCommandParser implements Parser<FindStudentCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL,
                         PREFIX_TUTORIAL_GROUP, PREFIX_COMPONENT_NAME, PREFIX_TAG);
 
+
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindStudentCommand.MESSAGE_USAGE));
         }

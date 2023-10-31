@@ -42,7 +42,7 @@ public class StudentMatchPredicate implements Predicate<Student> {
         boolean tutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
                 .anyMatch(keyword -> student.getTutorial().toString().equalsIgnoreCase(keyword));
         boolean tagMatch = tagKeywords.isEmpty() || student.getTags().stream()
-                .anyMatch(tag -> tagKeywords.contains(tag.tagName));
+                .anyMatch(tag -> tagKeywords.contains(tag.tagName.toLowerCase()));
         return idMatch && nameMatch && emailMatch && tutMatch && tagMatch;
     }
 

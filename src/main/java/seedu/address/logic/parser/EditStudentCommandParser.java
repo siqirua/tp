@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_GRADE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
@@ -45,7 +46,7 @@ public class EditStudentCommandParser implements Parser<EditStudentCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_NAME,
-                PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP, PREFIX_TAG);
+                PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
         EditStudentCommand.EditStudentDescriptor editStudentDescriptor = new EditStudentCommand.EditStudentDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -60,6 +61,10 @@ public class EditStudentCommandParser implements Parser<EditStudentCommand> {
         if (argMultimap.getValue(PREFIX_TUTORIAL_GROUP).isPresent()) {
             editStudentDescriptor.setTutorialGroup(
                     ParserUtil.parseTg(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get()));
+        }
+        if (argMultimap.getValue(PREFIX_STUDENT_GRADE).isPresent()) {
+            editStudentDescriptor.setStudentGrade(ParserUtil.parseStudentGrade(
+                    argMultimap.getValue(PREFIX_STUDENT_GRADE).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentDescriptor::setTags);
 

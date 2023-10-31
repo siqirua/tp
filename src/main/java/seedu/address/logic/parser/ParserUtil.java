@@ -17,6 +17,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentGrade;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
@@ -173,6 +174,21 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String student grade} into a {@code StudentGrade}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code studentGrade} is invalid.
+     */
+    public static StudentGrade parseStudentGrade(String studentGrade) throws ParseException {
+        requireNonNull(studentGrade);
+        String trimmedStudentGrade = studentGrade.trim();
+        if (!Address.isValidAddress(trimmedStudentGrade)) {
+            throw new ParseException(StudentGrade.MESSAGE_CONSTRAINTS);
+        }
+        return new StudentGrade(studentGrade);
     }
     /**
      * Parses {@code String s} into a {@code Weightage}, if possible.
