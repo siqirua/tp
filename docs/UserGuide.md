@@ -40,28 +40,102 @@ LumiNUS is a **desktop app for managing students' grades, optimized for use via 
 
 6. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+## Command Format
+
+| Notes                                                                                           | Explanation                                                                  | Examples                                                                                                                  |
+|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| Words in UPPER_CASE                                                                             | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                 |
+| Items in square brackets                                                                        | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                  |
+| Items with ... after them                                                                       | These are parameters that can be used multiple times (or omitted completely) | `listStu [g/TUTORIAL_GRP...]` can be used as `listStu g/T02 T03` or `listStu g/T01` or just `listStu`                     |
+| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 n/megan t/T00`                                                      |
+| If a parameter is expected only once and entered multiple times, an error message will be shown | NIL                                                                          | `editStu 1 n/megan n/maega` results in error message `Multiple values specified for the following single-valued field(s)` |
+| Extraneous parameters for commands that do not take in parameters will be ignored               | NIL                                                                          | `help abc` is equivalent to `help`                                                                                        |
+
+
+## Glossary
+
+### Definitions
+
+| Term                     | Definition                                                                                                                                                                               |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Command                  | An input written by the user to tell Modulight to perform a certain action.                                                                                                              |
+| Parameter                | A value that must be inputted by the user to complete a command.                                                                                                                         |
+| Index                    | A number that refers to the position of the components in an ordering. Modulight uses a 1-based index, which means the first number in an order is 1.                                    |
+| Command Line Interface   | It is a text-based user interface that accepts text inputs to execute commands.                                                                                                          |
+| Graphical User Interface | It is a digital interface where the users interact with the system using graphical components, such as icons and buttons.                                                                |
+| User Interface           | It is the point in which a human user interacts with a computer. It can be a physical device or software program.                                                                        |
+| Component                | A component is a part of the user interface.                                                                                                                                             |
+| JSON file                | JavaScript Object Notation(JSON) is a file used for data storage in ModuLight. For more information, please refer to the guide [here](https://www.oracle.com/sg/database/what-is-json/). |
+| Alphanumeric             | A piece of alphanumeric text should consist of only alphabets and numeric values. For instance,  the text “ABC11” is alphanumeric whereas “(**)” is not.                                 |
+| Domain                   | A domain is a digital address of a website. For emails, domain is the web address that comes after the @ symbol. For example, the domain in the email address 123@gmail.com is gmail.com |
+
+## Parameter Information
+
+The following section gives an overview of the parameters used for the commands related to Student, StudentScore and GradedComponent, as well as the constraints of these parameters.
+
+### Student Parameters
+
+| Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples           |
+|-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|----------------------------|
+| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준      | 
+| e/        | Email of the student          | Must consist of a alphanumeric prefix, @ symbol and a domain               | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail             |
+| s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
+| g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
+
+### Graded Component Parameters
+
+| Parameter | Description                                               | Constraints                                                                                                                                         | Valid Examples      | Invalid Examples             |
+|-----------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|------------------------------|
+| c/        | Name of the graded component                              | Must only contain alphanumeric characters and must not be empty                                                                                     | Midterm Exam, CA2   | 高考, CA2/Oral, Practical-Exam |
+| w/        | Weightage of the graded component                         | Must be a non-negative number, though decimals are allowed                                                                                          | 0, 0.25, 20, 1000.8 | -0.3, 1/2, (20), NIL         |
+| mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number, though decimals are allowed. If the weightage for this component is non-zero, then maximum marks must be more than 0 | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
+
+
+### Student Score Parameters
+
+| Parameter | Description                                   | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples   |
+|-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|--------------------|
+| m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve |
+| x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                 |
+| INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03          |
+
+<box type="info" seamless>
+
+**Notes on Graded Component and Student Score parameters for score calculation**<br>
+
+* The maximum marks of a graded component and marks of a student score are both absolute values and are used together to determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
+
+* The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of the student’s overall score. This is modified as components are added and removed.
+
+</box>
+
+## Navigating the Graphical User Interface (GUI)
+
+ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick runthrough of the different sections of our GUI, as well as some notes regarding the use of the GUI.
+
+### Quick Orientation:
+![Ui overview](images/Ui_overview.png)
+
+Here is a summary of each GUI component within ModuLight.
+
+| Name of Component     | Description                                                                                                                                                              |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Menu Bar              | Contains dropdown menu options for the App                                                                                                                               |
+| Command Box           | Allow users to enter their commands                                                                                                                                      |
+| Result Display        | Provides feedback upon a user command. Allows users to see if their command was successful or not.Provides error messages to guide user on how to use ModuLight Commands |
+| Graded Component List | Shows a list of Graded Component Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Graded Components stored.       |
+| Graded Component Card | Displays key information about a Graded Component such as maximum marks and weightage.                                                                                   |
+| Student List          | Shows a list of Student Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Students stored.                         |
+| Student Card          | Displays key information about a Student such as name, tutorial group, emailid, etc.                                                                                     |
+| Student Score List    | Shows a list of Student Score Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all StudentsScores stored.             |
+| Student Score Card    | Displays key information about student scores such as graded component name for which the student is given the score and the student score itself.                       |
+
 
 ## Features
 
 <box type="info" seamless>
 
 **Notes about the command format:**<br>
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
