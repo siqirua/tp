@@ -75,7 +75,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         this.tutorialGroupKeywords = new ArrayList<>();
         this.studentMatchPredicate = new StudentMatchPredicate(empty, empty, empty, empty, empty);
         this.tagKeywords = new ArrayList<>();
-        this.gcKeywords = gcKeywords;
+        this.gcNames = gcKeywords;
         this.gcMatchPredicate = new GcMatchPredicate();
     }
 
