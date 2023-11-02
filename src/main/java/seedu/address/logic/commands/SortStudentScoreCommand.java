@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REVERSE;
 
 import java.util.Collections;
 import java.util.function.Predicate;
@@ -13,7 +14,7 @@ import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.StudentScoreMatchPredicate;
+import seedu.address.model.studentscore.ScoreMatchPredicate;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
 
@@ -28,15 +29,16 @@ public class SortStudentScoreCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all students scores under a given graded component.\n"
             + "Parameters:\n"
-            + PREFIX_COMPONENT_NAME + "COMPONENT NAME\n"
-            + "Reverse (optional): If true, the sorted list is reversed (or sorted in Descending order)\n"
-            + "Example: " + COMMAND_WORD + " c/Midterm true";
+            + "[" + PREFIX_COMPONENT_NAME + "COMPONENT NAME]\n"
+            + "[" + PREFIX_REVERSE + "Reverse (optional, by default increasing)]: "
+            + "If true, the sorted list is reversed (or sorted in Descending order)\n"
+            + "Example: " + COMMAND_WORD + " c/Midterm r/true";
 
     private final GcName gcName;
     private final boolean reverse;
 
     /**
-     * Creates an SortStudentCommand to sort the displayed students.
+     * Creates a SortStudentCommand to sort the displayed students.
      */
     public SortStudentScoreCommand(GcName gcName, boolean reverse) {
         this.gcName = gcName;
@@ -47,12 +49,11 @@ public class SortStudentScoreCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         Predicate<Student> currentStuPredicate = model.getCurrentStudentsPredicate();
-        Predicate<StudentScore> currentStuScorePredicate = model.getCurrentScoresPredicate();
         StudentBook studentBook = model.getStudentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         studentScoreBook.sortStudentScore(reverse);
         studentBook.sortStudentScore(gcName, reverse);
-        model.updateFilteredStudentScoreList(new StudentScoreMatchPredicate(Collections.singletonList(gcName)));
+        model.updateFilteredStudentScoreList(new ScoreMatchPredicate(Collections.singletonList(gcName.gcName)));
         if (currentStuPredicate != null) {
             model.updateFilteredStudentList(currentStuPredicate);
         }

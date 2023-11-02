@@ -1,15 +1,17 @@
 package seedu.address.model.studentscore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentMatchPredicate;
 
 /**
  * Tests that a {@code Student}'s attributes matches any of the attributes given.
  */
 public class ScoreMatchPredicate implements Predicate<StudentScore> {
-    private final StudentMatchPredicate studentMatchPredicate;
+    private final Predicate<Student> studentMatchPredicate;
     private final List<String> tagKeywords;
 
     private final List<String> gcKeywords;
@@ -21,10 +23,17 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
      * @param tagKeywords           The keywords for Student tag (can be empty)
      * @param gcKeywords            the gc keywords
      */
-    public ScoreMatchPredicate(StudentMatchPredicate studentMatchPredicate, List<String> tagKeywords,
+    public ScoreMatchPredicate(Predicate<Student> studentMatchPredicate, List<String> tagKeywords,
                                List<String> gcKeywords) {
         this.studentMatchPredicate = studentMatchPredicate;
         this.tagKeywords = tagKeywords;
+        this.gcKeywords = gcKeywords;
+    }
+
+    public ScoreMatchPredicate(List<String> gcKeywords) {
+        List<String> empty = new ArrayList<>();
+        this.studentMatchPredicate = new StudentMatchPredicate(empty, empty, empty, empty, empty);
+        this.tagKeywords = new ArrayList<>();
         this.gcKeywords = gcKeywords;
     }
     @Override
