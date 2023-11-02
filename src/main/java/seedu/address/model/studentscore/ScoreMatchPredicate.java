@@ -67,15 +67,13 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
      * @param gcKeywords            the gc keywords
      */
     public ScoreMatchPredicate(List<String> gcKeywords) {
-        List<String> empty = new ArrayList<>();
-        this.gcNames = new ArrayList<>();
+        this.gcNames = gcKeywords;
         this.idKeywords = new ArrayList<>();
         this.nameKeywords = new ArrayList<>();
         this.tagKeywords = new ArrayList<>();
         this.tutorialGroupKeywords = new ArrayList<>();
-        this.studentMatchPredicate = new StudentMatchPredicate(empty, empty, empty, empty, empty);
-        this.tagKeywords = new ArrayList<>();
-        this.gcNames = gcKeywords;
+        this.commentKeywords = new ArrayList<>();
+        this.studentMatchPredicate = new StudentMatchPredicate();
         this.gcMatchPredicate = new GcMatchPredicate();
     }
 
