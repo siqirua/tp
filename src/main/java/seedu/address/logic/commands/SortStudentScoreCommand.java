@@ -13,12 +13,8 @@ import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
-import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.ScoreMatchPredicate;
 import seedu.address.model.studentscore.model.StudentScoreBook;
-
-
-
 
 /**
  * Sorts the student(s) whose student id by the given order.

@@ -30,6 +30,11 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         this.gcKeywords = gcKeywords;
     }
 
+    /**
+     * Constructs a predicate to search for certain students.
+     *
+     * @param gcKeywords            the gc keywords
+     */
     public ScoreMatchPredicate(List<String> gcKeywords) {
         List<String> empty = new ArrayList<>();
         this.studentMatchPredicate = new StudentMatchPredicate(empty, empty, empty, empty, empty);
