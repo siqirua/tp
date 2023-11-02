@@ -21,8 +21,11 @@ import seedu.address.logic.commands.EditGradedComponentCommand;
 import seedu.address.logic.commands.EditStudentCommand;
 import seedu.address.logic.commands.EditStudentScoreCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindGradedComponentCommand;
 import seedu.address.logic.commands.FindStudentCommand;
+import seedu.address.logic.commands.FindStudentScoreCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListStudentsCommand;
 import seedu.address.logic.commands.SortStudentCommand;
 import seedu.address.logic.commands.SortStudentScoreCommand;
@@ -85,6 +88,10 @@ public class AddressBookParser {
             return new HelpCommand();
         case FindStudentCommand.COMMAND_WORD:
             return new FindStudentCommandParser().parse(arguments);
+        case FindStudentScoreCommand.COMMAND_WORD:
+            return new FindStudentScoreCommandParser().parse(arguments);
+        case FindGradedComponentCommand.COMMAND_WORD:
+            return new FindGradedComponentCommandParser().parse(arguments);
         case ListStudentsCommand.COMMAND_WORD:
             return new ListStudentsCommand();
         case ClearAllCommand.COMMAND_WORD:
@@ -99,6 +106,8 @@ public class AddressBookParser {
             return new SortStudentScoreCommandParser().parse(arguments);
         case AutoGradeCommand.COMMAND_WORD:
             return new AutoGradeCommandParser().parse(arguments);
+        case ListAllCommand.COMMAND_WORD:
+            return new ListAllCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

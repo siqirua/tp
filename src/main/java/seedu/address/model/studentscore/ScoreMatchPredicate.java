@@ -1,41 +1,98 @@
 package seedu.address.model.studentscore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.model.gradedcomponent.GcMatchPredicate;
 import seedu.address.model.student.StudentMatchPredicate;
 
 /**
  * Tests that a {@code Student}'s attributes matches any of the attributes given.
  */
 public class ScoreMatchPredicate implements Predicate<StudentScore> {
-    private final StudentMatchPredicate studentMatchPredicate;
+    private final List<String> gcNames;
+    private final List<String> idKeywords;
+    private final List<String> nameKeywords;
+    private final List<String> tutorialGroupKeywords;
     private final List<String> tagKeywords;
-
-    private final List<String> gcKeywords;
+    private final List<String> commentKeywords;
+    private final StudentMatchPredicate studentMatchPredicate;
+    private final GcMatchPredicate gcMatchPredicate;
 
     /**
      * Constructs a predicate to search for certain students.
      *
-     * @param studentMatchPredicate the student match predicate
-     * @param tagKeywords           The keywords for Student tag (can be empty)
-     * @param gcKeywords            the gc keywords
+     * @param idKeywords            the id keywords
+     * @param nameKeywords          the name keywords
+     * @param tutorialGroupKeywords the tutorial group keywords
+     * @param tagKeywords           the tag keywords
+     * @param comments              the comments
+     * @param gcNames               The keywords for Component Name
      */
-    public ScoreMatchPredicate(StudentMatchPredicate studentMatchPredicate, List<String> tagKeywords,
-                               List<String> gcKeywords) {
-        this.studentMatchPredicate = studentMatchPredicate;
+    public ScoreMatchPredicate(List<String> idKeywords, List<String> nameKeywords,
+                                      List<String> tutorialGroupKeywords, List<String> tagKeywords,
+                                      List<String> comments, List<String> gcNames) {
+        this.gcNames = gcNames;
+        this.idKeywords = idKeywords;
+        this.nameKeywords = nameKeywords;
         this.tagKeywords = tagKeywords;
-        this.gcKeywords = gcKeywords;
+        this.commentKeywords = comments;
+        this.tutorialGroupKeywords = tutorialGroupKeywords;
+        this.studentMatchPredicate = new StudentMatchPredicate();
+        this.gcMatchPredicate = new GcMatchPredicate();
+
     }
+
+    /**
+     * Instantiates a new Score match predicate.
+     *
+     * @param studentMatchPredicate the student match predicate
+     */
+    public ScoreMatchPredicate(StudentMatchPredicate studentMatchPredicate) {
+        this.gcNames = new ArrayList<>();
+        this.idKeywords = new ArrayList<>();
+        this.nameKeywords = new ArrayList<>();
+        this.tagKeywords = new ArrayList<>();
+        this.tutorialGroupKeywords = new ArrayList<>();
+        this.commentKeywords = new ArrayList<>();
+        this.studentMatchPredicate = studentMatchPredicate;
+        this.gcMatchPredicate = new GcMatchPredicate();
+    }
+
+    /**
+     * Instantiates a new Score match predicate.
+     *
+     * @param gcMatchPredicate the gc match predicate
+     */
+    public ScoreMatchPredicate(GcMatchPredicate gcMatchPredicate) {
+        this.gcNames = new ArrayList<>();
+        this.idKeywords = new ArrayList<>();
+        this.nameKeywords = new ArrayList<>();
+        this.tagKeywords = new ArrayList<>();
+        this.tutorialGroupKeywords = new ArrayList<>();
+        this.commentKeywords = new ArrayList<>();
+        this.studentMatchPredicate = new StudentMatchPredicate();
+        this.gcMatchPredicate = gcMatchPredicate;
+    }
+
     @Override
     public boolean test(StudentScore score) {
-        boolean tagMatch = tagKeywords.isEmpty() || score.getTags().stream()
-                .anyMatch(tag -> tagKeywords.contains(tag.tagName));
-        boolean studentTagMatch = tagKeywords.isEmpty() || score.getStudent().getTags().stream()
-                .anyMatch(tag -> tagKeywords.contains(tag.tagName));
-        boolean gcMatch = gcKeywords.isEmpty() || gcKeywords.stream()
+        boolean gcNameMatch = gcNames.isEmpty() || gcNames.stream()
                 .anyMatch(keyword -> score.getGcName().toString().toLowerCase().contains(keyword.toLowerCase()));
-        return (tagMatch && gcMatch && studentTagMatch) && studentMatchPredicate.test(score.getStudent());
+        boolean idMatch = idKeywords.isEmpty() || idKeywords.stream()
+                .anyMatch(keyword -> score.getStudentId().toString().toLowerCase().contains(keyword.toLowerCase()));
+        boolean nameMatch = nameKeywords.isEmpty() || nameKeywords.stream()
+                .anyMatch(keyword -> score.getName().toString().toLowerCase().contains(keyword.toLowerCase()));
+        boolean commentMatch = commentKeywords.isEmpty() || commentKeywords.stream()
+                .anyMatch(keyword -> score.getComment().toString().toLowerCase().contains(keyword.toLowerCase()));
+        boolean tutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
+                .anyMatch(keyword -> score.getStudent().getTutorial().toString().equalsIgnoreCase(keyword));
+        boolean tagMatch = tagKeywords.isEmpty() || score.getTags().stream()
+                .anyMatch(tag -> tagKeywords.contains(tag.tagName.toLowerCase()));
+        boolean studentMatch = studentMatchPredicate.test(score.getStudent());
+        boolean gcMatch = gcMatchPredicate.test(score.getGradedComponent());
+        return gcNameMatch && idMatch && nameMatch && commentMatch && tutMatch && tagMatch && studentMatch && gcMatch;
     }
 
     @Override
@@ -49,16 +106,21 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
             return false;
         }
 
-        ScoreMatchPredicate otherStudentIdMatchPredicate =
+        ScoreMatchPredicate otherScoreMatchPredicate =
                 (ScoreMatchPredicate) other;
-        return studentMatchPredicate.equals(otherStudentIdMatchPredicate.studentMatchPredicate)
-                && tagKeywords.equals(otherStudentIdMatchPredicate.tagKeywords)
-                && gcKeywords.equals(otherStudentIdMatchPredicate.gcKeywords);
+        return idKeywords.equals(otherScoreMatchPredicate.idKeywords)
+                && nameKeywords.equals(otherScoreMatchPredicate.nameKeywords)
+                && tutorialGroupKeywords.equals(otherScoreMatchPredicate.tutorialGroupKeywords)
+                && tagKeywords.equals(otherScoreMatchPredicate.tagKeywords)
+                && gcNames.equals(otherScoreMatchPredicate.gcNames)
+                && commentKeywords.equals((otherScoreMatchPredicate.commentKeywords))
+                && studentMatchPredicate.equals(otherScoreMatchPredicate.studentMatchPredicate)
+                && gcMatchPredicate.equals(otherScoreMatchPredicate.gcMatchPredicate);
     }
 
     @Override
     public String toString() {
-        return "Find student scores by given criteria";
+        return "Find student score by given criteria";
     }
 }
 

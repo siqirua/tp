@@ -1,5 +1,6 @@
 package seedu.address.model.student;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -29,6 +30,17 @@ public class StudentMatchPredicate implements Predicate<Student> {
         this.nameKeywords = nameKeywords;
         this.tagKeywords = tagKeywords;
         this.tutorialGroupKeywords = tutorialGroupKeywords;
+    }
+
+    /**
+     * Instantiates a new emoty Student match predicate that always returns true
+     */
+    public StudentMatchPredicate() {
+        this.idKeywords = new ArrayList<>();
+        this.emailKeywords = new ArrayList<>();
+        this.nameKeywords = new ArrayList<>();
+        this.tagKeywords = new ArrayList<>();
+        this.tutorialGroupKeywords = new ArrayList<>();
     }
 
     @Override
