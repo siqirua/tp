@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.model.gradedcomponent.GcMatchPredicate;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentMatchPredicate;
 
 /**
@@ -17,7 +18,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
     private final List<String> tutorialGroupKeywords;
     private final List<String> tagKeywords;
     private final List<String> commentKeywords;
-    private final StudentMatchPredicate studentMatchPredicate;
+    private final Predicate<Student> studentMatchPredicate;
     private final GcMatchPredicate gcMatchPredicate;
 
     /**
@@ -49,7 +50,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
      *
      * @param studentMatchPredicate the student match predicate
      */
-    public ScoreMatchPredicate(StudentMatchPredicate studentMatchPredicate) {
+    public ScoreMatchPredicate(Predicate<Student> studentMatchPredicate) {
         this.gcNames = new ArrayList<>();
         this.idKeywords = new ArrayList<>();
         this.nameKeywords = new ArrayList<>();
@@ -57,6 +58,22 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         this.tutorialGroupKeywords = new ArrayList<>();
         this.commentKeywords = new ArrayList<>();
         this.studentMatchPredicate = studentMatchPredicate;
+        this.gcMatchPredicate = new GcMatchPredicate();
+    }
+
+    /**
+     * Constructs a predicate to search for certain students scores.
+     *
+     * @param gcKeywords            the gc keywords
+     */
+    public ScoreMatchPredicate(List<String> gcKeywords) {
+        this.gcNames = gcKeywords;
+        this.idKeywords = new ArrayList<>();
+        this.nameKeywords = new ArrayList<>();
+        this.tagKeywords = new ArrayList<>();
+        this.tutorialGroupKeywords = new ArrayList<>();
+        this.commentKeywords = new ArrayList<>();
+        this.studentMatchPredicate = new StudentMatchPredicate();
         this.gcMatchPredicate = new GcMatchPredicate();
     }
 

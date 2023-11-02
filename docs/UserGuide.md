@@ -299,6 +299,22 @@ measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewn
 Examples:
 * `stats st/upperQuartile st/lowerQuartile` returns the upper and lower quartile of the overall student grades.
 
+### Calculating statistics of a graded component
+
+Calculates the statistics of all students of a specific graded component.
+
+Format: `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]`
+
+* It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
+  supported.
+* For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
+  measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+* It is allowed to have multiple stats keywords, but only allowed to have 0 or 1 tutorial group keyword and component 
+name keyword.
+
+Examples:
+* `compStats st/upperQuartile st/lowerQuartile c/Midterm` returns the upper and lower quartile of the 
+student grades in Midterm.
 
 ### Clearing all entries : `clear`
 
