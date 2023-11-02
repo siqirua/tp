@@ -4,9 +4,20 @@ title: "User Guide"
 pageNav: 3
 ---
 
-# LumiNUS User Guide
+# User Guide: ModuLight
 
-LumiNUS is a **desktop app for managing students' grades, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, LumiNUS can get your contact management tasks done faster than traditional GUI apps.
+ModuLight is a **desktop app** built for **professors from National University of Singapore to manage students and 
+assessments** for a single module.
+
+Here’s an overview of how Modulight can help you to streamline your module management process:
+* Store and edit information about your students and various assessments.
+* Calculate statistics on cohort performance for assessments and visualize them graphically.
+* Track qualitative information about your students and assessments using tags and comments.
+
+Furthermore, we believe that module management should be **efficient**. Therefore, Modulight is **optimized for use 
+via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can 
+type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
+
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -17,26 +28,24 @@ LumiNUS is a **desktop app for managing students' grades, optimized for use via 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `luminus.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `ModuLight.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-2/tp/releases).
 
-3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your ModuLight.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
+   command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   ![Ui](images/Ui_overview.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `addStu s/A1234567X e/e0725856@u.nus.edu g/T02 n/Jamus Lim` : Adds a Student named Jamus Lim.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `addComp c/Midterm Exam w/25 mm/75` : Adds a Graded Component named Midterm Exam.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
-
-   * `clear` : Deletes all contacts.
-
-   * `exit` : Exits the app.
+   * `editStuScore s/A1234567X c/Midterms m/75` : Edits the score of the Midterm Component for the student with the student id A1234567X.
+   
 
 6. Refer to the [Features](#features) below for details of each command.
 
