@@ -78,7 +78,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         this.gcKeywords = gcKeywords;
         this.gcMatchPredicate = new GcMatchPredicate();
     }
-  
+
     /**
      * Instantiates a new Score match predicate.
      *
@@ -94,7 +94,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         this.studentMatchPredicate = new StudentMatchPredicate();
         this.gcMatchPredicate = gcMatchPredicate;
     }
-  
+
     @Override
     public boolean test(StudentScore score) {
         boolean gcNameMatch = gcNames.isEmpty() || gcNames.stream()
