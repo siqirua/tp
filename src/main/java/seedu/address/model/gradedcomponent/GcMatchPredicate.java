@@ -1,5 +1,6 @@
 package seedu.address.model.gradedcomponent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -17,6 +18,13 @@ public class GcMatchPredicate implements Predicate<GradedComponent> {
      */
     public GcMatchPredicate(List<String> gcKeywords) {
         this.gcKeywords = gcKeywords;
+    }
+
+    /**
+     * Instantiates a new empty Gc match predicate that always returns true.
+     */
+    public GcMatchPredicate() {
+        this.gcKeywords = new ArrayList<>();
     }
 
     @Override

@@ -21,6 +21,10 @@ public interface Model {
     Predicate<GradedComponent> PREDICATE_SHOW_ALL_GRADED_COMPONENTS = unused -> true;
     Predicate<StudentScore> PREDICATE_SHOW_ALL_STUDENT_SCORES = unused -> true;
 
+    Predicate<Student> PREDICATE_SHOW_NO_STUDENTS = unused -> false;
+    Predicate<GradedComponent> PREDICATE_SHOW_NO_COMPONENT = unused -> false;
+    Predicate<StudentScore> PREDICATE_SHOW_NO_SCORE = unused -> false;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
