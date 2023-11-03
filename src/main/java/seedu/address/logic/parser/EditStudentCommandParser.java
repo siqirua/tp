@@ -49,24 +49,28 @@ public class EditStudentCommandParser implements Parser<EditStudentCommand> {
                 PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
         EditStudentCommand.EditStudentDescriptor editStudentDescriptor = new EditStudentCommand.EditStudentDescriptor();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editStudentDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+        try {
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                editStudentDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            }
+            if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
+                editStudentDescriptor.setId(ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get()));
+            }
+            if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+                editStudentDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            }
+            if (argMultimap.getValue(PREFIX_TUTORIAL_GROUP).isPresent()) {
+                editStudentDescriptor.setTutorialGroup(
+                        ParserUtil.parseTg(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get()));
+            }
+            if (argMultimap.getValue(PREFIX_STUDENT_GRADE).isPresent()) {
+                editStudentDescriptor.setStudentGrade(ParserUtil.parseStudentGrade(
+                        argMultimap.getValue(PREFIX_STUDENT_GRADE).get()));
+            }
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentDescriptor::setTags);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
-            editStudentDescriptor.setId(ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editStudentDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_TUTORIAL_GROUP).isPresent()) {
-            editStudentDescriptor.setTutorialGroup(
-                    ParserUtil.parseTg(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get()));
-        }
-        if (argMultimap.getValue(PREFIX_STUDENT_GRADE).isPresent()) {
-            editStudentDescriptor.setStudentGrade(ParserUtil.parseStudentGrade(
-                    argMultimap.getValue(PREFIX_STUDENT_GRADE).get()));
-        }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentDescriptor::setTags);
 
         if (!editStudentDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditStudentCommand.MESSAGE_NOT_EDITED);

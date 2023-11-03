@@ -41,22 +41,26 @@ public class EditGradedComponentCommandParser implements Parser<EditGradedCompon
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_COMPONENT_NAME, PREFIX_WEIGHTAGE, PREFIX_MAX_MARKS);
         EditGradedComponentDescriptor editGradedComponentDescriptor = new EditGradedComponentDescriptor();
+        try {
+            if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
+                editGradedComponentDescriptor.setGcName(
+                        ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
+                );
+            }
+            if (argMultimap.getValue(PREFIX_WEIGHTAGE).isPresent()) {
+                editGradedComponentDescriptor.setWeightage(
+                        ParserUtil.parseWeightage(argMultimap.getValue(PREFIX_WEIGHTAGE).get())
+                );
+            }
+            if (argMultimap.getValue(PREFIX_MAX_MARKS).isPresent()) {
+                editGradedComponentDescriptor.setMaxMarks(
+                        ParserUtil.parseMaxMarks(argMultimap.getValue(PREFIX_MAX_MARKS).get())
+                );
+            }
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
 
-        if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
-            editGradedComponentDescriptor.setGcName(
-                    ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
-            );
-        }
-        if (argMultimap.getValue(PREFIX_WEIGHTAGE).isPresent()) {
-            editGradedComponentDescriptor.setWeightage(
-                    ParserUtil.parseWeightage(argMultimap.getValue(PREFIX_WEIGHTAGE).get())
-            );
-        }
-        if (argMultimap.getValue(PREFIX_MAX_MARKS).isPresent()) {
-            editGradedComponentDescriptor.setMaxMarks(
-                    ParserUtil.parseMaxMarks(argMultimap.getValue(PREFIX_MAX_MARKS).get())
-            );
-        }
 
         return new EditGradedComponentCommand(index, editGradedComponentDescriptor);
     }

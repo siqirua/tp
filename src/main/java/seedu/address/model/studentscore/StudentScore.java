@@ -106,7 +106,7 @@ public class StudentScore {
      */
     public float calcRelativeScore() {
         assert this.gc != null;
-        return score / this.gc.getMaxMarks().maxMarks * 100;
+        return Math.min(score / this.gc.getMaxMarks().maxMarks * 100, 100);
     }
     /**
      * Returns true if both student scores have the same StudentId and GcName.
