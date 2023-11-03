@@ -149,68 +149,82 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 ### Add a student: `addStu`
-Adds a student to the database. Throws error if student with same student number already exists. If it succeeds, an acknowledgement message (“Student was added successfully”) is shown to the user and data is saved. If it fails, show an error message instead. (“Something went wrong while adding student”)
+Adds a student to the database. Throws error if student with same student number already exists. If it succeeds, an acknowledgement message is shown and data is saved. If it fails, an error message is shown instead.
+
 Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
 
-Format: `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP]…​`
-
-Examples:
-* `addStu s/A1234567Y n/Andy g/03` Adds a student with student number A1234567Y, name Andy, belonging to tutorial group 03 to the database.
+Format: `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]`
+Examples: 
+* `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` Adds a student with student number A1234567Y, name Andy Ong, with email andy_ong@u.nus.edu belonging to tutorial group T03 to the database.
 
 ### Edit a student : `editStu`
-Edit student information. If it succeeds, it shows an acknowledgement message and saves the edited information (“Student information edited successfully”). Throws an error if student does not exist (“Something went wrong while editing student information”). Note that the student number cannot be edited as it is a unique identifier. In such a case, the student should be deleted.
-0 or more optional fields should be provided, and all the optional fields will be edited concurrently. Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
+Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
-Format: `editStu s/STUDENT_NO [g/TUTORIAL_GRP][n/NAME][e/EMAIL]…​`
+1 or more fields to be edited must be provided in the command. The index provided must be more than 0 and not exceed the number of students displayed in the Student list. **If the student number is being edited, the edited student number cannot match the student number of any other student already in the database.**
+
+
+Format: `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​`
 
 Examples:
-* `editStu n/Megan Chan g/03` Edits a student to have name Megan Chan and be in tutorial group 03.
+* `editStu 2 s/A1234567Y g/T03` edits the second student in the Student list to have student number A1234567Y, and have tutorial group T03.
 
 ### Delete a student : `deleteStu`
-Delete a student in the database. If it succeeds, it shows an acknowledgement message and deletes the student from the database (“Student information deleted successfully”). Throws an error if student does not exist (“Something went wrong while deleting the student”). All associated student scores will also be deleted.
-Valid student numbers start and end with an upper-case  alphabet, and have 7 numeric symbols in between.
+Deletes an existing student in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+The index provided must be at least 1 and not exceed the number of students displayed in the Student list.
 
-Format: `deleteStu s/STUDENT_NO`
-
-Examples:
-* `deleteStu s/A1234567Y`
-
-### Add a student score: `addStuScore`
-Assign a student’s score for a certain graded component. Throws an error if the Student or the graded component does not exist, or the score provided is negative. If the score exceeds the maximum score, it will show up on the panel as such, but for internal calculations it will be treated as the maximum score. (This is for users to indicate bonus scores)
-Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
-
-Format: `addStuScore s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]`
-
-Examples: 
-* `addStuScore s/A1234567Y c/Midterm m/57`
-Assigns a score of 57 to the graded component Midterm for the student with student number A123567Y.
-
-### Edit student score: `editStuScore`
-Edit a student’s score or comments. Throws an error if student or graded component does not exist, or if scores is negative.  If it succeeds, it shows an acknowledgement message and saves the edited information, and throws an error otherwise.
-0 or more optional fields need to be provided, and all the information will be edited concurrently.
-
-Format: `editStuScore s/STUDENT_NO c/COMP_NAME [m/MARKS] [x/comments]`
-
-Examples: 
-* `editComp s/A1234567Y c/Midterm x/Q4 answer is debatable. Discuss in next staff meeting. associates the given comment to A1234567Y’s Midterm score.`
- Edits the comments of the student score.
-
-### Delete student score: `deleteStuScore`
-Delete a student score in the database. If it succeeds, it shows an acknowledgement message and deletes the student score from the database (“Student score deleted successfully”). Throws an error if student score does not exist (“Something went wrong while deleting the student”).
-Valid student numbers start and end with an upper-case  alphabet, and have 7 numeric symbols in between.
-
-Format: `deleteStuScore s/STUDENT_NO c/COMP_NAME`
+Format: `deleteStu INDEX`
 
 Examples:
-* `deleteStuScore s/A1234567Y c/Midterm`
+* `deleteStu 1` deletes the first student in the currently visible Student list.
 
-### List all students : `listStudents`
+### Add a graded component: `addComp`
+Adds a graded component to the database. The graded component name (cae-sensitve) cannot match any other existing graded component names in the dtabase. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+
+Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers “A1234567X” and “A1234567Y” in the database, then two student scores are created with titles  “A1234567X - Midterm” and “A1234567Y - Midterm”.
+
+Weightage represents how much this component contributes when tabulating students’ total marks, and is calculated relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, and component A has weightage 30, and component B weightage 20, then component A currently represents 60% of the grade. This is modified as components are added and removed.
+
+Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
+
+Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
+
+### Edit a graded component: `editComp`
+Edits an existing graded component’s details in the database, based on the 1-based index of the graded component shown in the Graded Components list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+1 or more fields to be edited must be provided in the command. The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list. If the component name is being edited, the component name cannot match the component name of any other graded component already in the database.
+
+Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
+
+Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
+
+### Delete a graded component: `deleteComp`
+
+Deletes an existing graded component in the database, based on the 1-based index of the graded component shown in the Graded Components list. 
+If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+
+The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list.
+
+Format: `deleteComp INDEX`
+
+Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
+
+### Edit student score: `editScore`
+
+Edits a student’s mark for a certain graded component, based on the 1-based index of the student score shown in the Student Scores list. If the mark exceeds the maximum mark, it will show up on the panel as such, but for internal calculations it will be treated as the maximum mark. This is to allow users to indicate “bonus” marks.
+
+Note: a StudentScore will be automatically added when a graded component is created or when a new student is added. Similarly, student scores will be automatically deleted when its associated graded component or student is deleted.
+
+Format: `editScore INDEX [m/SCORE] [x/comment]`
+
+Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
+
+
+### List all students : `listStu`
 Shows a list of all students and associated student scores in separate panels respectively. The lists may be additionally filtered by optional arguments tutorial group. (can have more than 1)
 
 Format: `listStudents [g/TUTORIAL_GRP …]`
 
 Examples:
-* `listStudents g/02 03`
+* `listStudents g/02 03` lists all students belonging to tutorial groups 02 and 03.
 
 ### Searching students: `findStu`
 
@@ -234,7 +248,7 @@ criterion for each type.
 s/A00000Y, no students will be found since this is not a substring of any valid student number.
 
 Examples:
-* `find n/Alice n/Bob g/T01` returns the data of the students whose name contains 'Alice' or 'Bob' (case-insensitive)
+* `findStu n/Alice n/Bob g/T01` returns the data of the students whose name contains 'Alice' or 'Bob' (case-insensitive)
 while in tutorial group T01.
 
 ### Find students : `findComp`
@@ -247,15 +261,6 @@ Format: `findComp c/COMP_NAME`
 
 Example: `findComp c/midterm` lists all graded component contains the string midterm  (and their associated scores). 
 All graded students will be shown since they are relevant.
-
-
-
-### Find students : `findScore`
-Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
-
-Format: `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`
-
-Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
 ### List all students : `listAll`
 Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
@@ -333,7 +338,7 @@ Format: `exit`
 
 ### Saving the data
 
-ModuLight data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+ModuLight data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Loading the previous data
 
@@ -370,19 +375,18 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                         | Format, Examples                                                                                                                                                    |
-|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add a student**              | `addStu s/STUDENT_NO [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP]…` <br> e.g., `addStu s/A1234567Y n/Andy g/03`                                                              |
-| **Add a graded component**     | `addComp c/COMP_NAME w/WEIGHTAGE m/MAX_MARKS…` <br> e.g., `addComp c/Midterm w/30 m/70`                                                                             |
-| **Add a student score**<br/>   | `addStuScore s/STUDENT_NO c/COMP_NAME m/MARKS [x/comments]…` <br> e.g., `addStuScore s/A1234567Y c/Midterm m/57 `                                                   |
-| **Edit a student**             | `editStu s/STUDENT_NO [g/TUTORIAL_GRP][n/NAME][e/EMAIL]…​` <br> e.g., `editStu n/Megan Chan g/03`                                                                   |
-| **Edit a graded component**    | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                                                          |
-| **Edit a student score**       | `editStuScore s/STUDENT_NO c/COMP_NAME [m/MARKS] [x/comments]` <br> e.g., `editComp s/A1234567Y c/Midterm x/Q4 answer is debatable. Discuss in next staff meeting.` |
-| **Delete a student**           | `deleteStu s/STUDENT_NO` <br> e.g., `deleteStu s/A1234567Y`                                                                                                         |
-| **Delete a graded component**  | `deleteComp s/Optional Project` <br> e.g., `deleteComp s/Optional Project`                                                                                          |
-| **Delete a student score**     | `deleteStuScore s/STUDENT_NO c/COMP_NAME` <br> e.g., `deleteStuScore s/A1234567Y c/Midterm`                                                                         |
-| **Clear**                      | `clear`                                                                                                                                                             |
-| **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                          |
-| **List all students**          | ` listStudents [g/TUTORIAL_GRP …]` <br> e.g., `listStudents g/02 03`                                                                                                |
-| **List all graded components** | ` listComps [c/COMP_NAME …]` <br> e.g., `listComps c/CA1 CA2`                                                                                                       |
-| **Help**                       | `help`                                                                                                                                                              |
+| Action                         | Format, Examples                                                                                                                       |
+|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| **Add a student**              | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]…` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
+| **Add a graded component**     | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 m/70`                                                |
+| **Edit a student**             | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 2 s/A1234567Y g/T03`                 |
+| **Edit a graded component**    | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                             |
+| **Edit a student score**       | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 7 m/57`                                                                  |
+| **Delete a student**           | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
+| **Delete a graded component**  | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
+| **Clear**                      | `clear`                                                                                                                                |
+| **Find a student**             | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
+| **Find a graded component**    | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
+| **List all students**          | ` listStudents [g/TUTORIAL_GRP …]` <br> e.g., `listStudents g/02 03`                                                                   |
+| **List all graded components** | ` listComps [c/COMP_NAME …]` <br> e.g., `listComps c/CA1 CA2`                                                                          |
+| **Help**                       | `help`                                                                                                                                 |
