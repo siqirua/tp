@@ -271,9 +271,9 @@ Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group 
 ### List all students : `listStu`
 Shows a list of all students and associated student scores in separate panels respectively. The lists may be additionally filtered by optional arguments tutorial group. (can have more than 1)
 
-Format: `listStudents [g/TUTORIAL_GRP …]`
+Format: `listStu [g/TUTORIAL_GRP …]`
 
-Examples:`listStudents g/02 03` lists all students belonging to tutorial groups 02 and 03.
+Examples:`listStu g/02 03` lists all students belonging to tutorial groups 02 and 03.
 
 
 ### List all : `listAll`
@@ -355,11 +355,11 @@ Examples:
 * `compStats st/upperQuartile st/lowerQuartile c/Midterm` returns the upper and lower quartile of the 
 student grades in Midterm.
 
-### Clearing all entries : `clear`
+### Clearing all entries : `clearAll`
 
 Clears all data from ModuLight.
 
-Format: `clear`
+Format: `clearAll`
 
 * The clearing process is irreversible.
 
@@ -411,17 +411,18 @@ _Details coming soon ..._
 | Action                             | Format, Examples                                                                                                                       |
 |------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]…` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
-| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 m/70`                                                |
-| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 2 s/A1234567Y g/T03`                 |
-| **Edit a graded component**        | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                             |
-| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 7 m/57`                                                                  |
+| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                               |
+| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                 |
+| **Edit a graded component**        | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                                   |
+| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 1 m/57`                                                                  |
 | **Delete a student**               | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
 | **Delete a graded component**      | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
-| **Clear**                          | `clear`                                                                                                                                |
+| **Delete everything**              | `clearAll`                                                                                                                             |
 | **Find a student**                 | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
 | **Find a graded component**        | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
 | **Find a student score**           | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms`  |
-| **List all**                       | ` listAll` <br> e.g., `listAll`                                                                                                        |
+| **List all students**              | ` listStu`                                                                                                                             |
+| **List all**                       | ` listAll`                                                                                                                             |
 | **Sort student**                   | ` sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
 | **Sort student score**             | ` sortStuScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStuScore o/name r/true`                                                  |
 | **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                               |

@@ -47,32 +47,36 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
 
         EditStudentScoreCommand.EditStudentScoreDescriptor editStudentScoreDescriptor =
                 new EditStudentScoreCommand.EditStudentScoreDescriptor();
+        try {
+            if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
+                editStudentScoreDescriptor.setStudentId(
+                        ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get())
+                );
+            }
 
+            if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
+                editStudentScoreDescriptor.setGcName(
+                        ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
+                );
+            }
 
-        if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
-            editStudentScoreDescriptor.setStudentId(
-                    ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get())
-            );
+            if (argMultimap.getValue(PREFIX_MARKS).isPresent()) {
+                editStudentScoreDescriptor.setScore(
+                        ParserUtil.parseScore(argMultimap.getValue(PREFIX_MARKS).get())
+                );
+            }
+
+            if (argMultimap.getValue(PREFIX_COMMENT).isPresent()) {
+                editStudentScoreDescriptor.setComment(
+                        argMultimap.getValue(PREFIX_COMMENT).get());
+            }
+
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentScoreDescriptor::setTags);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
 
-        if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
-            editStudentScoreDescriptor.setGcName(
-                    ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
-            );
-        }
 
-        if (argMultimap.getValue(PREFIX_MARKS).isPresent()) {
-            editStudentScoreDescriptor.setScore(
-                    ParserUtil.parseScore(argMultimap.getValue(PREFIX_MARKS).get())
-            );
-        }
-
-        if (argMultimap.getValue(PREFIX_COMMENT).isPresent()) {
-            editStudentScoreDescriptor.setComment(
-                    argMultimap.getValue(PREFIX_COMMENT).get());
-        }
-
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentScoreDescriptor::setTags);
 
         return new EditStudentScoreCommand(index, editStudentScoreDescriptor);
     }

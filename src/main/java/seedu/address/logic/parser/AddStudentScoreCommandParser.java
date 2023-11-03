@@ -44,17 +44,21 @@ public class AddStudentScoreCommandParser implements Parser<AddStudentScoreComma
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID,
                 PREFIX_COMPONENT_NAME, PREFIX_MARKS, PREFIX_COMMENT);
-        StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
-        descriptor.setStudentId(sid);
-        GcName gcname = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
-        descriptor.setGcName(gcname);
-        float score = Float.parseFloat(argMultimap.getValue(PREFIX_MARKS).orElse("0"));
-        descriptor.setScore(score);
-        String comment = argMultimap.getValue(PREFIX_COMMENT).orElse("");
-        descriptor.setComment(comment);
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-        StudentScore studentScore = new StudentScore(sid, gcname, score, comment, tagList);
+        StudentScore studentScore = null;
+        try {
+            StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+            descriptor.setStudentId(sid);
+            GcName gcname = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
+            descriptor.setGcName(gcname);
+            float score = Float.parseFloat(argMultimap.getValue(PREFIX_MARKS).orElse("0"));
+            descriptor.setScore(score);
+            String comment = argMultimap.getValue(PREFIX_COMMENT).orElse("");
+            descriptor.setComment(comment);
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            studentScore = new StudentScore(sid, gcname, score, comment, tagList);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new AddStudentScoreCommand(studentScore);
     }
 

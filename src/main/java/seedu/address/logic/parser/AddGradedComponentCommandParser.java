@@ -35,17 +35,23 @@ public class AddGradedComponentCommandParser implements Parser<AddGradedComponen
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_COMPONENT_NAME, PREFIX_WEIGHTAGE, PREFIX_MAX_MARKS);
-        GcName name = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
-        String weightageString = argMultimap.getValue(PREFIX_WEIGHTAGE).get();
-        String maxMarksString = argMultimap.getValue(PREFIX_MAX_MARKS).get();
+        GradedComponent gc = null;
+        try {
+            GcName name = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
+            String weightageString = argMultimap.getValue(PREFIX_WEIGHTAGE).get();
+            String maxMarksString = argMultimap.getValue(PREFIX_MAX_MARKS).get();
 
-        checkStringParsableToDouble(weightageString, "Weightage");
-        checkStringParsableToDouble(maxMarksString, "Maximum marks");
-        Weightage weightage = new Weightage(Float.parseFloat(weightageString));
-        MaxMarks maxMarks = new MaxMarks(Float.parseFloat(maxMarksString));
+            checkStringParsableToDouble(weightageString, "Weightage");
+            checkStringParsableToDouble(maxMarksString, "Maximum marks");
+            Weightage weightage = new Weightage(Float.parseFloat(weightageString));
+            MaxMarks maxMarks = new MaxMarks(Float.parseFloat(maxMarksString));
+            gc = new GradedComponent(name, maxMarks, weightage);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
 
-        GradedComponent student = new GradedComponent(name, maxMarks, weightage);
-        return new AddGradedComponentCommand(student);
+
+        return new AddGradedComponentCommand(gc);
     }
 
     private static void checkStringParsableToDouble(String s, String fieldName) throws ParseException {

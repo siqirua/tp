@@ -70,21 +70,27 @@ public class GradedComponent {
     }
 
     private float calcMeanAbsoluteScore() {
+        float size = scoreList.size();
+        if (size == 0) {
+            return 0;
+        }
         float totalScore = 0;
         for (StudentScore sc : scoreList) {
             totalScore += sc.getScore();
         }
-        float size = scoreList.size();
         return totalScore / size;
     }
 
 
     private float calcMeanRelativeScore() {
+        float size = scoreList.size();
+        if (size == 0) {
+            return 0;
+        }
         float totalScore = 0;
         for (StudentScore sc : scoreList) {
             totalScore += sc.calcRelativeScore();
         }
-        float size = scoreList.size();
         return totalScore / size;
     }
 

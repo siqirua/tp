@@ -84,9 +84,12 @@ public class EditGradedComponentCommand extends Command {
         StudentScoreBook ssb = model.getStudentScoreBook();
         List<StudentScore> ssList = ssb.getStudentScoreList();
 
+        gModel.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
+
 
         for (int i = 0; i < ssList.size(); i++) {
             StudentScore sc = ssList.get(i);
+            sc.setGradedComponent(editedGradedComponent);
             if (sc.getGcName().equals(gradedComponentToEdit.getName())) {
                 EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
@@ -95,7 +98,7 @@ public class EditGradedComponentCommand extends Command {
             }
         }
 
-        gModel.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
+
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatGradedComponent(editedGradedComponent)));

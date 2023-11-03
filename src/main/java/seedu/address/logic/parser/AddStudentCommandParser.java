@@ -34,7 +34,7 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
      *
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddStudentCommand parse(String args) throws ParseException {
+    public AddStudentCommand parse(String args) throws ParseException, IllegalArgumentException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL,
                         PREFIX_TUTORIAL_GROUP, PREFIX_TAG);
@@ -45,16 +45,21 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP);
-        StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
-        StudentName name = new StudentName(argMultimap.getValue(PREFIX_NAME).get());
-        StudentEmail email = new StudentEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        List<StudentScore> scores = new ArrayList<>();
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        TutorialGroup tg = new TutorialGroup("T00");
-        if (arePrefixesPresent(argMultimap, PREFIX_TUTORIAL_GROUP)) {
-            tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        Student student = null;
+        try {
+            StudentId sid = new StudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+            StudentName name = new StudentName(argMultimap.getValue(PREFIX_NAME).get());
+            StudentEmail email = new StudentEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+            List<StudentScore> scores = new ArrayList<>();
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            TutorialGroup tg = new TutorialGroup("T00");
+            if (arePrefixesPresent(argMultimap, PREFIX_TUTORIAL_GROUP)) {
+                tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+            }
+            student = new Student(sid, name, email, tg, scores, tagList);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        Student student = new Student(sid, name, email, tg, scores, tagList);
         return new AddStudentCommand(student);
     }
 
@@ -65,5 +70,7 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+
 
 }
