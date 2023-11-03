@@ -303,11 +303,11 @@ command in advance.
 Examples:
 * `sortStu o/name r/true` returns the sorted students whose names are in descending alphabetical order.
 
-### Sorting students scores: `sortScore`
+### Sorting students scores: `sortStuScore`
 
 Sorts students score by the given criteria.
 
-Format: `sortScore [o/SORTING_ORDER] [r/REVERSE]`
+Format: `sortStuScore [o/SORTING_ORDER] [r/REVERSE]`
 
 * The sorting order keyword must be one of the acceptable description given below: <br>
   "n", "name", "s", "studentId", "studentID", "e", "email", "g", "tutorial", "tut", "tutGroup""ts", "totalScore",
@@ -321,7 +321,7 @@ Format: `sortScore [o/SORTING_ORDER] [r/REVERSE]`
   command in advance.
 
 Examples:
-* `sortScore o/score r/true` returns the sorted students whose names are in descending alphabetical order.
+* `sortStuScore o/score r/true` returns the sorted students whose names are in descending alphabetical order.
 
 ### Calculating overall statistics: `stats`
 
@@ -395,7 +395,6 @@ _Details coming soon ..._
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
-
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous LumiNUS home folder.
 
@@ -409,19 +408,22 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                        | Format, Examples                                                                                                                       |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| **Add a student**             | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]…` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
-| **Add a graded component**    | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 m/70`                                                |
-| **Edit a student**            | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 2 s/A1234567Y g/T03`                 |
-| **Edit a graded component**   | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                             |
-| **Edit a student score**      | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 7 m/57`                                                                  |
-| **Delete a student**          | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
-| **Delete a graded component** | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
-| **Clear**                     | `clear`                                                                                                                                |
-| **Find a student**            | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
-| **Find a graded component**   | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
-| **Find a student score**      | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms`  |
-| **List all**                  | ` listAll` <br> e.g., `listAll`                                                                                                        |
-| **Sort student**              | ` sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
-| **Help**                      | `help`                                                                                                                                 |
+| Action                             | Format, Examples                                                                                                                       |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]…` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
+| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 m/70`                                                |
+| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 2 s/A1234567Y g/T03`                 |
+| **Edit a graded component**        | `editComp c/COMP_NAME [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp c/Midterm  w/25 `                                             |
+| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 7 m/57`                                                                  |
+| **Delete a student**               | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
+| **Delete a graded component**      | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
+| **Clear**                          | `clear`                                                                                                                                |
+| **Find a student**                 | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
+| **Find a graded component**        | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
+| **Find a student score**           | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms`  |
+| **List all**                       | ` listAll` <br> e.g., `listAll`                                                                                                        |
+| **Sort student**                   | ` sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
+| **Sort student score**             | ` sortStuScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStuScore o/name r/true`                                                  |
+| **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                               |
+| **Calculate component statistics** | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`               |
+| **Help**                           | `help`                                                                                                                                 |
