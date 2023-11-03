@@ -380,7 +380,9 @@ There is no need to manually load data stored on the hard disc. It will be avail
 
 ### Editing the data file
 
-ModuLight data are saved automatically as a JSON file `[JAR file location]/data/modulight.json`. Advanced users are welcome to update data directly by editing that data file.
+ModuLight data are saved automatically as a set of 3 JSON files `[JAR file location]/data/studentBook.json`,
+`[JAR file location]/data/gradedComponentBook.json`, `[JAR file location]/data/studentScoreBook.json`, 
+Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
@@ -396,7 +398,7 @@ _Details coming soon ..._
 
 ## FAQ
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous LumiNUS home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -410,7 +412,7 @@ _Details coming soon ..._
 
 | Action                             | Format, Examples                                                                                                                       |
 |------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]…` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
+| **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
 | **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                               |
 | **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                 |
 | **Edit a graded component**        | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                                   |
