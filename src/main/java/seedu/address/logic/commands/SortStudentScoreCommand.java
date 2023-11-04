@@ -49,7 +49,8 @@ public class SortStudentScoreCommand extends Command {
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         studentScoreBook.sortStudentScore(reverse);
         studentBook.sortStudentScore(gcName, reverse);
-        model.updateFilteredStudentScoreList(new ScoreMatchPredicate(Collections.singletonList(gcName.gcName)));
+        model.updateFilteredStudentScoreList(new ScoreMatchPredicate(Collections.singletonList(gcName.gcName))
+                .and(new ScoreMatchPredicate(currentStuPredicate)));
         if (currentStuPredicate != null) {
             model.updateFilteredStudentList(currentStuPredicate);
         }

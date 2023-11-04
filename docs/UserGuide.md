@@ -56,7 +56,7 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 | Words in UPPER_CASE                                                                             | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                 |
 | Items in square brackets                                                                        | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                  |
 | Items with ... after them                                                                       | These are parameters that can be used multiple times (or omitted completely) | `listStu [g/TUTORIAL_GRP...]` can be used as `listStu g/T02 T03` or `listStu g/T01` or just `listStu`                     |
-| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 n/megan t/T00`                                                      |
+| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 t/T00 n/megan`                                                      |
 | If a parameter is expected only once and entered multiple times, an error message will be shown | NIL                                                                          | `editStu 1 n/megan n/maega` results in error message `Multiple values specified for the following single-valued field(s)` |
 | Extraneous parameters for commands that do not take in parameters will be ignored               | NIL                                                                          | `help abc` is equivalent to `help`                                                                                        |
 
@@ -187,7 +187,7 @@ Examples:
 * `deleteStu 1` deletes the first student in the currently visible Student list.
 
 ### Add a graded component: `addComp`
-Adds a graded component to the database. The graded component name (cae-sensitve) cannot match any other existing graded component names in the dtabase. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+Adds a graded component to the database. The graded component name (case-sensitve) cannot match any other existing graded component names in the database. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers “A1234567X” and “A1234567Y” in the database, then two student scores are created with titles  “A1234567X - Midterm” and “A1234567Y - Midterm”.
 
@@ -305,23 +305,19 @@ Examples:
 
 ### Sorting students scores: `sortStuScore`
 
-Sorts students score by the given criteria.
+Sorts students score by the given criteria and display its associated students in order.
 
-Format: `sortStuScore [o/SORTING_ORDER] [r/REVERSE]`
+Format: `sortStuScore [c/COMP_NAME] [r/REVERSE]`
 
-* The sorting order keyword must be one of the acceptable description given below: <br>
-  "n", "name", "s", "studentId", "studentID", "e", "email", "g", "tutorial", "tut", "tutGroup""ts", "totalScore",
-  "score", "totalscore".
 * The reverse keyword must be one of the acceptable description given below: <br>
   "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4
   keywords have the same effect).
-* It is allowed to omit sorting order and reverse. In this case, the default sorting order is by total score while
-  the default reverse is false (i.e. increasing).
+* It is allowed to omit reverse. In this case, the default reverse is false (i.e. increasing).
 * This command will only sort the currently displayed students. If you want to sort all students, please use `listAll`
   command in advance.
 
 Examples:
-* `sortStuScore o/score r/true` returns the sorted students whose names are in descending alphabetical order.
+* `sortStuScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
 
 ### Auto grading all the students: `autoGrade`
 
@@ -370,7 +366,7 @@ Examples:
 
 Calculates the statistics of all students of a specific graded component.
 
-Format: `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]`
+Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
 
 * It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
   supported.
