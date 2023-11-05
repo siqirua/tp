@@ -36,10 +36,10 @@ public class StudentScoreListPanel extends UiPart<Region> {
      */
     class StudentScoreListViewCell extends ListCell<StudentScore> {
         @Override
-        protected void updateItem(StudentScore studentScore, boolean empty) {
-            super.updateItem(studentScore, empty);
+        protected void updateItem(StudentScore studentScore, boolean isEmpty) {
+            super.updateItem(studentScore, isEmpty);
 
-            if (empty || studentScore == null) {
+            if (isEmpty || studentScore == null) {
                 setGraphic(null);
                 setText(null);
             } else {

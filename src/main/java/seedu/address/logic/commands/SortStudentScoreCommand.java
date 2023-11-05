@@ -31,14 +31,14 @@ public class SortStudentScoreCommand extends Command {
             + "Example: " + COMMAND_WORD + " c/Midterm r/true";
 
     private final GcName gcName;
-    private final boolean reverse;
+    private final boolean isReverse;
 
     /**
      * Creates a SortStudentCommand to sort the displayed students.
      */
-    public SortStudentScoreCommand(GcName gcName, boolean reverse) {
+    public SortStudentScoreCommand(GcName gcName, boolean isReverse) {
         this.gcName = gcName;
-        this.reverse = reverse;
+        this.isReverse = isReverse;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class SortStudentScoreCommand extends Command {
         Predicate<Student> currentStuPredicate = model.getCurrentStudentsPredicate();
         StudentBook studentBook = model.getStudentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
-        studentScoreBook.sortStudentScore(reverse);
-        studentBook.sortStudentScore(gcName, reverse);
+        studentScoreBook.sortStudentScore(isReverse);
+        studentBook.sortStudentScore(gcName, isReverse);
         model.updateFilteredStudentScoreList(new ExactScoreMatchPredicate(Collections.singletonList(gcName)));
         if (currentStuPredicate != null) {
             model.updateFilteredStudentList(currentStuPredicate);
@@ -69,7 +69,7 @@ public class SortStudentScoreCommand extends Command {
         }
 
         SortStudentScoreCommand otherSortCommand = (SortStudentScoreCommand) other;
-        return gcName.equals(otherSortCommand.gcName) && reverse == otherSortCommand.reverse;
+        return gcName.equals(otherSortCommand.gcName) && isReverse == otherSortCommand.isReverse;
     }
 
     @Override

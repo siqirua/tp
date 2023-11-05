@@ -104,7 +104,7 @@ public class UniqueGradedComponentList implements Iterable<GradedComponent> {
      */
     public void setGradedComponents(List<GradedComponent> comps) {
         requireAllNonNull(comps);
-        if (!gradedComponentsAreUnique(comps)) {
+        if (!areGradedComponentsUnique(comps)) {
             // to change
             throw new RuntimeException();
         }
@@ -153,7 +153,7 @@ public class UniqueGradedComponentList implements Iterable<GradedComponent> {
     /**
      * Returns true if {@code comps} contains only unique graded components.
      */
-    private boolean gradedComponentsAreUnique(List<GradedComponent> comps) {
+    private boolean areGradedComponentsUnique(List<GradedComponent> comps) {
         for (int i = 0; i < comps.size() - 1; i++) {
             for (int j = i + 1; j < comps.size(); j++) {
                 if (comps.get(i).isSameGc(comps.get(j))) {

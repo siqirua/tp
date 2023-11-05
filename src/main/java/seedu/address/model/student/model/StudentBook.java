@@ -108,16 +108,16 @@ public class StudentBook implements ReadOnlyStudentBook {
     /**
      * Sorts all students from this {@code StudentBook}.
      */
-    public void sortStudent(String order, boolean reverse) {
-        students.sort(order, reverse);
+    public void sortStudent(String order, boolean isReverse) {
+        students.sort(order, isReverse);
     }
 
     /**
      * Sorts all students from this {@code StudentBook} based on their performance
      * under a given graded component.
      */
-    public void sortStudentScore(GcName gcName, boolean reverse) {
-        students.sortScore(gcName, reverse);
+    public void sortStudentScore(GcName gcName, boolean isReverse) {
+        students.sortScore(gcName, isReverse);
     }
 
     public int getSize() {

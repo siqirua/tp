@@ -29,14 +29,14 @@ public class SortStudentCommand extends Command {
             + "Example: " + COMMAND_WORD + " o/s r/true";
 
     private final String sortingOrder;
-    private final boolean reverse;
+    private final boolean isReverse;
 
     /**
      * Creates an SortStudentCommand to sort the displayed students.
      */
-    public SortStudentCommand(String sortingOrder, boolean reverse) {
+    public SortStudentCommand(String sortingOrder, boolean isReverse) {
         this.sortingOrder = sortingOrder;
-        this.reverse = reverse;
+        this.isReverse = isReverse;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SortStudentCommand extends Command {
         requireNonNull(model);
         Predicate<Student> currentPredicate = model.getCurrentStudentsPredicate();
         StudentBook studentBook = model.getStudentBook();
-        studentBook.sortStudent(sortingOrder, reverse);
+        studentBook.sortStudent(sortingOrder, isReverse);
         if (currentPredicate != null) {
             model.updateFilteredStudentList(currentPredicate);
         }
