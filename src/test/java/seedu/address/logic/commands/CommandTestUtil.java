@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
+/**
+ * A utility class for test cases in command execution.
+ */
 public class CommandTestUtil {
     /**
      * Executes the given {@code command} under positive test cases, checks if <br>
