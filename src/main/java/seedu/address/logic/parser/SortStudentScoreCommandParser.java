@@ -42,13 +42,14 @@ public class SortStudentScoreCommandParser implements Parser<SortStudentScoreCom
                     SortStudentScoreCommand.MESSAGE_USAGE));
         }
 
-        if (reverses.size() == 1 && !REVERSES_ACCEPTABLE.contains(reverses.get(0))) {
+        boolean reverse = IS_REVERSE_DEFAULT;
+        GcName gcName;
+        try {
+            gcName = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
+        } catch (IllegalArgumentException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SortStudentScoreCommand.MESSAGE_USAGE));
         }
-
-        boolean reverse = IS_REVERSE_DEFAULT;
-        GcName gcName = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
         if (reverses.size() != 1) {
             return new SortStudentScoreCommand(gcName, reverse);
         }
