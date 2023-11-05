@@ -24,7 +24,7 @@ public class CompStatsCommand extends StatsCommand {
             + "Example: " + COMMAND_WORD;
 
 
-    public static final String MESSAGE_EMPTY = "Please at that one score fulfilling the condition.\n";
+    public static final String MESSAGE_EMPTY = "Please have at least one score fulfilling the condition.\n";
     public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores."
             + "Please check if the information is correct";
 

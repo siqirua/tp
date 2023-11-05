@@ -46,8 +46,12 @@ public class StatsCommandParser implements Parser<StatsCommand> {
             return new StatsCommand(allStats);
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TUTORIAL_GROUP);
-
-        TutorialGroup tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        TutorialGroup tg;
+        try {
+            tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new StatsCommand(allStats, tg);
     }
 

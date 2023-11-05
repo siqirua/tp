@@ -13,7 +13,7 @@ import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
-import seedu.address.model.studentscore.ScoreMatchPredicate;
+import seedu.address.model.studentscore.ExactScoreMatchPredicate;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
@@ -49,8 +49,7 @@ public class SortStudentScoreCommand extends Command {
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
         studentScoreBook.sortStudentScore(reverse);
         studentBook.sortStudentScore(gcName, reverse);
-        model.updateFilteredStudentScoreList(new ScoreMatchPredicate(Collections.singletonList(gcName.gcName))
-                .and(new ScoreMatchPredicate(currentStuPredicate)));
+        model.updateFilteredStudentScoreList(new ExactScoreMatchPredicate(Collections.singletonList(gcName)));
         if (currentStuPredicate != null) {
             model.updateFilteredStudentList(currentStuPredicate);
         }
