@@ -1,15 +1,10 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.model.Model;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+
 public class CommandTestUtil {
     /**
      * Executes the given {@code command} under positive test cases, checks if <br>
@@ -37,6 +32,7 @@ public class CommandTestUtil {
      * Executes the given {@code command} under positive test cases, checks if <br>
      * - the returned {@link CommandResult} matches {@code expectedCommandResult} <br>
      * - the {@code actualModel} after execution matches {@code expectedModel}
+     *
      * @param command Command to be executed.
      * @param actualModel Actual model before the execution.
      * @param expectedResult Expected command result.
@@ -57,6 +53,7 @@ public class CommandTestUtil {
      * Executes the given {@code command} under negative test cases, checks if <br>
      * - the thrown {@link Exception} matches {@code expectedException} <br>
      * - the {@code actualModel} after execution matches {@code expectedModel}
+     *
      * @param command Command to be executed.
      * @param actualModel Actual model before the execution.
      * @param expectedException Expected exception to be thrown.
