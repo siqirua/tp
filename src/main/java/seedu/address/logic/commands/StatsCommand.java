@@ -22,7 +22,7 @@ public class StatsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Here are the statistics:\n";
     public static final String MESSAGE_EMPTY = "Please have at least one score fulfilling the condition.\n";
     public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores."
-            + "Please check if the information is correct";
+            + "Please check if the information is correct.";
 
     protected final TutorialGroup tutorialGroup;
     protected final boolean isForTut;
@@ -77,6 +77,9 @@ public class StatsCommand extends Command {
     protected String generateSummaryFromScores(List<Float> scores, String opening) {
         StatsCalculator st = new StatsCalculator(scores);
         StringBuilder sb = new StringBuilder(opening);
+        if (scores.isEmpty()) {
+            return MESSAGE_EMPTY;
+        }
         if (stats.isEmpty()) {
             sb.append(String.format("MAX = %.2f, MIN = %.2f, MEAN = %.2f, STANDARD DEVIATION = %.2f\n",
                     st.getMax(), st.getMin(), st.getMean(), st.getStd()));

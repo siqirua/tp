@@ -53,8 +53,8 @@ public class StudentScoreBook implements ReadOnlyStudentScoreBook {
     /**
      * Sorts all student scores from this {@code StudentBook}.
      */
-    public void sortStudentScore(boolean reverse) {
-        studentScores.sortScore(reverse);
+    public void sortStudentScore(boolean isReverse) {
+        studentScores.sortScore(isReverse);
     }
 
     /**

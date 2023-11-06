@@ -95,21 +95,22 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
 
     @Override
     public boolean test(StudentScore score) {
-        boolean gcNameMatch = gcNames.isEmpty() || gcNames.stream()
+        boolean isGcNameMatch = gcNames.isEmpty() || gcNames.stream()
                 .anyMatch(keyword -> score.getGcName().toString().toLowerCase().contains(keyword.toLowerCase()));
-        boolean idMatch = idKeywords.isEmpty() || idKeywords.stream()
+        boolean isIdMatch = idKeywords.isEmpty() || idKeywords.stream()
                 .anyMatch(keyword -> score.getStudentId().toString().toLowerCase().contains(keyword.toLowerCase()));
-        boolean nameMatch = nameKeywords.isEmpty() || nameKeywords.stream()
+        boolean isNameMatch = nameKeywords.isEmpty() || nameKeywords.stream()
                 .anyMatch(keyword -> score.getName().toString().toLowerCase().contains(keyword.toLowerCase()));
-        boolean commentMatch = commentKeywords.isEmpty() || commentKeywords.stream()
+        boolean isCommentMatch = commentKeywords.isEmpty() || commentKeywords.stream()
                 .anyMatch(keyword -> score.getComment().toString().toLowerCase().contains(keyword.toLowerCase()));
-        boolean tutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
+        boolean isTutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
                 .anyMatch(keyword -> score.getStudent().getTutorial().toString().equalsIgnoreCase(keyword));
-        boolean tagMatch = tagKeywords.isEmpty() || score.getTags().stream()
+        boolean isTagMatch = tagKeywords.isEmpty() || score.getTags().stream()
                 .anyMatch(tag -> tagKeywords.contains(tag.tagName.toLowerCase()));
-        boolean studentMatch = studentMatchPredicate.test(score.getStudent());
-        boolean gcMatch = gcMatchPredicate.test(score.getGradedComponent());
-        return gcNameMatch && idMatch && nameMatch && commentMatch && tutMatch && tagMatch && studentMatch && gcMatch;
+        boolean isStudentMatch = studentMatchPredicate.test(score.getStudent());
+        boolean isGcMatch = gcMatchPredicate.test(score.getGradedComponent());
+        return isGcNameMatch && isIdMatch && isNameMatch && isCommentMatch && isTutMatch && isTagMatch
+                && isStudentMatch && isGcMatch;
     }
 
     @Override

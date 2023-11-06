@@ -29,9 +29,9 @@ public class GcMatchPredicate implements Predicate<GradedComponent> {
 
     @Override
     public boolean test(GradedComponent gc) {
-        boolean gcMatch = gcKeywords.isEmpty() || gcKeywords.stream()
+        boolean isGcMatch = gcKeywords.isEmpty() || gcKeywords.stream()
                 .anyMatch(keyword -> gc.getName().toString().toLowerCase().contains(keyword.toLowerCase()));
-        return gcMatch;
+        return isGcMatch;
     }
 
     @Override

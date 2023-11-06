@@ -54,8 +54,12 @@ public class CompStatsCommandParser implements Parser<CompStatsCommand> {
             return new CompStatsCommand(allStats, gcName);
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TUTORIAL_GROUP);
-
-        TutorialGroup tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        TutorialGroup tg;
+        try {
+            tg = new TutorialGroup(argMultimap.getValue(PREFIX_TUTORIAL_GROUP).get());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new CompStatsCommand(allStats, gcName, tg);
     }
 
