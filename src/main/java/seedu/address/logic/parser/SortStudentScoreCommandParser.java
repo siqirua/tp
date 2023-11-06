@@ -18,7 +18,7 @@ import seedu.address.model.gradedcomponent.GcName;
 public class SortStudentScoreCommandParser implements Parser<SortStudentScoreCommand> {
     private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
             "1", "0", "t", "f");
-    private static final Boolean REVERSE_DEFAULT = false;
+    private static final Boolean IS_REVERSE_DEFAULT = false;
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortStudentCommand
@@ -42,13 +42,14 @@ public class SortStudentScoreCommandParser implements Parser<SortStudentScoreCom
                     SortStudentScoreCommand.MESSAGE_USAGE));
         }
 
-        if (reverses.size() == 1 && !REVERSES_ACCEPTABLE.contains(reverses.get(0))) {
+        boolean reverse = IS_REVERSE_DEFAULT;
+        GcName gcName;
+        try {
+            gcName = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
+        } catch (IllegalArgumentException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SortStudentScoreCommand.MESSAGE_USAGE));
         }
-
-        boolean reverse = REVERSE_DEFAULT;
-        GcName gcName = new GcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get());
         if (reverses.size() != 1) {
             return new SortStudentScoreCommand(gcName, reverse);
         }

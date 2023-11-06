@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.studentscore.StudentScore;
@@ -24,9 +25,11 @@ public class CompStatsCommand extends StatsCommand {
             + "Example: " + COMMAND_WORD;
 
 
-    public static final String MESSAGE_EMPTY = "Please at that one score fulfilling the condition.\n";
-    public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores."
-            + "Please check if the information is correct";
+    public static final String MESSAGE_EMPTY = "Please have at least one score fulfilling the condition.\n";
+    public static final String MESSAGE_EMPTY_TUT = "This tutorial group does not have any valid scores. "
+            + "Please check if the information is correct\n";
+    public static final String MESSAGE_NO_GC = "This graded component is not created. "
+            + "Please check if the information is correct\n";
 
     private final GcName gradedComponentName;
 
@@ -54,6 +57,12 @@ public class CompStatsCommand extends StatsCommand {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        List<GradedComponent> gradedComponents = model.getGradedComponentBook().getGradedComponentList();
+        boolean isCreated = gradedComponents.stream().map(gc -> gc.getName())
+                .anyMatch(name -> name.equals(gradedComponentName));
+        if (!isCreated) {
+            return new CommandResult(MESSAGE_NO_GC);
+        }
         List<Student> students = model.getStudentBook().getStudentList();
         if (isForTut) {
             return new CommandResult(generateTutStatsSummary(students, tutorialGroup.toString()));

@@ -18,7 +18,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             "e", "email", "g", "tutorial", "tut", "tutGroup", "ts", "totalScore", "score", "overall", "totalscore");
     private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
             "1", "0", "t", "f");
-    private static final Boolean REVERSE_DEFAULT = false;
+    private static final Boolean IS_REVERSE_DEFAULT = false;
     private static final String ORDER_DEFAULT = "o";
 
     /**
@@ -51,7 +51,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
         }
 
         String order = ORDER_DEFAULT;
-        boolean reverse = REVERSE_DEFAULT;
+        boolean reverse = IS_REVERSE_DEFAULT;
         if (orders.size() == 1) {
             switch (orders.get(0)) {
             case "n":
@@ -75,6 +75,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
                 break;
             case "overall":
             case "score":
+            case "ts":
             case "totalscore":
             case "totalScore":
                 order = "o";
