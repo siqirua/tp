@@ -45,15 +45,20 @@ public class EditStudentScoreCommand extends Command {
             + PREFIX_MARKS + "35.4 "
             + PREFIX_COMMENT + "Good JOB!";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited StudentScore: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited student score: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_SCORE = "This studentScore already "
             + "exists in the address book.";
-    public static final String STUDENT_SCORE_NOT_FOUND = "The studentScore with provided Student ID "
+    public static final String STUDENT_SCORE_NOT_FOUND = "The student score with provided Student ID "
             + "and Graded Component name does not exist.";
+
+    public static final String SCORE_VALUE_NOT_VALID = "Score should be >= 0 and "
+            + "<= the associated component's maximum marks.";
+    public static final String MESSAGE_INVALID_SCORE_DISPLAYED_INDEX = "The score index provided is invalid.";
 
     private final EditStudentScoreDescriptor editStudentScoreDescriptor;
     private final Index index;
+    private final boolean useFiltered;
 
     /**
      * Constructor for EditStudentScoreCommand.
@@ -61,12 +66,14 @@ public class EditStudentScoreCommand extends Command {
      * @param index the Index of the StudentScore that want to be edited
      * @param editStudentScoreDescriptor the editStudentScoreDescriptor
      */
-    public EditStudentScoreCommand(Index index, EditStudentScoreDescriptor editStudentScoreDescriptor) {
+    public EditStudentScoreCommand(Index index, EditStudentScoreDescriptor editStudentScoreDescriptor,
+                                   boolean useFiltered) {
         requireNonNull(index);
         requireNonNull(editStudentScoreDescriptor);
 
         this.index = index;
         this.editStudentScoreDescriptor = editStudentScoreDescriptor;
+        this.useFiltered = useFiltered;
     }
 
     @Override
@@ -76,10 +83,15 @@ public class EditStudentScoreCommand extends Command {
         StudentBook studentBook = model.getStudentBook();
         GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
         StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+
         List<StudentScore> lastShownList = model.getFilteredStudentScoreList();
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (!useFiltered) {
+            lastShownList = studentScoreBook.getStudentScoreList();
         }
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(MESSAGE_INVALID_SCORE_DISPLAYED_INDEX);
+        }
+
         StudentScore studentScoreToEdit = lastShownList.get(index.getZeroBased());
         StudentScore editedStudentScore = createEditedStudentScore(studentScoreToEdit,
                 editStudentScoreDescriptor);
@@ -91,6 +103,10 @@ public class EditStudentScoreCommand extends Command {
 
         GradedComponent gc = gradedComponentBook.getGradedComponentByName(editedStudentScore.getGcName());
         Student student = studentBook.getStudentById(editedStudentScore.getStudentId());
+
+        if (editedStudentScore.getScore() > gc.getMaxMarks().maxMarks || editedStudentScore.getScore() < 0) {
+            throw new CommandException(SCORE_VALUE_NOT_VALID);
+        }
 
         studentScoreBook.setStudentScore(studentScoreToEdit, editedStudentScore);
 
