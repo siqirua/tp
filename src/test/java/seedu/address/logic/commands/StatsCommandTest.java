@@ -46,10 +46,10 @@ public class StatsCommandTest {
         String expectedOutput2 = "Here are the statistics:\n"
                 + "UPPER QUARTILE = 85.00, LOWER QUARTILE = 15.00, SKEWNESS = 0.00\n";
         ArrayList<String> stats1 = new ArrayList<>(List.of(new String[] {
-                "max", "min", "mean", "standardDeviation"
+            "max", "min", "mean", "standardDeviation"
         }));
         ArrayList<String> stats2 = new ArrayList<>(List.of(new String[] {
-                "upperQuartile", "lowerQuartile", "skewness"
+            "upperQuartile", "lowerQuartile", "skewness"
         }));
         assertCommandSuccess(new StatsCommand(stats1), model, expectedOutput1, model);
         assertCommandSuccess(new StatsCommand(stats2), model, expectedOutput2, model);
