@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 
 import seedu.address.model.Model;
@@ -11,7 +12,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.testutil.TestGcDataUtil;
 import seedu.address.testutil.TestStudentDataUtil;
 import seedu.address.testutil.TestStudentScoreDataUtil;
-
 
 public class StatsCommandTest {
     private Model model = new ModelManager(TestStudentDataUtil.getTestStudentBook("score"),
