@@ -9,8 +9,8 @@ import java.util.Set;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
-import seedu.address.model.student.StudentName;
 import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
@@ -34,8 +34,8 @@ public class TestStudentDataUtil {
             new Student(new StudentId("A0000001Y"), new StudentName("Ah Beng"), new StudentEmail("blexyeoh@example"
                 + ".com"),
                 new TutorialGroup("T03"), scoreList, tags),
-            new Student(new StudentId("A0000002Y"), new StudentName("Paul McCartney"), new StudentEmail("clexyeoh@example"
-                + ".com"),
+            new Student(new StudentId("A0000002Y"), new StudentName("Paul McCartney"),
+                new StudentEmail("clexyeoh@example.com"),
                 new TutorialGroup("T03"), scoreList, tags),
             new Student(new StudentId("A0000003Y"), new StudentName("Li Ming"), new StudentEmail("dlexyeoh@example"
                 + ".com"),
