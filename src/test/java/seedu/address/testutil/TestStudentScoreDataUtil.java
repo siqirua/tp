@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
+import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
@@ -44,11 +46,22 @@ public class TestStudentScoreDataUtil {
         return newScores;
     }
 
-    public static ReadOnlyStudentScoreBook getSampleStudentScoreBook() {
-        StudentScoreBook sampleAb = new StudentScoreBook();
-        for (StudentScore sampleStudentScore : getTestStudentScores()) {
-            sampleAb.addStudentScore(sampleStudentScore);
+    public static ReadOnlyStudentScoreBook getSampleStudentScoreBook(String selectedScore) {
+        StudentScoreBook sampleScore = new StudentScoreBook();
+        ArrayList<StudentScore> scoreToBeAdded;
+        switch (selectedScore) {
+        case "create":
+            scoreToBeAdded = getTestStudentScores();
+            break;
+        case "zeroScore":
+            scoreToBeAdded = getTestStudentZeroScores();
+            break;
+        default:
+            scoreToBeAdded = getTestStudentScoresEmpty();
         }
-        return sampleAb;
+        for (StudentScore testScore: scoreToBeAdded) {
+            sampleScore.addStudentScore(testScore);
+        }
+        return sampleScore;
     }
 }
