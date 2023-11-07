@@ -1,5 +1,8 @@
 package seedu.address;
 
+import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTItY_COUNT;
+import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -45,10 +48,6 @@ import seedu.address.storage.StudentScoreBookStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-
-import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTItY_COUNT;
-import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
-
 
 /**
  * Runs the application.
@@ -127,7 +126,7 @@ public class MainApp extends Application {
                 .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
             initialGradedComponentData = gradedComponentBookOptional
                 .orElseGet(SampleGcDataUtil::getSampleGcBook);
-            checkBookValidity(initialStudentData, initialGradedComponentData, initialStudentScoreData );
+            checkBookValidity(initialStudentData, initialGradedComponentData, initialStudentScoreData);
 
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
