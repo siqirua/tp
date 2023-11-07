@@ -32,7 +32,7 @@ public class StatsCommandTest {
     }
 
     @Test
-    public void execute_stat_success_tut() {
+    public void execute_tutStat_success() {
         assertCommandSuccess(new StatsCommand(new ArrayList<>(), new TutorialGroup("T03")), model,
                 expectedOutputOfTut3, model);
     }

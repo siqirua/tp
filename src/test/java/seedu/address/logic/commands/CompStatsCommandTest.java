@@ -34,7 +34,7 @@ public class CompStatsCommandTest {
     }
 
     @Test
-    public void execute_stat_success_tut() {
+    public void execute_TutStat_success() {
         assertCommandSuccess(new CompStatsCommand(new ArrayList<>(), new GcName("Final"),
                         new TutorialGroup("T03")), model, expectedOutputOfTut3, model);
     }
