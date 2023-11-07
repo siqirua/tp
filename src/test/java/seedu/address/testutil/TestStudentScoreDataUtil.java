@@ -1,14 +1,13 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.model.gradedcomponent.GcName;
-import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
-import seedu.address.model.tag.Tag;
-
-import java.util.*;
 
 
 /**
@@ -23,12 +22,12 @@ public class TestStudentScoreDataUtil {
 
     public static ArrayList<StudentScore> getTestStudentZeroScores() {
         StudentScore[] studentScores = new StudentScore[]{
-                new StudentScore(new StudentId("A0000000Y"), gcName1, 0),
-                new StudentScore(new StudentId("A0000001Y"), gcName1, 0),
-                new StudentScore(new StudentId("A0000002Y"), gcName1, 0),
-                new StudentScore(new StudentId("A0000003Y"), gcName1, 0),
-                new StudentScore(new StudentId("A0000004Y"), gcName1, 0),
-                new StudentScore(new StudentId("A0000005Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000000Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000001Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000002Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000003Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000004Y"), gcName1, 0),
+            new StudentScore(new StudentId("A0000005Y"), gcName1, 0),
         };
         return new ArrayList<>(List.of(studentScores));
     }

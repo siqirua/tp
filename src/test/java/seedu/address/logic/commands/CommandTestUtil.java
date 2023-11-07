@@ -9,6 +9,10 @@ import seedu.address.model.Model;
  * A utility class for test cases in command execution.
  */
 public class CommandTestUtil {
+    //@@author siqirua-reused
+    //Inspired by https://github.com/AY2324S1-CS2103T-F10-3/tp/blob/master/src/test/java/seedu/address/testutil/TestUtil.java
+    // and make some minor modifications to suit this project
+
     /**
      * Executes the given {@code command} under positive test cases, checks if <br>
      * - the returned {@link CommandResult} matches {@code expectedCommandResult} <br>
@@ -73,4 +77,5 @@ public class CommandTestUtil {
             assertEquals(actualModel, expectedModel);
         }
     }
+    //@@author
 }

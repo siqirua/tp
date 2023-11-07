@@ -14,13 +14,13 @@ public class TestGcDataUtil {
 
     public static GradedComponent[] getTestGradedComponents() {
         return new GradedComponent[]{new GradedComponent(new GcName("Midterm"), new MaxMarks(50), new Weightage(30)),
-                new GradedComponent(new GcName("Final"), new MaxMarks(100), new Weightage(40))};
+            new GradedComponent(new GcName("Final"), new MaxMarks(100), new Weightage(40))};
     }
 
     public static GradedComponent[] getTestGradedComponentsAfterAdding() {
         return new GradedComponent[]{new GradedComponent(new GcName("Midterm"), new MaxMarks(50), new Weightage(30)),
-                new GradedComponent(new GcName("Final"), new MaxMarks(100), new Weightage(40)),
-        new GradedComponent(new GcName("Practical Exam"), new MaxMarks(30), new Weightage(30))};
+            new GradedComponent(new GcName("Final"), new MaxMarks(100), new Weightage(40)),
+            new GradedComponent(new GcName("Practical Exam"), new MaxMarks(30), new Weightage(30))};
     }
 
     public static GradedComponent[] getTestGradedComponentsAfterDeleting() {
