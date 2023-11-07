@@ -2,8 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTItY_COUNT;
-import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -15,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.ModelUtil;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
@@ -60,7 +57,7 @@ public class ModelManager implements Model {
         this.studentBook = new StudentBook(studentBook);
         this.gradedComponentBook = new GradedComponentBook(gradedComponentBook);
         this.studentScoreBook = new StudentScoreBook(studentScoreBook);
-        checkBookValidity(this.studentBook, this.gradedComponentBook, this.studentScoreBook);
+
         assignStudentScores(this.studentBook, this.gradedComponentBook, this.studentScoreBook);
         calculateInitialScores(this.studentBook, this.gradedComponentBook, this.studentScoreBook);
 
@@ -114,19 +111,7 @@ public class ModelManager implements Model {
         }
     }
 
-    private void checkBookValidity(StudentBook studentBook, GradedComponentBook gcBook,
-                                   StudentScoreBook ssb) {
-        List<Student> studentList = studentBook.getStudentList();
-        List<GradedComponent> gcList = gcBook.getGradedComponentList();
-        List<StudentScore> studentScoreList = ssb.getStudentScoreList();
-        if (ModelUtil.weightageSum(gcBook) > 100) {
-            throw new RuntimeException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
-        }
-        if (studentList.size() * gcList.size() != studentScoreList.size()) {
-            throw new RuntimeException(MESSAGE_INCORRECT_ENTItY_COUNT);
-        }
 
-    }
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
         requireNonNull(userPrefs);
