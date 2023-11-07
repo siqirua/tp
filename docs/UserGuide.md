@@ -325,6 +325,34 @@ Format: `sortStuScore [o/SORTING_ORDER] [r/REVERSE]`
 Examples:
 * `sortStuScore o/score r/true` returns the sorted students whose names are in descending alphabetical order.
 
+### Auto grading all the students: `autoGrade`
+
+Automatically assign grades to all students based on their total score and
+the automatic grading method.
+
+Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
+
+* There are 2 possible `METHOD`:
+  * Percentile Method: `p`, `percentile`, `Percentile`
+    * Calculate students' grade based on the statistical percentile.
+  * Absolute Score Method: `a`, `absolute`, `Absolute`
+    * Calculate students' grade based on the given passing grade values.
+* The `PASSING_VALUE` are numbers that determine the boundary for each grade
+  * The structure of `PASSING_VALUE`: `[A+] [A] [A-] [B+] [B] [B-] [C+] [C] [D+] [D] [F]`
+  * Each bracket represents the boundary value for the grade.
+    * For `percentile` method, it is the statistical percentile value.
+    * For `absolute` method, it is the total score.
+  * It is **not** compulsory to fill all the `PASSING_VALUE`, but such approach would make students below the lowest given passing value to be graded `F`. 
+  * Example: `pg/90 80 65 40 30`. This would correspond to:
+    * Value `90` given to `A+`
+    * Value `80` given to `A`
+    * Value `65` given to `A-`
+    * Value `40` given to `B+`
+    * Value `30` given to `B`
+    * Any Value below `30` will be given `F`
+Example:
+* `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95` above will be given `A+`, total score below `95` and `90` above will be given `A`, and so on, while below `20` will be given `F`.
+
 ### Calculating overall statistics: `stats`
 
 Calculates the overall statistics of all students.
@@ -415,20 +443,22 @@ _Details coming soon ..._
 | Action                             | Format, Examples                                                                                                                   |
 |------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
-| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                           |
-| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`             |
-| **Edit a graded component**        | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                               |
-| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 1 m/57`                                                              |
-| **Delete a student**               | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                         |
-| **Delete a graded component**      | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                       |
-| **Delete everything**              | `clearAll`                                                                                                                         |
-| **Find a student**                 | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                       |
-| **Find a graded component**        | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                             |
-| **Find a student score**           | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms` |
-| **List all students**              | `listStu`                                                                                                                          |
-| **List all**                       | `listAll`                                                                                                                          |
-| **Sort student**                   | `sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                         |
-| **Sort student score**             | `sortStuScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStuScore o/name r/true`                                               |
-| **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                           |
-| **Calculate component statistics** | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`           |
-| **Help**                           | `help`                                                                                                                             |
+| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                               |
+| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                 |
+| **Edit a graded component**        | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                                   |
+| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 1 m/57`                                                                  |
+| **Delete a student**               | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
+| **Delete a graded component**      | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
+| **Delete everything**              | `clearAll`                                                                                                                             |
+| **Find a student**                 | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
+| **Find a graded component**        | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
+| **Find a student score**           | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms`  |
+| **List all students**              | ` listStu`                                                                                                                             |
+| **List all**                       | ` listAll`                                                                                                                             |
+| **Sort student**                   | ` sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
+| **Sort student score**             | ` sortStuScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStuScore o/name r/true`                                                  |
+| **Auto grading all the students**  | ` autoGrade ag/METHOD pg/PASING_VALUE` <br> e.g., `autoGrade ag/absolute pg/95 80 70 55 40 20`                                         |
+| **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                               |
+| **Calculate component statistics** | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`               |
+| **Help**                           | `help`                                                                                                                                 |
+>>>>>>> master
