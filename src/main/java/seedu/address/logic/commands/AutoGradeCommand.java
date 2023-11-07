@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTOGRADE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSING_GRADE;
 
@@ -8,7 +9,6 @@ import java.util.Arrays;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.student.Student;
@@ -31,23 +31,38 @@ public class AutoGradeCommand extends Command {
             + "Values are in format of " + PREFIX_PASSING_GRADE + "[A+] [A] [A-] [B+] [B] [B-] [C+] [C] [D+] [D] [F] \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_AUTOGRADE_TYPE + "percentile "
             + PREFIX_PASSING_GRADE + "90 80 70 60 50 40 30 20 18 15 12";
+    public static final String MESSAGE_SUCCESS = "Successfully auto grades all students!";
     public static final String MESSAGE_INCREASING_VALUE = "Lower grades cannot have "
             + "higher value than higher grades!";
     public static final String MESSAGE_PARSE_FLOAT = "Grade value is not parsable. "
             + "Please correctly input the grade value.";
     public static final String MESSAGE_TOO_MANY_VALUE = "Too many inputted passing grade value!";
-    private final String[] gradeList =
+    public static final String MESSAGE_VALUE_LESS_THAN_ZERO = "The passing grade value is less than zero. "
+            + "Please correctly input the value between 0 to 100.";
+    public static final String MESSAGE_VALUE_MORE_THAN_MAXIMUM = "Then passing grade value is more than one hundred. "
+            + "Please correctly input the value between 0 to 100.";
+    private static final String[] GRADE_LIST =
         {"A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D+", "D", "F"}; //Enum can only use alphanumeric
+
+    /**
+     * enum used to identify auto grading method.
+     */
+    public enum AutoGradeType {
+        PERCENTILE,
+        ABSOLUTE
+    };
     private float[] gradeThreshold = new float[11];
     private final float[] passingGradeValue;
-    private final boolean autoGradeType;
+
+    private final AutoGradeType autoGradeType;
+
 
     /**
      * Creates an AutoGradeCommand to autoGrade students based on total score.
      * @param passingGradeValue Array of passingGradeValue
      * @param autoGradeType Method of auto grading.
      */
-    public AutoGradeCommand(float[] passingGradeValue, boolean autoGradeType) {
+    public AutoGradeCommand(float[] passingGradeValue, AutoGradeType autoGradeType) {
         this.passingGradeValue = passingGradeValue;
         this.autoGradeType = autoGradeType;
     }
@@ -56,32 +71,37 @@ public class AutoGradeCommand extends Command {
         requireNonNull(model);
 
         StudentBook studentBook = model.getStudentBook();
-        studentBook.sortStudent("ts", true);
+        studentBook.sortStudent("o", true);
 
         Arrays.fill(gradeThreshold, 0);
 
-        if (passingGradeValue.length > gradeList.length) {
+        if (passingGradeValue.length > GRADE_LIST.length) {
             throw new CommandException(MESSAGE_TOO_MANY_VALUE);
         }
 
-        if (autoGradeType) {
+        switch (autoGradeType) {
+        case PERCENTILE:
             setGradeThresholdPercentile(model);
-        } else {
+            break;
+        case ABSOLUTE:
             setGradeThresholdAbsolute();
+            break;
+        default:
+            throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AutoGradeCommand.MESSAGE_USAGE));
         }
 
         addGradeToAllStudent(model);
 
-        return new CommandResult(String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
-                model.getFilteredStudentList().size()));
+        return new CommandResult(MESSAGE_SUCCESS);
 
     }
 
     private void setGradeThresholdPercentile(Model model) {
         int size = model.getStudentBook().getSize();
         for (int i = 0; i < passingGradeValue.length; i++) {
-            int percentileIndex = (int) Math.floor((1 - this.passingGradeValue[i] / 100) * (size - 1));
-            Student student = model.getFilteredStudentList().get(percentileIndex);
+            int percentileIndex = (int) Math.ceil((1 - this.passingGradeValue[i] / 100) * (size - 1));
+            Student student = model.getStudentBook().getStudentList().get(percentileIndex);
             float percentileScore = student.getTotalScore();
 
             this.gradeThreshold[i] = percentileScore;
@@ -98,11 +118,11 @@ public class AutoGradeCommand extends Command {
 
         for (int i = 0; i < passingGradeValue.length; i++) {
             if (score >= gradeThreshold[i]) {
-                studentGrade = new StudentGrade(gradeList[i]);
+                studentGrade = new StudentGrade(GRADE_LIST[i]);
                 return studentGrade;
             }
         }
-        studentGrade = new StudentGrade(gradeList[10]);
+        studentGrade = new StudentGrade(GRADE_LIST[10]);
         return studentGrade;
     }
 

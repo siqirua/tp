@@ -77,6 +77,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             case "score":
             case "totalscore":
             case "totalScore":
+            case "ts":
                 order = "o";
                 break;
             default:

@@ -335,6 +335,7 @@ Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
     * Calculate students' grade based on the statistical percentile.
   * Absolute Score Method: `a`, `absolute`, `Absolute`
     * Calculate students' grade based on the given passing grade values.
+    * the absolute value is compared directly with the students' total score (in percentage of the maximum score possible).
 * The `PASSING_VALUE` are numbers that determine the boundary for each grade
   * The structure of `PASSING_VALUE`: `[A+] [A] [A-] [B+] [B] [B-] [C+] [C] [D+] [D] [F]`
   * Each bracket represents the boundary value for the grade.
@@ -349,7 +350,7 @@ Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
     * Value `30` given to `B`
     * Any Value below `30` will be given `F`
 Example:
-* `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95` above will be given `A+`, total score below `95` and `90` above will be given `A`, and so on, while below `20` will be given `F`.
+* `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95%` above will be given `A+`, total score below `95%` and `90` above will be given `A`, and so on, while below `20%` will be given `F`.
 
 ### Calculating overall statistics: `stats`
 
