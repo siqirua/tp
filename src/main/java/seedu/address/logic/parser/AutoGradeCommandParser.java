@@ -2,12 +2,15 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.AutoGradeCommand.AutoGradeType.ABSOLUTE;
+import static seedu.address.logic.commands.AutoGradeCommand.AutoGradeType.PERCENTILE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTOGRADE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSING_GRADE;
 
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AutoGradeCommand;
+import seedu.address.logic.commands.AutoGradeCommand.AutoGradeType;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -36,7 +39,7 @@ public class AutoGradeCommandParser implements Parser<AutoGradeCommand> {
         float[] arrayOfFloat = mapToFloat(input);
 
         String autoGradeTypeString = argMultimap.getValue(PREFIX_AUTOGRADE_TYPE).get();
-        boolean autoGradeType = checkAutoGradeType(autoGradeTypeString);
+        AutoGradeType autoGradeType = checkAutoGradeType(autoGradeTypeString);
 
         return new AutoGradeCommand(arrayOfFloat, autoGradeType);
     }
@@ -52,8 +55,17 @@ public class AutoGradeCommandParser implements Parser<AutoGradeCommand> {
             try {
                 array[i] = Float.parseFloat(input[i]);
             } catch (NumberFormatException e) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        AutoGradeCommand.MESSAGE_PARSE_FLOAT));
+                throw new ParseException(AutoGradeCommand.MESSAGE_PARSE_FLOAT);
+            }
+
+            boolean isLessThanZero = array[i] < 0;
+            if (isLessThanZero) {
+                throw new ParseException(AutoGradeCommand.MESSAGE_VALUE_LESS_THAN_ZERO);
+            }
+
+            boolean isMoreThanMaximumMark = array[i] > 100;
+            if (isMoreThanMaximumMark) {
+                throw new ParseException(AutoGradeCommand.MESSAGE_VALUE_MORE_THAN_MAXIMUM);
             }
         }
 
@@ -67,16 +79,16 @@ public class AutoGradeCommandParser implements Parser<AutoGradeCommand> {
         return array;
     }
 
-    private boolean checkAutoGradeType(String autoGradeType) throws ParseException {
+    private AutoGradeType checkAutoGradeType(String autoGradeType) throws ParseException {
         switch (autoGradeType) {
         case "percentile":
         case "Percentile":
         case "p":
-            return true;
+            return PERCENTILE;
         case "absolute":
         case "Absolute":
         case "a":
-            return false;
+            return ABSOLUTE;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AutoGradeCommand.MESSAGE_USAGE));
         }
