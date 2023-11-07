@@ -1,20 +1,29 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TestGcDataUtil;
+import seedu.address.testutil.TestStudentDataUtil;
+import seedu.address.testutil.TestStudentScoreDataUtil;
+
+import java.util.ArrayList;
 
 public class StatsCommandTest {
-    private Model model = new ModelManager();
-    private Model expectedModel = new ModelManager();
+    private Model model = new ModelManager(TestStudentDataUtil.getTestStudentBook("score"),
+            TestStudentScoreDataUtil.getSampleStudentScoreBook("create"),
+            TestGcDataUtil.getTestGcBook("delete"), new UserPrefs());
+    private String expectedOutput = "Here are the statistics:\n" +
+            "MAX = 50.00, MIN = 0.00, MEAN = 25.00, STANDARD DEVIATION = 17.08\n" +
+            "UPPER QUARTILE = 42.50, LOWER QUARTILE = 7.50, SKEWNESS= 0.00\n";
 
     @Test
-    public void execute_help_success() {
-        CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE, true, false);
-        assertCommandSuccess(new HelpCommand(), model, expectedCommandResult, expectedModel);
+    public void execute_stat_success() {
+        CommandResult expectedCommandResult = new CommandResult(expectedOutput);
+        assertCommandSuccess(new StatsCommand(new ArrayList<>()), model, expectedCommandResult, model);
     }
 }

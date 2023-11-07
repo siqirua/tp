@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentEmail;
 import seedu.address.model.student.StudentId;
@@ -21,6 +22,7 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating StudentBook with sample data.
  */
 public class TestStudentDataUtil {
+    private static GradedComponent gc1 = TestGcDataUtil.getTestGradedComponentsAfterDeleting()[0];
 
     private static List<StudentScore> scoreList = new ArrayList<>();
 
@@ -66,25 +68,32 @@ public class TestStudentDataUtil {
 
     public static ArrayList<Student> getTestStudentsWithScore() {
         float markToBeAdded = 0;
-        ArrayList<Student> newStudents = new ArrayList<>();
+        ArrayList<Student> oldStudents = getTestStudents();
+        ArrayList<Student> newStudents = new ArrayList<>(oldStudents);
         if (!getTestStudents().isEmpty()) {
-            Collections.copy(newStudents, getTestStudents());
+            Collections.copy(newStudents, oldStudents);
         }
         for (Student stu : newStudents) {
-            stu.addScore(new StudentScore(stu.getStudentId(), new GcName("Midterm"),
-                    markToBeAdded));
-            markToBeAdded += newStudents.size() > 1 ? (float) 100 / (newStudents.size() - 1) : 0;
+            StudentScore newScore = new StudentScore(stu.getStudentId(), new GcName("Midterm"),
+                    markToBeAdded);
+            newScore.setGradedComponent(gc1);
+            stu.addScore(newScore);
+            markToBeAdded += newStudents.size() > 1 ? (float) 50 / (newStudents.size() - 1) : 0;
         }
         return newStudents;
     }
 
     public static ArrayList<Student> getTestStudentsWithZeroScore() {
         float markToBeAdded = 0;
-        ArrayList<Student> newStudents = new ArrayList<>();
+        ArrayList<Student> oldStudents = getTestStudents();
+        ArrayList<Student> newStudents = new ArrayList<>(oldStudents);
         if (!getTestStudents().isEmpty()) {
-            Collections.copy(newStudents, getTestStudents());
+            Collections.copy(newStudents, oldStudents);
         }
         for (Student stu : newStudents) {
+            StudentScore newScore = new StudentScore(stu.getStudentId(), new GcName("Midterm"),
+                    0);
+            newScore.setGradedComponent(gc1);
             stu.addScore(new StudentScore(stu.getStudentId(), new GcName("Midterm"),
                     0));
         }

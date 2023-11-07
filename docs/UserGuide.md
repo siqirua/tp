@@ -357,6 +357,8 @@ Format: `stats [st/STATS] [g/TUTORIAL_GRP]`
 supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
 measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+* For the calculation of upper and lower quartile, we use Method 4 introduced 
+in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * It is allowed to have multiple stats keywords, but only allowed to have 0 or 1 tutorial group keywords.
 
 Examples:
@@ -372,6 +374,8 @@ Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
   supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
   measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+* For the calculation of upper and lower quartile, we use Method 4 introduced 
+in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * It is allowed to have multiple stats keywords, but only allowed to have 0 or 1 tutorial group keyword and component 
 name keyword.
 
