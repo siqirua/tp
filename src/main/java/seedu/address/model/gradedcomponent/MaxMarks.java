@@ -11,7 +11,7 @@ public class MaxMarks {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Maximum mark argument should be an number larger than or equal to 0.";
+            "Maximum mark argument should be >= 0 and <= 10000";
 
     public final Float maxMarks;
 
@@ -30,7 +30,7 @@ public class MaxMarks {
      * Returns true if a given string is a valid mark.
      */
     public static boolean isValidMarks(float m) {
-        return m >= 0.0;
+        return m >= 0.0 && m <= 10000.0;
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentGrade;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
@@ -30,6 +31,7 @@ public class JsonAdaptedStudent {
     private final String studentEmail;
     private final String tutorialGroup;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String studentGrade;
 
     /**
      * Constructs a {@code JsonAdaptedStudent} with the given person details.
@@ -39,7 +41,8 @@ public class JsonAdaptedStudent {
                               @JsonProperty("studentName") String studentName,
                               @JsonProperty("studentEmail") String studentEmail,
                               @JsonProperty("tutorialGroup") String tutorialGroup,
-                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                              @JsonProperty("studentGrade") String studentGrade) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentEmail = studentEmail;
@@ -47,6 +50,7 @@ public class JsonAdaptedStudent {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.studentGrade = studentGrade;
     }
 
     /**
@@ -60,6 +64,7 @@ public class JsonAdaptedStudent {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        studentGrade = source.getStudentGrade().grade;
     }
 
     /**
@@ -111,8 +116,17 @@ public class JsonAdaptedStudent {
 
         final List<StudentScore> modelStudentScores = new ArrayList<>();
 
+        if (studentGrade == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    StudentGrade.class.getSimpleName()));
+        }
+        if (!StudentGrade.isValidGrade(studentGrade)) {
+            throw new IllegalValueException(StudentGrade.MESSAGE_CONSTRAINTS);
+        }
+        final StudentGrade modelStudentGrade = new StudentGrade(studentGrade);
+
         return new Student(modelStudentId, modelStudentName, modelStudentEmail, modelTutorialGroup,
-            modelStudentScores, modelTags);
+            modelStudentScores, modelTags, modelStudentGrade);
     }
 
 }
