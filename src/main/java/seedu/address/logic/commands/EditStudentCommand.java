@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_GRADE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_GROUP;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +22,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentEmail;
 import seedu.address.model.student.StudentGrade;
@@ -93,23 +91,21 @@ public class EditStudentCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        StudentScoreBook ssb = model.getStudentScoreBook();
-        List<StudentScore> ssList = ssb.getStudentScoreList();
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
         sModel.setStudent(studentToEdit, editedStudent);
 
-        for (int i = 0; i < ssList.size(); i++) {
-            StudentScore sc = ssList.get(i);
+        for (int i = 0; i < studentScoreList.size(); i++) {
+            StudentScore sc = studentScoreList.get(i);
+            sc.setStudent(editedStudent);
             if (sc.getStudentId().equals(studentToEdit.getStudentId())) {
                 EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
                 newDescriptor.setStudentId(editedStudent.getStudentId());
-                StudentId sid = sc.getStudentId();
-                GcName gcName = sc.getGcName();
-                new EditStudentScoreCommand(Index.fromZeroBased(i), newDescriptor).execute(model);
+                new EditStudentScoreCommand(Index.fromZeroBased(i), newDescriptor, false).execute(model);
             }
         }
 
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent)));
     }
 

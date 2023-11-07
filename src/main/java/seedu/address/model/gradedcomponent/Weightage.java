@@ -11,7 +11,7 @@ public class Weightage {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Weightage should be an number larger than or equal to 0.";
+            "Weightage should be >= 0 and <= 100.";
 
     public final Float weightage;
 
@@ -30,7 +30,7 @@ public class Weightage {
      * Returns true if a given string is a valid weightage.
      */
     public static boolean isValidWeightage(float m) {
-        return m >= 0.0;
+        return m >= 0.0 && m <= 100.0;
     }
 
     @Override

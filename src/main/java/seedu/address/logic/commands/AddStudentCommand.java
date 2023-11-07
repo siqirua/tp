@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.ModelUtil.addCommandUpdateBooks;
+import static seedu.address.commons.util.ModelUtil.addCommandUpdateLinks;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
@@ -17,10 +19,6 @@ import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.StudentScoreBook;
-
-
-
 
 /**
  * Format full help instructions for every command for display.
@@ -62,7 +60,6 @@ public class AddStudentCommand extends Command {
 
         GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
         StudentBook studentBook = model.getStudentBook();
-        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
 
         if (studentBook.hasStudent(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -72,13 +69,8 @@ public class AddStudentCommand extends Command {
         List<GradedComponent> gcs = gradedComponentBook.getGradedComponentList();
         for (GradedComponent gc : gcs) {
             StudentScore sc = new StudentScore(toAdd.getStudentId(), gc.getName(), 0);
-            sc.setGradedComponent(gc);
-            sc.setStudent(toAdd);
-            toAdd.addScore(sc);
-            gc.addScore(sc);
-            gradedComponentBook.setGradedComponent(gc, gc);
-            studentBook.setStudent(toAdd, toAdd);
-            studentScoreBook.addStudentScore(sc);
+            addCommandUpdateLinks(toAdd, gc, sc);
+            addCommandUpdateBooks(model, toAdd, gc, sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }

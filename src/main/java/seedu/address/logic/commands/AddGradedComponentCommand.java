@@ -1,12 +1,16 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
+import static seedu.address.commons.util.ModelUtil.addCommandUpdateBooks;
+import static seedu.address.commons.util.ModelUtil.addCommandUpdateLinks;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHTAGE;
 
 import java.util.List;
 
+import seedu.address.commons.util.ModelUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -16,7 +20,6 @@ import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.studentscore.model.StudentScoreBook;
 
 /**
  * Format full help instructions for every command for display.
@@ -40,6 +43,7 @@ public class AddGradedComponentCommand extends Command {
     public static final String MESSAGE_DUPLICATE_GRADED_COMPONENT = "This graded component already "
             + "exists in the database";
 
+
     private GradedComponent toAdd;
 
     /**
@@ -59,18 +63,18 @@ public class AddGradedComponentCommand extends Command {
         }
         GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
         StudentBook studentBook = model.getStudentBook();
-        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+
+        float weightageToAdd = toAdd.getWeightage().weightage;
+        if (ModelUtil.weightageSum(gradedComponentBook) + weightageToAdd > 100) {
+            throw new CommandException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
+        }
         gradedComponentBook.addGradedComponent(toAdd);
         List<Student> students = studentBook.getStudentList();
+
         for (Student student : students) {
             StudentScore sc = new StudentScore(student.getStudentId(), toAdd.getName(), 0);
-            sc.setGradedComponent(toAdd);
-            sc.setStudent(student);
-            student.addScore(sc);
-            toAdd.addScore(sc);
-            gradedComponentBook.setGradedComponent(toAdd, toAdd);
-            studentBook.setStudent(student, student);
-            studentScoreBook.addStudentScore(sc);
+            addCommandUpdateLinks(student, toAdd, sc);
+            addCommandUpdateBooks(model, student, toAdd, sc);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatGradedComponent(toAdd)));
     }

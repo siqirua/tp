@@ -93,11 +93,11 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Graded Component Parameters
 
-| Parameter | Description                                               | Constraints                                                                                                                                         | Valid Examples      | Invalid Examples             |
-|-----------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|------------------------------|
-| c/        | Name of the graded component                              | Must only contain alphanumeric characters and must not be empty                                                                                     | Midterm Exam, CA2   | 高考, CA2/Oral, Practical-Exam |
-| w/        | Weightage of the graded component                         | Must be a non-negative number, though decimals are allowed                                                                                          | 0, 0.25, 20, 1000.8 | -0.3, 1/2, (20), NIL         |
-| mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number, though decimals are allowed. If the weightage for this component is non-zero, then maximum marks must be more than 0 | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
+| Parameter | Description                                               | Constraints                                                              | Valid Examples      | Invalid Examples             |
+|-----------|-----------------------------------------------------------|--------------------------------------------------------------------------|---------------------|------------------------------|
+| c/        | Name of the graded component                              | Must only contain alphanumeric characters and must not be empty          | Midterm Exam, CA2   | 高考, CA2/Oral, Practical-Exam |
+| w/        | Weightage of the graded component                         | Must be a non-negative number less than or equal to 100. Decimals are allowed | 0, 0.25, 20, 1000.8 | -0.3, 1/2, (20), NIL         |
+| mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number less than or equal to 10000.               | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
 
 
 ### Student Score Parameters
@@ -115,6 +115,8 @@ The following section gives an overview of the parameters used for the commands 
 * The maximum marks of a graded component and marks of a student score are both absolute values and are used together to determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
 
 * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of the student’s overall score. This is modified as components are added and removed.
+
+* If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
 
 </box>
 
@@ -435,8 +437,8 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                             | Format, Examples                                                                                                                       |
-|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| Action                             | Format, Examples                                                                                                                   |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
 | **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                               |
 | **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                 |
@@ -456,3 +458,4 @@ _Details coming soon ..._
 | **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                               |
 | **Calculate component statistics** | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`               |
 | **Help**                           | `help`                                                                                                                                 |
+>>>>>>> master

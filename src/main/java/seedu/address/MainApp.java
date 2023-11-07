@@ -42,6 +42,8 @@ import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
 
+
+
 /**
  * Runs the application.
  */
@@ -119,6 +121,7 @@ public class MainApp extends Application {
                 .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
             initialGradedComponentData = gradedComponentBookOptional
                 .orElseGet(SampleGcDataUtil::getSampleGcBook);
+
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");

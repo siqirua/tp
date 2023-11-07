@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.Weightage;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.tag.Tag;
 
@@ -109,11 +111,15 @@ public class Student {
     private float calcTotalScore() {
         float totalWeightage = 0;
         for (StudentScore sc : scoreList) {
-            totalWeightage += sc.getGradedComponent().getWeightage().weightage;
+            GradedComponent gc = sc.getGradedComponent();
+            Weightage w = gc.getWeightage();
+            totalWeightage += w.weightage;
         }
         float totalScore = 0;
         for (StudentScore sc : scoreList) {
-            float weight = sc.getGradedComponent().getWeightage().weightage;
+            GradedComponent gc = sc.getGradedComponent();
+            Weightage w = gc.getWeightage();
+            float weight = w.weightage;
             totalScore += weight / totalWeightage * sc.calcRelativeScore();
         }
         return totalScore;
