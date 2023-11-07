@@ -1,6 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -9,10 +14,6 @@ import seedu.address.model.student.TutorialGroup;
 import seedu.address.testutil.TestGcDataUtil;
 import seedu.address.testutil.TestStudentDataUtil;
 import seedu.address.testutil.TestStudentScoreDataUtil;
-
-import java.util.ArrayList;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 public class CompStatsCommandTest {
     private Model model = new ModelManager(TestStudentDataUtil.getTestStudentBook("create"),
@@ -33,7 +34,7 @@ public class CompStatsCommandTest {
     }
 
     @Test
-    public void execute_stat_tut_success() {
+    public void execute_stat_success_tut() {
         assertCommandSuccess(new CompStatsCommand(new ArrayList<>(), new GcName("Final"),
                         new TutorialGroup("T03")), model, expectedOutputOfTut3, model);
     }
