@@ -15,18 +15,17 @@ import java.util.Set;
  * Contains utility methods for populating StudentBook with sample data.
  */
 public class TestStudentScoreDataUtil {
+    public static ArrayList<StudentScore> getTestStudentScoresEmpty() {
+        return new ArrayList<>();
+    }
 
-    private static List<StudentScore> scoreList = new ArrayList<>();
-
-    private static Set<Tag> tags = new HashSet<>();
-
-    public static StudentScore[] getSampleStudentScores() {
-        return new StudentScore[]{ };
+    public static ArrayList<StudentScore> getTestStudentScores() {
+        return getTestStudentScoresEmpty();
     }
 
     public static ReadOnlyStudentScoreBook getSampleStudentScoreBook() {
         StudentScoreBook sampleAb = new StudentScoreBook();
-        for (StudentScore sampleStudentScore : getSampleStudentScores()) {
+        for (StudentScore sampleStudentScore : getTestStudentScores()) {
             sampleAb.addStudentScore(sampleStudentScore);
         }
         return sampleAb;
