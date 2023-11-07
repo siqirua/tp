@@ -8,8 +8,8 @@ import java.util.Set;
 
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentEmail;
+import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
