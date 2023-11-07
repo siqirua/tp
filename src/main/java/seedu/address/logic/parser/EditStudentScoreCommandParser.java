@@ -2,9 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARKS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -30,11 +28,9 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
      */
     public EditStudentScoreCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
-                        PREFIX_MARKS, PREFIX_COMMENT, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_MARKS, PREFIX_COMMENT, PREFIX_TAG);
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_COMPONENT_NAME,
-                PREFIX_MARKS, PREFIX_COMMENT);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MARKS, PREFIX_COMMENT);
 
         Index index;
 
@@ -48,18 +44,6 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
         EditStudentScoreCommand.EditStudentScoreDescriptor editStudentScoreDescriptor =
                 new EditStudentScoreCommand.EditStudentScoreDescriptor();
         try {
-            if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
-                editStudentScoreDescriptor.setStudentId(
-                        ParserUtil.parseId(argMultimap.getValue(PREFIX_STUDENT_ID).get())
-                );
-            }
-
-            if (argMultimap.getValue(PREFIX_COMPONENT_NAME).isPresent()) {
-                editStudentScoreDescriptor.setGcName(
-                        ParserUtil.parseGcName(argMultimap.getValue(PREFIX_COMPONENT_NAME).get())
-                );
-            }
-
             if (argMultimap.getValue(PREFIX_MARKS).isPresent()) {
                 editStudentScoreDescriptor.setScore(
                         ParserUtil.parseScore(argMultimap.getValue(PREFIX_MARKS).get())
@@ -76,9 +60,7 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
             throw new ParseException(e.getMessage());
         }
 
-
-
-        return new EditStudentScoreCommand(index, editStudentScoreDescriptor);
+        return new EditStudentScoreCommand(index, editStudentScoreDescriptor, true);
     }
 
     /**

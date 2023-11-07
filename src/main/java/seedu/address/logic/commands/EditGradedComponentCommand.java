@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_MARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHTAGE;
@@ -11,8 +12,10 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.ModelUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.EditStudentScoreCommand.EditStudentScoreDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GcName;
@@ -22,6 +25,7 @@ import seedu.address.model.gradedcomponent.Weightage;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.StudentScoreBook;
+
 
 /**
  * Edits the details of an existing gradedComponent in the address book.
@@ -74,34 +78,53 @@ public class EditGradedComponentCommand extends Command {
         GradedComponent editedGradedComponent = createEditedGradedComponent(gradedComponentToEdit,
                 editGradedComponentDescriptor);
 
-        GradedComponentBook gModel = model.getGradedComponentBook();
+        GradedComponentBook gradedComponentBook = model.getGradedComponentBook();
+        checkEditedComponentValidity(gradedComponentToEdit, editedGradedComponent, gradedComponentBook);
 
-        if (!gradedComponentToEdit.isSameGc(editedGradedComponent)
-                && gModel.hasGradedComponent(editedGradedComponent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_GRADED_COMPONENT);
-        }
+        gradedComponentBook.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
+        StudentScoreBook studentScoreBook = model.getStudentScoreBook();
+        List<StudentScore> studentScoreList = studentScoreBook.getStudentScoreList();
 
-        StudentScoreBook ssb = model.getStudentScoreBook();
-        List<StudentScore> ssList = ssb.getStudentScoreList();
-
-        gModel.setGradedComponent(gradedComponentToEdit, editedGradedComponent);
-
-
-        for (int i = 0; i < ssList.size(); i++) {
-            StudentScore sc = ssList.get(i);
+        for (int i = 0; i < studentScoreList.size(); i++) {
+            StudentScore sc = studentScoreList.get(i);
             sc.setGradedComponent(editedGradedComponent);
             if (sc.getGcName().equals(gradedComponentToEdit.getName())) {
-                EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
-                        new EditStudentScoreCommand.EditStudentScoreDescriptor();
-                newDescriptor.setGcName(editedGradedComponent.getName());
-                new EditStudentScoreCommand(Index.fromZeroBased(i), newDescriptor).execute(model);
+                EditStudentScoreDescriptor descriptor =
+                        createStudentScoreDescriptor(sc, editedGradedComponent);
+                EditStudentScoreCommand command = new EditStudentScoreCommand(
+                        Index.fromZeroBased(i), descriptor, false);
+                command.execute(model);
             }
         }
 
-
-
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatGradedComponent(editedGradedComponent)));
+    }
+
+    private void checkEditedComponentValidity(GradedComponent gradedComponentToEdit,
+                                       GradedComponent editedGradedComponent,
+                                       GradedComponentBook gradedComponentBook) throws CommandException {
+        if (!gradedComponentToEdit.isSameGc(editedGradedComponent)
+                && gradedComponentBook.hasGradedComponent(editedGradedComponent)) {
+            throw new CommandException(MESSAGE_DUPLICATE_GRADED_COMPONENT);
+        }
+        float weightageToEdit = gradedComponentToEdit.getWeightage().weightage;
+        float weightageEdited = editedGradedComponent.getWeightage().weightage;
+        if (ModelUtil.weightageSum(gradedComponentBook) - weightageToEdit + weightageEdited > 100) {
+            throw new CommandException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
+        }
+    }
+
+    private EditStudentScoreDescriptor createStudentScoreDescriptor(StudentScore sc,
+                                                                    GradedComponent editedGradedComponent) {
+        EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
+                new EditStudentScoreCommand.EditStudentScoreDescriptor();
+        newDescriptor.setGcName(editedGradedComponent.getName());
+        float maxMarks = editedGradedComponent.getMaxMarks().maxMarks;
+        if (sc.getScore() > maxMarks) {
+            newDescriptor.setScore(maxMarks);
+        }
+        return newDescriptor;
     }
 
     /**

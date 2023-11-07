@@ -53,16 +53,18 @@ public class StatsCalculator {
 
     public float getUpperQuartile() {
         double upperIndex = (scores.size() + 1) * 0.75 - 1;
+        double dec = upperIndex % 1;
         int floor = (int) Math.max(0, Math.floor(upperIndex));
         int ceiling = (int) Math.min(Math.ceil(upperIndex), scores.size() - 1);
-        return (scores.get(floor) + scores.get(ceiling)) / 2;
+        return (float) (scores.get(floor) + (scores.get(ceiling) - scores.get(floor)) * dec);
     }
 
     public float getLowerQuartile() {
         double lowerIndex = (scores.size() + 1) * 0.25 - 1;
+        double dec = lowerIndex % 1;
         int floor = (int) Math.max(0, Math.floor(lowerIndex));
         int ceiling = (int) Math.min(Math.ceil(lowerIndex), scores.size() - 1);
-        return (scores.get(floor) + scores.get(ceiling)) / 2;
+        return (float) (scores.get(floor) + (scores.get(ceiling) - scores.get(floor)) * dec);
     }
 
     public float getSkewness() {

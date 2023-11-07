@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
+import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
@@ -27,8 +28,8 @@ public class StudentScore {
     private String comment = "";
     private Student student;
     private GradedComponent gc;
-
     private final Set<Tag> tags = new HashSet<>();
+
     /**
      * Constructs a {@code studentScore}.
      *
@@ -58,6 +59,13 @@ public class StudentScore {
 
     }
 
+    private boolean isValidScore(float s) {
+        boolean isLessEqualThanMaxMarks = true;
+        if (this.gc != null) {
+            isLessEqualThanMaxMarks = s <= this.gc.getMaxMarks().maxMarks;
+        }
+        return s >= 0 && isLessEqualThanMaxMarks;
+    }
 
     public StudentId getStudentId() {
         return this.sid;
@@ -99,7 +107,12 @@ public class StudentScore {
      */
     public float calcRelativeScore() {
         assert this.gc != null;
-        return Math.min(score / this.gc.getMaxMarks().maxMarks * 100, 100);
+        MaxMarks mm = this.gc.getMaxMarks();
+        float maxMarks = mm.maxMarks;
+        if (maxMarks == 0) {
+            return 0;
+        }
+        return Math.min(score / maxMarks * 100, 100);
     }
     /**
      * Returns true if both student scores have the same StudentId and GcName.

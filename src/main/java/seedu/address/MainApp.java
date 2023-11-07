@@ -1,7 +1,11 @@
 package seedu.address;
 
+import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTItY_COUNT;
+import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
+
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -12,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.ModelUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -19,10 +24,13 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
 import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
+import seedu.address.model.student.Student;
 import seedu.address.model.student.model.ReadOnlyStudentBook;
 import seedu.address.model.student.model.StudentBook;
+import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.studentscore.model.ReadOnlyStudentScoreBook;
 import seedu.address.model.studentscore.model.StudentScoreBook;
 import seedu.address.model.util.SampleGcDataUtil;
@@ -40,7 +48,6 @@ import seedu.address.storage.StudentScoreBookStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-
 
 /**
  * Runs the application.
@@ -119,6 +126,8 @@ public class MainApp extends Application {
                 .orElseGet(SampleStudentScoreDataUtil::getSampleStudentScoreBook);
             initialGradedComponentData = gradedComponentBookOptional
                 .orElseGet(SampleGcDataUtil::getSampleGcBook);
+            checkBookValidity(initialStudentData, initialGradedComponentData, initialStudentScoreData);
+
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
@@ -172,6 +181,20 @@ public class MainApp extends Application {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
         }
         return initializedConfig;
+    }
+
+    private void checkBookValidity(ReadOnlyStudentBook studentBook, ReadOnlyGradedComponentBook gcBook,
+                                   ReadOnlyStudentScoreBook ssb) {
+        List<Student> studentList = studentBook.getStudentList();
+        List<GradedComponent> gcList = gcBook.getGradedComponentList();
+        List<StudentScore> studentScoreList = ssb.getStudentScoreList();
+        if (ModelUtil.weightageSum(gcBook) > 100) {
+            throw new RuntimeException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
+        }
+        if (studentList.size() * gcList.size() != studentScoreList.size()) {
+            throw new RuntimeException(MESSAGE_INCORRECT_ENTItY_COUNT);
+        }
+
     }
 
     /**
