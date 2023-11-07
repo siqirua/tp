@@ -133,18 +133,10 @@ public class UniqueStudentList implements Iterable<Student> {
                 }
 
                 if (order.equals("ts")) {
-                    if (!reverse) {
-                        return s1TotalScore.compareTo(s2TotalScore);
-                    } else {
-                        return s2TotalScore.compareTo(s1TotalScore);
-                    }
+                    return (!reverse ? 1 : -1) * s1TotalScore.compareTo(s2TotalScore);
                 }
 
-                if (!reverse) {
-                    return s1Value.compareTo(s2Value);
-                } else {
-                    return s2Value.compareTo(s1Value);
-                }
+                return (!reverse ? 1 : -1) * s1Value.compareTo(s2Value);
             }
         });
     }
