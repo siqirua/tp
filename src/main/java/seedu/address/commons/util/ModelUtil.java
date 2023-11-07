@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.model.Model;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.model.GradedComponentBook;
+import seedu.address.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.model.StudentBook;
 import seedu.address.model.studentscore.StudentScore;
@@ -21,7 +22,7 @@ public class ModelUtil {
     /**
      * Calculates the sum of weightages of all graded components in the graded component book.
      */
-    public static float weightageSum(GradedComponentBook book) {
+    public static float weightageSum(ReadOnlyGradedComponentBook book) {
         requireNonNull(book);
         float totalWeightage = 0;
         for (GradedComponent gc : book.getGradedComponentList()) {
