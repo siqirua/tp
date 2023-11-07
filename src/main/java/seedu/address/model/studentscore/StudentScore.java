@@ -22,7 +22,6 @@ import seedu.address.model.tag.Tag;
  */
 public class StudentScore {
     private StudentId sid;
-    private StudentName name;
     private GcName gcName;
     private float score;
     private String comment = "";
@@ -39,10 +38,8 @@ public class StudentScore {
         requireAllNonNull(sid, gcName, score);
         this.sid = sid;
         this.gcName = gcName;
-        this.score = score; //add also max marks for the score
+        this.score = score;
         this.comment = comment;
-        // Add student name based on the student id
-        this.name = new StudentName("test name"); //test name
         this.tags.addAll(tagSet);
     }
 
@@ -58,16 +55,12 @@ public class StudentScore {
         this.sid = sid;
         this.gcName = gcName;
         this.score = score;
-        // Add student name based on the student id
+
     }
 
 
     public StudentId getStudentId() {
         return this.sid;
-    }
-
-    public StudentName getName() {
-        return this.name;
     }
 
     public GcName getGcName() {
@@ -151,7 +144,6 @@ public class StudentScore {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("student id", sid)
-                .add("student name", name)
                 .add("component name", gcName)
                 .add("score", score)
                 .add("comment", comment)
