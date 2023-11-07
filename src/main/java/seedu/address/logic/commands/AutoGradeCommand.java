@@ -33,7 +33,7 @@ public class AutoGradeCommand extends Command {
             + PREFIX_PASSING_GRADE + "90 80 70 60 50 40 30 20 18 15 12";
     public static final String MESSAGE_SUCCESS = "Successfully auto grades all students!";
     public static final String MESSAGE_INCREASING_VALUE = "Lower grades cannot have "
-            + "higher value than higher grades!";
+            + "higher or equal value than higher grades!";
     public static final String MESSAGE_PARSE_FLOAT = "Grade value is not parsable. "
             + "Please correctly input the grade value.";
     public static final String MESSAGE_TOO_MANY_VALUE = "Too many inputted passing grade value!";
