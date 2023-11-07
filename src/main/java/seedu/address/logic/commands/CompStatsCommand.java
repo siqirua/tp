@@ -58,13 +58,14 @@ public class CompStatsCommand extends StatsCommand {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         List<GradedComponent> gradedComponents = model.getGradedComponentBook().getGradedComponentList();
-        boolean isCreated = gradedComponents.stream().map(gc -> gc.getName())
+        boolean isCreated = gradedComponents.stream().map(GradedComponent::getName)
                 .anyMatch(name -> name.equals(gradedComponentName));
         if (!isCreated) {
             return new CommandResult(MESSAGE_NO_GC);
         }
         List<Student> students = model.getStudentBook().getStudentList();
         if (isForTut) {
+            assert tutorialGroup != null;
             return new CommandResult(generateTutStatsSummary(students, tutorialGroup.toString()));
         }
         return new CommandResult(generateOverallStatsSummary(students));

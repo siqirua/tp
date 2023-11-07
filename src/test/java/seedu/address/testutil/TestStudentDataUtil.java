@@ -1,10 +1,7 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
@@ -22,7 +19,8 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating StudentBook with sample data.
  */
 public class TestStudentDataUtil {
-    private static GradedComponent gc1 = TestGcDataUtil.getTestGradedComponentsAfterDeleting()[0];
+    private static GradedComponent gc1 = TestGcDataUtil.getTestGradedComponents()[0];
+    private static GradedComponent gc2 = TestGcDataUtil.getTestGradedComponents()[1];
 
     private static List<StudentScore> scoreList = new ArrayList<>();
 
@@ -66,19 +64,18 @@ public class TestStudentDataUtil {
         return newStudents;
     }
 
-    public static ArrayList<Student> getTestStudentsWithScore() {
-        float markToBeAdded = 0;
+    public static ArrayList<Student> getTestStudentsWithScore(ArrayList<StudentScore> scores) {
         ArrayList<Student> oldStudents = getTestStudents();
         ArrayList<Student> newStudents = new ArrayList<>(oldStudents);
         if (!getTestStudents().isEmpty()) {
             Collections.copy(newStudents, oldStudents);
         }
         for (Student stu : newStudents) {
-            StudentScore newScore = new StudentScore(stu.getStudentId(), new GcName("Midterm"),
-                    markToBeAdded);
-            newScore.setGradedComponent(gc1);
-            stu.addScore(newScore);
-            markToBeAdded += newStudents.size() > 1 ? (float) 50 / (newStudents.size() - 1) : 0;
+            List<StudentScore> matchingScores = scores.stream()
+                    .filter(score -> score.getStudentId().equals(stu.getStudentId())).collect(Collectors.toList());
+            for (StudentScore score : matchingScores) {
+                stu.addScore(score);
+            }
         }
         return newStudents;
     }
@@ -114,7 +111,10 @@ public class TestStudentDataUtil {
             stuToBeAdded = getTestStudents();
             break;
         case "score":
-            stuToBeAdded = getTestStudentsWithScore();
+            stuToBeAdded = getTestStudentsWithScore(TestStudentScoreDataUtil.getTestStudentScores());
+            break;
+        case "twoScores":
+            stuToBeAdded = getTestStudentsWithScore(TestStudentScoreDataUtil.getTestStudentTwoScores());
             break;
         case "zeroScore":
             stuToBeAdded = getTestStudentsWithZeroScore();

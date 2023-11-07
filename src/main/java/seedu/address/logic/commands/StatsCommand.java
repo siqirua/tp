@@ -83,7 +83,7 @@ public class StatsCommand extends Command {
         if (stats.isEmpty()) {
             sb.append(String.format("MAX = %.2f, MIN = %.2f, MEAN = %.2f, STANDARD DEVIATION = %.2f\n",
                     st.getMax(), st.getMin(), st.getMean(), st.getStd()));
-            sb.append(String.format("UPPER QUARTILE = %.2f, LOWER QUARTILE = %.2f, SKEWNESS= %.2f\n",
+            sb.append(String.format("UPPER QUARTILE = %.2f, LOWER QUARTILE = %.2f, SKEWNESS = %.2f\n",
                     st.getUpperQuartile(), st.getLowerQuartile(), st.getSkewness()));
         } else {
             int count = 0;

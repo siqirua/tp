@@ -165,6 +165,9 @@ Adds a student to the database. Throws error if student with same student number
 Valid student numbers start and end with an upper-case alphabet, and have 7 numeric symbols in between.
 
 Format: `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]`
+
+* it is allowed to omit the tutorial group. In this case, the student's tutorial group will be T00 by default.
+
 Examples: 
 * `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` Adds a student with student number A1234567Y, name Andy Ong, with email andy_ong@u.nus.edu belonging to tutorial group T03 to the database.
 
@@ -360,8 +363,9 @@ Format: `stats [st/STATS] [g/TUTORIAL_GRP]`
 supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
 measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
-* For the calculation of upper and lower quartile, we use Method 4 introduced 
-in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
+* For the calculation of upper and lower quartile, we use Method 4 introduced in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
+* If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
+is meaningless.
 * It is allowed to have multiple stats keywords, but only allowed to have 0 or 1 tutorial group keywords.
 
 Examples:
@@ -379,6 +383,8 @@ Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
   measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
 * For the calculation of upper and lower quartile, we use Method 4 introduced 
 in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
+* If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
+is meaningless.
 * It is allowed to have multiple stats keywords, but only allowed to have 0 or 1 tutorial group keyword and component 
 name keyword.
 
