@@ -4,7 +4,6 @@ import seedu.address.logic.commands.EditStudentScoreCommand.EditStudentScoreDesc
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.student.StudentId;
 import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with Building EditStudentScoreDescriptor objects.
@@ -86,7 +85,7 @@ public class EditStudentScoreDescriptorBuilder {
      * @return EditStudentScoreDescriptorBuilder
      */
     public EditStudentScoreDescriptorBuilder withTags(String ... tags) {
-        descriptor.setTags(SampleDataUtil.getTagSet(tags));
+        descriptor.setTags(TestStudentDataUtil.getTagSet(tags));
         return this;
     }
 

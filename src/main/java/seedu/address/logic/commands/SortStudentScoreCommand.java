@@ -22,7 +22,7 @@ import seedu.address.model.studentscore.model.StudentScoreBook;
  * Sorts the student(s) whose student id by the given order.
  */
 public class SortStudentScoreCommand extends Command {
-    public static final String COMMAND_WORD = "sortStuScore";
+    public static final String COMMAND_WORD = "sortScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all students scores under a given existing graded component.\n"

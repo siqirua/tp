@@ -10,7 +10,6 @@ import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.studentscore.StudentScore;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Student Score object
@@ -100,7 +99,7 @@ public class StudentScoreBuilder {
      * @return Edited StudentScoreBuilder
      */
     public StudentScoreBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+        this.tags = TestStudentDataUtil.getTagSet(tags);
         return this;
     }
 
