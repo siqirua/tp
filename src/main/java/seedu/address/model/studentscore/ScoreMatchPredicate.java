@@ -99,8 +99,6 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
                 .anyMatch(keyword -> score.getGcName().toString().toLowerCase().contains(keyword.toLowerCase()));
         boolean isIdMatch = idKeywords.isEmpty() || idKeywords.stream()
                 .anyMatch(keyword -> score.getStudentId().toString().toLowerCase().contains(keyword.toLowerCase()));
-        boolean isNameMatch = nameKeywords.isEmpty() || nameKeywords.stream()
-                .anyMatch(keyword -> score.getName().toString().toLowerCase().contains(keyword.toLowerCase()));
         boolean isCommentMatch = commentKeywords.isEmpty() || commentKeywords.stream()
                 .anyMatch(keyword -> score.getComment().toString().toLowerCase().contains(keyword.toLowerCase()));
         boolean isTutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
@@ -109,7 +107,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
                 .anyMatch(tag -> tagKeywords.contains(tag.tagName.toLowerCase()));
         boolean isStudentMatch = studentMatchPredicate.test(score.getStudent());
         boolean isGcMatch = gcMatchPredicate.test(score.getGradedComponent());
-        return isGcNameMatch && isIdMatch && isNameMatch && isCommentMatch && isTutMatch && isTagMatch
+        return isGcNameMatch && isIdMatch && isCommentMatch && isTutMatch && isTagMatch
                 && isStudentMatch && isGcMatch;
     }
 

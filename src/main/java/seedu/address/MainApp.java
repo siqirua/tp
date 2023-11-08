@@ -1,6 +1,6 @@
 package seedu.address;
 
-import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTItY_COUNT;
+import static seedu.address.commons.util.ModelUtil.MESSAGE_INCORRECT_ENTITY_COUNT;
 import static seedu.address.commons.util.ModelUtil.MESSAGE_WEIGHTAGES_MORE_THAN_100;
 
 import java.io.IOException;
@@ -192,7 +192,7 @@ public class MainApp extends Application {
             throw new RuntimeException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
         }
         if (studentList.size() * gcList.size() != studentScoreList.size()) {
-            throw new RuntimeException(MESSAGE_INCORRECT_ENTItY_COUNT);
+            throw new RuntimeException(MESSAGE_INCORRECT_ENTITY_COUNT);
         }
 
     }

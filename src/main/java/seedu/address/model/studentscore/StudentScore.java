@@ -13,7 +13,6 @@ import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
-import seedu.address.model.student.StudentName;
 import seedu.address.model.tag.Tag;
 
 
@@ -23,7 +22,6 @@ import seedu.address.model.tag.Tag;
  */
 public class StudentScore {
     private StudentId sid;
-    private StudentName name;
     private GcName gcName;
     private float score;
     private String comment = "";
@@ -40,10 +38,8 @@ public class StudentScore {
         requireAllNonNull(sid, gcName, score);
         this.sid = sid;
         this.gcName = gcName;
-        this.score = score; //add also max marks for the score
+        this.score = score;
         this.comment = comment;
-        // Add student name based on the student id
-        this.name = new StudentName("test name"); //test name
         this.tags.addAll(tagSet);
     }
 
@@ -59,7 +55,7 @@ public class StudentScore {
         this.sid = sid;
         this.gcName = gcName;
         this.score = score;
-        // Add student name based on the student id
+
     }
 
     private boolean isValidScore(float s) {
@@ -72,10 +68,6 @@ public class StudentScore {
 
     public StudentId getStudentId() {
         return this.sid;
-    }
-
-    public StudentName getName() {
-        return this.name;
     }
 
     public GcName getGcName() {
@@ -95,6 +87,14 @@ public class StudentScore {
 
     public void setGcName(GcName newName) {
         this.gcName = newName;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
     public Student getStudent() {
         return this.student;
@@ -151,7 +151,9 @@ public class StudentScore {
         }
 
         StudentScore otherScore = (StudentScore) other;
-        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName);
+        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName)
+                && score == otherScore.getScore() && comment.equals(otherScore.getComment())
+                && tags.equals(otherScore.tags);
     }
 
     @Override
@@ -164,7 +166,6 @@ public class StudentScore {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("student id", sid)
-                .add("student name", name)
                 .add("component name", gcName)
                 .add("score", score)
                 .add("comment", comment)
