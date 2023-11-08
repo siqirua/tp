@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.statscalculator.StatsCalculator;
@@ -129,4 +130,23 @@ public class StatsCommand extends Command {
         sb.insert(MESSAGE_SUCCESS.length() - 2, String.format(" of Tutorial Group %S", tutGroup));
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof StatsCommand)) {
+            return false;
+        }
+        StatsCommand otherCommand = (StatsCommand) other;
+        boolean isTutMatch = !isForTut || !otherCommand.isForTut
+                || Objects.equals(tutorialGroup, otherCommand.tutorialGroup);
+        return stats.equals(otherCommand.stats)
+                && isForTut == otherCommand.isForTut
+                && isTutMatch;
+    }
+
 }
