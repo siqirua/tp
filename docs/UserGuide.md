@@ -11,7 +11,7 @@ assessments** for a single module.
 
 Here’s an overview of how Modulight can help you to streamline your module management process:
 * Store and edit information about your students and various assessments.
-* Calculate statistics on cohort performance for assessments and visualize them graphically.
+* Calculate statistics on cohort performance for assessments and autograde based on customised parameters.
 * Track qualitative information about your students and assessments using tags and comments.
 
 Furthermore, we believe that module management should be **efficient**. Therefore, Modulight is **optimized for use 
@@ -51,14 +51,14 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 
 ## Command Format
 
-| Notes                                                                                           | Explanation                                                                  | Examples                                                                                                                  |
-|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| Words in UPPER_CASE                                                                             | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                 |
-| Items in square brackets                                                                        | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                  |
-| Items with ... after them                                                                       | These are parameters that can be used multiple times (or omitted completely) | `listStu [g/TUTORIAL_GRP...]` can be used as `listStu g/T02 T03` or `listStu g/T01` or just `listStu`                     |
-| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 t/T00 n/megan`                                                      |
-| If a parameter is expected only once and entered multiple times, an error message will be shown | NIL                                                                          | `editStu 1 n/megan n/maega` results in error message `Multiple values specified for the following single-valued field(s)` |
-| Extraneous parameters for commands that do not take in parameters will be ignored               | NIL                                                                          | `help abc` is equivalent to `help`                                                                                        |
+| Notes                                                                                           | Explanation                                                                  | Examples                                                                                                                   |
+|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Words in UPPER_CASE                                                                             | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                  |
+| Items in square brackets                                                                        | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                   |
+| Items with ... after them                                                                       | These are parameters that can be used multiple times (or omitted completely) | `editStu INDEX [t/TAG...]` can be used as `editStu 1 t/plagiarism t/withdraw` or `editStu 1 t/plagiarism`                  |
+| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 t/T00 n/megan`                                                       |
+| If a parameter is expected only once and entered multiple times, an error message will be shown | NIL                                                                          | `editStu 1 n/megan n/maegan` results in error message `Multiple values specified for the following single-valued field(s)` |
+| Extraneous parameters for commands that do not take in parameters will be ignored               | NIL                                                                          | `help abc` is equivalent to `help`                                                                                         |
 
 
 ## Glossary
@@ -93,11 +93,11 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Graded Component Parameters
 
-| Parameter | Description                                               | Constraints                                                              | Valid Examples      | Invalid Examples             |
-|-----------|-----------------------------------------------------------|--------------------------------------------------------------------------|---------------------|------------------------------|
-| c/        | Name of the graded component                              | Must only contain alphanumeric characters and must not be empty          | Midterm Exam, CA2   | 高考, CA2/Oral, Practical-Exam |
-| w/        | Weightage of the graded component                         | Must be a non-negative number less than or equal to 100. Decimals are allowed | 0, 0.25, 20, 1000.8 | -0.3, 1/2, (20), NIL         |
-| mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number less than or equal to 10000.               | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
+| Parameter | Description                                               | Constraints                                                                    | Valid Examples      | Invalid Examples             |
+|-----------|-----------------------------------------------------------|--------------------------------------------------------------------------------|---------------------|------------------------------|
+| c/        | Name of the graded component                              | Must only contain alphanumeric characters and must not be empty                | Midterm Exam, CA2   | 高考, CA2/Oral, Practical-Exam |
+| w/        | Weightage of the graded component                         | Must be a non-negative number less than or equal to 100. Decimals are allowed. | 0, 0.25, 20         | -0.3, 1/2, (20), 1000.8, NIL |
+| mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number less than or equal to 10000.                     | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
 
 
 ### Student Score Parameters
@@ -112,9 +112,13 @@ The following section gives an overview of the parameters used for the commands 
 
 **Notes on Graded Component and Student Score parameters for score calculation**<br>
 
-* The maximum marks of a graded component and marks of a student score are both absolute values and are used together to determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
+* The maximum marks of a graded component and marks of a student score are both absolute values and are used together to 
+determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
 
-* The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of the student’s overall score. This is modified as components are added and removed.
+* The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
+relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, 
+and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
+the student’s overall score. This is modified as components are added and removed. Note that the total weightage of all graded components should be less than or equal to 100.
 
 * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
 
@@ -129,17 +133,17 @@ ModuLight comes with a GUI to allow for nice visual feedback for our users. Here
 
 Here is a summary of each GUI component within ModuLight.
 
-| Name of Component     | Description                                                                                                                                                              |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Menu Bar              | Contains dropdown menu options for the App                                                                                                                               |
-| Command Box           | Allow users to enter their commands                                                                                                                                      |
-| Result Display        | Provides feedback upon a user command. Allows users to see if their command was successful or not.Provides error messages to guide user on how to use ModuLight Commands |
-| Graded Component List | Shows a list of Graded Component Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Graded Components stored.       |
-| Graded Component Card | Displays key information about a Graded Component such as maximum marks and weightage.                                                                                   |
-| Student List          | Shows a list of Student Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Students stored.                         |
-| Student Card          | Displays key information about a Student such as name, tutorial group, emailid, etc.                                                                                     |
-| Student Score List    | Shows a list of Student Score Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all StudentsScores stored.             |
-| Student Score Card    | Displays key information about student scores such as graded component name for which the student is given the score and the student score itself.                       |
+| Name of Component     | Description                                                                                                                                                                |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Menu Bar              | Contains dropdown menu options for the App                                                                                                                                 |
+| Command Box           | Allow users to enter their commands                                                                                                                                        |
+| Result Display        | Provides feedback upon a user command. Allows users to see if their command was successful or not. Provides error messages to guide user on how to use ModuLight Commands. |
+| Graded Component List | Shows a list of Graded Component Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Graded Components stored.         |
+| Graded Component Card | Displays key information about a Graded Component such as maximum marks and weightage.                                                                                     |
+| Student List          | Shows a list of Student Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all Students stored.                           |
+| Student Card          | Displays key information about a Student such as name, tutorial group, email, id, etc.                                                                                     |
+| Student Score List    | Shows a list of Student Score Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all StudentsScores stored.               |
+| Student Score Card    | Displays key information about student scores such as graded component name for which the student is given the score and the student score itself.                         |
 
 
 ## Features
@@ -174,7 +178,7 @@ Examples:
 ### Edit a student : `editStu`
 Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
-1 or more fields to be edited must be provided in the command. The index provided must be more than 0 and not exceed the number of students displayed in the Student list. **If the student number is being edited, the edited student number cannot match the student number of any other student already in the database.**
+1 or more fields to be edited must be provided in the command. The index provided must be more than 0 and not exceed the number of students displayed in the Student list. **If the student number is being edited, the edited student number must be different from any other student already in the database.**
 
 
 Format: `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​`
@@ -291,14 +295,6 @@ Format: `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_N
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
-### List all students : `listStu`
-Shows a list of all students and associated student scores in separate panels respectively. The lists may be additionally filtered by optional arguments tutorial group. (can have more than 1)
-
-Format: `listStu [g/TUTORIAL_GRP …]`
-
-Examples:`listStu g/02 03` lists all students belonging to tutorial groups 02 and 03.
-
-
 ### List all : `listAll`
 Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
 
@@ -326,11 +322,11 @@ command in advance.
 Examples:
 * `sortStu o/name r/true` returns the sorted students whose names are in descending alphabetical order.
 
-### Sorting students scores: `sortStuScore`
+### Sorting students scores: `sortScore`
 
 Sorts students score by the given criteria and display its associated students in order.
 
-Format: `sortStuScore [c/COMP_NAME] [r/REVERSE]`
+Format: `sortScore [c/COMP_NAME] [r/REVERSE]`
 
 * The reverse keyword must be one of the acceptable description given below: <br>
   "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4
@@ -340,7 +336,7 @@ Format: `sortStuScore [c/COMP_NAME] [r/REVERSE]`
   command in advance.
 
 Examples:
-* `sortStuScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
+* `sortScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
 
 ### Auto grading all the students: `autoGrade`
 
@@ -465,25 +461,24 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                             | Format, Examples                                                                                                                   |
-|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Add a student**                  | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
-| **Add a graded component**         | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                               |
-| **Edit a student**                 | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                 |
-| **Edit a graded component**        | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                                   |
-| **Edit a student score**           | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 1 m/57`                                                                  |
-| **Delete a student**               | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                             |
-| **Delete a graded component**      | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                           |
-| **Delete everything**              | `clearAll`                                                                                                                             |
-| **Find a student**                 | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                           |
-| **Find a graded component**        | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                 |
-| **Find a student score**           | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms`  |
-| **List all students**              | ` listStu`                                                                                                                             |
-| **List all**                       | ` listAll`                                                                                                                             |
-| **Sort student**                   | ` sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
-| **Sort student score**             | ` sortStuScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStuScore o/name r/true`                                                  |
-| **Auto grading all the students**  | ` autoGrade ag/METHOD pg/PASING_VALUE` <br> e.g., `autoGrade ag/absolute pg/95 80 70 55 40 20`                                         |
-| **Calculate overall statistics**   | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                               |
-| **Calculate component statistics** | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`               |
-| **Help**                           | `help`                                                                                                                                 |
+| Action                                              | Format, Examples                                                                                                                      |
+|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| **Add a student**                                   | `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]` <br> e.g., `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` |
+| **Add a graded component**                          | `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS` <br> e.g., `addComp c/Midterm w/30 mm/70`                                              |
+| **Edit a student**                                  | `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​` <br> e.g., `editStu 1 s/A1234567Y g/T03`                |
+| **Edit a graded component**                         | `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]` <br> e.g., `editComp 1 c/Midterms mm/55`                                  |
+| **Edit a student score**                            | `editScore INDEX [m/SCORE] [x/comment]` <br> e.g., `editScore 1 m/57`                                                                 |
+| **Delete a student**                                | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                            |
+| **Delete a graded component**                       | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                          |
+| **Delete everything**                               | `clearAll`                                                                                                                            |
+| **Find a student**                                  | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                          |
+| **Find a graded component**                         | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                |
+| **Find a student score**                            | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms` |
+| **List all students, scores and graded components** | `listAll`                                                                                                                             |
+| **Sort student**                                    | `sortStu [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortStu o/name r/true`                                                            |
+| **Sort student score**                              | `sortScore [o/SORTING_ORDER] [r/REVERSE]` <br> e.g., `sortScore o/name r/true`                                                        |
+| **Auto grading all the students**                   | `autoGrade ag/METHOD pg/PASING_VALUE` <br> e.g., `autoGrade ag/absolute pg/95 80 70 55 40 20`                                         |
+| **Calculate overall statistics**                    | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile`                                              |
+| **Calculate component statistics**                  | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`              |
+| **Help**                                            | `help`                                                                                                                                |
 >>>>>>> master
