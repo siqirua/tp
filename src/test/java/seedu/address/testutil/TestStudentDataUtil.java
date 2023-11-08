@@ -1,10 +1,6 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import seedu.address.model.gradedcomponent.GcName;
@@ -84,23 +80,6 @@ public class TestStudentDataUtil {
         return newStudents;
     }
 
-    public static ArrayList<Student> getTestStudentsWithZeroScore() {
-        float markToBeAdded = 0;
-        ArrayList<Student> oldStudents = getTestStudents();
-        ArrayList<Student> newStudents = new ArrayList<>(oldStudents);
-        if (!getTestStudents().isEmpty()) {
-            Collections.copy(newStudents, oldStudents);
-        }
-        for (Student stu : newStudents) {
-            StudentScore newScore = new StudentScore(stu.getStudentId(), new GcName("Midterm"),
-                    0);
-            newScore.setGradedComponent(gc1);
-            stu.addScore(new StudentScore(stu.getStudentId(), new GcName("Midterm"),
-                    0));
-        }
-        return newStudents;
-    }
-
     public static ReadOnlyStudentBook getTestStudentBook(String selectedStu) {
         StudentBook sampleStu = new StudentBook();
         ArrayList<Student> stuToBeAdded;
@@ -121,7 +100,20 @@ public class TestStudentDataUtil {
             stuToBeAdded = getTestStudentsWithScore(TestStudentScoreDataUtil.getTestStudentTwoScores());
             break;
         case "zeroScore":
-            stuToBeAdded = getTestStudentsWithZeroScore();
+            stuToBeAdded = getTestStudentsWithScore(TestStudentScoreDataUtil.getTestStudentZeroScores());
+            break;
+        case "sortByName":
+            stuToBeAdded = getTestStudents();
+            stuToBeAdded.sort(new Comparator<Student>() {
+                @Override
+                public int compare(Student o1, Student o2) {
+                    return o1.getName().fullName.compareTo(o2.getName().fullName);
+                }
+            });
+            break;
+        case "sortByTsReverse":
+            stuToBeAdded = getTestStudents();
+            Collections.reverse(stuToBeAdded);
             break;
         default:
             stuToBeAdded = new ArrayList<>();

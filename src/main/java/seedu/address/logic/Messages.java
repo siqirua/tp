@@ -22,7 +22,8 @@ public class Messages {
             "%1$d students, %2$d scores, %3$d graded components listed!";
     public static final String MESSAGE_SCORE_LISTED_OVERVIEW = "%1$d scores listed!";
 
-    public static final String MESSAGE_STUDENTS_SORTED_OVERVIEW = "%1$d scores sorted!";
+    public static final String MESSAGE_STUDENTS_SORTED_OVERVIEW = "%1$d students sorted!";
+    public static final String MESSAGE_SCORES_SORTED_OVERVIEW = "%1$d scores sorted!";
     public static final String MESSAGE_COMP_LISTED_OVERVIEW = "%1$d graded components listed!";
 
     public static final String MESSAGE_DUPLICATE_FIELDS =
