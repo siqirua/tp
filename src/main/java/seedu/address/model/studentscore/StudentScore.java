@@ -89,6 +89,14 @@ public class StudentScore {
     public void setGcName(GcName newName) {
         this.gcName = newName;
     }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
     public Student getStudent() {
         return this.student;
     }
@@ -144,7 +152,9 @@ public class StudentScore {
         }
 
         StudentScore otherScore = (StudentScore) other;
-        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName);
+        return sid.equals(otherScore.sid) && gcName.equals(otherScore.gcName)
+                && score == otherScore.getScore() && comment.equals(otherScore.getComment())
+                && tags.equals(otherScore.tags);
     }
 
     @Override
