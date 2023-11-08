@@ -1,8 +1,9 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * A utility class for test cases in parser execution.
