@@ -197,7 +197,10 @@ public class ModelManager implements Model {
         return studentBook.equals(otherModelManager.studentBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && gradedComponentBook.equals(otherModelManager.gradedComponentBook)
-                && studentScoreBook.equals(otherModelManager.studentScoreBook);
+                && studentScoreBook.equals(otherModelManager.studentScoreBook)
+                && filteredStudentList.equals(otherModelManager.filteredStudentList)
+                && filteredStudentScoreList.equals(otherModelManager.filteredStudentScoreList)
+                && filteredGradedComponentList.equals(otherModelManager.filteredGradedComponentList);
     }
 
     @Override
