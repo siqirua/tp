@@ -228,7 +228,6 @@ Format: `editScore INDEX [m/SCORE] [x/comment]`
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
-
 ### Searching students: `findStu`
 
 Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and all graded components will be displayed as well.
@@ -241,7 +240,7 @@ Format: `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`
 * It is allowed to have 0 searching criteria. In this case, this command will simply list all students.
 * For searching based on tutorial group and tag, it will find the students with exactly the same description
 (case-insensitive). However, for searching based on student ID, name and email, it will find the students as long as the
-description contains the searching criteria.
+description contains the searching keyword.
 * For searching with multiple student parameters of the same type, it will find the students who satisfy any of the
 criteria.
 * For searching with student parameters of different types, it will find the students who satisfy all the criteria.
@@ -260,7 +259,11 @@ all graded components will be displayed as well.
 
 Format: `findComp c/COMP_NAME`
 
-* Graded components whose name contains the keyword will be found.
+* Graded components whose name contains the keyword will be found. e.g. when searching using `findComp c/CA` the components with name `CA1`, `CA2` etc will all be matched
+* The search is case-insensitive. e.g. `midterm` will match `Midterm`
+* It is allowed to have 0 searching criteria. In this case, this command will simply list all graded components.
+* For searching with multiple student parameters of the same type, it will find the students who satisfy any of the
+  criteria.
 
 Example: `findComp c/midterm` lists all graded component contains the string midterm  (and their associated scores). 
 All graded students will be shown since they are relevant.
@@ -268,6 +271,21 @@ All graded students will be shown since they are relevant.
 ### Find students : `findScore`
 Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
 Format: `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`
+
+* The search is case-insensitive. e.g. `a0123456` will match `A0123456`
+* You can search based on any of the following attributes: name, student number, email, tutorial group, graded component, comment or tag.
+* It is allowed to have 0 searching criteria. In this case, this command will simply list all scores.
+* For searching based on tutorial group and tag, it will find the scores with exactly the same description
+  (case-insensitive). However, for searching based on student ID, name, email, comment or graded component it will find the scores as long as the
+  description contains the searching keyword.
+* For searching with multiple score parameters of the same type, it will find the students who satisfy any of the
+  criteria.
+* For searching with student parameters of different types, it will find the students who satisfy all the criteria.
+* For searching with multiple student parameters of different types, it will find the students who satisfy at least one
+  criterion for each type.
+* If a input of the incorrect format is given, there might be no students found. For example, if you search findStu
+  s/A00000Y, no students will be found since this is not a substring of any valid student number
+
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
 ### List all students : `listStu`
