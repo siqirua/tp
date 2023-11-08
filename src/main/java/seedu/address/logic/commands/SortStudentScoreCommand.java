@@ -27,7 +27,7 @@ public class SortStudentScoreCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all students scores under a given existing graded component.\n"
             + "Parameters:\n"
-            + "[" + PREFIX_COMPONENT_NAME + "COMPONENT NAME]\n"
+            + PREFIX_COMPONENT_NAME + "COMPONENT NAME\n"
             + "[" + PREFIX_REVERSE + "Reverse (optional, by default increasing)]: "
             + "If true, the sorted list is reversed (or sorted in Descending order)\n"
             + "Example: " + COMMAND_WORD + " c/Midterm r/true";
