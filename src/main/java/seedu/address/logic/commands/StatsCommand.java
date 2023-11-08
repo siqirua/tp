@@ -27,7 +27,7 @@ public class StatsCommand extends Command {
 
     protected final TutorialGroup tutorialGroup;
     protected final boolean isForTut;
-    private List<String> stats;
+    protected List<String> stats;
 
     /**
      * Creates a StatsCommand to calculate the overall stats.
