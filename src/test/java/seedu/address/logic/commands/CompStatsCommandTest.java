@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import java.util.ArrayList;
@@ -37,5 +38,21 @@ public class CompStatsCommandTest {
     public void execute_tutStat_success() {
         assertCommandSuccess(new CompStatsCommand(new ArrayList<>(), new GcName("Final"),
                         new TutorialGroup("T03")), model, expectedOutputOfTut3, model);
+    }
+
+    @Test
+    public void execute_equal() {
+        CompStatsCommand testCommand = new CompStatsCommand(new ArrayList<>(),
+                new GcName("Midterm"), new TutorialGroup("T01"));
+        CompStatsCommand testCommand1 = new CompStatsCommand(new ArrayList<>(),
+                new GcName("Midterm"), new TutorialGroup("T01"));
+        CompStatsCommand testCommand2 = new CompStatsCommand(new ArrayList<>(),
+                new GcName("Midterm"), new TutorialGroup("T02"));
+        CompStatsCommand testCommand3 = new CompStatsCommand(new ArrayList<>(),
+                new GcName("Final"), new TutorialGroup("T01"));
+        assertNotEquals(testCommand, "Test String");
+        assertNotEquals(testCommand, testCommand2);
+        assertNotEquals(testCommand, testCommand3);
+        assertEquals(testCommand, testCommand1);
     }
 }
