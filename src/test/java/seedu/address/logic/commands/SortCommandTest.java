@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -30,9 +31,9 @@ public class SortCommandTest {
     @Test
     public void execute_sort_success() {
         String expectedOutput = "6 students sorted!";
-        assertCommandSuccess(new SortStudentCommand("n",false), model, expectedOutput,
+        assertCommandSuccess(new SortStudentCommand("n", false), model, expectedOutput,
                 expectedModelSortedByName);
-        assertCommandSuccess(new SortStudentCommand("o",true), model, expectedOutput,
+        assertCommandSuccess(new SortStudentCommand("o", true), model, expectedOutput,
                 expectedModelSortedByGradeReverse);
     }
 
