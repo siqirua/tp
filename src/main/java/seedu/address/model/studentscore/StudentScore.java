@@ -13,7 +13,6 @@ import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentId;
-import seedu.address.model.student.StudentName;
 import seedu.address.model.tag.Tag;
 
 
