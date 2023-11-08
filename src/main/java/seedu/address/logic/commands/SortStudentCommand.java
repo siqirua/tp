@@ -20,7 +20,7 @@ public class SortStudentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all students by the given order.\n"
             + "Parameters:\n"
-            + "[" + PREFIX_ORDER + "attribute to be sorted (optional, by default sorted by overall score]: \n"
+            + "[" + PREFIX_ORDER + "attribute to be sorted (optional, by default sorted by overall score)]: \n"
             + "Must be one of \"n\", \"name\", \"s\", \"studentId\", "
             + "\"studentID\", \"e\", \"email\", \"g\", \"tutorial\", \"tut\", \"tutGroup\""
             + "\"ts\", \"totalScore\", \"totalscore\", \"overall\", \"score\"\n"

@@ -64,7 +64,7 @@ public class SortStudentScoreCommand extends Command {
             model.updateFilteredStudentList(currentStuPredicate);
         }
         return new CommandResult(
-                String.format(Messages.MESSAGE_STUDENTS_SORTED_OVERVIEW, model.getFilteredStudentList().size()));
+                String.format(Messages.MESSAGE_SCORES_SORTED_OVERVIEW, model.getFilteredStudentList().size()));
     }
 
     @Override
