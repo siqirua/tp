@@ -2,13 +2,15 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.ParserTestUtil.assertParserSuccess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.Command;
+
 import seedu.address.logic.commands.StatsCommand;
 import seedu.address.model.student.TutorialGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class StatsCommandParserTest {
@@ -19,7 +21,7 @@ public class StatsCommandParserTest {
         String inputWithTut = " g/T01";
         String inputWithStats = " st/max";
         assertParserSuccess(input, parser, new StatsCommand(new ArrayList<>()));
-        assertParserSuccess(inputWithTut, parser, new StatsCommand(new ArrayList<>(),new TutorialGroup("T01")));
+        assertParserSuccess(inputWithTut, parser, new StatsCommand(new ArrayList<>(), new TutorialGroup("T01")));
         assertParserSuccess(inputWithStats, parser, new StatsCommand(new ArrayList<>(List.of("max"))));
     }
 }

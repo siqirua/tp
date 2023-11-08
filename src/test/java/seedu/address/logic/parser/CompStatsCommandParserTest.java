@@ -1,14 +1,17 @@
 package seedu.address.logic.parser;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.CompStatsCommand;
-import seedu.address.model.gradedcomponent.GcName;
-import seedu.address.model.student.TutorialGroup;
+import static seedu.address.logic.parser.ParserTestUtil.assertParserSuccess;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static seedu.address.logic.parser.ParserTestUtil.assertParserSuccess;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.commands.CompStatsCommand;
+import seedu.address.model.gradedcomponent.GcName;
+import seedu.address.model.student.TutorialGroup;
+
+
 
 
 public class CompStatsCommandParserTest {
