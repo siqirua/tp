@@ -17,7 +17,7 @@ import seedu.address.model.studentscore.model.StudentScoreBook;
 public class ModelUtil {
 
     public static final String MESSAGE_WEIGHTAGES_MORE_THAN_100 = "Weightages must add up to 100 or less.";
-    public static final String MESSAGE_INCORRECT_ENTItY_COUNT = "Size of student list * size of graded component list"
+    public static final String MESSAGE_INCORRECT_ENTITY_COUNT = "Size of student list * size of graded component list"
             + "does not equal to size of student score list";
     /**
      * Calculates the sum of weightages of all graded components in the graded component book.

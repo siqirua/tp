@@ -97,8 +97,8 @@ public class EditStudentCommand extends Command {
 
         for (int i = 0; i < studentScoreList.size(); i++) {
             StudentScore sc = studentScoreList.get(i);
-            sc.setStudent(editedStudent);
             if (sc.getStudentId().equals(studentToEdit.getStudentId())) {
+                sc.setStudent(editedStudent);
                 EditStudentScoreCommand.EditStudentScoreDescriptor newDescriptor =
                         new EditStudentScoreCommand.EditStudentScoreDescriptor();
                 newDescriptor.setStudentId(editedStudent.getStudentId());

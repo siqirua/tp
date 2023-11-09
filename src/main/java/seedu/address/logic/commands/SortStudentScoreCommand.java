@@ -22,12 +22,12 @@ import seedu.address.model.studentscore.model.StudentScoreBook;
  * Sorts the student(s) whose student id by the given order.
  */
 public class SortStudentScoreCommand extends Command {
-    public static final String COMMAND_WORD = "sortStuScore";
+    public static final String COMMAND_WORD = "sortScore";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all students scores under a given existing graded component.\n"
             + "Parameters:\n"
-            + "[" + PREFIX_COMPONENT_NAME + "COMPONENT NAME]\n"
+            + PREFIX_COMPONENT_NAME + "COMPONENT NAME\n"
             + "[" + PREFIX_REVERSE + "Reverse (optional, by default increasing)]: "
             + "If true, the sorted list is reversed (or sorted in Descending order)\n"
             + "Example: " + COMMAND_WORD + " c/Midterm r/true";
@@ -64,7 +64,7 @@ public class SortStudentScoreCommand extends Command {
             model.updateFilteredStudentList(currentStuPredicate);
         }
         return new CommandResult(
-                String.format(Messages.MESSAGE_STUDENTS_SORTED_OVERVIEW, model.getFilteredStudentList().size()));
+                String.format(Messages.MESSAGE_SCORES_SORTED_OVERVIEW, model.getFilteredStudentList().size()));
     }
 
     @Override

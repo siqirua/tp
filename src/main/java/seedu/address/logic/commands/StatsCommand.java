@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.statscalculator.StatsCalculator;
@@ -26,7 +27,7 @@ public class StatsCommand extends Command {
 
     protected final TutorialGroup tutorialGroup;
     protected final boolean isForTut;
-    private List<String> stats;
+    protected List<String> stats;
 
     /**
      * Creates a StatsCommand to calculate the overall stats.
@@ -83,7 +84,7 @@ public class StatsCommand extends Command {
         if (stats.isEmpty()) {
             sb.append(String.format("MAX = %.2f, MIN = %.2f, MEAN = %.2f, STANDARD DEVIATION = %.2f\n",
                     st.getMax(), st.getMin(), st.getMean(), st.getStd()));
-            sb.append(String.format("UPPER QUARTILE = %.2f, LOWER QUARTILE = %.2f, SKEWNESS= %.2f\n",
+            sb.append(String.format("UPPER QUARTILE = %.2f, LOWER QUARTILE = %.2f, SKEWNESS = %.2f\n",
                     st.getUpperQuartile(), st.getLowerQuartile(), st.getSkewness()));
         } else {
             int count = 0;
@@ -129,4 +130,23 @@ public class StatsCommand extends Command {
         sb.insert(MESSAGE_SUCCESS.length() - 2, String.format(" of Tutorial Group %S", tutGroup));
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof StatsCommand)) {
+            return false;
+        }
+        StatsCommand otherCommand = (StatsCommand) other;
+        boolean isTutMatch = !isForTut || !otherCommand.isForTut
+                || Objects.equals(tutorialGroup, otherCommand.tutorialGroup);
+        return stats.equals(otherCommand.stats)
+                && isForTut == otherCommand.isForTut
+                && isTutMatch;
+    }
+
 }

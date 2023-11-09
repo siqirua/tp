@@ -45,10 +45,13 @@ public class EditGradedComponentCommand extends Command {
             + PREFIX_COMPONENT_NAME + "Midterm Project "
             + PREFIX_WEIGHTAGE + "20";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited GradedComponent: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited graded component: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_GRADED_COMPONENT = "This gradedComponent already "
+    public static final String MESSAGE_DUPLICATE_GRADED_COMPONENT = "This graded component already "
             + "exists in the address book.";
+    public static final String MESSAGE_ASSOCIATED_SCORE_EXCEEDS = "Graded component could not be edited."
+            + " An associated student score has marks that exceeds the maximum marks provided.";
+
 
     private final Index index;
     private final EditGradedComponentDescriptor editGradedComponentDescriptor;
@@ -87,8 +90,8 @@ public class EditGradedComponentCommand extends Command {
 
         for (int i = 0; i < studentScoreList.size(); i++) {
             StudentScore sc = studentScoreList.get(i);
-            sc.setGradedComponent(editedGradedComponent);
             if (sc.getGcName().equals(gradedComponentToEdit.getName())) {
+                sc.setGradedComponent(editedGradedComponent);
                 EditStudentScoreDescriptor descriptor =
                         createStudentScoreDescriptor(sc, editedGradedComponent);
                 EditStudentScoreCommand command = new EditStudentScoreCommand(
@@ -112,6 +115,12 @@ public class EditGradedComponentCommand extends Command {
         float weightageEdited = editedGradedComponent.getWeightage().weightage;
         if (ModelUtil.weightageSum(gradedComponentBook) - weightageToEdit + weightageEdited > 100) {
             throw new CommandException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
+        }
+
+        for (StudentScore sc : gradedComponentToEdit.getScores()) {
+            if (sc.getScore() > editedGradedComponent.getMaxMarks().maxMarks) {
+                throw new CommandException(MESSAGE_ASSOCIATED_SCORE_EXCEEDS);
+            }
         }
     }
 

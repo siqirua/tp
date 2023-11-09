@@ -118,7 +118,6 @@ public class EditStudentScoreCommand extends Command {
         studentBook.setStudent(student, student);
         gradedComponentBook.setGradedComponent(gc, gc);
 
-
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore)));
     }

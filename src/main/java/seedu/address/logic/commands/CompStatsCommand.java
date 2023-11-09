@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
@@ -58,13 +59,14 @@ public class CompStatsCommand extends StatsCommand {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         List<GradedComponent> gradedComponents = model.getGradedComponentBook().getGradedComponentList();
-        boolean isCreated = gradedComponents.stream().map(gc -> gc.getName())
+        boolean isCreated = gradedComponents.stream().map(GradedComponent::getName)
                 .anyMatch(name -> name.equals(gradedComponentName));
         if (!isCreated) {
             return new CommandResult(MESSAGE_NO_GC);
         }
         List<Student> students = model.getStudentBook().getStudentList();
         if (isForTut) {
+            assert tutorialGroup != null;
             return new CommandResult(generateTutStatsSummary(students, tutorialGroup.toString()));
         }
         return new CommandResult(generateOverallStatsSummary(students));
@@ -104,5 +106,24 @@ public class CompStatsCommand extends StatsCommand {
         sb.insert(MESSAGE_SUCCESS.length() - 2, String.format(" of %s of Tutorial Group %S",
                 gradedComponentName.gcName, tutGroup));
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof CompStatsCommand)) {
+            return false;
+        }
+        CompStatsCommand otherCommand = (CompStatsCommand) other;
+        boolean isTutMatch = !isForTut || !otherCommand.isForTut
+                || Objects.equals(tutorialGroup, otherCommand.tutorialGroup);
+        return super.stats.equals(otherCommand.stats)
+                && isForTut == otherCommand.isForTut
+                && isTutMatch
+                && gradedComponentName.equals(otherCommand.gradedComponentName);
     }
 }

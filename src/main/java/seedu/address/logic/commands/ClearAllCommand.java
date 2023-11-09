@@ -19,7 +19,7 @@ public class ClearAllCommand extends Command {
             + ": Clears all data. \n "
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_CLEAR_PERSON_SUCCESS = "Cleared all data successfully";
+    public static final String MESSAGE_CLEAR_SUCCESS = "Cleared all data successfully";
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -27,21 +27,7 @@ public class ClearAllCommand extends Command {
         model.getStudentBook().clearStudent();
         model.getStudentScoreBook().clearStudentScore();
         model.getGradedComponentBook().clearGradedComponent();
-        return new CommandResult(String.format(MESSAGE_CLEAR_PERSON_SUCCESS));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof ClearAllCommand)) {
-            return false;
-        }
-
-        return true;
+        return new CommandResult(String.format(MESSAGE_CLEAR_SUCCESS));
     }
 
     @Override
