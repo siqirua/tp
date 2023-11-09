@@ -104,7 +104,7 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         boolean isTutMatch = tutorialGroupKeywords.isEmpty() || tutorialGroupKeywords.stream()
                 .anyMatch(keyword -> score.getStudent().getTutorial().toString().equalsIgnoreCase(keyword));
         boolean isTagMatch = tagKeywords.isEmpty() || score.getTags().stream()
-                .anyMatch(tag -> tagKeywords.contains(tag.tagName.toLowerCase()));
+                .anyMatch(tag -> tagKeywords.contains(tag.tagName));
         boolean isStudentMatch = studentMatchPredicate.test(score.getStudent());
         boolean isGcMatch = gcMatchPredicate.test(score.getGradedComponent());
         return isGcNameMatch && isIdMatch && isCommentMatch && isTutMatch && isTagMatch
