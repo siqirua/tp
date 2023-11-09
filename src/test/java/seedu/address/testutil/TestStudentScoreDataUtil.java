@@ -15,7 +15,8 @@ import seedu.address.model.studentscore.model.StudentScoreBook;
  * Contains utility methods for populating StudentBook with sample data.
  */
 public class TestStudentScoreDataUtil {
-    private static GradedComponent gc1 = TestGcDataUtil.getTestGradedComponentsAfterDeleting()[0];
+    private static GradedComponent gc1 = TestGcDataUtil.getTestGradedComponents()[0];
+    private static GradedComponent gc2 = TestGcDataUtil.getTestGradedComponents()[1];
 
     public static ArrayList<StudentScore> getTestStudentScoresEmpty() {
         return new ArrayList<>();
@@ -39,14 +40,27 @@ public class TestStudentScoreDataUtil {
 
     public static ArrayList<StudentScore> getTestStudentScores() {
         float markToBeAdded = 0;
-        int size = getTestStudentScoresEmpty().size();
+        int size = getTestStudentZeroScores().size();
         ArrayList<StudentScore> newScores = new ArrayList<>();
         for (StudentScore score : getTestStudentZeroScores()) {
-            StudentScore newScore = new StudentScore(score.getStudentId(), score.getGcName(), markToBeAdded,
-                    score.getComment(), score.getTags());
+            StudentScore newScore = new StudentScore(score.getStudentId(), score.getGcName(), markToBeAdded);
             newScore.setGradedComponent(gc1);
             newScores.add(newScore);
             markToBeAdded += size > 1 ? (float) 50 / (size - 1) : 0;
+        }
+        return newScores;
+    }
+
+    public static ArrayList<StudentScore> getTestStudentTwoScores() {
+        float markToBeAdded = 100;
+        int size = getTestStudentScores().size();
+        ArrayList<StudentScore> oldScores = getTestStudentScores();
+        ArrayList<StudentScore> newScores = new ArrayList<>(oldScores);
+        for (StudentScore score : oldScores) {
+            StudentScore newScore = new StudentScore(score.getStudentId(), gc2.getName(), markToBeAdded);
+            newScore.setGradedComponent(gc2);
+            newScores.add(newScore);
+            markToBeAdded -= size > 1 ? (float) 50 / (size - 1) : 0;
         }
         return newScores;
     }
@@ -60,6 +74,9 @@ public class TestStudentScoreDataUtil {
             break;
         case "zeroScore":
             scoreToBeAdded = getTestStudentZeroScores();
+            break;
+        case "twoScores":
+            scoreToBeAdded = getTestStudentTwoScores();
             break;
         default:
             scoreToBeAdded = getTestStudentScoresEmpty();

@@ -12,10 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.MaxMarks;
 import seedu.address.model.gradedcomponent.Weightage;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 import seedu.address.model.student.StudentEmail;
 import seedu.address.model.student.StudentGrade;
 import seedu.address.model.student.StudentId;
@@ -52,7 +48,7 @@ public class ParserUtil {
     public static StudentId parseId(String sid) throws ParseException {
         requireNonNull(sid);
         String trimmedId = sid.trim();
-        if (!Name.isValidName(trimmedId)) {
+        if (!StudentName.isValidName(trimmedId)) {
             throw new ParseException(StudentId.MESSAGE_CONSTRAINTS);
         }
         return new StudentId(trimmedId);
@@ -67,8 +63,8 @@ public class ParserUtil {
     public static StudentName parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        if (!StudentName.isValidName(trimmedName)) {
+            throw new ParseException(StudentName.MESSAGE_CONSTRAINTS);
         }
         return new StudentName(trimmedName);
     }
@@ -82,41 +78,10 @@ public class ParserUtil {
     public static GcName parseGcName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        if (!StudentName.isValidName(trimmedName)) {
+            throw new ParseException(StudentName.MESSAGE_CONSTRAINTS);
         }
         return new GcName(trimmedName);
-    }
-
-
-    /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code phone} is invalid.
-     */
-    public static Phone parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        return new Phone(trimmedPhone);
-    }
-
-    /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
-     */
-    public static Address parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
-        }
-        return new Address(trimmedAddress);
     }
 
     /**
@@ -128,8 +93,8 @@ public class ParserUtil {
     public static StudentEmail parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+        if (!StudentEmail.isValidEmail(trimmedEmail)) {
+            throw new ParseException(StudentEmail.MESSAGE_CONSTRAINTS);
         }
         return new StudentEmail(trimmedEmail);
     }
@@ -185,7 +150,7 @@ public class ParserUtil {
     public static StudentGrade parseStudentGrade(String studentGrade) throws ParseException {
         requireNonNull(studentGrade);
         String trimmedStudentGrade = studentGrade.trim();
-        if (!Address.isValidAddress(trimmedStudentGrade)) {
+        if (!StudentGrade.isValidGrade(trimmedStudentGrade)) {
             throw new ParseException(StudentGrade.MESSAGE_CONSTRAINTS);
         }
         return new StudentGrade(studentGrade);

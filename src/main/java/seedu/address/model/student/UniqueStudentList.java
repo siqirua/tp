@@ -104,8 +104,8 @@ public class UniqueStudentList implements Iterable<Student> {
                 String s1Value;
                 String s2Value;
 
-                Float s1TotalScore = new Float(0);
-                Float s2TotalScore = new Float(0);
+                Float s1TotalScore = s1.getTotalScore();
+                Float s2TotalScore = s2.getTotalScore();
                 switch (order) {
                 case "s":
                     s1Value = s1.getStudentId().toString();
@@ -123,16 +123,12 @@ public class UniqueStudentList implements Iterable<Student> {
                     s1Value = s1.getTutorial().toString();
                     s2Value = s2.getTutorial().toString();
                     break;
-                case "o":
-                    s1Value = String.valueOf(s1.getTotalScore());
-                    s2Value = String.valueOf(s2.getTotalScore());
-                    break;
                 default:
                     s1Value = s1.getStudentId().toString();
                     s2Value = s2.getStudentId().toString();
                 }
 
-                if (order.equals("ts")) {
+                if (order.equals("o")) {
                     return (!reverse ? 1 : -1) * s1TotalScore.compareTo(s2TotalScore);
                 }
 

@@ -67,7 +67,7 @@ public class CommandTestUtil {
      * @param expectedException Expected exception to be thrown.
      * @param expectedModel Expected model after the execution, usually the same as the actual model before execution.
      */
-    public static void assertCommandSuccess(Command command, Model actualModel, CommandException expectedException,
+    public static void assertCommandFailure(Command command, Model actualModel, CommandException expectedException,
                                             Model expectedModel) {
         try {
             command.execute(actualModel);
