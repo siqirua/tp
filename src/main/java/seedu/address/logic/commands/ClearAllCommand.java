@@ -31,20 +31,6 @@ public class ClearAllCommand extends Command {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof ClearAllCommand)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
     public String toString() {
         return new ToStringBuilder(this).toString();
     }
