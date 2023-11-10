@@ -20,7 +20,7 @@ Given below are my contributions to the project.
 
 * **Contributions to the UG**:
   * to be added
-  * Here I will add my contribution to the UG by Monday
+  * Here I will add my contribution to the UG after we fill the form on the CS2101 side so that it is the same as that.
 
 * **Contributions to the DG**:
   * To be added
@@ -29,3 +29,9 @@ Given below are my contributions to the project.
 * **Review contributions**:
   * To be added
   * Here I will add my review contribution by Monday.
+
+Just so that it surely gets detected by the scripts here I 
+
+am adding some 
+
+extra lines.
