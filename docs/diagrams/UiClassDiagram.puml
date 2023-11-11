@@ -15,7 +15,7 @@ Class StudentListPanel
 Class StudentCard
 Class StudentScoreListPanel
 Class StudentScoreCard
-Class GradedComponentPanel
+Class GradedComponentListPanel
 Class GradedComponentCard
 Class StatusBarFooter
 Class CommandBox
@@ -53,6 +53,7 @@ CommandBox --|> UiPart
 StudentListPanel --|> UiPart
 StudentCard --|> UiPart
 StudentScoreListPanel --|> UiPart
+StudentScoreCard --|> UiPart
 GradedComponentListPanel --|> UiPart
 GradedComponentCard --|> UiPart
 StatusBarFooter --|> UiPart
