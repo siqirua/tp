@@ -2,15 +2,15 @@ package seedu.modulight.model.student;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.EMPTY_EMAIL_KEYWORDS;
-import static seedu.address.logic.commands.CommandTestUtil.EMPTY_ID_KEYWORDS;
-import static seedu.address.logic.commands.CommandTestUtil.EMPTY_TAG_KEYWORDS;
-import static seedu.address.logic.commands.CommandTestUtil.EMPTY_TG_KEYWORDS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SID_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_TA;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TG_AMY;
-import static seedu.address.testutil.TypicalStudents.AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.EMPTY_EMAIL_KEYWORDS;
+import static seedu.modulight.logic.commands.CommandTestUtil.EMPTY_ID_KEYWORDS;
+import static seedu.modulight.logic.commands.CommandTestUtil.EMPTY_TAG_KEYWORDS;
+import static seedu.modulight.logic.commands.CommandTestUtil.EMPTY_TG_KEYWORDS;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_SID_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_TA;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TG_AMY;
+import static seedu.modulight.testutil.TypicalStudents.AMY;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.StudentBuilder;
+import seedu.modulight.testutil.StudentBuilder;
 
 class StudentMatchPredicateTest {
 

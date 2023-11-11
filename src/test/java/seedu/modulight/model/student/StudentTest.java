@@ -4,23 +4,23 @@ package seedu.modulight.model.student;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SID_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SID_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENT_SCORE_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_TA;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TG_JAMES;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.ALICE;
-import static seedu.address.testutil.TypicalStudents.JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_EMAIL_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_NAME_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_SID_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_SID_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_STUDENT_SCORE_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_TA;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TG_JAMES;
+import static seedu.modulight.testutil.Assert.assertThrows;
+import static seedu.modulight.testutil.TypicalStudents.ALICE;
+import static seedu.modulight.testutil.TypicalStudents.JAMES;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.testutil.StudentBuilder;
-import seedu.address.testutil.StudentScoreBuilder;
+import seedu.modulight.model.studentscore.StudentScore;
+import seedu.modulight.testutil.StudentBuilder;
+import seedu.modulight.testutil.StudentScoreBuilder;
 
 class StudentTest {
 

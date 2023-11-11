@@ -1,18 +1,18 @@
-package seedu.address.testutil;
+package seedu.modulight.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_TA;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_EMAIL_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_NAME_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_TA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.student.Student;
-import seedu.address.model.student.model.StudentBook;
+import seedu.modulight.model.student.Student;
+import seedu.modulight.model.student.model.StudentBook;
 
 /**
  * A utility class containing a list of {@code Student} objects to be used in tests.

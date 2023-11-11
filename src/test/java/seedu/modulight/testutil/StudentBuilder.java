@@ -1,18 +1,18 @@
-package seedu.address.testutil;
+package seedu.modulight.testutil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import seedu.address.model.student.Student;
-import seedu.address.model.student.StudentEmail;
-import seedu.address.model.student.StudentGrade;
-import seedu.address.model.student.StudentId;
-import seedu.address.model.student.StudentName;
-import seedu.address.model.student.TutorialGroup;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.model.tag.Tag;
+import seedu.modulight.model.student.Student;
+import seedu.modulight.model.student.StudentEmail;
+import seedu.modulight.model.student.StudentGrade;
+import seedu.modulight.model.student.StudentId;
+import seedu.modulight.model.student.StudentName;
+import seedu.modulight.model.student.TutorialGroup;
+import seedu.modulight.model.studentscore.StudentScore;
+import seedu.modulight.model.tag.Tag;
 
 /**
  * A utility class to help with building Student objects.

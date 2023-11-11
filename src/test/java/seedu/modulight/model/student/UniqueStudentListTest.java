@@ -3,11 +3,11 @@ package seedu.modulight.model.student;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TG_JAMES;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.ALICE;
-import static seedu.address.testutil.TypicalStudents.JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TAG_MAKEUP_EXAM;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TG_JAMES;
+import static seedu.modulight.testutil.Assert.assertThrows;
+import static seedu.modulight.testutil.TypicalStudents.ALICE;
+import static seedu.modulight.testutil.TypicalStudents.JAMES;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,9 +15,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.student.exceptions.DuplicateStudentException;
-import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.testutil.StudentBuilder;
+import seedu.modulight.model.student.exceptions.DuplicateStudentException;
+import seedu.modulight.model.student.exceptions.StudentNotFoundException;
+import seedu.modulight.testutil.StudentBuilder;
 
 class UniqueStudentListTest {
 

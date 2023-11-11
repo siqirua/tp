@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.modulight.logic.commands;
 
 
 class AddStudentCommandTest {

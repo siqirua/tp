@@ -5,7 +5,7 @@ import static seedu.modulight.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Student's ID in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidSid(String)}
  */
 public class StudentId {
 

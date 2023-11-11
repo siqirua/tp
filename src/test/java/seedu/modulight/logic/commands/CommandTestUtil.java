@@ -1,28 +1,24 @@
 package seedu.modulight.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_AMY;
-import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_JAMES;
-import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_SCORE_AMY;
-import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_SCORE_JAMES;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_JAMES;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_SCORE_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_SCORE_JAMES;
+import static seedu.modulight.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.modulight.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.modulight.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.modulight.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.modulight.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD:src/test/java/seedu/modulight/logic/commands/CommandTestUtil.java
 import seedu.modulight.logic.commands.exceptions.CommandException;
 import seedu.modulight.model.Model;
-=======
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.studentscore.StudentScore;
-import seedu.address.testutil.StudentScoreBuilder;
->>>>>>> master:src/test/java/seedu/address/logic/commands/CommandTestUtil.java
+import seedu.modulight.model.studentscore.StudentScore;
+import seedu.modulight.testutil.StudentScoreBuilder;
+
 
 /**
  * A utility class for test cases in command execution.
