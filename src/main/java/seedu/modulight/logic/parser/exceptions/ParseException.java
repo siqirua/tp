@@ -1,7 +1,6 @@
 package seedu.modulight.logic.parser.exceptions;
 
 import seedu.modulight.commons.exceptions.IllegalValueException;
-import seedu.modulight.logic.commands.SortStudentCommand;
 
 /**
  * Represents a parse error encountered by a parser.
