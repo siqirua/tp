@@ -56,7 +56,7 @@ public class TypicalStudents {
     /**
      * Returns an {@code AddressBook} with all the typical Students.
      */
-    public static StudentBook getTypicalAddressBook() {
+    public static StudentBook getTypicalStudentBook() {
         StudentBook ab = new StudentBook();
         for (Student student : getTypicalStudents()) {
             ab.addStudent(student);

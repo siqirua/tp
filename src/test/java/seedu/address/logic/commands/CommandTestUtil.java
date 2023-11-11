@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_AMY;
 import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_JAMES;
 import static seedu.address.logic.commands.CommandStudentScoreTestUtil.VALID_SCORE_AMY;
@@ -10,13 +11,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.studentscore.StudentScore;
+import seedu.address.testutil.EditStudentDescriptorBuilder;
 import seedu.address.testutil.StudentScoreBuilder;
 
 /**
@@ -61,6 +66,18 @@ public class CommandTestUtil {
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+
+    public static final EditStudentCommand.EditStudentDescriptor DESC_AMY;
+    public static final EditStudentCommand.EditStudentDescriptor DESC_JAMES;
+
+    static {
+        DESC_AMY = new EditStudentDescriptorBuilder().withName(VALID_NAME_AMY)
+                .withId(VALID_SID_AMY).withEmail(VALID_EMAIL_AMY).withTg(VALID_TG_AMY)
+                .withTags(VALID_TAG_TA).build();
+        DESC_JAMES = new EditStudentDescriptorBuilder().withName(VALID_NAME_JAMES)
+                .withId(VALID_SID_JAMES).withEmail(VALID_EMAIL_JAMES).withTg(VALID_TG_JAMES)
+                .withTags(VALID_TAG_MAKEUP_EXAM).build();
+    }
 
     //@@author siqirua-reused
     //Inspired by
@@ -126,7 +143,7 @@ public class CommandTestUtil {
             command.execute(actualModel);
             throw new AssertionError("Execution of command in negative test cases should not succeed.");
         } catch (CommandException ce) {
-            assertEquals(expectedException, ce);
+            assertEquals(expectedException.getMessage(), ce.getMessage());
         } finally {
             assertEquals(actualModel, expectedModel);
         }
