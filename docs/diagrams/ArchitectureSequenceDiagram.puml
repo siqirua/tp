@@ -20,7 +20,23 @@ activate model MODEL_COLOR
 model -[MODEL_COLOR]-> logic
 deactivate model
 
+loop until all scores of the student p are deleted
+    logic -[LOGIC_COLOR]> model : removeStudentScore(s)
+    activate model MODEL_COLOR
+
+    model -[MODEL_COLOR]-> logic
+    deactivate model
+end
+
 logic -[LOGIC_COLOR]> storage : saveStudentBook(studentBook)
+activate storage STORAGE_COLOR
+
+storage -[STORAGE_COLOR]> storage : Save to file
+activate storage STORAGE_COLOR_T1
+storage --[STORAGE_COLOR]> storage
+deactivate storage
+
+logic -[LOGIC_COLOR]> storage : saveStudentScoreBook(studentScoreBook)
 activate storage STORAGE_COLOR
 
 storage -[STORAGE_COLOR]> storage : Save to file

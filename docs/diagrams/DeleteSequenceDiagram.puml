@@ -49,11 +49,20 @@ deactivate ModuLightParser
 LogicManager -> DeleteStudentCommand : execute()
 activate DeleteStudentCommand
 
-DeleteStudentCommand -> Model : removeStudent(1)
+DeleteStudentCommand -> Model : removeStudent(p)
 activate Model
 
 Model --> DeleteStudentCommand
 deactivate Model
+
+loop until all scores of the student p are deleted
+    DeleteStudentCommand -> Model : removeStudentScore(s)
+    activate Model
+
+    Model --> DeleteStudentCommand
+    deactivate Model
+end
+
 
 create CommandResult
 DeleteStudentCommand -> CommandResult
