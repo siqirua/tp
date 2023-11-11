@@ -1,10 +1,13 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.ParserTestUtil.assertParserSuccess;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.logic.commands.SortStudentScoreCommand;
 import seedu.address.model.gradedcomponent.GcName;
 
-import static seedu.address.logic.parser.ParserTestUtil.assertParserSuccess;
+
 
 public class SortStudentScoreCommandParserTest {
     private SortStudentScoreCommandParser parser = new SortStudentScoreCommandParser();
