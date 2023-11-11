@@ -1,6 +1,7 @@
 package seedu.modulight.testutil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.modulight.model.gradedcomponent.GcName;
@@ -71,6 +72,10 @@ public class TestStudentScoreDataUtil {
         switch (selectedScore) {
         case "create":
             scoreToBeAdded = getTestStudentScores();
+            break;
+        case "reverse":
+            scoreToBeAdded = getTestStudentScores();
+            Collections.reverse(scoreToBeAdded);
             break;
         case "zeroScore":
             scoreToBeAdded = getTestStudentZeroScores();

@@ -11,8 +11,8 @@ import seedu.modulight.commons.core.LogsCenter;
 import seedu.modulight.logic.commands.Command;
 import seedu.modulight.logic.commands.CommandResult;
 import seedu.modulight.logic.commands.exceptions.CommandException;
-import seedu.modulight.logic.parser.AddressBookParser;
 import seedu.modulight.logic.parser.exceptions.ParseException;
+import seedu.modulight.logic.parser.ModuLightParser;
 import seedu.modulight.model.Model;
 import seedu.modulight.model.gradedcomponent.GradedComponent;
 import seedu.modulight.model.student.Student;
@@ -32,7 +32,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final ModuLightParser moduLightParser;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -40,7 +40,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        moduLightParser = new ModuLightParser();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = moduLightParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {

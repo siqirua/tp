@@ -83,7 +83,7 @@ public class JsonAdaptedStudentScore {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 StudentId.class.getSimpleName()));
         }
-        if (!StudentId.isValidName(studentId)) {
+        if (!StudentId.isValidSid(studentId)) {
             throw new IllegalValueException(StudentId.MESSAGE_CONSTRAINTS);
         }
         final StudentId modelStudentId = new StudentId(studentId);

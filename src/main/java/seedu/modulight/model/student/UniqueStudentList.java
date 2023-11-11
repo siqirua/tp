@@ -11,8 +11,11 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.modulight.model.gradedcomponent.GcName;
-import seedu.modulight.model.student.exceptions.DuplicateScoresException;
+import seedu.modulight.model.student.exceptions.DuplicateStudentException;
+import seedu.modulight.model.student.exceptions.StudentNotFoundException;
 import seedu.modulight.model.studentscore.StudentScore;
+import seedu.modulight.model.studentscore.exceptions.DuplicateScoresException;
+
 
 
 /**
@@ -44,11 +47,10 @@ public class UniqueStudentList implements Iterable<Student> {
      * Adds a student to the list.
      * The student must not already exist in the list.
      */
-    public void add(Student toAdd) {
+    public void add(Student toAdd) throws DuplicateStudentException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            //to change
-            throw new RuntimeException();
+            throw new DuplicateStudentException();
         }
         internalList.add(toAdd);
     }
@@ -64,13 +66,11 @@ public class UniqueStudentList implements Iterable<Student> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            //to change
-            throw new RuntimeException();
+            throw new StudentNotFoundException();
         }
 
         if (!target.isSameStudent(editedStudent) && contains(editedStudent)) {
-            //to change
-            throw new RuntimeException();
+            throw new DuplicateStudentException();
         }
 
         internalList.set(index, editedStudent);
@@ -83,7 +83,7 @@ public class UniqueStudentList implements Iterable<Student> {
     public void remove(Student toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new RuntimeException();
+            throw new StudentNotFoundException();
         }
     }
 
@@ -194,7 +194,7 @@ public class UniqueStudentList implements Iterable<Student> {
         requireAllNonNull(students);
         if (!studentsAreUnique(students)) {
             // to change
-            throw new RuntimeException();
+            throw new DuplicateStudentException();
         }
 
         internalList.setAll(students);

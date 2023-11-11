@@ -5,7 +5,7 @@ import static seedu.modulight.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Student's ID in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidSid(String)}
  */
 public class StudentId {
 
@@ -23,14 +23,14 @@ public class StudentId {
      */
     public StudentId(String sid) {
         requireNonNull(sid);
-        checkArgument(isValidName(sid), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidSid(sid), MESSAGE_CONSTRAINTS);
         this.sid = sid;
     }
 
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidSid(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 

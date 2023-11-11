@@ -130,6 +130,7 @@ public class EditStudentScoreCommand extends Command {
         assert studentScoreToEdit != null;
         assert editStudentScoreDescriptor != null;
 
+
         StudentId updatedSid = editStudentScoreDescriptor.getStudentId()
                 .orElse(studentScoreToEdit.getStudentId());
         GcName updatedGcName = editStudentScoreDescriptor.getGcName()
@@ -268,14 +269,14 @@ public class EditStudentScoreCommand extends Command {
 
             EditStudentScoreDescriptor otherEditStudentScoreDescriptor =
                     (EditStudentScoreDescriptor) other;
-
+          
             // null safe equal
             boolean equalSid = this.sid == otherEditStudentScoreDescriptor.sid;
             boolean equalGcName = this.gcName == otherEditStudentScoreDescriptor.gcName;
             if (equalSid && equalGcName) {
                 return true;
             }
-
+          
             return sid.equals(otherEditStudentScoreDescriptor.sid)
                     && gcName.equals((otherEditStudentScoreDescriptor).gcName);
         }
