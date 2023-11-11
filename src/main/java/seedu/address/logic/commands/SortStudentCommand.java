@@ -64,7 +64,8 @@ public class SortStudentCommand extends Command {
         }
 
         SortStudentCommand otherSortCommand = (SortStudentCommand) other;
-        return sortingOrder.equals(otherSortCommand.sortingOrder);
+        return sortingOrder.equals(otherSortCommand.sortingOrder)
+                && isReverse == otherSortCommand.isReverse;
     }
 
     @Override

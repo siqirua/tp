@@ -16,7 +16,7 @@ import seedu.address.model.student.TutorialGroup;
 public class StatsCommandParserTest {
     private StatsCommandParser parser = new StatsCommandParser();
     @Test
-    public void execute_stat_success() {
+    public void parse_stat_success() {
         String input = "";
         String inputWithTut = " g/T01";
         String inputWithStats = " st/max";

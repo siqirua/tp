@@ -17,7 +17,7 @@ import seedu.address.model.student.TutorialGroup;
 public class CompStatsCommandParserTest {
     private CompStatsCommandParser parser = new CompStatsCommandParser();
     @Test
-    public void execute_stat_success() {
+    public void parse_stat_success() {
         String input = " c/Midterm";
         String inputWithTut = " g/T01 c/Midterm";
         String inputWithCompStats = " c/Midterm st/max";
