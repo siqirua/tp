@@ -13,7 +13,7 @@ import seedu.modulight.testutil.TestStudentScoreDataUtil;
 
 
 
-public class SortCommandTest {
+public class SortStudentCommandTest {
     private Model model = new ModelManager(TestStudentDataUtil.getTestStudentBook("create"),
             TestStudentScoreDataUtil.getSampleStudentScoreBook("create"),
             TestGcDataUtil.getTestGcBook("delete"), new UserPrefs());
