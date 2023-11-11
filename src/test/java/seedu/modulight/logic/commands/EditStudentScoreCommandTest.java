@@ -26,6 +26,7 @@ import seedu.modulight.logic.Messages;
 import seedu.modulight.model.Model;
 import seedu.modulight.model.ModelManager;
 import seedu.modulight.model.UserPrefs;
+import seedu.modulight.model.student.Student;
 import seedu.modulight.model.studentscore.StudentScore;
 import seedu.modulight.testutil.EditStudentScoreDescriptorBuilder;
 import seedu.modulight.testutil.StudentScoreBuilder;
@@ -36,7 +37,7 @@ class EditStudentScoreCommandTest {
     private Model model = new ModelManager(getTestStudentBook("create"),
             getSampleStudentScoreBook("twoScores"),
             getTestGcBook("create"), new UserPrefs());
-    private boolean useFiltered = true;
+    private boolean useFiltered = false;
 
     @Test
     public void execute_indexMoreThanListSize_failure() {
@@ -58,14 +59,19 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withScore(VALID_SCORE_JAMES).build();
+
         Model expectedModel = new ModelManager(getTestStudentBook("create"),
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -89,7 +95,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withComment(VALID_COMMENT_AMY).build();
@@ -98,6 +104,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -111,7 +121,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withComment(VALID_COMMENT_AMY).build();
@@ -120,6 +130,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -133,7 +147,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withTags(VALID_TAG_JAMES).build();
@@ -142,6 +156,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -156,7 +174,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withTags(VALID_TAG_JAMES, VALID_TAG_AMY).build();
@@ -165,6 +183,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -178,7 +200,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withTags(VALID_TAG_JAMES, VALID_TAG_JAMES).build();
@@ -187,6 +209,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));
@@ -203,7 +229,7 @@ class EditStudentScoreCommandTest {
         EditStudentScoreCommand editStudentScoreCommand = new EditStudentScoreCommand(
                 INDEX_FIRST_SCORE, descriptor, useFiltered);
 
-        StudentScore studentScoreToEdit = model.getFilteredStudentScoreList()
+        StudentScore studentScoreToEdit = model.getStudentScoreBook().getStudentScoreList()
                 .get(INDEX_FIRST_SCORE.getZeroBased());
         StudentScore editedStudentScore = new StudentScoreBuilder(studentScoreToEdit)
                 .withScore(VALID_SCORE_JAMES).withComment(VALID_COMMENT_JAMES)
@@ -213,6 +239,10 @@ class EditStudentScoreCommandTest {
                 getSampleStudentScoreBook("twoScores"),
                 getTestGcBook("create"), new UserPrefs());
         expectedModel.getStudentScoreBook().setStudentScore(studentScoreToEdit, editedStudentScore);
+
+        Student editedStudent = expectedModel.getStudentBook().getStudentById(editedStudentScore.getStudentId());
+        editedStudent.deleteScore(studentScoreToEdit);
+        editedStudent.addScore(editedStudentScore);
 
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.formatStudentScore(editedStudentScore));

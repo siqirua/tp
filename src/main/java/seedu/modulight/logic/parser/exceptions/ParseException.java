@@ -14,7 +14,7 @@ public class ParseException extends IllegalValueException {
     public ParseException(String message, Throwable cause) {
         super(message, cause);
     }
-  
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
