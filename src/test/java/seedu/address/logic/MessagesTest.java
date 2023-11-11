@@ -2,10 +2,12 @@ package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.CliSyntax;
-import seedu.address.logic.parser.Prefix;
 import seedu.address.model.gradedcomponent.GcName;
 import seedu.address.model.gradedcomponent.GradedComponent;
 import seedu.address.model.gradedcomponent.MaxMarks;
@@ -16,9 +18,6 @@ import seedu.address.model.student.StudentId;
 import seedu.address.model.student.StudentName;
 import seedu.address.model.student.TutorialGroup;
 import seedu.address.model.studentscore.StudentScore;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class MessagesTest {
     @Test
