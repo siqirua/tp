@@ -28,18 +28,6 @@ class StudentScoreTest {
     }
 
     @Test
-    public void testIsValidScore() {
-    // StudentScore studentScore = TestStudentScoreDataUtil.getTestStudentScores().get(5); //sid = A0000005Y
-    // GradedComponent gradedComponent = TestGcDataUtil.getTestGradedComponents()[0];
-
-    }
-
-    @Test
-    public void testCalcRelativeScore() {
-
-    }
-
-    @Test
     public void testIsSameScore() {
         StudentScore studentScore = TestStudentScoreDataUtil.getTestStudentScores().get(5); //sid = A0000005Y
         studentScore.setComment(VALID_COMMENT_JAMES);
