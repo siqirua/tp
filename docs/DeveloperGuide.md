@@ -6,14 +6,22 @@ pageNav: 3
 
 # ModuLight Developer Guide
 
-<!-- * Table of Contents -->
-<page-nav-print />
+--------------------------------------------------------------------------------------------------------------------
+* Table of Contents
+    * **[Acknowledgements](#acknowledgements)**
+    * **[Setting up, getting started](#setting-up-getting-started)**
+    * **[Design](#design)**
+    * **[Implementation](#implementation)**
+    * **[Others](#documentation-logging-testing-configuration-dev-ops)**
+    * **[Appendix: Requirements](#appendix-requirements)**
+    * **[Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)**
+    * **[Appendix: Planned enhancements](#appendix-planned-enhancements)**
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+* [AddressBook-3](https://github.com/nus-cs2103-AY2223S1/tp)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -104,12 +112,12 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteStudentCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteStudentCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a student).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+1. When `Logic` is called upon to execute a command, it is passed to an `ModuLightParser` object which in turn creates a parser that matches the command (e.g., `DeleteStudentCommandParser`) and uses it to parse the command.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteStudentCommand`) which is executed by the `LogicManager`.
+3. The command can communicate with the `Model` when it is executed (e.g. to delete a student).
+4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-**Note:** There are three different model objects, namely the StudentBook, the StudentScore Book and the GradedComponentBook.
+**Note:** There are three different model objects, namely the StudentBook, the StudentScoreBook and the GradedComponentBook.
 The command might interact with one or more model objects. For example, when a student is deleted, the command will communicate 
 with the StudentBook to delete this student, as well as the StudentScoreBook, to delete all the student scores relevant to this student.
 
@@ -118,7 +126,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `ModuLightParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `ModuLightParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddStudentCommandParser`, `DeleteStudentCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
@@ -126,17 +134,23 @@ How the parsing works:
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
+Note that Student, StudentGrade and GradeComponent classes have similar structures and dependencies, thus, we use Ssc class to represent these three and their related classes in the class diagram above.
+
+Here are the class diagrams for Ssc (Student, StudentGrade, GradedComponent) classes respectively.
+<puml src="diagrams/StudentModelDiagram.puml" width="450" />
+<puml src="diagrams/StudentGradeModelDiagram.puml" width="450" />
+<puml src="diagrams/GradedComponentModelDiagram.puml" width="450" />
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the ModuLight data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object), all `StudentScore` objects (which are contained in a `UniqueStudentScoreList` object) and all `GradedComponent` objects (which are contained in a `UniqueGradedComponentList` object).
+* stores the currently 'selected' `Student`, `StudentScore` and `GradedComponent` objects (e.g., results of a search query) as separate _filtered_ lists respectively which are exposed to outsiders as unmodifiable `ObservableList<Student>`, `ObservableList<StudentScore>` and `ObservableList<GradedComponent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** For student and student score, an alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `Student`, which `Student` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -158,7 +172,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.modulight.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -166,46 +180,90 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+
+### Auto-grading
+
+#### Proposed Implementation
+
+{Intro}
+
+Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
+
+Step 1. The user launch the application for the first time.
+
+Step 2. The user creates the desired graded components and adds all the students in the cohort.
+
+Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile'
+keyword indicates that ModuLight grades based on the students' percentile compared to another. The value after `pg/` indicates
+the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`.
+
+<box type="info" seamless>
+
+**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score.
+
+</box>
+
+Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
+Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
+total score. ModuLight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
+`autoGradeCommand`.
+
+
+
+#### Design considerations:
+
+**Aspect: How the assignments of grade works:**
+
+* **Alternative 1 (Current choice):** Use tags to assign the grade
+    * Pros: Easy to implement.
+    * Cons: Not ideal if we want to extend the code for more features.
+* **Alternative 2:** Create new Grade object for each student.
+    * Pros: Cleaner and extendable code implementation.
+    * Cons: require change of implementation on multiple classes.
+
+
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+Since `Student`, `StudentGrade` and `GradedComponent` have similar dependencies and behavior, we will use `Ssc` to refer these three classes and their related classes in the following discussion. In other words, `VersionedSscBook` means `VersionedStudentBook`, `VersionedStudentScoreBook` and `VersionedGradedComponentBook`.
+The proposed undo/redo mechanism is facilitated by `VersionedSscBook`. It extends `SscBook` with an undo/redo history, stored internally as an `sscStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedSscBook#commit()` — Saves the current ssc book state in its history.
+* `VersionedSscBook#undo()` — Restores the previous ssc book state from its history.
+* `VersionedSscBook#redo()` — Restores a previously undone ssc book state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitSscBook()`, `Model#undoSscBook()` and `Model#redoSscBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedSscBook` will be initialized with the initial Ssc book state, and the `currentStatePointer` pointing to that single Ssc book state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `deleteStu 5` command to delete the 5th student in the Ssc book. The `deleteStu` command calls `Model#commitSscBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `SscBookStateList`, and the `currentStatePointer` is shifted to the newly inserted Ssc book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `addStu n/David …​` to add a new person. The `addStu` command also calls `Model#commitSscBook()`, causing another modified address book state to be saved into the `sscBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitSscBook()`, so the ssc book state will not be saved into the `sscBookStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoSscBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous ssc book state, and restores the ssc book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial SscBook state, then there are no previous SscBook states to restore. The `undo` command uses `Model#canUndoSscBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -220,19 +278,19 @@ The following sequence diagram shows how the undo operation works:
 
 </box>
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoSscBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the ssc book to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `sscBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone SscBook states to restore. The `redo` command uses `Model#canRedoSscBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `listAll`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitSscBook()`, `Model#undoSscBook()` or `Model#redoSscBook()`. Thus, the `sscBookStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clearAll`, which calls `Model#commitSscBook()`. Since the `currentStatePointer` is not pointing at the end of the `sscBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -244,61 +302,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire ssc book.
   * Pros: Easy to implement.
   * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Pros: Will use less memory (e.g. for `deleteStu`, just save the student being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-### \[Proposed\] Auto-grading 
-
-#### Proposed Implementation
-
-{Intro}
-
-Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
-
-Step 1. The user launch the application for the first time. 
-
-Step 2. The user creates the desired graded components and adds all the students in the cohort.
-
-Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile' 
-keyword indicates that Modulight grades based on the students' percentile compared to another. The value after `pg/` indicates
-the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`. 
-
-<box type="info" seamless>
-
-**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score. 
-
-</box>
-
-Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
-Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
-total score. Modulight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
-`autoGradeCommand`.
-
-
-
-#### Design considerations:
-
-**Aspect: How the assignments of grade works:**
-
-* **Alternative 1 (Current choice):** Use tags to assign the grade
-  * Pros: Easy to implement.
-  * Cons: Not ideal if we want to extend the code for more features.
-* **Alternative 2:** Create new Grade object for each student.
-  * Pros: Cleaner and extendable code implementation.
-  * Cons: require change of implementation on multiple classes.
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -333,36 +344,83 @@ NUS professors who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                      | So that I can…​                                                                                                |
-|----------|---------|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `* * *`  | user    | add a new student                                 | track all students taking my course.                                                                           |
-| `* * *`  | user    | add a new graded component                        | track all graded components in my course thus far.                                                             |
-| `* * *`  | user    | add a new student score                           | track individual student performance on this module's graded components.                                       |
-| `* * *`  | user    | delete a student                                  | remove students dropping the course/wrongly assigned.                                                          |
-| `* * *`  | user    | delete a graded component                         | remove a graded component if I feel it is no longer necessary.                                                 |
-| `* * *`  | user    | delete a student score                            |                                                                                                                |
-| `* * *`  | user    | save changes made                                 | so I can update student grade information throughout the semester.                                             |
-| `* * *`  | user    | load information                                  | so I can update student grade information throughout the semester.                                             |
-| `* *`    | user    | edit a student                                    | update outdated student information or correct mistakes.                                                       |
-| `* *`    | user    | edit a graded component                           | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
-| `* *`    | user    | edit a student score                              | regrade student scripts or correct mistakes.                                                                   |
-| `* *`    | user    | find student and associated scores by ID          | quickly find information about a student and their scores without having to search through the list            |
-| `* *`    | user    | find graded component and associated scores by ID | quickly find information about a graded component and student scores without having to search through the list |
-| `*`      | user    | toggle between dark and light mode                | have a pleasant user experience.                                                                               |
+| Priority | As a …​       | I want to …​                                               | So that I can…​                                                                                                |
+|----------|---------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `* * *`  | NUS professor | add a new student                                          | track all students taking my course.                                                                           |
+| `* * *`  | NUS professor | add a new graded component                                 | track all graded components in my course thus far.                                                             |
+| `* * *`  | NUS professor | add a new student score                                    | track individual student performance on this module's graded components.                                       |
+| `* * *`  | NUS professor | delete a student                                           | remove students dropping the course/wrongly assigned.                                                          |
+| `* * *`  | NUS professor | delete a graded component                                  | remove a graded component if I feel it is no longer necessary.                                                 |
+| `* * *`  | NUS professor | delete a student score                                     |                                                                                                                |
+| `* * *`  | NUS professor | save changes made                                          | so I can update student grade information throughout the semester.                                             |
+| `* * *`  | NUS professor | load information                                           | so I can update student grade information throughout the semester.                                             |
+| `* *`    | NUS professor | edit a student                                             | update outdated student information or correct mistakes.                                                       |
+| `* *`    | NUS professor | edit a graded component                                    | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
+| `* *`    | NUS professor | edit a student score                                       | regrade student scripts or correct mistakes.                                                                   |
+| `* *`    | NUS professor | find student and associated scores by ID                   | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | NUS professor | find graded component and associated scores by ID          | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | quickly calculate the overall statistics of student grades | have a quick insight of how my students are performing                                                         |
+| `* *`    | NUS professor | sort students with specific order                          | find the top students easily                                                                                   |
+| `* *`    | NUS professor | sort student scores with specific order                    | find the top students with their associated scores easily                                                      |
+|          | NUS professor | **autograde**                                              |                                                                                                                |
+| `*`      | NUS professor | toggle between dark and light mode                         | have a pleasant user experience.                                                                               |
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `ModuLight` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case: Add a student **
+
+**MSS**
+
+1.  User enters the details to add a student.
+2.  ModuLight adds the student with entered details to the student list.
+    
+    Use case ends.
+
+**Extensions**
+* 1a. There is some error in the entered data.
+  * 1a1. ModuLight shows an error message.
+  Use case ends.
+
+* 2a. There are already some existing graded components.
+  * 2a1. ModuLight creates student scores correspond to the new student for every graded component.
+  Use case ends.
+
+**Use case: Edit a student's information**
+
+**MSS**
+
+1.  User requests to list students.
+2.  ModuLight shows a list of students.
+3.  User requests to edit the details of a specific student.
+4.  ModuLight updates the detail of that student with entered data.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+* 3b. There is some
+
 **Use case: Delete a student and the associated scores**
 
 **MSS**
 
-1.  User requests to list persons
-2.  ModuLight shows a list of persons
-3.  User requests to delete a specific student in the list
-4.  ModuLight deletes the person
+1.  User requests to list students.
+2.  ModuLight shows a list of students.
+3.  User requests to delete a specific student in the list.
+4.  ModuLight deletes the student.
+5.  ModuLight shows a list of updated students.
 
     Use case ends.
 
@@ -378,68 +436,109 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+* 3b. The selected student has some associated student scores.
+    * 3b1. ModuLight deletes all associated students scores.
+    * 3b2. ModuLight shows a list of updated student scores.
+    Use case resumes at step 4.
 
-**Use case: Add StudentScores by new graded component**
+
+**Use case: Add a new graded component**
 
 **MSS**
 
 1.  User creates new Graded Component.
-2.  Modulight creates student scores correspond to the new graded component for every student. 
-3.  Modulight display the student scores list. 
+2.  ModuLight adds the graded component with entered details to the graded component list.
+3.  ModuLight shows lists of updated graded components and student scores.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The student list is empty.
+* 1a. There is some error in the entered data.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
 
-    Use case ends.
+* 2a. There are already some existing students.
+    * 2a1. ModuLight creates student scores correspond to the new graded component for every student.
+      Use case ends.
 
-
-**Use case: Add StudentScores by new student **
+**Use case: Edit a student score**
 
 **MSS**
 
-1.  User creates new Students.
-2.  Modulight creates student scores correspond to the new student for every graded component.
-3.  Modulight display the student scores list.
+1.  User requests to list student scores.
+2.  ModuLight shows a list of student scores.
+3.  User requests to edit the details of a specific student score.
+4.  ModuLight updates the detail of that student score with entered data.
+5.  ModuLight shows a list of updated student scores.
+    
+    Use case ends.
 
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. There is some error in the entered data.
+  
+  * 3b1. ModuLight shows an error message.
+    
+  Use case resumes at step 2.
+
+**Use case: Find student(s)**
+
+**MSS**
+
+1.  User requests to find a student or students with the specific keywords.
+2.  ModuLight shows a list of students that fulfilling the searching criteria.
+    Use case ends.
+
+**Extensions**
+
+* 1a. There are some unsupported or incorrect keywords.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
+
+**Use case: Sort student(s)**
+
+**MSS**
+
+1.  User requests to sort the displayed student list with the specific order.
+2.  ModuLight shows a list of sorted students.
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given sorting order is unsupported.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
 
 **Use case: Calculate the overall stats of student performance**
 
 **MSS**
 
-1.  User requests to calculate the overall stats of student performance
+1.  User requests to calculate the overall statistics of student performance
 2.  ModuLight shows a summary of statistics
-
-
     Use case ends.
 
 **Extensions**
 
 * 1a. There is currently no student scores.
     * 1a1. ModuLight shows an error message.
-
-  Use case ends.
-
-
-**Use case: Edit StudentScores**
-
-**MSS**
-
-1.  User requests to edit a student score
-2.  Modulight edits the student score with score and comments
-3.  Modulight display the student score list.
-
     Use case ends.
 
-**Extensions**
+* 1b. User requests to calculate a non-supported statistical measure.
+    * 1b1. ModuLight shows an error message and a list of supported statistical measures.
+    Use case ends.
 
-* 1a. The given index is invalid.
 
-    * 1a1. ModuLight shows an error message.
-
-      Use case ends.
 
 *{More to be added}*
 
@@ -489,11 +588,11 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a student
 
 1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all students using the `listStu` command. Multiple students in the list.
+   1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
    1. Test case: `deleteStu 1`<br>
       Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
@@ -510,9 +609,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing the data file manually.
 
-   1. Open `scoreBook.json`.
-   2. Edit the score field of any student in the file. 
+   1. Open `studentBook.json`, `scoreBook.json` or `gradedComponentBook.json`.
+   2. Edit the field of any student, student score or graded component in the file. 
    3. Run the program.
-      Expected: The score field for the particular student will be updated.
+      Expected: The edited field for the particular student, student score or graded component will be updated.
 
 1. _{ more test cases …​ }_
+
+## **Appendix: Planned Enhancements**
+
+1. Support special characters in student name parameter as some people's legal name do include some special characters(e.g. "s/o").
+2. Allow the Student List Panel, Student Score List Panel and Graded Component List Panel to automatically scroll down when adding new Student, Student Grade or Graded Component.
