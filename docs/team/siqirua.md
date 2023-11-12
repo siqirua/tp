@@ -31,24 +31,30 @@ Given below are my contributions to the project.
     allow our users to quickly identify the top scores. Meanwhile, the associated students will also be displayed in the
     corresponding order. In addition, this command is also necessary to make the displayed data more neat.
 
+* **Enhancements to existing features**:
+* Did cosmetic tweaks to the existing `help` features
+
 * **Code contributed**:
     * Please refer to this [RepoSense Link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=siqirua&breakdown=true)
 
-  * **Project management**:
-    * Release JAR file for V1.3 trial
-
-* **Enhancements to existing features**:
-    * To be added soon
-
 * **Documentation**:
     * User Guide:
-        * Added documentation for the features `find` [\#72]()
-        * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
+        * Added documentation for the features `findStu`, `stats`, `compStats`, `sortStu`, `sortScore`
+        * Added documentation for the parameters `o/`, `r/`, `st/`
     * Developer Guide:
-        * Added target user profile, value proposition, use cases, non-functional requirements and glossary sections.
+        * Added use cases, non-functional requirements and glossary sections.
+        * Created UML diagrams for most parts
+        * Did cosmetic tweaks to the proposed `Redo`/`Undo` features
+
+* **Contributions to team-based tasks**:
+  * Renamed the package, method name and class name from address book related to modulight related
+  * Released JAR file for V1.3 trial
+  * Created Milestone v1.4
+  * Added table of content to User Guide and Developer Guide
+  * Added target user profile, value proposition to Developer Guide
+  * Added Planned Enhancement to Developer Guide
+  * Updated README.md in GitHub repository
 
 * **Community**:
-  * To be added soon
+  * Reviewed peers’ tP (CS2103T-F10-3) and reported bugs/flaws for PED
 
-* **Tools**:
-    * To be added soon

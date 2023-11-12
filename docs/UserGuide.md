@@ -6,6 +6,10 @@ pageNav: 3
 
 # User Guide: ModuLight
 
+## Welcome to ModuLight
+
+_**Min-max your module management!**_
+
 ModuLight is a **desktop app** built for **professors from National University of Singapore to manage students and 
 assessments** for a single module.
 
@@ -19,8 +23,17 @@ via a Command Line Interface (CLI)** while still having the benefits of a Graphi
 type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
 
-<!-- * Table of Contents -->
-<page-nav-print />
+
+--------------------------------------------------------------------------------------------------------------------
+* Table of Contents
+  * **[Quick Start](#quick-start)**
+  * **[Glossary](#glossary)**
+  * **[Parameter Information](#parameter-information)**
+  * **[Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui)**
+  * **[Command Format](#command-format)**
+  * **[Features](#features)**
+  * **[Command Summary](#command-summary)**
+  * **[FAQ](#faq)**
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -48,18 +61,6 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
    
 
 6. Refer to the [Features](#features) below for details of each command.
-
-## Command Format
-
-| Notes                                                                                           | Explanation                                                                  | Examples                                                                                                                   |
-|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| Words in UPPER_CASE                                                                             | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                  |
-| Items in square brackets                                                                        | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                   |
-| Items with ... after them                                                                       | These are parameters that can be used multiple times (or omitted completely) | `editStu INDEX [t/TAG...]` can be used as `editStu 1 t/plagiarism t/withdraw` or `editStu 1 t/plagiarism`                  |
-| Parameters can be in any order                                                                  | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 t/T00 n/megan`                                                       |
-| If a parameter is expected only once and entered multiple times, an error message will be shown | NIL                                                                          | `editStu 1 n/megan n/maegan` results in error message `Multiple values specified for the following single-valued field(s)` |
-| Extraneous parameters for commands that do not take in parameters will be ignored               | NIL                                                                          | `help abc` is equivalent to `help`                                                                                         |
-
 
 ## Glossary
 
@@ -157,6 +158,18 @@ Here is a summary of each GUI component within ModuLight.
 | Student Score Card    | Displays key information about student scores such as graded component name for which the student is given the score and the student score itself.                         |
 
 
+## Command Format
+
+| Notes                                                                                                                                | Explanation                                                                  | Examples                                                                                                                   |
+|--------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Words in UPPER_CASE                                                                                                                  | These are parameters that are supplied by the user                           | `addStu s/STUDENT_NO n/NAME…` can be used as `addStu s/A1234567Z n/John…`                                                  |
+| Items in square brackets                                                                                                             | These are optional parameters (can be left empty by the user)                | `editScore 1 m/MARKS [x/COMMENTS]` can be used as `editScore 1 m/75` or `editScore 1 m/75 x/Great work.`                   |
+| Items with ... after them                                                                                                            | These are parameters that can be used multiple times (or omitted completely) | `editStu INDEX [t/TAG...]` can be used as `editStu 1 t/plagiarism t/withdraw` or `editStu 1 t/plagiarism`                  |
+| Parameters can be in any order                                                                                                       | NIL                                                                          | `editStu 1 n/megan t/T00` is equivalent to `editStu 1 t/T00 n/megan`                                                       |
+| If a parameter is expected only once and entered multiple times, an error message will be shown                                      | NIL                                                                          | `editStu 1 n/megan n/maegan` results in error message `Multiple values specified for the following single-valued field(s)` |
+| Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` , `listAll` and `clearAll` will be ignored | NIL                                                                          | `help abc` is equivalent to `help`                                                                                         |
+
+
 ## Features
 
 <box type="info" seamless>
@@ -225,6 +238,8 @@ Edits an existing graded component’s details in the database, based on the 1-b
 
 Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
+* if no parameters except index are passed in, the graded component will remain unchanged.
+
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
 ### Delete a graded component: `deleteComp`
@@ -247,6 +262,7 @@ Note: a StudentScore will be automatically added when a graded component is crea
 Format: `editScore INDEX [m/SCORE] [x/comment]`
 
 * if the mark is being edited, the new mark should be more than 0 and not exceed the associated component's maximum marks.
+* if no parameters except index are passed in, the score will remain unchanged.
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
@@ -450,18 +466,6 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-
---------------------------------------------------------------------------------------------------------------------
-
 ## Command summary
 
 | Action                                              | Format, Examples                                                                                                                      |
@@ -484,4 +488,16 @@ _Details coming soon ..._
 | **Calculate overall statistics**                    | `stats [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `stats st/upperQuartile st/lowerQuartile g/T01`                                        |
 | **Calculate component statistics**                  | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`              |
 | **Help**                                            | `help`                                                                                                                                |
->>>>>>> master
+
+--------------------------------------------------------------------------------------------------------------------
+
+## FAQ
+**Q**: How do I transfer my data to another Computer?<br>
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Known issues
+
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+
