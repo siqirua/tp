@@ -23,7 +23,6 @@ public interface Model {
 
     Predicate<Student> PREDICATE_SHOW_NO_STUDENTS = unused -> false;
     Predicate<GradedComponent> PREDICATE_SHOW_NO_COMPONENT = unused -> false;
-    Predicate<StudentScore> PREDICATE_SHOW_NO_SCORE = unused -> false;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -83,7 +82,4 @@ public interface Model {
     void updateFilteredStudentScoreList(Predicate<StudentScore> predicate);
 
     Predicate<Student> getCurrentStudentsPredicate();
-
-    Predicate<StudentScore> getCurrentScoresPredicate();
-
 }
