@@ -94,6 +94,26 @@ public class StudentScoreBuilder {
     }
 
     /**
+     * Return StudentScoreBuilder with newly set student
+     * @param student student
+     * @return Edited StudentScoreBuilder
+     */
+    public StudentScoreBuilder withStudent(Student student) {
+        this.student = student;
+        return this;
+    }
+
+    /**
+     * Return StudentScoreBuilder with newly set graded component
+     * @param gc graded component
+     * @return Edited StudentScoreBuilder
+     */
+    public StudentScoreBuilder withGc(GradedComponent gc) {
+        this.gc = gc;
+        return this;
+    }
+
+    /**
      * Return StudentScoreBuilder with newly set tags
      * @param tags tags
      * @return Edited StudentScoreBuilder
@@ -103,7 +123,15 @@ public class StudentScoreBuilder {
         return this;
     }
 
+    /**
+     * Build the studentScore
+     * @return StudentScore
+     */
     public StudentScore build() {
-        return new StudentScore(sid, gcName, score, comment, tags);
+        StudentScore studentScore = new StudentScore(sid, gcName, score, comment, tags);
+        studentScore.setStudent(student);
+        studentScore.setGradedComponent(gc);
+
+        return studentScore;
     }
 }
