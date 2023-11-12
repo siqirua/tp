@@ -7,13 +7,20 @@ pageNav: 3
 # ModuLight Developer Guide
 
 <!-- * Table of Contents -->
-<page-nav-print />
+* Table of Contents
+    * **[Acknowledgements](#acknowledgements)**
+    * **[Setting up, getting started](#setting-up-getting-started)**
+    * **[Design](#design)**
+    * **[Implementation](#implementation)**
+    * **[Others](#documentation-logging-testing-configuration-dev-ops)**
+    * **[Appendix: Requirements](#appendix-requirements)**
+    * **[Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)**
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+* [AddressBook-3](https://github.com/nus-cs2103-AY2223S1/tp)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -272,7 +279,7 @@ Step 1. The user launch the application for the first time.
 Step 2. The user creates the desired graded components and adds all the students in the cohort.
 
 Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile' 
-keyword indicates that Modulight grades based on the students' percentile compared to another. The value after `pg/` indicates
+keyword indicates that ModuLight grades based on the students' percentile compared to another. The value after `pg/` indicates
 the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`. 
 
 <box type="info" seamless>
@@ -283,7 +290,7 @@ the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-
 
 Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
 Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
-total score. Modulight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
+total score. ModuLight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
 `autoGradeCommand`.
 
 
@@ -333,36 +340,83 @@ NUS professors who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                      | So that I can…​                                                                                                |
-|----------|---------|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `* * *`  | user    | add a new student                                 | track all students taking my course.                                                                           |
-| `* * *`  | user    | add a new graded component                        | track all graded components in my course thus far.                                                             |
-| `* * *`  | user    | add a new student score                           | track individual student performance on this module's graded components.                                       |
-| `* * *`  | user    | delete a student                                  | remove students dropping the course/wrongly assigned.                                                          |
-| `* * *`  | user    | delete a graded component                         | remove a graded component if I feel it is no longer necessary.                                                 |
-| `* * *`  | user    | delete a student score                            |                                                                                                                |
-| `* * *`  | user    | save changes made                                 | so I can update student grade information throughout the semester.                                             |
-| `* * *`  | user    | load information                                  | so I can update student grade information throughout the semester.                                             |
-| `* *`    | user    | edit a student                                    | update outdated student information or correct mistakes.                                                       |
-| `* *`    | user    | edit a graded component                           | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
-| `* *`    | user    | edit a student score                              | regrade student scripts or correct mistakes.                                                                   |
-| `* *`    | user    | find student and associated scores by ID          | quickly find information about a student and their scores without having to search through the list            |
-| `* *`    | user    | find graded component and associated scores by ID | quickly find information about a graded component and student scores without having to search through the list |
-| `*`      | user    | toggle between dark and light mode                | have a pleasant user experience.                                                                               |
+| Priority | As a …​       | I want to …​                                               | So that I can…​                                                                                                |
+|----------|---------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `* * *`  | NUS professor | add a new student                                          | track all students taking my course.                                                                           |
+| `* * *`  | NUS professor | add a new graded component                                 | track all graded components in my course thus far.                                                             |
+| `* * *`  | NUS professor | add a new student score                                    | track individual student performance on this module's graded components.                                       |
+| `* * *`  | NUS professor | delete a student                                           | remove students dropping the course/wrongly assigned.                                                          |
+| `* * *`  | NUS professor | delete a graded component                                  | remove a graded component if I feel it is no longer necessary.                                                 |
+| `* * *`  | NUS professor | delete a student score                                     |                                                                                                                |
+| `* * *`  | NUS professor | save changes made                                          | so I can update student grade information throughout the semester.                                             |
+| `* * *`  | NUS professor | load information                                           | so I can update student grade information throughout the semester.                                             |
+| `* *`    | NUS professor | edit a student                                             | update outdated student information or correct mistakes.                                                       |
+| `* *`    | NUS professor | edit a graded component                                    | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
+| `* *`    | NUS professor | edit a student score                                       | regrade student scripts or correct mistakes.                                                                   |
+| `* *`    | NUS professor | find student and associated scores by ID                   | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | NUS professor | find graded component and associated scores by ID          | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | quickly calculate the overall statistics of student grades | have a quick insight of how my students are performing                                                         |
+| `* *`    | NUS professor | sort students with specific order                          | find the top students easily                                                                                   |
+| `* *`    | NUS professor | sort student scores with specific order                    | find the top students with their associated scores easily                                                      |
+|          | NUS professor | **autograde**                                              |                                                                                                                |
+| `*`      | NUS professor | toggle between dark and light mode                         | have a pleasant user experience.                                                                               |
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `ModuLight` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case: Add a student **
+
+**MSS**
+
+1.  User enters the details to add a student.
+2.  ModuLight adds the student with entered details to the student list.
+    
+    Use case ends.
+
+**Extensions**
+* 1a. There is some error in the entered data.
+  * 1a1. ModuLight shows an error message.
+  Use case ends.
+
+* 2a. There are already some existing graded components.
+  * 2a1. ModuLight creates student scores correspond to the new student for every graded component.
+  Use case ends.
+
+**Use case: Edit a student's information**
+
+**MSS**
+
+1.  User requests to list students.
+2.  ModuLight shows a list of students.
+3.  User requests to edit the details of a specific student.
+4.  ModuLight updates the detail of that student with entered data.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+* 3b. There is some
+
 **Use case: Delete a student and the associated scores**
 
 **MSS**
 
-1.  User requests to list persons
-2.  ModuLight shows a list of persons
-3.  User requests to delete a specific student in the list
-4.  ModuLight deletes the person
+1.  User requests to list students.
+2.  ModuLight shows a list of students.
+3.  User requests to delete a specific student in the list.
+4.  ModuLight deletes the student.
+5.  ModuLight shows a list of updated students.
 
     Use case ends.
 
@@ -378,68 +432,109 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+* 3b. The selected student has some associated student scores.
+    * 3b1. ModuLight deletes all associated students scores.
+    * 3b2. ModuLight shows a list of updated student scores.
+    Use case resumes at step 4.
 
-**Use case: Add StudentScores by new graded component**
+
+**Use case: Add a new graded component**
 
 **MSS**
 
 1.  User creates new Graded Component.
-2.  Modulight creates student scores correspond to the new graded component for every student. 
-3.  Modulight display the student scores list. 
+2.  ModuLight adds the graded component with entered details to the graded component list.
+3.  ModuLight shows lists of updated graded components and student scores.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The student list is empty.
+* 1a. There is some error in the entered data.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
 
-    Use case ends.
+* 2a. There are already some existing students.
+    * 2a1. ModuLight creates student scores correspond to the new graded component for every student.
+      Use case ends.
 
-
-**Use case: Add StudentScores by new student **
+**Use case: Edit a student score**
 
 **MSS**
 
-1.  User creates new Students.
-2.  Modulight creates student scores correspond to the new student for every graded component.
-3.  Modulight display the student scores list.
+1.  User requests to list student scores.
+2.  ModuLight shows a list of student scores.
+3.  User requests to edit the details of a specific student score.
+4.  ModuLight updates the detail of that student score with entered data.
+5.  ModuLight shows a list of updated student scores.
+    
+    Use case ends.
 
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. There is some error in the entered data.
+  
+  * 3b1. ModuLight shows an error message.
+    
+  Use case resumes at step 2.
+
+**Use case: Find student(s)**
+
+**MSS**
+
+1.  User requests to find a student or students with the specific keywords.
+2.  ModuLight shows a list of students that fulfilling the searching criteria.
+    Use case ends.
+
+**Extensions**
+
+* 1a. There are some unsupported or incorrect keywords.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
+
+**Use case: Sort student(s)**
+
+**MSS**
+
+1.  User requests to sort the displayed student list with the specific order.
+2.  ModuLight shows a list of sorted students.
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given sorting order is unsupported.
+    * 1a1. ModuLight shows an error message.
+      Use case ends.
 
 **Use case: Calculate the overall stats of student performance**
 
 **MSS**
 
-1.  User requests to calculate the overall stats of student performance
+1.  User requests to calculate the overall statistics of student performance
 2.  ModuLight shows a summary of statistics
-
-
     Use case ends.
 
 **Extensions**
 
 * 1a. There is currently no student scores.
     * 1a1. ModuLight shows an error message.
-
-  Use case ends.
-
-
-**Use case: Edit StudentScores**
-
-**MSS**
-
-1.  User requests to edit a student score
-2.  Modulight edits the student score with score and comments
-3.  Modulight display the student score list.
-
     Use case ends.
 
-**Extensions**
+* 1b. User requests to calculate a non-supported statistical measure.
+    * 1b1. ModuLight shows an error message and a list of supported statistical measures.
+    Use case ends.
 
-* 1a. The given index is invalid.
 
-    * 1a1. ModuLight shows an error message.
-
-      Use case ends.
 
 *{More to be added}*
 
@@ -489,11 +584,11 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a student
 
 1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all students using the `listStu` command. Multiple students in the list.
+   1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
    1. Test case: `deleteStu 1`<br>
       Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
@@ -510,9 +605,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing the data file manually.
 
-   1. Open `scoreBook.json`.
-   2. Edit the score field of any student in the file. 
+   1. Open `studentBook.json`, `scoreBook.json` or `gradedComponentBook.json`.
+   2. Edit the field of any student, student score or graded component in the file. 
    3. Run the program.
-      Expected: The score field for the particular student will be updated.
+      Expected: The edited field for the particular student, student score or graded component will be updated.
 
 1. _{ more test cases …​ }_
