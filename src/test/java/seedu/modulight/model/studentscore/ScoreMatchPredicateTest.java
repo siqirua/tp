@@ -1,19 +1,39 @@
-package seedu.address.model.studentscore;
+package seedu.modulight.model.studentscore;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.model.gradedcomponent.GcMatchPredicate;
-import seedu.address.model.student.StudentMatchPredicate;
-import seedu.address.testutil.StudentScoreBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_COMMENT_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_COMMENT_JAMES;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_GCNAME_JAMES;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_SID_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_SID_JAMES;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_TAG_AMY;
+import static seedu.modulight.logic.commands.CommandStudentScoreTestUtil.VALID_TAG_JAMES;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TG_AMY;
+import static seedu.modulight.logic.commands.CommandTestUtil.VALID_TG_JAMES;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.address.logic.commands.CommandStudentScoreTestUtil.*;
+import org.junit.jupiter.api.Test;
+
+import seedu.modulight.model.gradedcomponent.GcMatchPredicate;
+import seedu.modulight.model.gradedcomponent.GcName;
+import seedu.modulight.model.gradedcomponent.GradedComponent;
+import seedu.modulight.model.gradedcomponent.MaxMarks;
+import seedu.modulight.model.gradedcomponent.Weightage;
+import seedu.modulight.model.student.Student;
+import seedu.modulight.model.student.StudentMatchPredicate;
+import seedu.modulight.testutil.StudentBuilder;
+import seedu.modulight.testutil.StudentScoreBuilder;
+
 
 class ScoreMatchPredicateTest {
     private final List<String> sidList = List.of(VALID_SID_AMY);
-    private final List<String> nameList = List.of("Amy");
-    private final List<String> tutorialGroupList = List.of("T23");
+    private final List<String> nameList = List.of(VALID_NAME_AMY);
+    private final List<String> tutorialGroupList = List.of(VALID_TG_AMY);
     private final List<String> tagList = List.of(VALID_TAG_AMY);
     private final List<String> commentList = List.of(VALID_COMMENT_AMY);
     private final List<String> gcNameList = List.of(VALID_GCNAME_AMY);
@@ -31,20 +51,42 @@ class ScoreMatchPredicateTest {
 
     @Test
     public void test_containsGcNames_returnsTrue() {
+        // empty keyword
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, emptyList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withGcName(VALID_GCNAME_AMY).build()));
+
         // Single keyword
+        predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, gcNameList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withGcName(VALID_GCNAME_AMY).build()));
 
-        // Multiple keywords
+        predicate = new ScoreMatchPredicate(gcNameList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withGcName(VALID_GCNAME_AMY).build()));
 
-        //
+        // Exact Multiple keywords
+        List<String> multipleGcName = List.of(VALID_GCNAME_JAMES, VALID_GCNAME_AMY);
+        predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, multipleGcName);
+        assertTrue(predicate.test(new StudentScoreBuilder()
+                .withGcName(VALID_GCNAME_AMY).withGcName(VALID_GCNAME_JAMES).build()));
+
+        // multiple keyword with a non-matching keyword
+        multipleGcName = List.of(VALID_GCNAME_JAMES, VALID_GCNAME_AMY);
+        predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, multipleGcName);
+        assertTrue(predicate.test(new StudentScoreBuilder()
+                .withGcName(VALID_GCNAME_AMY).build()));
+
     }
 
     @Test
     public void test_noMatchForGcNames_returnsFalse() {
-        // Single keyword
+        // Single non-matching keyword
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, gcNameList);
+        assertFalse(predicate.test(new StudentScoreBuilder().withGcName(VALID_GCNAME_JAMES).build()));
 
-        // Multiple keywords
-
-        //
     }
 
     @Test
@@ -127,7 +169,7 @@ class ScoreMatchPredicateTest {
         assertTrue(predicate.test(new StudentScoreBuilder().withTags(VALID_TAG_AMY).build()));
 
         // zero keywords
-       predicate = new ScoreMatchPredicate(emptyList,
+        predicate = new ScoreMatchPredicate(emptyList,
                 emptyList, emptyList, emptyList, emptyList, emptyList);
         assertTrue(predicate.test(new StudentScoreBuilder().withTags(VALID_TAG_AMY).build()));
 
@@ -151,51 +193,108 @@ class ScoreMatchPredicateTest {
     @Test
     public void test_containsTutorialGroupKeywords_returnsTrue() {
         // Single keyword
+        StudentMatchPredicate studentMatchPredicate = new StudentMatchPredicate(emptyList,
+                emptyList, emptyList, List.of(VALID_TG_AMY), emptyList);
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(studentMatchPredicate);
+
+        Student student = new StudentBuilder().withId(VALID_SID_AMY).withTg(VALID_TG_AMY).build();
+        StudentScore studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withStudent(student).build();
+        assertTrue(predicate.test(studentScore));
 
         // zero keyword
+        studentMatchPredicate = new StudentMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList);
+        predicate = new ScoreMatchPredicate(studentMatchPredicate);
 
-        // Multiple keywords
+        student = new StudentBuilder().withId(VALID_SID_AMY).withTg(VALID_TG_AMY).build();
+        studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withStudent(student).build();
+        assertTrue(predicate.test(studentScore));
 
-        // Multiple identical keywords
+        // Multiple keywords with a non-matching keyword
+        studentMatchPredicate = new StudentMatchPredicate(emptyList,
+                emptyList, emptyList, List.of(VALID_TG_AMY, VALID_SID_JAMES), emptyList);
+        predicate = new ScoreMatchPredicate(studentMatchPredicate);
 
-        // matching and non-matching keywords
+        student = new StudentBuilder().withId(VALID_SID_AMY).withTg(VALID_TG_AMY).build();
+        studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withStudent(student).build();
+        assertTrue(predicate.test(studentScore));
+
     }
 
     @Test
     public void test_noMatchingTutorialGroupKeywords_returnsFalse() {
         // non-matching keywords
+        StudentMatchPredicate studentMatchPredicate = new StudentMatchPredicate(emptyList,
+                emptyList, emptyList, List.of(VALID_TG_AMY), emptyList);
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(studentMatchPredicate);
+
+        Student student = new StudentBuilder().withId(VALID_SID_JAMES).withTg(VALID_TG_JAMES).build();
+        StudentScore studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withStudent(student).build();
+        assertFalse(predicate.test(studentScore));
 
         // incomplete keyword
+        studentMatchPredicate = new StudentMatchPredicate(emptyList,
+                emptyList, emptyList, List.of(VALID_TG_AMY.substring(0, 1)), emptyList);
+        predicate = new ScoreMatchPredicate(studentMatchPredicate);
+
+        student = new StudentBuilder().withId(VALID_SID_AMY).withTg(VALID_TG_AMY).build();
+        studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withStudent(student).build();
+        assertFalse(predicate.test(studentScore));
     }
 
     @Test
     public void test_containsCommentKeywords_returnTrue() {
         // single keyword
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, commentList, emptyList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withComment(VALID_COMMENT_AMY).build()));
 
         // zero keyword
+        predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, emptyList, emptyList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withComment(VALID_COMMENT_AMY).build()));
 
         // multiple keywords
+        predicate = new ScoreMatchPredicate(emptyList,
+                emptyList, emptyList, emptyList, List.of(VALID_COMMENT_JAMES, VALID_COMMENT_AMY), emptyList);
+        assertTrue(predicate.test(new StudentScoreBuilder().withComment(VALID_COMMENT_AMY).build()));
 
     }
 
     @Test
     public void test_multipleTypeKeywords_returnTrue() {
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(sidList, emptyList,
+                emptyList, tagList, List.of(VALID_COMMENT_JAMES, VALID_COMMENT_AMY), gcNameList);
+        assertTrue(predicate.test(new StudentScoreBuilder()
+                .withComment(VALID_COMMENT_AMY).withStudentId(VALID_SID_AMY)
+                .withTags(VALID_TAG_AMY).withGcName(VALID_GCNAME_AMY).build()));
+
     }
 
     @Test
-    public void test_noMatchMultipleTypeKeywords_returnTrue() {
+    public void test_singleMatchMultipleTypeKeywords_returnFalse() {
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(sidList, emptyList,
+                emptyList, tagList, List.of(VALID_COMMENT_JAMES, VALID_COMMENT_AMY), gcNameList);
+        assertFalse(predicate.test(new StudentScoreBuilder()
+                .withComment(VALID_COMMENT_AMY).withStudentId(VALID_SID_JAMES)
+                .withTags(VALID_TAG_JAMES).withGcName(VALID_GCNAME_JAMES).build()));
     }
 
     @Test
-    public void test_containsStudentMatchPredicate() {
-    }
+    public void test_gcMatchPredicate_returnTrue() {
+        GcMatchPredicate gcMatchPredicate = new GcMatchPredicate(gcNameList);
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(gcMatchPredicate);
 
-    @Test
-    public void test_containsGcMatchPredicate() {
-    }
-
-    @Test
-    public void test_containsNameKeywords_returnsTrue() {
+        GradedComponent gradedComponent =
+                new GradedComponent(new GcName(VALID_GCNAME_AMY), new MaxMarks(100), new Weightage(30));
+        StudentScore studentScore = new StudentScoreBuilder()
+                .withStudentId(VALID_SID_AMY).withGc(gradedComponent).build();
+        assertTrue(predicate.test(studentScore));
     }
 
     @Test
@@ -275,6 +374,10 @@ class ScoreMatchPredicateTest {
 
     @Test
     public void testToString() {
+        ScoreMatchPredicate predicate = new ScoreMatchPredicate(sidList, emptyList,
+                emptyList, tagList, List.of(VALID_COMMENT_JAMES, VALID_COMMENT_AMY), gcNameList);
+
+        assertEquals(predicate.toString(), "Find student score by given criteria");
 
     }
 }
