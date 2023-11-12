@@ -225,6 +225,8 @@ Edits an existing graded component’s details in the database, based on the 1-b
 
 Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
+* if no parameters except index are passed in, the graded component will remain unchanged.
+
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
 ### Delete a graded component: `deleteComp`
@@ -247,6 +249,7 @@ Note: a StudentScore will be automatically added when a graded component is crea
 Format: `editScore INDEX [m/SCORE] [x/comment]`
 
 * if the mark is being edited, the new mark should be more than 0 and not exceed the associated component's maximum marks.
+* if no parameters except index are passed in, the score will remain unchanged.
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
