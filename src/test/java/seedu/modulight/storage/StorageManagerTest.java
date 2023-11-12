@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.modulight.testutil.TypicalGradedComponents.getTypicalGradedComponentBook;
 import static seedu.modulight.testutil.TypicalStudentScores.getTypicalStudentScoreBook;
-import static seedu.modulight.testutil.TypicalStudents.getTypicalAddressBook;
+import static seedu.modulight.testutil.TypicalStudents.getTypicalStudentBook;
 
 import java.nio.file.Path;
 
@@ -65,7 +65,7 @@ public class StorageManagerTest {
          * {@link JsonStudentBookStorage} class.
          * More extensive testing of saving/reading is done in {@link JsonStudentBookStorageTest} class.
          */
-        StudentBook original = getTypicalAddressBook();
+        StudentBook original = getTypicalStudentBook();
         storageManager.saveStudentBook(original);
         ReadOnlyStudentBook retrieved = storageManager.readStudentBook().get();
         assertEquals(original, new StudentBook(retrieved));
