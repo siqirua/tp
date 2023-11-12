@@ -15,6 +15,7 @@ pageNav: 3
     * **[Others](#documentation-logging-testing-configuration-dev-ops)**
     * **[Appendix: Requirements](#appendix-requirements)**
     * **[Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)**
+    * **[Appendix: Planned enhancements](#appendix-planned-enhancements)**
 
 --------------------------------------------------------------------------------------------------------------------
 
