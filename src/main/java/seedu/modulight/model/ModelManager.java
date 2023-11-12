@@ -178,11 +178,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Predicate<StudentScore> getCurrentScoresPredicate() {
-        return (Predicate<StudentScore>) filteredStudentScoreList.getPredicate();
-    }
-
-    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
