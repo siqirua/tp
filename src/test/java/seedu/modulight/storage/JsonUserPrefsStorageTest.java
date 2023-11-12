@@ -25,42 +25,14 @@ public class JsonUserPrefsStorageTest {
     @TempDir
     public Path testFolder;
 
-    private Optional<UserPrefs> readUserPrefs(String userPrefsFileInTestDataFolder) throws DataLoadingException {
-        Path prefsFilePath = addToTestDataPathIfNotNull(userPrefsFileInTestDataFolder);
-        return new JsonUserPrefsStorage(prefsFilePath).readUserPrefs(prefsFilePath);
-    }
-
-    private Path addToTestDataPathIfNotNull(String userPrefsFileInTestDataFolder) {
-        return userPrefsFileInTestDataFolder != null
-            ? TEST_DATA_FOLDER.resolve(userPrefsFileInTestDataFolder)
-            : null;
-    }
-
-    private UserPrefs getTypicalUserPrefs() {
-        UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
-        userPrefs.setAddressBookFilePath(Paths.get("addressbook.json"));
-        userPrefs.setStudentBookFilePath(Paths.get("studentBook.json"));
-        userPrefs.setScoreBookFilePath(Paths.get("scoreBook.json"));
-        userPrefs.setGcBookFilePath(Paths.get("gradedComponentBook.json"));
-        return userPrefs;
-    }
-
-    /**
-     * Saves {@code userPrefs} at the specified {@code prefsFileInTestDataFolder} filepath.
-     */
-    private void saveUserPrefs(UserPrefs userPrefs, String prefsFileInTestDataFolder) {
-        try {
-            new JsonUserPrefsStorage(addToTestDataPathIfNotNull(prefsFileInTestDataFolder))
-                .saveUserPrefs(userPrefs);
-        } catch (IOException ioe) {
-            throw new AssertionError("There should not be an error writing to the file", ioe);
-        }
-    }
-
     @Test
     public void readUserPrefs_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> readUserPrefs(null));
+    }
+
+    private Optional<UserPrefs> readUserPrefs(String userPrefsFileInTestDataFolder) throws DataLoadingException {
+        Path prefsFilePath = addToTestDataPathIfNotNull(userPrefsFileInTestDataFolder);
+        return new JsonUserPrefsStorage(prefsFilePath).readUserPrefs(prefsFilePath);
     }
 
     @Test
@@ -72,6 +44,12 @@ public class JsonUserPrefsStorageTest {
     public void readUserPrefs_notJsonFormat_exceptionThrown() {
         assertThrows(DataLoadingException.class, () -> readUserPrefs(
             "NotJsonFormatUserPrefs.json"));
+    }
+
+    private Path addToTestDataPathIfNotNull(String userPrefsFileInTestDataFolder) {
+        return userPrefsFileInTestDataFolder != null
+            ? TEST_DATA_FOLDER.resolve(userPrefsFileInTestDataFolder)
+            : null;
     }
 
     @Test
@@ -95,6 +73,16 @@ public class JsonUserPrefsStorageTest {
         assertEquals(expected, actual);
     }
 
+    private UserPrefs getTypicalUserPrefs() {
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
+        userPrefs.setAddressBookFilePath(Paths.get("addressbook.json"));
+        userPrefs.setStudentBookFilePath(Paths.get("studentBook.json"));
+        userPrefs.setScoreBookFilePath(Paths.get("scoreBook.json"));
+        userPrefs.setGcBookFilePath(Paths.get("gradedComponentBook.json"));
+        return userPrefs;
+    }
+
     @Test
     public void savePrefs_nullPrefs_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveUserPrefs(null, "SomeFile.json"));
@@ -103,6 +91,18 @@ public class JsonUserPrefsStorageTest {
     @Test
     public void saveUserPrefs_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveUserPrefs(new UserPrefs(), null));
+    }
+
+    /**
+     * Saves {@code userPrefs} at the specified {@code prefsFileInTestDataFolder} filepath.
+     */
+    private void saveUserPrefs(UserPrefs userPrefs, String prefsFileInTestDataFolder) {
+        try {
+            new JsonUserPrefsStorage(addToTestDataPathIfNotNull(prefsFileInTestDataFolder))
+                .saveUserPrefs(userPrefs);
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file", ioe);
+        }
     }
 
     @Test

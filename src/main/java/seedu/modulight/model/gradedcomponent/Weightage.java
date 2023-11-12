@@ -5,7 +5,7 @@ import static seedu.modulight.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents the weightage of a graded component in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidWeightage(double)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidWeightage(float)}
  */
 public class Weightage {
 
