@@ -87,7 +87,7 @@ The following section gives an overview of the parameters used for the commands 
 
 | Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples            |
 |-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|-----------------------------|
-| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준       | 
+| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John1, Lee Xiao Ming         | 晓明, Xiao Ming@Lee, 이준       | 
 | e/        | Email of the student          | Must consist of a alphanumeric prefix, @ symbol and a domain               | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail              |
 | s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567  |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11         |
