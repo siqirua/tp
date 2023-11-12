@@ -106,7 +106,7 @@ public class StorageManagerTest {
     public void getStudentScoreBookFilePath() {
         assertNotNull(storageManager.getStudentScoreBookFilePath());
     }
-    
+
     @Test
     public void getGcBookFilePath() {
         assertNotNull(storageManager.getGcBookFilePath());
