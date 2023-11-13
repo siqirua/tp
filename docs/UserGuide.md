@@ -49,7 +49,7 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
    command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui_overview.png)
+   ![Ui](images/initial_Ui.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -58,8 +58,7 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 
    * `addComp c/Midterm Exam w/25 mm/75` : Adds a Graded Component named Midterm Exam.
 
-   * `editStuScore s/A1234567X c/Midterms m/75` : Edits the score of the Midterm Component for the student with the student id A1234567X.
-   
+   * `editScore 1 m/10` : Edits the score of the Midterm Component for the student with the student id A1234567X.
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -114,16 +113,16 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Command Related Parameters
 
-| Parameter | Description                                                                                                                    | Constraints                                                                                                                                                                                                                           | Valid Examples     | Invalid Examples           |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|----------------------------|
-| o/        | Used in the sortStu command, the selected parameter of students to be sorted                                                   | Only parameters in the list (The full list can be found under the description of [sortStu command](#sorting-students-sortstu)) are allowed                                                                                            | n, totalscore, tut | studentName, overall score |
-| r/        | Used in the sortStu and sortStuScore commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu command](#sorting-students-sortstu) and [sortScore command](#sorting-students-scores-sortscore)) are allowed                                | t, f, decreasing   | True, ascending            |
-| st/       | Used in the stats and compStats command, the statistical measures to be calculated                                             | Only parameters in the list (The full list can be found under the description of [stats command](#calculating-overall-statistics-stats) and [compStats command](#calculating-statistics-of-a-graded-component-compstats)) are allowed | max, upperQuartile | quartile, correlation      |
-| pg/       | Used in autograde command, ....                                                                                                |                                                                                                                                                                                                                                       |                    |                            |
+| Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples     | Invalid Examples           |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|----------------------------|
+| o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut | studentName, overall score |
+| r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing   | True, ascending            |
+| st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile | quartile, correlation      |
+| pg/       | Used in autograde command, ....                                                                                                                                                                   |                                                                                                                                                                                                                                |                    |                            |
 
 <box type="info" seamless>
 
-##Notes on score calculation
+## Notes on score calculation
 
 * The maximum marks of a graded component and marks of a student score are both absolute values and are used together to 
 determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
@@ -286,9 +285,9 @@ Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score 
 
 ### Searching students: `findStu`
 
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and all graded components will be displayed as well.
+Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. However, the displayed list of graded components will remain unchanged.
 
-Format: `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`
+Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
 * The search is case-insensitive. e.g. `a0123456` will match `A0123456`
 * You can search based on any of the following attributes: name, student number, email, tutorial group or tag.
@@ -325,7 +324,7 @@ All graded students will be shown since they are relevant.
 
 ### Find students : `findScore`
 Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
-Format: `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`
+Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
 * The search is case-insensitive. e.g. `a0123456` will match `A0123456`
 * You can search based on any of the following attributes: name, student number, email, tutorial group, graded component, comment or tag.
@@ -374,7 +373,7 @@ Examples:
 
 Sorts students score by the given criteria and display its associated students in order.
 
-Format: `sortScore [c/COMP_NAME] [r/REVERSE_ORDER]`
+Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
 
 * The reverse order keyword must be one of the acceptable description given below: <br>
   "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4
@@ -484,18 +483,6 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
-
-**Q**: How does the calculation of scores work?<br>
-**A**: Refer to the [notes on score calculations](#notes-on-score-calculation).
-
-**Q**: Does the display update information (eg. name, mean) in real time?<br>
-**A**: Yes. 
-
---------------------------------------------------------------------------------------------------------------------
-
 ## Command summary
 
 | Action                                              | Format, Examples                                                                                                                      |
@@ -522,12 +509,14 @@ _Details coming soon ..._
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
+1. **Q**: How do I transfer my data to another Computer?<br>
+   **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
 
---------------------------------------------------------------------------------------------------------------------
+2. **Q**: How does the calculation of scores work?<br>
+   **A**: Refer to the [notes on score calculations](#notes-on-score-calculation).
 
-## Known issues
+3. **Q**: Does the display update information (eg. name, mean) in real time?<br>
+   **A**: Yes.
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-
+4. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?
+   **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
