@@ -96,7 +96,7 @@ The following section gives an overview of the parameters used for the commands 
 | e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a domain              | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail             |
 | s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
-| t/        | Tag of the student            | Must only contain alphanumeric characters and no space                     | PotentialTA, MakeupExam      | deans_list, Potential TA   |
+| t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam     | 晓明, Xiao Ming@Lee, 이준      |
 
 
 
@@ -562,10 +562,13 @@ There is no need to manually load data stored on the hard disc. It will be avail
 3. **Q**: Does the display update information (e.g. name, mean) in real time?<br>
    **A**: Yes.
 
-4. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?<br>
+4. **Q**: Why should I avoid entering numbers with more than 2 decimal places of precision?<br>
+   **A**: Numerical errors have been known to occur due to the limits of floating-point precision on computers.
+
+5. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?<br>
    **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
 
-5. **Q**: How do I open a terminal?<br>
+6. **Q**: How do I open a terminal?<br>
    **A**: It depends on the operating system.
    * **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
    * **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
