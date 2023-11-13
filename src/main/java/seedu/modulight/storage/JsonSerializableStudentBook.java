@@ -15,7 +15,7 @@ import seedu.modulight.model.student.model.StudentBook;
 
 
 /**
- * An Immutable AddressBook that is serializable to JSON format.
+ * An Immutable StudentBook that is serializable to JSON format.
  */
 @JsonRootName(value = "studentbook")
 public class JsonSerializableStudentBook {

@@ -58,11 +58,16 @@ public class StudentScore {
 
     }
 
-    private boolean isValidScore(float s) {
+    /**
+     * Checks whether a score is valid.
+     *
+     * @param s score.
+     * @param mm maximum marks of the graded component.
+     * @return true if given score is valid.
+     */
+    public static boolean isValidScore(float s, float mm) {
         boolean isLessEqualThanMaxMarks = true;
-        if (this.gc != null) {
-            isLessEqualThanMaxMarks = s <= this.gc.getMaxMarks().maxMarks;
-        }
+        isLessEqualThanMaxMarks = s <= mm;
         return s >= 0 && isLessEqualThanMaxMarks;
     }
 
