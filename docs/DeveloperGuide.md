@@ -587,18 +587,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User enters the details to add a student.
-2.  ModuLight adds the student with entered details to the student list.
-    
+2.  ModuLight adds the student with entered details to the student list.<br>
+
     Use case ends.
 
 **Extensions**
 * 1a. There is some error in the entered data.
-  * 1a1. ModuLight shows an error message.
-  Use case ends.
+  * 1a1. ModuLight shows an error message. <br>
+  
+    Use case ends.
 
 * 2a. There are already some existing graded components.
   * 2a1. ModuLight creates student scores correspond to the new student for every graded component.
-  Use case ends.
+    
+     Use case ends.
 
 **Use case: Edit a student's information**
 
@@ -650,8 +652,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3b. The selected student has some associated student scores.
     * 3b1. ModuLight deletes all associated students scores.
-    * 3b2. ModuLight shows a list of updated student scores.
-    Use case resumes at step 4.
+    * 3b2. ModuLight shows a list of updated student scores.<br>
+      Use case resumes at step 4.
 
 
 **Use case: Add a new graded component**
@@ -668,10 +670,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. There is some error in the entered data.
     * 1a1. ModuLight shows an error message.
+      
       Use case ends.
 
 * 2a. There are already some existing students.
     * 2a1. ModuLight creates student scores correspond to the new graded component for every student.
+    
       Use case ends.
 
 **Use case: Edit a student score**
@@ -702,7 +706,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3b1. ModuLight shows an error message.
 
-  Use case resumes at step 2.
+      Use case resumes at step 2.
 
 **Use case: List all**
 
@@ -710,6 +714,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list all students, student scores and graded components.
 2.  ModuLight shows lists of all students, student scores and graded components.
+
+    Use case ends.
 
 **Use case: Delete a graded component and its associated scores**
 
@@ -737,7 +743,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3b. The selected graded component has some associated student scores.
     * 3b1. ModuLight deletes all associated students scores.
-    * 3b2. ModuLight shows a list of updated student scores.
+    * 3b2. ModuLight shows a list of updated student scores.<br>
+      
       Use case resumes at step 4.
 
 **Use case: Find student(s)**
@@ -757,6 +764,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 * 1b. There are no keywords given
     * 1b1. ModuLight shows all students, scores and graded components.
+      Use case ends.
 
 **Use case: Sort student(s)**
 
@@ -788,12 +796,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. There is currently no student scores.
     * 1a1. ModuLight shows an error message.
   
-    Use case ends.
+      Use case ends.
 
 * 1b. User requests to calculate a non-supported statistical measure.
     * 1b1. ModuLight shows an error message and a list of supported statistical measures.
 
-    Use case ends.
+      Use case ends.
 
 **Use case: Automatically grade students based on their total score**
 
@@ -810,22 +818,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. User request to use unsupported grading method.
   * 1a1. Modulight shows an error message and a list of supported grading method available.
 
-    Use case ends
+    Use case ends.
 
 * 1b. User inputted non-decreasing values for passing value.
   * 1b1. Modulight shows an error message specifying that the values inputted is non-decreasing.
 
-    Use case ends
+    Use case ends.
 
 * 1c. User inputted passing values outside the bound of 0 and 100 inclusively.
   * 1c1. Modulight shows an error message specifying that the values must be between 0 and 100 inclusively.
 
-    Use case ends
+    Use case ends.
 
 * 1d. User inputted too many passing values.
   * 1d1. Modulight shows an error message specifying that there are too many passing values inputted.
 
-    Use case ends
+    Use case ends.
 
 *{More to be added}*
 
