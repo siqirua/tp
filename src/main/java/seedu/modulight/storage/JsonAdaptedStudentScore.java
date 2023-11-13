@@ -11,9 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.modulight.commons.exceptions.IllegalValueException;
 import seedu.modulight.model.gradedcomponent.GcName;
-import seedu.modulight.model.gradedcomponent.GradedComponent;
 import seedu.modulight.model.gradedcomponent.MaxMarks;
-import seedu.modulight.model.gradedcomponent.Weightage;
 import seedu.modulight.model.student.StudentId;
 import seedu.modulight.model.studentscore.StudentScore;
 import seedu.modulight.model.tag.Tag;
@@ -88,11 +86,42 @@ public class JsonAdaptedStudentScore {
         }
         final StudentId modelStudentId = new StudentId(studentId);
 
+        if (gcName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                GcName.class.getSimpleName()));
+        }
+        if (!GcName.isValidName(gcName)) {
+            throw new IllegalValueException(GcName.MESSAGE_CONSTRAINTS);
+        }
         final GcName newGcName = new GcName(gcName);
-        final GradedComponent gradedComponent = new GradedComponent(newGcName,
-                new MaxMarks(Float.parseFloat(gcMaxMarks)), new Weightage(Float.parseFloat(gcWeightage)));
 
-        //check validity of scores
+        try {
+            Float.parseFloat(gcMaxMarks);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(MaxMarks.MESSAGE_CONSTRAINTS);
+        }
+
+        if (!MaxMarks.isValidMarks(Float.parseFloat(gcMaxMarks))) {
+            throw new IllegalValueException(MaxMarks.MESSAGE_CONSTRAINTS);
+        }
+
+        if (score == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                StudentScore.class.getSimpleName()));
+        }
+
+        final float modelMaxMarks = Float.parseFloat(gcMaxMarks);
+
+        try {
+            Float.parseFloat(score);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException("Score should be a number less than max marks and greater than 0");
+        }
+
+        if (!StudentScore.isValidScore(Float.parseFloat(score), modelMaxMarks)) {
+            throw new IllegalValueException("Score should be a number less than max marks and greater than 0");
+        }
+
         final float modelScore = Float.parseFloat(score);
 
         final String modelComment = comment;

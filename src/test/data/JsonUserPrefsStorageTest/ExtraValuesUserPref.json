@@ -9,5 +9,8 @@
       "z" : 99
     }
   },
-  "addressBookFilePath" : "addressbook.json"
+  "addressBookFilePath" : "addressbook.json",
+  "studentBookFilePath" : "studentBook.json",
+  "scoreBookFilePath" : "scoreBook.json",
+  "gcBookFilePath" : "gradedComponentBook.json"
 }
