@@ -344,9 +344,16 @@ Sorts students' data by the given criteria.
 
 Format: `sortStu [o/SORTING_ORDER] [r/REVERSE_ORDER]`
 
-* The sorting order keyword must be one of the acceptable description given below: <br> "n",
-  "name", "s", "studentId", "studentID", "e", "email", "g", "tutorial", "tut", 
-  "tutGroup", "ts", "totalScore", "totalscore", "score".
+* The sorting order keyword must be one of the acceptable description given below: <br>
+
+| Accepted keywords                  | Field to be sorted | Description                                         |
+|------------------------------------|--------------------|-----------------------------------------------------|
+| `n`, `name`                        | `n/`               | Name of the student by alphabetical order           |
+| `s`, `studentId`, `studentID`      | `s/`               | Student ID of the student by alphabetical order     |
+| `e`, `email`                       | `e/`               | Email of the student by alphabetical order          |
+| `g`, `tutorial`, `tut`, `tutGroup` | `g/`               | Tutorial group of the student by alphabetical order |
+| `ts`, `totalScore`, `score`        | NIL                | Total score of the student by numerical value       |
+
 * The reverse order keyword must be one of the acceptable description given below: <br>
 "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4 
 keywords have the same effect).
