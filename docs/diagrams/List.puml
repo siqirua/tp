@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+
+:Update filteredStudentList to show all students;
+:Update filteredStudentScoreList to show all scores;
+:Update filteredGradedComponentList to show all components;
+:Display all students, scores, componenys and acknowledgement message;
+stop
+
+@enduml
