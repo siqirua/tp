@@ -99,10 +99,10 @@ public class AutoGradeCommand extends Command {
     }
 
     private void setGradeThresholdPercentile(Model model) {
-        int size = model.getStudentBook().getSize();
+        int size = model.getFilteredStudentList().size();
         for (int i = 0; i < passingGradeValue.length; i++) {
             int percentileIndex = (int) Math.ceil((1 - this.passingGradeValue[i] / 100) * (size - 1));
-            Student student = model.getStudentBook().getStudentList().get(percentileIndex);
+            Student student = model.getFilteredStudentList().get(percentileIndex);
             float percentileScore = student.getTotalScore();
 
             this.gradeThreshold[i] = percentileScore;
