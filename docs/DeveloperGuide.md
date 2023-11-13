@@ -161,7 +161,15 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" />
+
+Here are the complete class diagrams of StudentBook Storage, StudentScoreBook Storage and GradedComponentBook Storage.
+
+<puml src="diagrams/StudentAndScoreBookStorage.puml" />
+
+
+<puml src="diagrams/GradedComponentBookStorage.puml" />
+
 
 The `Storage` component,
 * can save student data, student score data, graded component data and user preference data in JSON format, and read 
@@ -607,14 +615,27 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Editing the data file manually.
+1. Dealing with missing files
 
-   1. Open `studentBook.json`, `scoreBook.json` or `gradedComponentBook.json`.
-   2. Edit the field of any student, student score or graded component in the file. 
-   3. Run the program.
-      Expected: The edited field for the particular student, student score or graded component will be updated.
+   1. Delete all three json files `studentBook.json`, `gradedComponentBook.json`, `scoreBook.json`.
+   
+   2. Run the program. <br>
+      Expected: The program will load with the original sample data just like it was run for the first time.
 
-1. _{ more test cases …​ }_
+1. Dealing with corrupted files
+
+   1. Open `studentBook.json`.
+   
+   2. Edit any "studentName" field and input "R@chel".
+   
+   3. Run the program. <br>
+      Expected: The program will load with completely empty data instead of edited data.
+   
+   4. Other ways to corrupt the files are to change "tutorialGroup" to "AAA", "gcName" (in `gradedComponentBook.
+      json`) to "@Quiz", ...
+   
+   5. Run the program. <br>
+      Expected: Similar to previous.
 
 ## **Appendix: Planned Enhancements**
 
