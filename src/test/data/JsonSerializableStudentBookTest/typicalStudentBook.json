@@ -1,0 +1,52 @@
+{
+  "students" : [ {
+    "studentId" : "A0000000Y",
+    "studentName" : "Alice Pauline",
+    "studentEmail" : "alice@example.com",
+    "tutorialGroup" : "T01",
+    "tags" : [ "friends" ],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000001Y",
+    "studentName" : "Benson Meier",
+    "studentEmail" : "johnd@example.com",
+    "tutorialGroup" : "T01",
+    "tags" : [ "owesMoney", "friends"],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000002Y",
+    "studentName" : "Carl Kurz",
+    "studentEmail" : "heinz@example.com",
+    "tutorialGroup" : "T01",
+    "tags" : [ ],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000003Y",
+    "studentName" : "Daniel Meier",
+    "studentEmail" : "cornelia@example.com",
+    "tutorialGroup" : "T02",
+    "tags" : [ "plagiarism" ],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000004Y",
+    "studentName" : "Elle Meyer",
+    "studentEmail" : "werner@example.com",
+    "tutorialGroup" : "T02",
+    "tags" : [ ],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000005Y",
+    "studentName" : "Fiona Kunz",
+    "studentEmail" : "lydia@example.com",
+    "tutorialGroup" : "T02",
+    "tags" : [ ],
+    "studentGrade" : ""
+  }, {
+    "studentId" : "A0000006Y",
+    "studentName" : "George Best",
+    "studentEmail" : "anna@example.com",
+    "tutorialGroup" : "T02",
+    "tags" : [ ],
+    "studentGrade" : ""
+  } ]
+}

@@ -185,6 +185,108 @@ Classes used by multiple components are in the `seedu.modulight.commons` package
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Student
+The `addStu` function allows the user to add a new student to the database. ModuLight maintains a `UniqueStudentList` 
+to make sure that there is no duplicates. 
+The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
+
+The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+
+The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
+![AddStudentCommand](diagrams/AddStudent.png)
+
+### Edit Student
+The `editStu` function allows the user to edit the information of the student indicated by index. 
+The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
+All student scores related to this `Student` will be updated as well.
+
+The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). 
+
+The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
+![AddStudentCommand](diagrams/EditStudent.png)
+
+### Find Student
+The `findStu` function allows the user to find the student that matches the given search criteria.
+
+It displays both the matching students and relevant student scores that belongs to the student.
+All graded components are displayed since they are considered relevant to the student.
+
+To find the wanted student, a `StudentMatchPredicate` is created to test whether a student matches the search keywords. A `ScoreMatchPredicate` is created from the `StudentMatchPredicate` to test whether the score belongs to the matched student.
+
+This only changes the displayed list of students and student scores, stored as `filteredStudentList` and `filteredStudentScoreList` in `Model`, without affecting the data stored in ModuLight.
+
+The following sequence diagram illustrates the process of execution of an `FindStudentCommand`.
+
+![AddStudentCommand](diagrams/FindStudent.png)
+
+### Sort Commands
+
+The Sort related features allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
+
+We will discuss the implementation of `sortScore` (Sort Student Scores) command here and omit the discussion of the implementation of `sortStu` command since it is very similar to `sortScore` command and simpler.
+
+#### Implementation
+
+The `sortScore` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentScoreBook.sortStudentScore(Boolean isReverse)` - Filters the student scores with the given graded component and sort them according to the given reverse order.
+* `studentBook.sortStudentScore(GcName gcName, Boolean isReverse)` - Sorts students by their scores in a given graded component.
+
+Given below is an example usage scenario and how the `sortScore` mechanism behaves at each step.
+
+Step 1. The GUI displayed the list of students and their student scores that the user wants to sort after some `find` or `list` commands.
+
+Step 2. The user executes `sortStuScore c/Midterm` command to sort the current displayed lists of students and student scores. The `sortStuScore` command calls SortStudentScoreCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 3. `SortStudentScoreCommandParser#parse()` invokes the creation of a `SortStudentScoreCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `SortStudentScoreCommand` object, an error message will be displayed and user will retype their command.
+
+Step 4. Upon creation and execution of `SortStudentScoreCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentScoreBook.sortStudentScore(Boolean isReverse)` and `studentBook.sortStudentScore(GcName gcName, Boolean isReverse)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so the students and student scores will not be sorted.
+
+Step 5. After successfully sorting student scores and their associated students, a `CommandResult` object will be created to tell the user that the student scores has been successfully sorted.
+
+The following sequence diagram shows how the sort student scores operation works:<br>
+
+<puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new `sortScore` command：<br>
+<puml src="diagrams/SortScoreActivityDiagram.puml" alt="SortScoreActivityDiagram" />
+
+### Stats Commands
+
+The Stats related features allows NUS professors to calculate the statistics of student scores effectively. When successfully executed, the relevant statistics will be shown in the result display box of Graphical User Interface. <br>
+
+We will discuss the implementation of `compStats` (calculate the statistics for a specific graded component) command here and omit the discussion of the implementation of `stats` command since it is very similar to `compStats` command and simpler.
+
+#### Implementation
+
+The `compStats` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentBook.getStudentList()` - Returns the stored list of students.
+* `compStatsCommand.generateOverallStatsSummary(List<Student> students)` - Returns a string represented all the relevant statistics.
+* `statsCalculator` - A class that helps calculate different types of statistical measures.
+
+Given below is an example usage scenario and how the `compStats` mechanism behaves at each step.
+
+Step 1. The user executes `compStats c/Midterm` command to calculate the statistics of student scores of Midterm. The `compStats` command calls CompStatsCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 2. `CompStatsCommandParser#parse()` invokes the creation of a `CompStatsCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `CompStatsCommand` object, an error message will be displayed and user will retype their command.
+
+Step 4. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so statistics will not be calculated and displayed.
+
+Step 5. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
+
+The following sequence diagram shows how the `compStats` operation works:<br>
+
+<puml src="diagrams/CompStatsCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new `compStats` command：<br>
+<puml src="diagrams/CompStatsActivityDiagram.puml" alt="CompStatsActivityDiagram" />
 
 ### Auto-grading
 
@@ -210,6 +312,7 @@ There are 2 possible method of grading:
 
 
 Given below is an example usage scenario and how the auto-grading mechanism for percentile calculation behaves at each step.
+
 
 Step 1. The user launch the application for the first time.
 
@@ -406,7 +509,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | NUS professor | sort student scores with specific order                                                                                         | find the top students with their associated scores easily                                                      |
 | `* *`    | NUS professor | automatically grade students based on their total score, the grading method I want to use, and the passing value for each grade | significantly reduce the time needed to grade the students and avoid manually grading each student.            |
 | `*`      | NUS professor | toggle between dark and light mode                                                                                              | have a pleasant user experience.                                                                               |
-*{More to be added}*
+
 
 ### Use cases
 
@@ -669,22 +772,83 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Adding a student
+1. Adding a student to Modulight
+   1. Test case: `addStu n/John Doe s/A1234567Y e/john@gmail.com g/T07`
+      Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
+      Otherwise, a new student with name `John Doe`, student id `A1234567Y`, email `john@gmail.com` and tutorial group `T07` will be created and displayed in the student list.
+      If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
+
+   1. Test case: `addStu n/Jane Plain s/A1111111Y e/jane@gmail.com`
+      Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
+      Otherwise, a new student with name `Jane Plain`, student id `A1111111Y`, email `jane@gmail.com` and default tutorial group `T00` will be created and displayed in the student list.
+      If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
+   
+   1. Test case: `addStu n/Amy e/amy@gamil.com`
+      Expected: An error message of Invalid command format will be displayed in the feedback box, as the student id parameter is missing.
+      
+   
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
 
    1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
-   1. Test case: `deleteStu 1`<br>
-      Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+      1. Test case: `deleteStu 1`<br>
+         Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `deleteStu 0`<br>
-      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
+      1. Test case: `deleteStu 0`<br>
+         Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+      1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
+         Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Finding a student
+1. Find a student in ModuLight
+   1. Prerequisite: student list is not empty.
+      1. Test case: `findStu g/T00`
+         Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu`
+         Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
+      2. Test case: `findStu n/John n/Amy`
+         Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      3. Test case: `findStu n/John g/T00`
+         Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+
+### Sorting Students
+1. Sort students in ModuLight
+    1. Prerequisite: displayed student list is not empty.
+       2. Test case: `sortStu`
+          Expected: The displayed students are sorted by their total scores.
+       3. Test case: `sortStu o/n r/t`
+          Expected: The displayed students are sorted by their names in the reverse alphabetical order.
+       4. Test case: `sortStu o/wrongInput`
+          Expected: An error message that states "Invalid command format!" and the correct usage is shown.
+
+### Sorting Student Scores
+1. Sort student scores in ModuLight
+    1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
+       2. Test case: `sortScore c/Midterm`
+          Expected: Only Midterm student scores are shown and they are sorted in the ascending order.
+       3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
+          Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
+
+
+### Calculating Statistics
+1. Calculate overall statistics of students' total scores
+    1. Prerequisite: student list and student score list are not empty and there is at least a valid score in Tut `T01`.
+       1. Test case: `stats`
+          Expected: A message that states  all relevant statistical measures (The exhausitive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
+       2. Test case: `stats st/max st/min`
+          Expected: A message that states the max and min is shown.
+       3. Test case: `stats g/T01`
+          Expected: A message that states all relevant statistical measures of Tut `T01` is shown.
+       4. Test case: `stats st/wrongInput`
+          Expected: An error message that states "Some statistic measures are not supported yet." and all supported statistical measures are shown.
+    2. Prerequisite: student score list is empty
+        1. Test case: `stats`
+           Expected: An error message that state "Please have at least one score fulfilling the condition." is shown.
+
 
 ### Saving data
 

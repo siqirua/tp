@@ -1,0 +1,92 @@
+@startuml
+
+!include style.puml
+skinparam ArrowFontStyle plain
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ModuLightParser" as ModuLightParser LOGIC_COLOR
+participant ":FindStudentCommandParser" as FindStudentCommandParser LOGIC_COLOR
+participant "sp:StudentMatchPredicate" as StudentMatchPredicate LOGIC_COLOR
+participant "scp:ScoreMatchPredicate" as ScoreMatchPredicate LOGIC_COLOR
+participant "d:FindStudentCommand" as FindStudentCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("findStu g/t01")
+activate LogicManager
+
+LogicManager -> ModuLightParser : parseCommand("findStu g/t01")
+activate ModuLightParser
+
+create FindStudentCommandParser
+ModuLightParser -> FindStudentCommandParser
+activate FindStudentCommandParser
+
+FindStudentCommandParser --> ModuLightParser
+deactivate FindStudentCommandParser
+
+ModuLightParser -> FindStudentCommandParser : parse(" g/t01")
+activate FindStudentCommandParser
+
+create StudentMatchPredicate
+FindStudentCommandParser -> StudentMatchPredicate
+activate StudentMatchPredicate
+
+StudentMatchPredicate --> FindStudentCommandParser : sp
+deactivate StudentMatchPredicate
+
+create ScoreMatchPredicate
+FindStudentCommandParser -> ScoreMatchPredicate : ScoreMatchPredicate(sp)
+activate ScoreMatchPredicate
+
+ScoreMatchPredicate --> FindStudentCommandParser : scp
+deactivate ScoreMatchPredicate
+
+create FindStudentCommand
+FindStudentCommandParser -> FindStudentCommand : FindStudentCommand(sp, scp)
+activate FindStudentCommand
+
+FindStudentCommand --> FindStudentCommandParser : d
+deactivate FindStudentCommand
+
+FindStudentCommandParser --> ModuLightParser : d
+deactivate FindStudentCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FindStudentCommandParser -[hidden]-> ModuLightParser
+destroy FindStudentCommandParser
+
+ModuLightParser --> LogicManager : d
+deactivate ModuLightParser
+
+LogicManager -> FindStudentCommand : execute()
+activate FindStudentCommand
+
+FindStudentCommand -> Model :  updateFilteredStudentList(sp)
+activate Model
+
+Model --> FindStudentCommand
+deactivate Model
+
+FindStudentCommand -> Model :  updateFilteredStudentScoreList(scp)
+activate Model
+
+Model --> FindStudentCommand
+deactivate Model
+
+create CommandResult
+FindStudentCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> FindStudentCommand
+deactivate CommandResult
+
+FindStudentCommand --> LogicManager : result
+deactivate FindStudentCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

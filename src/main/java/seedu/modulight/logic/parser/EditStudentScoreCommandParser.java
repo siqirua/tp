@@ -60,6 +60,10 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
             throw new ParseException(e.getMessage());
         }
 
+        if (!editStudentScoreDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditStudentScoreCommand.MESSAGE_NOT_EDITED);
+        }
+
         return new EditStudentScoreCommand(index, editStudentScoreDescriptor, true);
     }
 

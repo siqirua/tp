@@ -48,6 +48,7 @@ public class FindStudentCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        model.updateFilteredGradedComponentList(Model.PREDICATE_SHOW_ALL_GRADED_COMPONENTS);
         model.updateFilteredStudentList(studentPredicate);
         model.updateFilteredStudentScoreList(scorePredicate);
         String feedback = String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
