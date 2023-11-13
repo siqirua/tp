@@ -1046,3 +1046,6 @@ as well, as it is pointless to keep them when they belong to no student.
 
 1. Support special characters in student name parameter as some people's legal name do include some special characters(e.g. "s/o").
 2. Allow the Student List Panel, Student Score List Panel and Graded Component List Panel to automatically scroll down when adding new Student, Student Grade or Graded Component.
+3. Include visualisation of statistics by plotting graphs.
+4. Support more flexible search methods that find the entity of interest despite small inaccuracies(e.g. typo) in the search keyword.
+5. Support storage and display of student photos to help the professors recognise and identify their students.
