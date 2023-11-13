@@ -10,8 +10,7 @@ import static seedu.modulight.commons.util.AppUtil.checkArgument;
 public class Weightage {
 
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Weightage should be >= 0 and <= 100.";
+    public static final String MESSAGE_CONSTRAINTS = "Weightage should be >= 0 and <= 100.";
 
     public final Float weightage;
 

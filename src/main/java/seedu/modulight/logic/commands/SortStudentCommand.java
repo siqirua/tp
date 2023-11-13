@@ -13,7 +13,7 @@ import seedu.modulight.model.student.Student;
 import seedu.modulight.model.student.model.StudentBook;
 
 /**
- * Sorts the student(s) whose student id by the given order.
+ * Sorts the student(s) by the given order.
  */
 public class SortStudentCommand extends Command {
     public static final String COMMAND_WORD = "sortStu";
