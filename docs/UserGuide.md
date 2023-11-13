@@ -11,9 +11,9 @@ pageNav: 3
 _**Min-max your module management!**_
 
 ModuLight is a **desktop app** built for **professors from National University of Singapore from the School of Computing to manage students and 
-assessments** for a single module. This app is ideally designed for professors with at least intermediate technical knowledge,
+assessments** for a single module. This app is ideally designed for professors with intermediate or higher technical knowledge,
 who are comfortable using the Command Line Interface (CLI) and terminal. We also assume that the professors are already familiar with module structures,
-such as the number and weightage of graded components and the number of students and tutorial groups.
+such as the graded components and their weightages and the number of students and tutorial groups.
 
 Here’s an overview of how Modulight can help you to streamline your module management process:
 * Store and edit information about your students and various assessments.
@@ -21,8 +21,7 @@ Here’s an overview of how Modulight can help you to streamline your module man
 * Track qualitative information about your students and assessments using tags and comments.
 
 Furthermore, we believe that module management should be **efficient**. Therefore, Modulight is **optimized for use 
-via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). If you can 
-type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
+via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). For those proficient in typing, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
