@@ -1,0 +1,87 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ModuLightParser" as ModuLightParser LOGIC_COLOR
+participant ":AddGradedComponentCommandParser" as AddGradedComponentCommandParser LOGIC_COLOR
+participant ":AddGradedComponentCommand" as AddGradedComponentCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "gc:GradedComponent" as GradedComponent MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("addComp c/Finals w/50 mm/75")
+activate LogicManager
+
+LogicManager -> ModuLightParser : parseCommand("addComp c/Finals w/50 mm/75")
+activate ModuLightParser
+
+create AddGradedComponentCommandParser
+ModuLightParser -> AddGradedComponentCommandParser
+activate AddGradedComponentCommandParser
+
+AddGradedComponentCommandParser --> ModuLightParser
+deactivate AddGradedComponentCommandParser
+
+ModuLightParser -> AddGradedComponentCommandParser : parse(arguments)
+activate AddGradedComponentCommandParser
+
+create GradedComponent
+AddGradedComponentCommandParser -> GradedComponent : new GradedComponent("Finals", 75, 50)
+activate GradedComponent
+
+GradedComponent --> AddGradedComponentCommandParser : gc
+deactivate GradedComponent
+
+create AddGradedComponentCommand
+AddGradedComponentCommandParser -> AddGradedComponentCommand : new AddGradedComponentCommand(gc)
+activate AddGradedComponentCommand
+
+AddGradedComponentCommand --> AddGradedComponentCommandParser
+deactivate AddGradedComponentCommand
+
+AddGradedComponentCommandParser --> ModuLightParser
+deactivate AddGradedComponentCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddGradedComponentCommandParser -[hidden]-> ModuLightParser
+destroy AddGradedComponentCommandParser
+
+ModuLightParser --> LogicManager
+deactivate ModuLightParser
+
+LogicManager -> AddGradedComponentCommand : execute()
+activate AddGradedComponentCommand
+
+AddGradedComponentCommand -> Model : addGradedComponent(gc)
+activate Model
+
+Model --> AddGradedComponentCommand
+deactivate Model
+
+loop for all students s in the database
+    AddGradedComponentCommand -> Model :addStudentScore(s, gc, 0)
+    activate Model
+
+    Model --> AddGradedComponentCommand
+    deactivate Model
+end
+
+
+create CommandResult
+AddGradedComponentCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddGradedComponentCommand
+deactivate CommandResult
+
+AddGradedComponentCommand --> LogicManager : result
+deactivate AddGradedComponentCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

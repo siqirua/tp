@@ -135,8 +135,9 @@ determine the relative performance of a student for a component. <br> For instan
  * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
 **relative to the sum of all other component weightages**. <br> For example, in a system with only 2 components, if component A has a weightage of 30 and component B has a weightage of 20, then component A represents 20/(20+30) = 60% of the student’s overall score. This changes as components are added or removed.
 <br> Note that the **total weightage of all graded components should not exceed 100**.
- * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
- * If a student or graded component has no associated student scores, the overall score will be listed as 0.
+ 
+ > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+ > * If a student or graded component has no associated student scores, the overall score will be listed as 0.
 
 </box>
 
