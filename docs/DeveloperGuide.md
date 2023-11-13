@@ -593,11 +593,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 * 1a. There is some error in the entered data.
+  
   * 1a1. ModuLight shows an error message. <br>
   
     Use case ends.
 
 * 2a. There are already some existing graded components.
+  
   * 2a1. ModuLight creates student scores correspond to the new student for every graded component.
     
      Use case ends.
@@ -624,12 +626,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. ModuLight shows an error message.
 
       Use case resumes at step 2.
+
 * 3b. The given parameter is of invalid format
-   *  3b1. ModuLight shows an error message.
+   
+   * 3b1. ModuLight shows an error message.
   
       Use case resumes at step 2.
+
 * 3c. The edited student number already exists.
-   *  3c1. ModuLight shows an error message.
+   
+   * 3c1. ModuLight shows an error message.
  
       Use case resumes at step 2.
 
@@ -660,6 +666,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3b. The selected student has some associated student scores.
     * 3b1. ModuLight deletes all associated students scores.
     * 3b2. ModuLight shows a list of updated student scores.<br>
+      
       Use case resumes at step 4.
 
 
@@ -676,11 +683,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. There is some error in the entered data.
+  
     * 1a1. ModuLight shows an error message.
       
       Use case ends.
 
 * 2a. There are already some existing students.
+  
     * 2a1. ModuLight creates student scores correspond to the new graded component for every student.
     
       Use case ends.
@@ -769,8 +778,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. ModuLight shows an error message.
 
       Use case ends.
+
 * 1b. There are no keywords given
     * 1b1. ModuLight shows all students, scores and graded components.
+      
       Use case ends.
 
 **Use case: Sort student(s)**
@@ -929,16 +940,16 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: student list is not empty.
    
-         2. Test case: `findStu g/T00`
-            Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu g/T00`
+         Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
          
-         3. Test case: `findStu`
+         2. Test case: `findStu`
             Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
          
-         4. Test case: `findStu n/John n/Amy`
+         3. Test case: `findStu n/John n/Amy`
             Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
          
-         5. Test case: `findStu n/John g/T00`
+         4. Test case: `findStu n/John g/T00`
             Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
       
 
