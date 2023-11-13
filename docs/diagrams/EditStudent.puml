@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/activity-diagram
+
+start
+if () then ([else])
+if () then ([else])
+    :Retrieve student to edit;
+    :Create edited student;
+    if () then ([else])
+        :Replace student to edit with edited student in the student book;
+        if () then ([else])
+        else ([there are score related to the student])
+        :Edit all scores related to the student;
+        endif
+        : Display acknowledge message to user with information of edited student;
+    else ([edited student already exists in student book])
+        :Throw CommandException;
+    endif
+else (given student parameters are invalid)
+    :Throw ParseException;
+endif
+else (given index is invalid or out of range)
+    :Throw ParseException;
+endif
+
+stop
+
+@enduml
