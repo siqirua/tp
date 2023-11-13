@@ -25,6 +25,7 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
+  * **[How to use this guide](#how-to-use-this-guide)**
   * **[Quick Start](#quick-start)**
   * **[Parameter Information](#parameter-information)**
   * **[Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui)**
@@ -35,6 +36,25 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
   * **[Glossary](#glossary)**
 
 --------------------------------------------------------------------------------------------------------------------
+
+## How to use this guide
+1. For the first time users we recommend to:
+
+   * Start with the [Quick start](#quick-start) to download, setup and run the program.
+   
+   * Go through [Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui) 
+     section to understand the different components of the GUI of the program.
+   
+   * Go through the [Command Format](#command-format) to get an idea of the correct way to understand and input the 
+     commands.
+   
+2. For regular users:
+
+   * We have provided a [command summary](#command-summary) for you to check all the available features.
+   
+   * More detailed explanation of the features can be found under the [Features](#features) section.
+   * An overview of all the parameters used in the commands along with their constraints and such  can be found 
+     under the [Parameter Information](#parameter-information) section.
 
 ## Quick start
 
