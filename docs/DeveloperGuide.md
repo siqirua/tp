@@ -187,13 +187,13 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Sort Commands
 
-The Sort related feature allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
+The Sort related features allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
 
-We will discuss the implementation of sortScore (Sort Student Scores) command here and omit the discussion of the implementation of sortStu command since it is very similar to sortScore command and simpler.
+We will discuss the implementation of `sortScore` (Sort Student Scores) command here and omit the discussion of the implementation of `sortStu` command since it is very similar to `sortScore` command and simpler.
 
 #### Implementation
 
-The `sortScoreCommand` (Sort Student Scores) mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+The `sortScore` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
 
 * `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
 * `studentScoreBook.sortStudentScore(Boolean isReverse)` - Filters the student scores with the given graded component and sort them according to the given reverse order.
@@ -217,8 +217,42 @@ The following sequence diagram shows how the sort student scores operation works
 
 <puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
-The following activity diagram summarizes what happens when a user executes a new sortScore command：<br>
-<puml src="diagrams/SortScoreCommandActivityDiagram.puml" alt="SortScoreActivityDiagram" />
+The following activity diagram summarizes what happens when a user executes a new `sortScore` command：<br>
+<puml src="diagrams/SortScoreActivityDiagram.puml" alt="SortScoreActivityDiagram" />
+
+### Stats Commands
+
+The Stats related features allows NUS professors to calculate the statistics of student scores effectively. When successfully executed, the relevant statistics will be shown in the result display box of Graphical User Interface. <br>
+
+We will discuss the implementation of `compStats` (calculate the statistics for a specific graded component) command here and omit the discussion of the implementation of `stats` command since it is very similar to `compStats` command and simpler.
+
+#### Implementation
+
+The `compStats` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentBook.getStudentList()` - Returns the stored list of students.
+* `compStatsCommand.generateOverallStatsSummary(List<Student> students)` - Returns a string represented all the relevant statistics.
+* `statsCalculator` - A class that helps calculate different types of statistical measures.
+
+Given below is an example usage scenario and how the `compStats` mechanism behaves at each step.
+
+Step 1. The user executes `compStats c/Midterm` command to calculate the statistics of student scores of Midterm. The `compStats` command calls CompStatsCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 2. `CompStatsCommandParser#parse()` invokes the creation of a `CompStatsCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `CompStatsCommand` object, an error message will be displayed and user will retype their command.
+
+Step 4. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so statistics will not be calculated and displayed.
+
+Step 5. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
+
+The following sequence diagram shows how the `compStats` operation works:<br>
+
+<puml src="diagrams/CompStatsCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new `compStats` command：<br>
+<puml src="diagrams/CompStatsActivityDiagram.puml" alt="CompStatsActivityDiagram" />
 
 ### Auto-grading
 
