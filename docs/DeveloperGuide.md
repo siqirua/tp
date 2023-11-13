@@ -718,28 +718,60 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
-   1. Test case: `deleteStu 1`<br>
-      Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+      1. Test case: `deleteStu 1`<br>
+         Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `deleteStu 0`<br>
-      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
+      1. Test case: `deleteStu 0`<br>
+         Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
+      1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
+         Expected: Similar to previous.
 
 ### Finding a student
 1. Find a student in ModuLight
    1. Prerequisite: student list is not empty.
-   1. Test case: `findStu g/T00`
-      Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   1. Test case: `findStu`
-      Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
-   2. Test case: `findStu n/John n/Amy`
-      Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   3. Test case: `findStu n/John g/T00`
-      Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu g/T00`
+         Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu`
+         Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
+      2. Test case: `findStu n/John n/Amy`
+         Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      3. Test case: `findStu n/John g/T00`
+         Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+
+### Sorting Students
+1. Sort students in ModuLight
+    1. Prerequisite: displayed student list is not empty.
+       2. Test case: `sortStu`
+          Expected: The displayed students are sorted by their total scores.
+       3. Test case: `sortStu o/n r/t`
+          Expected: The displayed students are sorted by their names in the reverse alphabetical order.
+       4. Test case: `sortStu o/wrongInput`
+          Expected: An error message that states "Invalid command format!" and the correct usage is shown.
+
+### Sorting Student Scores
+1. Sort student scores in ModuLight
+    1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
+       2. Test case: `sortScore c/Midterm`
+          Expected: Only Midterm student scores are shown and they are sorted in the ascending order.
+       3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
+          Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
+
+
+### Calculating Statistics
+1. Calculate overall statistics of students' total scores
+    1. Prerequisite: student list and student score list are not empty and there is at least a valid score in Tut `T01`.
+       1. Test case: `stats`
+          Expected: A message that states  all relevant statistical measures (The exhausitive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
+       2. Test case: `stats st/max st/min`
+          Expected: A message that states the max and min is shown.
+       3. Test case: `stats g/T01`
+          Expected: A message that states all relevant statistical measures of Tut `T01` is shown.
+       4. Test case: `stats st/wrongInput`
+          Expected: An error message that states "Some statistic measures are not supported yet." and all supported statistical measures are shown.
+    2. Prerequisite: student score list is empty
+        1. Test case: `stats`
+           Expected: An error message that state "Please have at least one score fulfilling the condition." is shown.
 
 
 ### Saving data
