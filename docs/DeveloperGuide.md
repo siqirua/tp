@@ -252,7 +252,7 @@ The following sequence diagram shows how the sort student scores operation works
 <puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
 The following activity diagram summarizes what happens when a user executes a new `sortScore` command：<br>
-<puml src="diagrams/SortScoreActivityDiagram.puml" alt="SortScoreActivityDiagram" />
+<puml src="diagrams/SortScoreAcitivityDiagram.puml" alt="SortScoreActivityDiagram" />
 
 ### Stats Commands
 
@@ -276,17 +276,17 @@ Step 1. The user executes `compStats c/Midterm` command to calculate the statist
 Step 2. `CompStatsCommandParser#parse()` invokes the creation of a `CompStatsCommand` object.
 > **Note**: If a command fails its execution due to incorrect command format, it will not create a `CompStatsCommand` object, an error message will be displayed and user will retype their command.
 
-Step 4. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
+Step 3. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
 > **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so statistics will not be calculated and displayed.
 
-Step 5. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
+Step 4. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
 
 The following sequence diagram shows how the `compStats` operation works:<br>
 
 <puml src="diagrams/CompStatsCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
 The following activity diagram summarizes what happens when a user executes a new `compStats` command：<br>
-<puml src="diagrams/CompStatsActivityDiagram.puml" alt="CompStatsActivityDiagram" />
+<puml src="diagrams/CompStatsAcitivityDiagram.puml" alt="CompStatsActivityDiagram" />
 
 ### Auto-grading
 
