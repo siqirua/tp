@@ -1,0 +1,25 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor STORAGE_COLOR
+skinparam classBackgroundColor STORAGE_COLOR
+
+package Storage as StoragePackage {
+
+package "GradedComponentBook Storage" #F4F6F6{
+Class "<<interface>>\nGradedComponentBookStorage" as GradedComponentBookStorage
+Class JsonGradedComponentBookStorage
+Class JsonSerializableGcBook
+Class JsonAdaptedGradedComponent
+}
+
+}
+Class HiddenOutside #FFFFFF
+Class I #FFFFFF
+
+HiddenOutside -right-> "1" GradedComponentBookStorage
+I -right-|>  GradedComponentBookStorage
+JsonGradedComponentBookStorage .up.|> GradedComponentBookStorage
+JsonGradedComponentBookStorage ..> JsonSerializableGcBook
+JsonSerializableGcBook --> "*" JsonAdaptedGradedComponent
+@enduml

@@ -6,7 +6,7 @@ pageNav: 3
 
 # ModuLight Developer Guide
 
-<!-- * Table of Contents -->
+--------------------------------------------------------------------------------------------------------------------
 * Table of Contents
     * **[Acknowledgements](#acknowledgements)**
     * **[Setting up, getting started](#setting-up-getting-started)**
@@ -15,6 +15,7 @@ pageNav: 3
     * **[Others](#documentation-logging-testing-configuration-dev-ops)**
     * **[Appendix: Requirements](#appendix-requirements)**
     * **[Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)**
+    * **[Appendix: Planned enhancements](#appendix-planned-enhancements)**
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -79,9 +80,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`,
-`GradedComponentListPanel`, `StudentScoreListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`,
-inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts 
-of the visible GUI.
+`GradedComponentListPanel`, `StudentScoreListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -111,12 +110,12 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteStudentCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteStudentCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a student).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+1. When `Logic` is called upon to execute a command, it is passed to an `ModuLightParser` object which in turn creates a parser that matches the command (e.g., `DeleteStudentCommandParser`) and uses it to parse the command.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteStudentCommand`) which is executed by the `LogicManager`.
+3. The command can communicate with the `Model` when it is executed (e.g. to delete a student).
+4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-**Note:** There are three different model objects, namely the StudentBook, the StudentScore Book and the GradedComponentBook.
+**Note:** There are three different model objects, namely the StudentBook, the StudentScoreBook and the GradedComponentBook.
 The command might interact with one or more model objects. For example, when a student is deleted, the command will communicate 
 with the StudentBook to delete this student, as well as the StudentScoreBook, to delete all the student scores relevant to this student.
 
@@ -125,7 +124,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `ModuLightParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `ModuLightParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddStudentCommandParser`, `DeleteStudentCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
@@ -133,17 +132,23 @@ How the parsing works:
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
+Note that Student, StudentGrade and GradeComponent classes have similar structures and dependencies, thus, we use Ssc class to represent these three and their related classes in the class diagram above.
+
+Here are the class diagrams for Ssc (Student, StudentGrade, GradedComponent) classes respectively.
+<puml src="diagrams/StudentModelDiagram.puml" width="450" />
+<puml src="diagrams/StudentScoreModelDiagram.puml" width="300" />
+<puml src="diagrams/GradedComponentModelDiagram.puml" width="300" />
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the ModuLight data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object), all `StudentScore` objects (which are contained in a `UniqueStudentScoreList` object) and all `GradedComponent` objects (which are contained in a `UniqueGradedComponentList` object).
+* stores the currently 'selected' `Student`, `StudentScore` and `GradedComponent` objects (e.g., results of a search query) as separate _filtered_ lists respectively which are exposed to outsiders as unmodifiable `ObservableList<Student>`, `ObservableList<StudentScore>` and `ObservableList<GradedComponent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** For student and student score, an alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `Student`, which `Student` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -154,18 +159,25 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" />
+
+Here are the complete class diagrams of StudentBook Storage, StudentScoreBook Storage and GradedComponentBook Storage.
+
+<puml src="diagrams/StudentAndScoreBookStorage.puml" />
+
+
+<puml src="diagrams/GradedComponentBookStorage.puml" />
+
 
 The `Storage` component,
 * can save student data, student score data, graded component data and user preference data in JSON format, and read 
   them back into the corresponding objects.  
-* inherits from `StudentBookStorage`, `GradedComponentBookStorage`, `StudentScoreBookStorage` and `UserPrefsStorage`,
-  which means it can be treated as any of the one (if only the functionality of only one is needed).
+* inherits from `StudentBookStorage`, `GradedComponentBookStorage`, `StudentScoreBookStorage` and `UserPrefsStorage`, which means it can be treated as any of the one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.modulight.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -173,100 +185,8 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
 
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how the undo operation works:
-
-<puml src="diagrams/UndoSequenceDiagram.puml" alt="UndoSequenceDiagram" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-### \[Proposed\] Auto-grading 
+### Auto-grading
 
 #### Proposed Implementation
 
@@ -274,17 +194,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
 
-Step 1. The user launch the application for the first time. 
+Step 1. The user launch the application for the first time.
 
 Step 2. The user creates the desired graded components and adds all the students in the cohort.
 
-Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile' 
+Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile'
 keyword indicates that ModuLight grades based on the students' percentile compared to another. The value after `pg/` indicates
-the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`. 
+the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`.
 
 <box type="info" seamless>
 
-**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score. 
+**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score.
 
 </box>
 
@@ -300,12 +220,101 @@ total score. ModuLight will then execute `editStudentCommand` on every student t
 **Aspect: How the assignments of grade works:**
 
 * **Alternative 1 (Current choice):** Use tags to assign the grade
-  * Pros: Easy to implement.
-  * Cons: Not ideal if we want to extend the code for more features.
+    * Pros: Easy to implement.
+    * Cons: Not ideal if we want to extend the code for more features.
 * **Alternative 2:** Create new Grade object for each student.
-  * Pros: Cleaner and extendable code implementation.
-  * Cons: require change of implementation on multiple classes.
+    * Pros: Cleaner and extendable code implementation.
+    * Cons: require change of implementation on multiple classes.
 
+
+
+### \[Proposed\] Undo/redo feature
+
+#### Proposed Implementation
+
+Since `Student`, `StudentGrade` and `GradedComponent` have similar dependencies and behavior, we will use `Ssc` to refer these three classes and their related classes in the following discussion. In other words, `VersionedSscBook` means `VersionedStudentBook`, `VersionedStudentScoreBook` and `VersionedGradedComponentBook`.
+The proposed undo/redo mechanism is facilitated by `VersionedSscBook`. It extends `SscBook` with an undo/redo history, stored internally as an `sscStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+
+* `VersionedSscBook#commit()` — Saves the current ssc book state in its history.
+* `VersionedSscBook#undo()` — Restores the previous ssc book state from its history.
+* `VersionedSscBook#redo()` — Restores a previously undone ssc book state from its history.
+
+These operations are exposed in the `Model` interface as `Model#commitSscBook()`, `Model#undoSscBook()` and `Model#redoSscBook()` respectively.
+
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `VersionedSscBook` will be initialized with the initial Ssc book state, and the `currentStatePointer` pointing to that single Ssc book state.
+
+<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
+
+Step 2. The user executes `deleteStu 5` command to delete the 5th student in the Ssc book. The `deleteStu` command calls `Model#commitSscBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `SscBookStateList`, and the `currentStatePointer` is shifted to the newly inserted Ssc book state.
+
+<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
+
+Step 3. The user executes `addStu n/David …​` to add a new person. The `addStu` command also calls `Model#commitSscBook()`, causing another modified address book state to be saved into the `sscBookStateList`.
+
+<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
+
+<box type="info" seamless>
+
+**Note:** If a command fails its execution, it will not call `Model#commitSscBook()`, so the ssc book state will not be saved into the `sscBookStateList`.
+
+</box>
+
+Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoSscBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous ssc book state, and restores the ssc book to that state.
+
+<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
+
+
+<box type="info" seamless>
+
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial SscBook state, then there are no previous SscBook states to restore. The `undo` command uses `Model#canUndoSscBook()` to check if this is the case. If so, it will return an error to the user rather
+than attempting to perform the undo.
+
+</box>
+
+The following sequence diagram shows how the undo operation works:
+
+<puml src="diagrams/UndoSequenceDiagram.puml" alt="UndoSequenceDiagram" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</box>
+
+The `redo` command does the opposite — it calls `Model#redoSscBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the ssc book to that state.
+
+<box type="info" seamless>
+
+**Note:** If the `currentStatePointer` is at index `sscBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone SscBook states to restore. The `redo` command uses `Model#canRedoSscBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+</box>
+
+Step 5. The user then decides to execute the command `listAll`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitSscBook()`, `Model#undoSscBook()` or `Model#redoSscBook()`. Thus, the `sscBookStateList` remains unchanged.
+
+<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
+
+Step 6. The user executes `clearAll`, which calls `Model#commitSscBook()`. Since the `currentStatePointer` is not pointing at the end of the `sscBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+
+<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+
+#### Design considerations:
+
+**Aspect: How undo & redo executes:**
+
+* **Alternative 1 (current choice):** Saves the entire ssc book.
+  * Pros: Easy to implement.
+  * Cons: May have performance issues in terms of memory usage.
+
+* **Alternative 2:** Individual command knows how to undo/redo by
+  itself.
+  * Pros: Will use less memory (e.g. for `deleteStu`, just save the student being deleted).
+  * Cons: We must ensure that the implementation of each individual command are correct.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -462,13 +471,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to list student scores.
-2.  ModuLight shows a list of student scores.
-3.  User requests to edit the details of a specific student score.
-4.  ModuLight updates the detail of that student score with entered data.
-5.  ModuLight shows a list of updated student scores.
-    
-    Use case ends.
+1. User requests to list student scores.
+2. ModuLight shows a list of student scores.
+3. User requests to edit the details of a specific student score.
+4. ModuLight updates the detail of that student score with entered data.
+5. ModuLight shows a list of updated student scores.
+
+   Use case ends.
 
 **Extensions**
 
@@ -483,9 +492,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 * 3b. There is some error in the entered data.
-  
-  * 3b1. ModuLight shows an error message.
-    
+
+    * 3b1. ModuLight shows an error message.
+
   Use case resumes at step 2.
 
 **Use case: Find student(s)**
@@ -541,9 +550,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2. Should be able to hold up to 1000 students, 10000 student scores and 10 graded components without a noticeable sluggishness in performance for typical usage. 
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4. Should respond to user requests within 2 seconds. 
+2. Should be able to hold up to 1000 students, 10000 student scores and 10 graded components without a noticeable
+   sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+4. Should respond to user requests within 2 seconds.
 5. The user interface shall be intuitive and user-friendly.
 6. Should allow edit only by authorized users.
 7. Should not take more than 128MB memory while in operation.
@@ -603,11 +614,29 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Editing the data file manually.
+1. Dealing with missing files
 
-   1. Open `studentBook.json`, `scoreBook.json` or `gradedComponentBook.json`.
-   2. Edit the field of any student, student score or graded component in the file. 
-   3. Run the program.
-      Expected: The edited field for the particular student, student score or graded component will be updated.
+   1. Delete all three json files `studentBook.json`, `gradedComponentBook.json`, `scoreBook.json`.
+   
+   2. Run the program. <br>
+      Expected: The program will load with the original sample data just like it was run for the first time.
 
-1. _{ more test cases …​ }_
+1. Dealing with corrupted files
+
+    1. Open `studentBook.json`.
+
+    2. Edit any "studentName" field and input "R@chel".
+
+    3. Run the program. <br>
+       Expected: The program will load with completely empty data instead of edited data.
+
+    4. Other ways to corrupt the files are to change "tutorialGroup" to "AAA", "gcName" (in `gradedComponentBook.
+       json`) to "@Quiz", ...
+
+    5. Run the program. <br>
+       Expected: Similar to previous.
+
+## **Appendix: Planned Enhancements**
+
+1. Support special characters in student name parameter as some people's legal name do include some special characters(e.g. "s/o").
+2. Allow the Student List Panel, Student Score List Panel and Graded Component List Panel to automatically scroll down when adding new Student, Student Grade or Graded Component.

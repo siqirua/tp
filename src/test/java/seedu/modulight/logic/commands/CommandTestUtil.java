@@ -119,6 +119,11 @@ public class CommandTestUtil {
         try {
             CommandResult result = command.execute(actualModel);
             assertEquals(expectedResult, result);
+            System.out.println(result.getFeedbackToUser());
+            System.out.println(expectedResult.getFeedbackToUser());
+            System.out.println(actualModel.getFilteredStudentScoreList().size());
+            System.out.println(expectedModel.getFilteredStudentScoreList().size());
+
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command in positive test cases should not fail.", ce);
