@@ -137,7 +137,7 @@ How the parsing works:
 Note that Student, StudentGrade and GradeComponent classes have similar structures and dependencies, thus, we use Ssc class to represent these three and their related classes in the class diagram above.
 
 Here are the class diagrams for Ssc (Student, StudentGrade, GradedComponent) classes respectively.
-<puml src="diagrams/StudentModelDiagram.puml" width="450" />
+<puml src="diagrams/StudentModelDiagram.puml" width="450" /> <br>
 <puml src="diagrams/StudentScoreModelDiagram.puml" width="300" />
 <puml src="diagrams/GradedComponentModelDiagram.puml" width="300" />
 

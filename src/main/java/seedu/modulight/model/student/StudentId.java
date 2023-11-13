@@ -59,5 +59,4 @@ public class StudentId {
     public int hashCode() {
         return sid.hashCode();
     }
-
 }

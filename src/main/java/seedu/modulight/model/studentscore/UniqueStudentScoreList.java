@@ -113,15 +113,13 @@ public class UniqueStudentScoreList implements Iterable<StudentScore> {
      * Sorts the score list based on the performance.
      */
     public void sortScore(boolean reverse) {
-        internalList.sort(new Comparator<StudentScore>() {
-            public int compare(StudentScore s1, StudentScore s2) {
-                Float s1Value = s1.getScore();
-                Float s2Value = s2.getScore();
-                if (!reverse) {
-                    return s1Value.compareTo(s2Value);
-                } else {
-                    return s2Value.compareTo(s1Value);
-                }
+        internalList.sort((s1, s2) -> {
+            Float s1Value = s1.getScore();
+            Float s2Value = s2.getScore();
+            if (!reverse) {
+                return s1Value.compareTo(s2Value);
+            } else {
+                return s2Value.compareTo(s1Value);
             }
         });
     }

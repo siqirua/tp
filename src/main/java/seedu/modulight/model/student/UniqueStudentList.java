@@ -98,42 +98,39 @@ public class UniqueStudentList implements Iterable<Student> {
      * Sorts the Student list.
      */
     public void sort(String order, boolean reverse) {
-        internalList.sort(new Comparator<Student>() {
-            @Override
-            public int compare(Student s1, Student s2) {
-                String s1Value;
-                String s2Value;
+        internalList.sort((s1, s2) -> {
+            String s1Value;
+            String s2Value;
 
-                Float s1TotalScore = s1.getTotalScore();
-                Float s2TotalScore = s2.getTotalScore();
-                switch (order) {
-                case "s":
-                    s1Value = s1.getStudentId().toString();
-                    s2Value = s2.getStudentId().toString();
-                    break;
-                case "n":
-                    s1Value = s1.getName().toString();
-                    s2Value = s2.getName().toString();
-                    break;
-                case "e":
-                    s1Value = s1.getEmail().toString();
-                    s2Value = s2.getEmail().toString();
-                    break;
-                case "g":
-                    s1Value = s1.getTutorial().toString();
-                    s2Value = s2.getTutorial().toString();
-                    break;
-                default:
-                    s1Value = s1.getStudentId().toString();
-                    s2Value = s2.getStudentId().toString();
-                }
-
-                if (order.equals("o")) {
-                    return (!reverse ? 1 : -1) * s1TotalScore.compareTo(s2TotalScore);
-                }
-
-                return (!reverse ? 1 : -1) * s1Value.compareTo(s2Value);
+            Float s1TotalScore = s1.getTotalScore();
+            Float s2TotalScore = s2.getTotalScore();
+            switch (order) {
+            case "s":
+                s1Value = s1.getStudentId().toString();
+                s2Value = s2.getStudentId().toString();
+                break;
+            case "n":
+                s1Value = s1.getName().toString();
+                s2Value = s2.getName().toString();
+                break;
+            case "e":
+                s1Value = s1.getEmail().toString();
+                s2Value = s2.getEmail().toString();
+                break;
+            case "g":
+                s1Value = s1.getTutorial().toString();
+                s2Value = s2.getTutorial().toString();
+                break;
+            default:
+                s1Value = s1.getStudentId().toString();
+                s2Value = s2.getStudentId().toString();
             }
+
+            if (order.equals("o")) {
+                return (!reverse ? 1 : -1) * s1TotalScore.compareTo(s2TotalScore);
+            }
+
+            return (!reverse ? 1 : -1) * s1Value.compareTo(s2Value);
         });
     }
 
@@ -141,34 +138,32 @@ public class UniqueStudentList implements Iterable<Student> {
      * Sorts the Student list based on the performance in a graded component.
      */
     public void sortScore(GcName gcName, boolean reverse) {
-        internalList.sort(new Comparator<Student>() {
-            public int compare(Student s1, Student s2) {
-                List<Float> s1MatchingValue = s1.getScores().stream()
-                        .filter(studentScore -> studentScore.getGcName().equals(gcName))
-                        .map(StudentScore::getScore).collect(Collectors.toList());
-                List<Float> s2MatchingValue = s2.getScores().stream()
-                        .filter(studentScore -> studentScore.getGcName().equals(gcName))
-                        .map(StudentScore::getScore).collect(Collectors.toList());
-                if (s1MatchingValue.size() > 1) {
-                    DuplicateScoresException exc = new DuplicateScoresException(gcName, s1);
-                    throw new RuntimeException(exc.getMessage(), exc);
-                } else if (s2MatchingValue.size() > 1) {
-                    DuplicateScoresException exc = new DuplicateScoresException(gcName, s2);
-                    throw new RuntimeException(exc.getMessage(), exc);
-                }
-                Float s1Value = 0F;
-                Float s2Value = 0F;
-                if (s1MatchingValue.size() == 1) {
-                    s1Value = s1MatchingValue.get(0);
-                }
-                if (s2MatchingValue.size() == 1) {
-                    s2Value = s2MatchingValue.get(0);
-                }
-                if (!reverse) {
-                    return s1Value.compareTo(s2Value);
-                } else {
-                    return s2Value.compareTo(s1Value);
-                }
+        internalList.sort((s1, s2) -> {
+            List<Float> s1MatchingValue = s1.getScores().stream()
+                    .filter(studentScore -> studentScore.getGcName().equals(gcName))
+                    .map(StudentScore::getScore).collect(Collectors.toList());
+            List<Float> s2MatchingValue = s2.getScores().stream()
+                    .filter(studentScore -> studentScore.getGcName().equals(gcName))
+                    .map(StudentScore::getScore).collect(Collectors.toList());
+            if (s1MatchingValue.size() > 1) {
+                DuplicateScoresException exc = new DuplicateScoresException(gcName, s1);
+                throw new RuntimeException(exc.getMessage(), exc);
+            } else if (s2MatchingValue.size() > 1) {
+                DuplicateScoresException exc = new DuplicateScoresException(gcName, s2);
+                throw new RuntimeException(exc.getMessage(), exc);
+            }
+            Float s1Value = 0F;
+            Float s2Value = 0F;
+            if (s1MatchingValue.size() == 1) {
+                s1Value = s1MatchingValue.get(0);
+            }
+            if (s2MatchingValue.size() == 1) {
+                s2Value = s2MatchingValue.get(0);
+            }
+            if (!reverse) {
+                return s1Value.compareTo(s2Value);
+            } else {
+                return s2Value.compareTo(s1Value);
             }
         });
     }
