@@ -5,6 +5,7 @@ title: "Yufei Sun's Project Portfolio Page"
 
 ### Project: ModuLight
 
+ModuLight is a desktop application that uses Command Lined Interface(CLI) to manage student, scores and graded components. 
 
 * **New Feature**: `addStu` - Add a student to the database
     * **What it does**: Adds a student to the database. An empty score of the student will be added to all existing 
@@ -18,13 +19,11 @@ title: "Yufei Sun's Project Portfolio Page"
 * **New Feature**: `editStu` - edit the student information
     * **What it does**: Edit a student's name, student id, email, tutorial group or tag, as indicated by the index. All student scores related to this student wil be updated as well.
     * **Justification**: There might be changes to a student's information.
-    * **Highlights**: Implementing this feature requires a good understanding of the project model. Since a student score is related to a student, it has to be updated when the student is edited.
 
 
 * **New Feature**: `deleteStu` - delete a student and related student scores from the database
     * **What it does**: Delete a student as all related student scores as indicated by the index.
     * **Justification**: A student can drop the module.
-    * **Highlights**: Implementing this feature requires a good understanding of the project model. Since a student score is related to a student, it should be removed when the student no longer exists.
 
 
 * **New Feature**: `findStu` - find a student based on the keywords
@@ -40,14 +39,12 @@ title: "Yufei Sun's Project Portfolio Page"
       The student and graded component list will be emptied.
     * **Justification**: A student score is related to one graded component and one student, thus it can ab found by keywords of both classes. 
   We assume that the user is only interested in the particular student scores when using this command. If they are interested in the students and graded components as well, findStu or findComp should be used instead.
-    * **Highlights**: Implementing this feature requires a good design of the algorithm and understanding or the project models to show the correct student scores.
 
 
 * **New Feature**: `findComp` - find a graded component based on the keywords
     * **What it does**:  Find a graded component in the database based on component name. All students are displayed as they are all relevant.
       All student scores related to the component will be displayed as well.
     * **Justification**: Since student score is related to students, they are also displayed so that the user does not need rto do another search for them.
-    * **Highlights**: Implementing this feature requires a good design of the algorithm and understanding or the project models to show the correct graded components.
 
 * **New Feature**: `listAll` - list all students, student scores and graded components
   * **What it does**:  Displays all students, student scores and graded components in the respective lists
@@ -83,8 +80,8 @@ title: "Yufei Sun's Project Portfolio Page"
 
 
 * **Community**:
-    * Reviewed 14 PRs
-      * 3 with non-trivial comment
+    * Reviewed 16 PRs
+      * 2 with non-trivial comment
 
 
 
