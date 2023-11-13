@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:User executes sortScore command;
+if () then ([given graded component exists])
+  :student scores filtered and sorted;
+  :students sorted accordingly;
+else ([else])
+    :a error message shows up;
+    :user retypes the command;
+endif
+
+:Updated students and student scores list saved to ModuLight;
+
+stop
+
+@enduml
