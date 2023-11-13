@@ -303,7 +303,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 > **Note** <br>
 > 
-> * All find commands are case-insensitive
+> * All find parameters are case-insensitive, except for tag
 > * It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
 > * For searching with multiple student parameters of the same type, it will find the objects who satisfy any of the
     criteria.

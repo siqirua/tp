@@ -38,6 +38,7 @@ public class FindGradedComponentCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        model.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
         model.updateFilteredGradedComponentList(gcPredicate);
         model.updateFilteredStudentScoreList(scorePredicate);
         String feedback = String.format(Messages.MESSAGE_COMP_LISTED_OVERVIEW,
