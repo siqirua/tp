@@ -68,7 +68,7 @@ public class StudentCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         student.recalculateScores();
         float totalScore = student.getTotalScore();
-        Label totalScoreLabel = new Label(String.format("Total Score: %.1f", totalScore) + "%");
+        Label totalScoreLabel = new Label(String.format("Total Score: %.2f", totalScore) + "%");
         totalScoreLabel.getStyleClass().add("cell_small_label");
         studentBox.getChildren().add(totalScoreLabel);
         if (!student.getStudentGrade().toString().isEmpty()) {
