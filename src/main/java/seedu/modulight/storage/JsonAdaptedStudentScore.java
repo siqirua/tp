@@ -115,11 +115,11 @@ public class JsonAdaptedStudentScore {
         try {
             Float.parseFloat(score);
         } catch (NumberFormatException e) {
-            throw new IllegalValueException("Score should be a number less than max marks and greater than 0");
+            throw new IllegalValueException("Score should be a number");
         }
 
         if (!StudentScore.isValidScore(Float.parseFloat(score), modelMaxMarks)) {
-            throw new IllegalValueException("Score should be a number less than max marks and greater than 0");
+            throw new IllegalValueException("Score should be less than or equal to max marks and greater than 0");
         }
 
         final float modelScore = Float.parseFloat(score);

@@ -670,6 +670,15 @@ testers are expected to do more *exploratory* testing.
     5. Run the program. <br>
        Expected: Similar to previous.
 
+1. Manually editing data files
+    
+    1. Open `studentBook.json`.
+   
+    2. Edit any "studentName" field and input "Rachel" or some other name which contains alphanumeric characters.
+
+    3. Run the program. <br>
+       Expected: The program will load with the updated studentName.
+
 ## **Appendix: Planned Enhancements**
 
 1. Support special characters in student name parameter as some people's legal name do include some special characters(e.g. "s/o").
