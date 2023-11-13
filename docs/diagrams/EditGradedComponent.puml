@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/activity-diagram
+
+start
+if () then ([else])
+if () then ([else])
+    :Retrieve GradedComponent to edit;
+    :Create edited GradedComponent;
+    if () then ([else])
+        :Replace GradedComponent to edit with edited GradedComponent in the GradedComponentBook;
+        if () then ([else])
+        else ([there are score associated with the GradedComponent])
+        :Edit all scores associated with the GradedComponent;
+        endif
+        : Display acknowledgement message to user with information of edited GradedComponent;
+    else ([edited GradedComponent already exists in GradedComponentBook])
+        :Throw CommandException;
+    endif
+else (given GradedComponent parameters are invalid)
+    :Throw ParseException;
+endif
+else (given index is invalid or out of range)
+    :Throw ParseException;
+endif
+
+stop
+
+@enduml

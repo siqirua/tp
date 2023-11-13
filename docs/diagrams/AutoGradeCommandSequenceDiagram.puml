@@ -1,0 +1,124 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor previous_code as user USER_COLOR
+
+box Logic LOGIC_COLOR_T1
+participant "a:AutoGradeCommand" as AutoGradeCommand LOGIC_COLOR
+participant "ed:EditStudentDescriptor" as EditStudentDescriptor LOGIC_COLOR
+participant ":EditStudentCommand" as EditStudentCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+create AutoGradeCommand
+user -> AutoGradeCommand
+activate AutoGradeCommand
+
+user <-- AutoGradeCommand
+deactivate AutoGradeCommand
+
+user -> AutoGradeCommand : execute()
+activate AutoGradeCommand
+
+AutoGradeCommand -> Model : sortStudent("o", true)
+activate Model
+
+AutoGradeCommand <-- Model
+deactivate Model
+
+alt PERCENTILE
+    AutoGradeCommand -> AutoGradeCommand : setGradeThresholdPercentile()
+    activate AutoGradeCommand
+
+    AutoGradeCommand --> AutoGradeCommand
+    deactivate AutoGradeCommand
+    AutoGradeCommand -[hidden]-> AutoGradeCommand
+
+else ABSOLUTE
+    AutoGradeCommand -> AutoGradeCommand : setGradeThresholdAbsolute()
+    activate AutoGradeCommand
+
+    AutoGradeCommand --> AutoGradeCommand
+    deactivate AutoGradeCommand
+
+    AutoGradeCommand -[hidden]-> AutoGradeCommand
+end
+
+AutoGradeCommand -> AutoGradeCommand : addGradeToAllStudent()
+activate AutoGradeCommand
+
+AutoGradeCommand -> Model : getFilteredStudentList()
+activate Model
+
+AutoGradeCommand <-- Model
+deactivate Model
+
+loop studentList.size()
+    AutoGradeCommand -> AutoGradeCommand
+    activate AutoGradeCommand
+
+    create EditStudentDescriptor
+    AutoGradeCommand -> EditStudentDescriptor
+    activate EditStudentDescriptor
+
+    AutoGradeCommand <-- EditStudentDescriptor
+    deactivate EditStudentDescriptor
+
+    AutoGradeCommand -> AutoGradeCommand : createGraded()
+    activate AutoGradeCommand
+
+    AutoGradeCommand --> AutoGradeCommand : studentGrade
+    deactivate AutoGradeCommand
+
+    AutoGradeCommand -> EditStudentDescriptor : setStudentGrade()
+    activate EditStudentDescriptor
+
+    AutoGradeCommand <-- EditStudentDescriptor : ed
+    deactivate EditStudentDescriptor
+
+    EditStudentDescriptor -[hidden]-> EditStudentDescriptor
+    destroy EditStudentDescriptor
+
+    AutoGradeCommand --> AutoGradeCommand
+    deactivate AutoGradeCommand
+
+    create EditStudentCommand
+    AutoGradeCommand -> EditStudentCommand
+    activate EditStudentCommand
+
+    AutoGradeCommand <-- EditStudentCommand
+    deactivate EditStudentCommand
+
+    AutoGradeCommand -> EditStudentCommand : execute()
+    activate EditStudentCommand
+
+    AutoGradeCommand <-- EditStudentCommand
+    deactivate EditStudentCommand
+
+    EditStudentCommand -[hidden]-> EditStudentCommand
+    destroy EditStudentCommand
+
+    AutoGradeCommand -[hidden]-> AutoGradeCommand
+
+end
+
+AutoGradeCommand --> AutoGradeCommand
+deactivate AutoGradeCommand
+
+create CommandResult
+AutoGradeCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AutoGradeCommand
+deactivate CommandResult
+
+AutoGradeCommand -> user : result
+deactivate AutoGradeCommand
+
+
+@enduml

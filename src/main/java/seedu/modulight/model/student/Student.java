@@ -141,7 +141,7 @@ public class Student {
         }
 
         return otherStudent != null
-                && otherStudent.getStudentId().equals(getStudentId()) && otherStudent.getName().equals(getName());
+                && otherStudent.getStudentId().equals(getStudentId());
     }
     /**
      * Returns true if both students have the same identity and data fields.
