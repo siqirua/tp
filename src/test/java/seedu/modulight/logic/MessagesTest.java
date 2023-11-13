@@ -31,7 +31,7 @@ public class MessagesTest {
                 new StudentEmail("xyz@nus.edu.sg"), new TutorialGroup("T01"), new ArrayList<>(),
                 new HashSet<>());
         String expectedOutput = "A0123456U; Name: Test Stu; Email: xyz@nus.edu.sg; Tutorial Group: T01";
-        assertEquals(Messages.format(testStu), expectedOutput);
+        assertEquals(Messages.formatStudent(testStu), expectedOutput);
     }
 
     @Test

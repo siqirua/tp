@@ -31,8 +31,8 @@ class AddStudentCommandTest {
 
         CommandResult commandResult = new AddStudentCommand(validStudent).execute(model);
         String s1 = commandResult.getFeedbackToUser();
-        String s2 = String.format(AddStudentCommand.MESSAGE_SUCCESS, Messages.format(validStudent));
-        assertEquals(String.format(AddStudentCommand.MESSAGE_SUCCESS, Messages.format(validStudent)),
+        String s2 = String.format(AddStudentCommand.MESSAGE_SUCCESS, Messages.formatStudent(validStudent));
+        assertEquals(String.format(AddStudentCommand.MESSAGE_SUCCESS, Messages.formatStudent(validStudent)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validStudent), model.getStudentBook().getStudentList());
     }
