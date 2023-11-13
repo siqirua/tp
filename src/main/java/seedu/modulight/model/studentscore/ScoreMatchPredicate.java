@@ -98,7 +98,8 @@ public class ScoreMatchPredicate implements Predicate<StudentScore> {
         boolean isGcNameMatch = gcNames.isEmpty() || gcNames.stream()
                 .anyMatch(keyword -> score.getGcName().toString().toLowerCase().contains(keyword.toLowerCase()));
         boolean isNameMatch = nameKeywords.isEmpty() || nameKeywords.stream()
-                .anyMatch(keyword -> score.getStudent().getName().toString().toLowerCase().contains(keyword.toLowerCase()));
+                .anyMatch(keyword -> score.getStudent().getName().toString().toLowerCase()
+                        .contains(keyword.toLowerCase()));
         boolean isIdMatch = idKeywords.isEmpty() || idKeywords.stream()
                 .anyMatch(keyword -> score.getStudentId().toString().toLowerCase().contains(keyword.toLowerCase()));
         boolean isCommentMatch = commentKeywords.isEmpty() || commentKeywords.stream()
