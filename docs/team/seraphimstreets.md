@@ -81,3 +81,4 @@ Format: `deleteComp INDEX`
 Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
 
 ### Contributions to Developer Guide
+
