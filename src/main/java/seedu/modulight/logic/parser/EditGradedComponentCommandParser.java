@@ -13,6 +13,7 @@ import java.util.Set;
 import seedu.modulight.commons.core.index.Index;
 import seedu.modulight.logic.commands.EditGradedComponentCommand;
 import seedu.modulight.logic.commands.EditGradedComponentCommand.EditGradedComponentDescriptor;
+import seedu.modulight.logic.commands.EditStudentCommand;
 import seedu.modulight.logic.parser.exceptions.ParseException;
 import seedu.modulight.model.tag.Tag;
 
@@ -59,6 +60,10 @@ public class EditGradedComponentCommandParser implements Parser<EditGradedCompon
             }
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
+        }
+
+        if (!editGradedComponentDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditGradedComponentCommand.MESSAGE_NOT_EDITED);
         }
 
 

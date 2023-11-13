@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.modulight.commons.core.index.Index;
+import seedu.modulight.logic.commands.EditStudentCommand;
 import seedu.modulight.logic.commands.EditStudentScoreCommand;
 import seedu.modulight.logic.parser.exceptions.ParseException;
 import seedu.modulight.model.tag.Tag;
@@ -58,6 +59,10 @@ public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCom
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentScoreDescriptor::setTags);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
+        }
+
+        if (!editStudentScoreDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditStudentScoreCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditStudentScoreCommand(index, editStudentScoreDescriptor, true);
