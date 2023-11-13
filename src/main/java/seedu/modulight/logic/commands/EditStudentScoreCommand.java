@@ -40,7 +40,7 @@ public class EditStudentScoreCommand extends Command {
             + "Parameters: " + "INDEX "
             + "[" + PREFIX_MARKS + "SCORE] "
             + "[" + PREFIX_COMMENT + "COMMENT] "
-            + "[" + PREFIX_TAG + "TAG]...\n "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_MARKS + "35.4 "
             + PREFIX_COMMENT + "Good JOB!";

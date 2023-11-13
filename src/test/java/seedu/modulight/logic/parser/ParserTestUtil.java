@@ -25,6 +25,7 @@ public class ParserTestUtil {
     public static void assertParserSuccess(String input, Parser parser, Command expectedCommand) {
         try {
             Command result = parser.parse(input);
+            System.out.println(result.toString());
             assertEquals(expectedCommand, result);
         } catch (ParseException ce) {
             throw new AssertionError("Execution of parser in positive test cases should not fail.", ce);
@@ -83,4 +84,6 @@ public class ParserTestUtil {
         }
     }
     //@@author
+
+
 }

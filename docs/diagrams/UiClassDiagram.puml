@@ -11,8 +11,8 @@ Class UiManager
 Class MainWindow
 Class HelpWindow
 Class ResultDisplay
-Class PersonListPanel
-Class PersonCard
+Class SSCListPanel
+Class SSCCard
 Class StatusBarFooter
 Class CommandBox
 }
@@ -32,26 +32,28 @@ UiManager .left.|> Ui
 UiManager -down-> "1" MainWindow
 MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
-MainWindow *-down-> "1" PersonListPanel
+MainWindow *-down-> "1" SSCListPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
+note right of SSCListPanel: SSCListPanel = StudentListPanel,\nStudentScoreListPanel\n and GradedComponentListPanel
 
-PersonListPanel -down-> "*" PersonCard
 
+SSCListPanel -down-> "*" SSCCard
 MainWindow -left-|> UiPart
+note right of SSCCard: SSCCard = StudentCard,\nStudentScoreCard\n and GradedComponentCard
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
-PersonListPanel --|> UiPart
-PersonCard --|> UiPart
+SSCListPanel --|> UiPart
+SSCCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
 
-PersonCard ..> Model
+SSCCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
-PersonListPanel -[hidden]left- HelpWindow
+SSCListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
