@@ -221,13 +221,13 @@ The following sequence diagram illustrates the process of execution of an `FindS
 
 ### Sort Commands
 
-The Sort related feature allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
+The Sort related features allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
 
-We will discuss the implementation of sortScore (Sort Student Scores) command here and omit the discussion of the implementation of sortStu command since it is very similar to sortScore command and simpler.
+We will discuss the implementation of `sortScore` (Sort Student Scores) command here and omit the discussion of the implementation of `sortStu` command since it is very similar to `sortScore` command and simpler.
 
 #### Implementation
 
-The `sortScoreCommand` (Sort Student Scores) mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+The `sortScore` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
 
 * `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
 * `studentScoreBook.sortStudentScore(Boolean isReverse)` - Filters the student scores with the given graded component and sort them according to the given reverse order.
@@ -251,8 +251,42 @@ The following sequence diagram shows how the sort student scores operation works
 
 <puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
-The following activity diagram summarizes what happens when a user executes a new sortScore command：<br>
+The following activity diagram summarizes what happens when a user executes a new `sortScore` command：<br>
+<puml src="diagrams/SortScoreActivityDiagram.puml" alt="SortScoreActivityDiagram" />
 
+### Stats Commands
+
+The Stats related features allows NUS professors to calculate the statistics of student scores effectively. When successfully executed, the relevant statistics will be shown in the result display box of Graphical User Interface. <br>
+
+We will discuss the implementation of `compStats` (calculate the statistics for a specific graded component) command here and omit the discussion of the implementation of `stats` command since it is very similar to `compStats` command and simpler.
+
+#### Implementation
+
+The `compStats` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentBook.getStudentList()` - Returns the stored list of students.
+* `compStatsCommand.generateOverallStatsSummary(List<Student> students)` - Returns a string represented all the relevant statistics.
+* `statsCalculator` - A class that helps calculate different types of statistical measures.
+
+Given below is an example usage scenario and how the `compStats` mechanism behaves at each step.
+
+Step 1. The user executes `compStats c/Midterm` command to calculate the statistics of student scores of Midterm. The `compStats` command calls CompStatsCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 2. `CompStatsCommandParser#parse()` invokes the creation of a `CompStatsCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `CompStatsCommand` object, an error message will be displayed and user will retype their command.
+
+Step 4. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so statistics will not be calculated and displayed.
+
+Step 5. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
+
+The following sequence diagram shows how the `compStats` operation works:<br>
+
+<puml src="diagrams/CompStatsCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new `compStats` command：<br>
+<puml src="diagrams/CompStatsActivityDiagram.puml" alt="CompStatsActivityDiagram" />
 
 ### Auto-grading
 
@@ -684,28 +718,60 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
-   1. Test case: `deleteStu 1`<br>
-      Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+      1. Test case: `deleteStu 1`<br>
+         Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `deleteStu 0`<br>
-      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
+      1. Test case: `deleteStu 0`<br>
+         Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
+      1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
+         Expected: Similar to previous.
 
 ### Finding a student
 1. Find a student in ModuLight
    1. Prerequisite: student list is not empty.
-   1. Test case: `findStu g/T00`
-      Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   1. Test case: `findStu`
-      Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
-   2. Test case: `findStu n/John n/Amy`
-      Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   3. Test case: `findStu n/John g/T00`
-      Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu g/T00`
+         Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu`
+         Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
+      2. Test case: `findStu n/John n/Amy`
+         Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      3. Test case: `findStu n/John g/T00`
+         Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+
+### Sorting Students
+1. Sort students in ModuLight
+    1. Prerequisite: displayed student list is not empty.
+       2. Test case: `sortStu`
+          Expected: The displayed students are sorted by their total scores.
+       3. Test case: `sortStu o/n r/t`
+          Expected: The displayed students are sorted by their names in the reverse alphabetical order.
+       4. Test case: `sortStu o/wrongInput`
+          Expected: An error message that states "Invalid command format!" and the correct usage is shown.
+
+### Sorting Student Scores
+1. Sort student scores in ModuLight
+    1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
+       2. Test case: `sortScore c/Midterm`
+          Expected: Only Midterm student scores are shown and they are sorted in the ascending order.
+       3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
+          Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
+
+
+### Calculating Statistics
+1. Calculate overall statistics of students' total scores
+    1. Prerequisite: student list and student score list are not empty and there is at least a valid score in Tut `T01`.
+       1. Test case: `stats`
+          Expected: A message that states  all relevant statistical measures (The exhausitive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
+       2. Test case: `stats st/max st/min`
+          Expected: A message that states the max and min is shown.
+       3. Test case: `stats g/T01`
+          Expected: A message that states all relevant statistical measures of Tut `T01` is shown.
+       4. Test case: `stats st/wrongInput`
+          Expected: An error message that states "Some statistic measures are not supported yet." and all supported statistical measures are shown.
+    2. Prerequisite: student score list is empty
+        1. Test case: `stats`
+           Expected: An error message that state "Please have at least one score fulfilling the condition." is shown.
 
 
 ### Saving data
