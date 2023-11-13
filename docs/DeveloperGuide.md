@@ -219,6 +219,62 @@ The following sequence diagram illustrates the process of execution of an `FindS
 
 ![AddStudentCommand](diagrams/FindStudent.png)
 
+### Add Graded Component
+
+<puml src="diagrams/AddGradedComponentSequenceDiagram.puml" width="450" />
+
+The `addComp` command allows users to add a graded component and automaticaly create student scores associated with that component for every student in the database.
+A typical program flow is as follows:
+
+1. User enters a command to add a graded component, for instance `addComp 1 c/Midterms w/30 mm/60`.
+2. `AddGradedComponentCommandParser` attempts to parse the flags `c/`, `mm/` and `w/` which represent the
+   component name, maximum mark and weightage values respectively. It performs several checks, failing which a `ParseCommandException` is thrown:
+    1. All 3 flags have non-empty values.
+    2. The component name, maximum marks and weightage values provided are valid. (eg. `Weightage` is a number between 0 and 100)
+    3. There are no duplicate flags provided.
+3. Assuming all flag values have been successfully parsed, these are used to initialize a `GradedComponent` which is passed into `AddGradedComponentCommand`.
+4. Within `AddGradedComponentCommand`, a second round of checks is initiated, failing which a `CommandException` is thrown:
+    1. There does not exist another `GradedComponent` in the database with the same name as the added one.
+    2. After adding the `GradedComponent`, the total weightage does not exceed 100.
+5. If all checks are successful, the new `GradedComponent` is added into the database.
+6. For every student in the database, the command additionally creates a student score corresponding to that student and the newly created
+   `GradedComponent`, with marks initialized to 0.
+7. The linkages between `Student` and `GradedComponent` are updated accordingly (ie. their corresponding `StudentScores` are added to their score lists)
+
+Alternative Implementations:
+* For step 6, we initially considered letting users add student scores on their own corresponding to an existing student ID and component name.
+  However, we rejected this idea as users would likely find it very troublesome to individually create student scores, and it would also make the
+  calculation of scores more convoluted. (eg. how to calculate mean for components/students with missing scores)
+  se the index provided, checking that it is a valid integer from 1 to the size
+
+### Edit Graded Component
+
+<puml src="diagrams/EditGradedComponent.puml" width="450" />
+
+The `editComp` command allows users to edit a graded component's details based on its 1-based index, which are propagated to the component's associated student scores.
+A typical program flow is as follows:
+
+1. User enters a command to edit a graded component, for instance `editComp 1 c/Midterm Exam w/25 mm/50`.
+2. `EditGradedComponentCommandParser` checks for the  flags c/, mm/ and w/ which represent the component name, maximum mark and weightage values respectively. It performs several checks, failing which a `ParseCommandException` is thrown:
+    1. The index provided is an integer between 1 and the size of the displayed `GradedComponent` list
+    2. The component name, maximum marks and weightage values provided are valid. (eg. Weightage is a number between 0 and 100)
+    3. There are no duplicate flags provided.
+    4. At least one field to be edited must be provided.
+3. An `EditGradedComponentCommandDescriptor` is created using the provided arguments. This is because the graded component list in `GradedComponentBook` is read-only, so to edit a `GradedComponent`, we will need to create a new `GradedComponent` using the descriptor, and call the `setGradedComponent` function to replace the old component with the new one.
+4. An `EditGradedComponentCommand` is created and executed with the `Model`.
+5. In `EditGradedComponentCommand`, more checks are performed, failing which a `CommandException` is thrown:
+    1. There does not exist another `GradedComponent` in the database with the same name as the edited one.
+    2. After editing the `GradedComponent`, the total weightage does not exceed 100.
+    3. After editing the `GradedComponent`, none of the associated student scores exceeds its maximum mark.
+6. This new graded component replaces the old one using  `setGradedComponent` in `GradedComponentBook`.
+7. All associated student scores of the old `GradedComponent` have their linkages updated.
+
+Alternative Implementations:
+* We considered making the lists of `GradedComponentBook` not read-only, but decided against it at
+  the time as it would require refactoring a large part of the codebase. However, this may
+  create some inefficiency as the `Model` has to search through the entire `GradedComponent` list
+  for the appropriate item to replace. Therefore, this is a possible extension that future developers may consider.
+
 ### Sort Commands
 
 The Sort related feature allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
@@ -252,6 +308,7 @@ The following sequence diagram shows how the sort student scores operation works
 <puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
 The following activity diagram summarizes what happens when a user executes a new sortScore command：<br>
+
 
 
 ### Auto-grading
@@ -563,6 +620,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3b1. ModuLight shows an error message.
 
   Use case resumes at step 2.
+
+
+**Use case: Delete a graded component and its associated scores**
+
+**MSS**
+
+1.  User requests to list graded components.
+2.  ModuLight shows a list of graded components.
+3.  User requests to delete a specific graded component in the list.
+4.  ModuLight deletes the graded component.
+5.  ModuLight shows a list of updated graded components.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The selected graded component has some associated student scores.
+    * 3b1. ModuLight deletes all associated students scores.
+    * 3b2. ModuLight shows a list of updated student scores.
+      Use case resumes at step 4.
 
 **Use case: Find student(s)**
 

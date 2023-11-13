@@ -1,0 +1,73 @@
+[1mdiff --git a/docs/DeveloperGuide.md b/docs/DeveloperGuide.md[m
+[1mindex e32f67d1..2f3cd5d9 100644[m
+[1m--- a/docs/DeveloperGuide.md[m
+[1m+++ b/docs/DeveloperGuide.md[m
+[36m@@ -185,6 +185,31 @@[m [mClasses used by multiple components are in the `seedu.modulight.commons` package[m
+ [m
+ This section describes some noteworthy details on how certain features are implemented.[m
+ [m
+[32m+[m[32m### Add Graded Component[m
+[32m+[m
+[32m+[m[32m<puml src="diagrams/AddGradedComponentSequenceDiagram.puml" width="450" />[m
+[32m+[m
+[32m+[m[32m1. `AddGradedComponentCommandParser` attempts to parse the flags `c/`, `mm/` and `w/` which represent the[m[41m [m
+[32m+[m[32mcomponent name, maximum mark and weightage values respectively. It performs several checks, failing which a ParseCommandException is thrown:[m
+[32m+[m[32m   1. All 3 flags have non-empty values.[m[41m [m
+[32m+[m[32m   2. The component name, maximum marks and weightage values provided are valid. (eg. Weightage is a number between 0 and 100)[m
+[32m+[m[32m   3. There are no duplicate flags provided.[m
+[32m+[m[32m2. Assuming all flag values have been successfully parsed, these are used to initialize a GradedComponent.[m
+[32m+[m[32m3. This GradedComponent is used to initialize the AddGradedComponentCommand object.[m
+[32m+[m[32m4. AddGradedComponentCommand is executed, where a second round of checks is initiated, failing which a CommandException is thrown:[m
+[32m+[m[32m   1. There does not exist another GradedComponent in the database with the same name as the added one.[m
+[32m+[m[32m   2. After adding the GradedComponent, the total weightage does not exceed 100.[m
+[32m+[m[32m5. If all checks are successful, the new GradedComponent is added into the database.[m
+[32m+[m[32m6. For every student in the database, the command additionally creates a student score corresponding to that student and the newly created[m
+[32m+[m[32mGradedComponent, with marks initialized to 0.[m[41m [m
+[32m+[m[32m7. The linkages between Student and GradedComponent are updated accordingly (ie. their corresponding StudentScores are added to their score lists)[m
+[32m+[m
+[32m+[m[32mAlternative Implementations:[m
+[32m+[m[32m* For step 6, we initially considered letting users add student scores on their own corresponding to an existing student ID and component name.[m[41m [m
+[32m+[m[32mHowever, we rejected this idea as users would likely find it very troublesome to individually create student scores, and it would also make the[m
+[32m+[m[32mcalculation of scores more convoluted. (eg. how to calculate mean for components/students with missing scores)[m
+[32m+[m[32mse the index provided, checking that it is a valid integer from 1 to the size[m[41m [m
+[32m+[m[41m   [m
+ [m
+ ### Auto-grading[m
+ [m
+[36m@@ -497,6 +522,36 @@[m [mPriorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli[m
+ [m
+   Use case resumes at step 2.[m
+ [m
+[32m+[m
+[32m+[m[32m**Use case: Delete a graded component and its associated scores**[m
+[32m+[m
+[32m+[m[32m**MSS**[m
+[32m+[m
+[32m+[m[32m1.  User requests to list graded components.[m
+[32m+[m[32m2.  ModuLight shows a list of graded components.[m
+[32m+[m[32m3.  User requests to delete a specific graded component in the list.[m
+[32m+[m[32m4.  ModuLight deletes the graded component.[m
+[32m+[m[32m5.  ModuLight shows a list of updated graded components.[m
+[32m+[m
+[32m+[m[32m    Use case ends.[m
+[32m+[m
+[32m+[m[32m**Extensions**[m
+[32m+[m
+[32m+[m[32m* 2a. The list is empty.[m
+[32m+[m
+[32m+[m[32m  Use case ends.[m
+[32m+[m
+[32m+[m[32m* 3a. The given index is invalid.[m
+[32m+[m
+[32m+[m[32m    * 3a1. ModuLight shows an error message.[m
+[32m+[m
+[32m+[m[32m      Use case resumes at step 2.[m
+[32m+[m
+[32m+[m[32m* 3b. The selected graded component has some associated student scores.[m
+[32m+[m[32m    * 3b1. ModuLight deletes all associated students scores.[m
+[32m+[m[32m    * 3b2. ModuLight shows a list of updated student scores.[m
+[32m+[m[32m      Use case resumes at step 4.[m
+[32m+[m
+ **Use case: Find student(s)**[m
+ [m
+ **MSS**[m

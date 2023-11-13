@@ -118,7 +118,7 @@ determine the relative performance of a student for a component. <br> For instan
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
 the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
 > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
-> * If a student or graded component has no associated student scores, the average mark will be listed as 0.
+> * If a student or graded component has no associated student scores, the overall score or average mark respectively will be displayed as 0.
 
 </box>
 
