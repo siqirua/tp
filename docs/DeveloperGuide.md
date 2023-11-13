@@ -921,18 +921,18 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: student list is not empty.
    
-   2. Test case: `findStu g/T00`
-      Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   
-   3. Test case: `findStu`
-      Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
-   
-   4. Test case: `findStu n/John n/Amy`
-      Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   
-   5. Test case: `findStu n/John g/T00`
-      Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
-
+         2. Test case: `findStu g/T00`
+            Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+         
+         3. Test case: `findStu`
+            Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
+         
+         4. Test case: `findStu n/John n/Amy`
+            Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
+         
+         5. Test case: `findStu n/John g/T00`
+            Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      
 
 ### Sorting Students
 1. Sort students in ModuLight
