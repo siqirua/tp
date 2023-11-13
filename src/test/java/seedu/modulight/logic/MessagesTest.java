@@ -37,7 +37,7 @@ public class MessagesTest {
     @Test
     public void format_studentScore_success() {
         StudentScore testStuScore = new StudentScore(new StudentId("A0123456U"), new GcName("Midterm"), 40);
-        String expectedOutput = "; Student ID: A0123456U; Graded component name: Midterm; Score: 40.0";
+        String expectedOutput = "Student ID: A0123456U; Graded component name: Midterm; Score: 40.0";
         assertEquals(Messages.formatStudentScore(testStuScore), expectedOutput);
     }
 

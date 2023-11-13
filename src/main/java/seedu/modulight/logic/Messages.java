@@ -47,7 +47,7 @@ public class Messages {
     public static String formatStudent(Student student) {
         final StringBuilder builder = new StringBuilder();
         builder.append(student.getStudentId())
-                .append(" Name: ")
+                .append("; Name: ")
                 .append(student.getName())
                 .append("; Email: ")
                 .append(student.getEmail())
@@ -62,7 +62,7 @@ public class Messages {
     public static String formatGradedComponent(GradedComponent gc) {
         final StringBuilder builder = new StringBuilder();
         builder.append(gc.getName())
-                .append(" Maximum Marks: ")
+                .append("; Maximum Marks: ")
                 .append(gc.getMaxMarks())
                 .append("; Weightage: ")
                 .append(gc.getWeightage());
@@ -75,7 +75,7 @@ public class Messages {
      */
     public static String formatStudentScore(StudentScore sc) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Student ID: ")
+        builder.append("Student ID: ")
                 .append(sc.getStudentId())
                 .append("; Graded component name: ")
                 .append(sc.getGcName())
