@@ -109,16 +109,16 @@ The following section gives an overview of the parameters used for the commands 
 
 <box type="info" seamless>
 
-> **Note**: Graded Component and Student Score parameters for score calculation
-> 
-> * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
+ **Note**: Graded Component and Student Score parameters for score calculation
+ 
+ * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
 determine the relative performance of a student for a component. <br> For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
-> * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
+ * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
 **relative to the sum of all other component weightages**. <br> For instance, if there are only 2 components in the system currently, 
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
 the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
-> * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
-> * If a student or graded component has no associated student scores, the average mark will be listed as 0.
+ * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+ * If a student or graded component has no associated student scores, the average mark will be listed as 0.
 
 </box>
 
