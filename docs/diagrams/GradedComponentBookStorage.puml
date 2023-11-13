@@ -22,7 +22,4 @@ I -right-|>  GradedComponentBookStorage
 JsonGradedComponentBookStorage .up.|> GradedComponentBookStorage
 JsonGradedComponentBookStorage ..> JsonSerializableGcBook
 JsonSerializableGcBook --> "*" JsonAdaptedGradedComponent
-
-
-
 @enduml

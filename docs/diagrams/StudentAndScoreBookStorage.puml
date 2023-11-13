@@ -40,5 +40,4 @@ JsonStudentScoreBookStorage .up.|> StudentScoreBookStorage
 JsonStudentScoreBookStorage ..> JsonSerializableStudentScoreBook
 JsonSerializableStudentScoreBook --> "*" JsonAdaptedStudentScore
 JsonAdaptedStudentScore --> "*" JsonAdaptedTag
-
 @enduml
