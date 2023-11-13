@@ -138,8 +138,8 @@ Note that Student, StudentGrade and GradeComponent classes have similar structur
 
 Here are the class diagrams for Ssc (Student, StudentGrade, GradedComponent) classes respectively.
 <puml src="diagrams/StudentModelDiagram.puml" width="450" />
-<puml src="diagrams/StudentGradeModelDiagram.puml" width="450" />
-<puml src="diagrams/GradedComponentModelDiagram.puml" width="450" />
+<puml src="diagrams/StudentScoreModelDiagram.puml" width="300" />
+<puml src="diagrams/GradedComponentModelDiagram.puml" width="300" />
 
 The `Model` component,
 
