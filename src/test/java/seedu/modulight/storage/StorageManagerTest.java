@@ -36,8 +36,8 @@ public class StorageManagerTest {
             "gcb"));
         JsonStudentScoreBookStorage studentScoreBookStorage = new JsonStudentScoreBookStorage(getTempFilePath(
             "ssb"));
-        storageManager = new StorageManager(studentBookStorage, studentScoreBookStorage, gradedComponentBookStorage
-            , userPrefsStorage);
+        storageManager = new StorageManager(studentBookStorage, studentScoreBookStorage, gradedComponentBookStorage,
+            userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {

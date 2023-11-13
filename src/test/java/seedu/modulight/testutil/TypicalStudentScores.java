@@ -10,6 +10,9 @@ import java.util.List;
 import seedu.modulight.model.studentscore.StudentScore;
 import seedu.modulight.model.studentscore.model.StudentScoreBook;
 
+/**
+ * A utility class containing a list of {@code StudentScores} objects to be used in tests.
+ */
 public class TypicalStudentScores {
 
     private TypicalStudentScores() {};

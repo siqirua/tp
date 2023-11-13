@@ -21,8 +21,8 @@ import seedu.modulight.model.gradedcomponent.model.ReadOnlyGradedComponentBook;
 
 public class JsonGradedComponentBookStorageTest {
 
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data"
-        , "JsonGradedComponentBookStorageTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
+        "JsonGradedComponentBookStorageTest");
 
     @TempDir
     public Path testFolder;
@@ -109,7 +109,7 @@ public class JsonGradedComponentBookStorageTest {
 
     @Test
     public void saveGradedComponentBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveGradedComponentBook(new GradedComponentBook()
-            , null));
+        assertThrows(NullPointerException.class, () -> saveGradedComponentBook(new GradedComponentBook(),
+            null));
     }
 }

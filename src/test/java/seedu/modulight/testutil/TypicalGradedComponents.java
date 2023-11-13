@@ -7,9 +7,10 @@ import java.util.List;
 import seedu.modulight.model.gradedcomponent.GradedComponent;
 import seedu.modulight.model.gradedcomponent.model.GradedComponentBook;
 
+/**
+ * A utility class containing a list of {@code GradedComponent} objects to be used in tests.
+ */
 public class TypicalGradedComponents {
-
-    private TypicalGradedComponents() {};
 
     public static final GradedComponent MIDTERMS = new GradedComponentBuilder().withGcName("Midterms")
             .withMaxMarks((float) 100.0).withWeightage((float) 25).build();
@@ -23,6 +24,8 @@ public class TypicalGradedComponents {
 
     public static final GradedComponent CA2 = new GradedComponentBuilder().withGcName("CA2").withMaxMarks((float) 100)
             .withWeightage((float) 20).build();
+
+    private TypicalGradedComponents() {};
 
 
     public static GradedComponentBook getTypicalGradedComponentBook() {

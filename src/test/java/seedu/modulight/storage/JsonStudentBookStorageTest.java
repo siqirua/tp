@@ -21,8 +21,8 @@ import seedu.modulight.model.student.model.StudentBook;
 
 public class JsonStudentBookStorageTest {
 
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data"
-        , "JsonStudentBookStorageTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
+        "JsonStudentBookStorageTest");
 
     @TempDir
     public Path testFolder;

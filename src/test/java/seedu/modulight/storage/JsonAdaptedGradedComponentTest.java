@@ -29,9 +29,9 @@ public class JsonAdaptedGradedComponentTest {
     }
 
     @Test
-    public void toModelType_InvalidGcName_throwsIllegalValueException() {
-        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(INVALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS
-            , VALID_WEIGHTAGE);
+    public void toModelType_invalidGcName_throwsIllegalValueException() {
+        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(INVALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS,
+            VALID_WEIGHTAGE);
         String expectedMessage = GcName.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, gc::toModelType);
     }
@@ -44,33 +44,33 @@ public class JsonAdaptedGradedComponentTest {
     }
 
     @Test
-    public void toModelType_InvalidMaxMarks_throwsIllegalValueException() {
-        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, INVALID_MAX_MARKS
-            , VALID_WEIGHTAGE);
+    public void toModelType_invalidMaxMarks_throwsIllegalValueException() {
+        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, INVALID_MAX_MARKS,
+            VALID_WEIGHTAGE);
         String expectedMessage = MaxMarks.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, gc::toModelType);
     }
 
     @Test
     public void toModelType_nullMaxMarks_throwsIllegalValueException() {
-        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, null
-            , VALID_WEIGHTAGE);
+        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, null,
+            VALID_WEIGHTAGE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, MaxMarks.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, gc::toModelType);
     }
 
     @Test
-    public void toModelType_InvalidWeightage_throwsIllegalValueException() {
-        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS
-            , INVALID_WEIGHTAGE);
+    public void toModelType_invalidWeightage_throwsIllegalValueException() {
+        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS,
+            INVALID_WEIGHTAGE);
         String expectedMessage = Weightage.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, gc::toModelType);
     }
 
     @Test
     public void toModelType_nullWeightage_throwsIllegalValueException() {
-        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS
-            , null);
+        JsonAdaptedGradedComponent gc = new JsonAdaptedGradedComponent(VALID_GRADED_COMPONENT_NAME, VALID_MAX_MARKS,
+            null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Weightage.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, gc::toModelType);
     }
