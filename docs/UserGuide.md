@@ -97,7 +97,7 @@ The following section gives an overview of the parameters used for the commands 
 | e/        | Email of the student          | Must consist of a alphanumeric prefix, @ symbol and a domain               | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail             |
 | s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
-| t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, Makeup exam    | deans_list                 |
+| t/        | Tag of the student            | Must only contain alphanumeric characters and no space                     | PotentialTA, MakeupExam      | deans_list, Potential TA   |
 
 
 
@@ -111,12 +111,12 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Student Score Parameters
 
-| Parameter | Description                                   | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples   |
-|-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|--------------------|
-| m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve |
-| x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                 |
-| t/        | Tags of the student score                     | Must only contain alphanumeric characters                                                                                                    | Highest score, Makeup exam | @plagiarism        |
-| INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03          |
+| Parameter | Description                                   | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples           |
+|-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|----------------------------|
+| m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
+| x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
+| t/        | Tags of the student score                     | Must only contain alphanumeric characters and no space                                                                                       | HighestScore, MakeupExam   | @plagiarism, Highest Score |
+| INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
 
 ### Command Related Parameters
 
@@ -251,7 +251,7 @@ Edits an existing graded component’s details in the database, based on the 1-b
 
 Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
-* if no parameters except index are passed in, the graded component will remain unchanged.
+* if no parameters except index are passed in, it will throw an error.
 
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
@@ -267,10 +267,10 @@ Note: a StudentScore will be automatically added when a graded component is crea
 * The mark given cannot exceed the maximum marks for that graded component.
 * Please refrain from entering numbers with more than 2 decimal places of precision.
 
-Format: `editScore INDEX [m/SCORE] [x/comment]`
+Format: `editScore INDEX [m/SCORE] [x/comment] [t/tags]`
 
 * if the mark is being edited, the new mark should be more than 0 and not exceed the associated component's maximum marks.
-* if no parameters except index are passed in, the score will remain unchanged.
+* if no parameters except index are passed in, it will throw an error.
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
