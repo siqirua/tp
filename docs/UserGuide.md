@@ -428,7 +428,7 @@ Format: `stats [st/STATS] [g/TUTORIAL_GRP]`
 * It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
 supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
-measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+measures: `mean`, `standardDeviation`, `upperQuartile`, `lowerQuartile`, `max`, `min`, `skewness`.
 * For the calculation of upper and lower quartile, we use Method 4 introduced in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
 is meaningless.
@@ -448,7 +448,7 @@ Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
 * It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
   supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
-  measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+  measures: `mean`, `standardDeviation`, `upperQuartile`, `lowerQuartile`, `max`, `min`, `skewness`.
 * For the calculation of upper and lower quartile, we use Method 4 introduced 
 in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
