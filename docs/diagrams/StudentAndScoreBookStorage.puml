@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor STORAGE_COLOR
+skinparam classBackgroundColor STORAGE_COLOR
+
+package Storage as StoragePackage {
+
+package "StudentBook Storage" #F4F6F6{
+Class "<<interface>>\nStudentBookStorage" as StudentBookStorage
+Class JsonStudentBookStorage
+Class JsonSerializableStudentBook
+Class JsonAdaptedStudent
+}
+
+package "StudentScoreBook Storage" #F4F6F6{
+Class "<<interface>>\nStudentScoreBookStorage" as StudentScoreBookStorage
+Class JsonStudentScoreBookStorage
+Class JsonSerializableStudentScoreBook
+Class JsonAdaptedStudentScore
+}
+
+Class JsonAdaptedTag
+
+}
+Class HiddenOutside #FFFFFF
+Class I #FFFFFF
+Class J #FFFFFF
+Class K #FFFFFF
+
+HiddenOutside -right-> "1" StudentBookStorage
+I -right-> "1" StudentScoreBookStorage
+J --|>  StudentBookStorage
+K --|>  StudentScoreBookStorage
+JsonStudentBookStorage .up.|> StudentBookStorage
+JsonStudentBookStorage ..> JsonSerializableStudentBook
+JsonSerializableStudentBook --> "*" JsonAdaptedStudent
+JsonAdaptedStudent --> "*" JsonAdaptedTag
+JsonStudentScoreBookStorage .up.|> StudentScoreBookStorage
+JsonStudentScoreBookStorage ..> JsonSerializableStudentScoreBook
+JsonSerializableStudentScoreBook --> "*" JsonAdaptedStudentScore
+JsonAdaptedStudentScore --> "*" JsonAdaptedTag
+@enduml

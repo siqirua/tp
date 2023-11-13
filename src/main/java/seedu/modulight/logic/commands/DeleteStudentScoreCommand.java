@@ -87,6 +87,4 @@ public class DeleteStudentScoreCommand extends Command {
                 .add("targetIndex", targetIndex)
                 .toString();
     }
-
-
 }

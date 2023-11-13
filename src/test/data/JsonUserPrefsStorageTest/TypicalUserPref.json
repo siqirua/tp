@@ -1,11 +1,14 @@
 {
   "guiSettings" : {
-    "windowWidth" : 1000.0,
-    "windowHeight" : 500.0,
+    "windowWidth" : 1000,
+    "windowHeight" : 500,
     "windowCoordinates" : {
       "x" : 300,
       "y" : 100
     }
   },
-  "addressBookFilePath" : "addressbook.json"
+  "addressBookFilePath" : "addressbook.json",
+  "studentBookFilePath" : "studentBook.json",
+  "scoreBookFilePath" : "scoreBook.json",
+  "gcBookFilePath" : "gradedComponentBook.json"
 }

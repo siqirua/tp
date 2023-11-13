@@ -53,10 +53,6 @@ public class GradedComponent {
     public Weightage getWeightage() {
         return weightage;
     }
-    /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
 
     public List<StudentScore> getScores() {
         return Collections.unmodifiableList(scoreList);
@@ -149,9 +145,6 @@ public class GradedComponent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .toString();
+        return new ToStringBuilder(this).add("name", name).toString();
     }
-
 }

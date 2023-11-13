@@ -7,6 +7,7 @@ skinparam classBackgroundColor STORAGE_COLOR
 package Storage as StoragePackage {
 
 package "UserPrefs Storage" #F4F6F6{
+
 Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
 Class JsonUserPrefsStorage
 }
@@ -14,13 +15,11 @@ Class JsonUserPrefsStorage
 Class "<<interface>>\nStorage" as Storage
 Class StorageManager
 
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedPerson
-Class JsonAdaptedTag
-}
+Class "<<interface>>\nStudentBookStorage" as StudentBookStorage
+
+Class "<<interface>>\nStudentScoreBookStorage" as StudentScoreBookStorage
+
+Class "<<interface>>\nGradedComponentBookStorage" as GradedComponentBookStorage
 
 }
 
@@ -28,16 +27,16 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
-StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+StorageManager -down-> "1" UserPrefsStorage
+StorageManager -down-> "1" StudentBookStorage
+StorageManager -down-> "1" StudentScoreBookStorage
+StorageManager -down-> "1" GradedComponentBookStorage
 
-Storage -left-|> UserPrefsStorage
-Storage -right-|> AddressBookStorage
+Storage -down-|> UserPrefsStorage
+Storage -down-|> StudentBookStorage
+Storage -down-|> StudentScoreBookStorage
+Storage -down-|> GradedComponentBookStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAddressBookStorage .up.|> AddressBookStorage
-JsonAddressBookStorage ..> JsonSerializableAddressBook
-JsonSerializableAddressBook --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
 
 @enduml

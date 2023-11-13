@@ -18,6 +18,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             "e", "email", "g", "tutorial", "tut", "tutGroup", "ts", "totalScore", "score", "overall", "totalscore");
     private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
             "1", "0", "t", "f");
+
     private static final Boolean IS_REVERSE_DEFAULT = false;
     private static final String ORDER_DEFAULT = "o";
 
@@ -38,9 +39,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
         List<String> orders = argMultimap.getAllValues(PREFIX_ORDER);
         List<String> reverses = argMultimap.getAllValues(PREFIX_REVERSE);
 
-        if (orders.size() > 1 && reverses.size() > 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
-        }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER, PREFIX_REVERSE);
 
         if (orders.size() == 1 && !ORDERS_ACCEPTABLE.contains(orders.get(0))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
@@ -50,10 +49,15 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
         }
 
+        return parsedStringToCommand(orders, reverses);
+    }
+
+    private SortStudentCommand parsedStringToCommand(List<String> givenOrder, List<String> givenIsReverse)
+            throws ParseException {
         String order = ORDER_DEFAULT;
-        boolean reverse = IS_REVERSE_DEFAULT;
-        if (orders.size() == 1) {
-            switch (orders.get(0)) {
+        boolean isReverse = IS_REVERSE_DEFAULT;
+        if (givenOrder.size() == 1) {
+            switch (givenOrder.get(0)) {
             case "n":
             case "name":
                 order = "n";
@@ -86,26 +90,25 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             }
         }
 
-        if (reverses.size() == 1) {
-            switch (reverses.get(0)) {
+        if (givenIsReverse.size() == 1) {
+            switch (givenIsReverse.get(0)) {
             case "decreasing":
             case "0":
             case "false":
             case "f":
-                reverse = false;
+                isReverse = false;
                 break;
             case "increasing":
             case "1":
             case "true":
             case "t":
-                reverse = true;
+                isReverse = true;
                 break;
             default:
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         SortStudentCommand.MESSAGE_USAGE));
             }
         }
-
-        return new SortStudentCommand(order, reverse);
+        return new SortStudentCommand(order, isReverse);
     }
 }

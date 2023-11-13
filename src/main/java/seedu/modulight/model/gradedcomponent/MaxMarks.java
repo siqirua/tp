@@ -10,8 +10,7 @@ import static seedu.modulight.commons.util.AppUtil.checkArgument;
 public class MaxMarks {
 
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Maximum mark argument should be >= 0 and <= 10000";
+    public static final String MESSAGE_CONSTRAINTS = "Maximum mark argument should be >= 0 and <= 10000";
 
     public final Float maxMarks;
 

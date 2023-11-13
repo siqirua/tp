@@ -19,7 +19,7 @@ import seedu.modulight.model.studentscore.ExactScoreMatchPredicate;
 import seedu.modulight.model.studentscore.model.StudentScoreBook;
 
 /**
- * Sorts the student(s) whose student id by the given order.
+ * Sorts the student scores and their associated students by the given order.
  */
 public class SortStudentScoreCommand extends Command {
     public static final String COMMAND_WORD = "sortScore";

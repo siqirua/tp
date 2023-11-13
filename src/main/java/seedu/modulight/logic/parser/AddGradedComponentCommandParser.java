@@ -20,8 +20,8 @@ import seedu.modulight.model.gradedcomponent.Weightage;
 public class AddGradedComponentCommandParser implements Parser<AddGradedComponentCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AddGradedComponentCommand
+     * and returns an AddGradedComponentCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddGradedComponentCommand parse(String args) throws ParseException {
