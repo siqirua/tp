@@ -188,25 +188,47 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Auto-grading
 
-#### Proposed Implementation
+#### Implementation
 
-{Intro}
+The auto-grading command uses the help of `EditStudentScommand` and `SortStuCommand` to properly assign each grade to the students. 
+The `SortStuCommand` is used to find the grade threshold value for each grade, if the method used is by `percentile` (this will be explained later). 
+Additionally, it creates clearer result as it sorts the students by their total score inversely. 
+In a short manner, the mechanism works by finding the grade threshold for each grade and assigning the grade to each student by comparing
+their total score to the previously found grade threshold.
 
-Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
+There are 2 possible method of grading:
+* Percentile Method: `percentile`
+    * Calculate students' grade based on the statistical percentile. This will assign the grade for students above k-th percentile.
+      `SortStuCommand` will be used to sort the students and find the students at the exact position of the grade threshold. 
+      Note that it will **round up** the index to take a more lenient approach. The total score of that student will be used as the grade threshold.
+* Absolute Score Method: `absolute`
+    * Calculate students' grade based on the given passing grade values.
+    * The absolute value is compared directly with the students' total score (in percentage of the maximum score possible).
+
+**Important Note:**
+* The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, `findStu` command can be used to display every student.
+
+
+Given below is an example usage scenario and how the auto-grading mechanism for percentile calculation behaves at each step.
 
 Step 1. The user launch the application for the first time.
 
-Step 2. The user creates the desired graded components and adds all the students in the cohort.
+Step 2. The user creates the desired graded components, adds all the students in the cohort, and assign them with scores.
 
-Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile'
+Step 3. The user then executes `autoGrade ag/percentile pg/95 70 65 50 40 30 20` to execute the auto-grading system, the `percentile`
 keyword indicates that ModuLight grades based on the students' percentile compared to another. The value after `pg/` indicates
 the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`.
 
 <box type="info" seamless>
 
-**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score.
+**Note:** The value for `ag/` can be type `absolute` which determines the grade based on the passing score of the student's total score.
 
 </box>
+
+This step will first trigger the parse function and several things will be executed
+1. 
+This step will first trigger the `sortStuCommand` and causes the filtered student list to be updated into the sorted form. 
+
 
 Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
 Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
@@ -219,9 +241,6 @@ total score. ModuLight will then execute `editStudentCommand` on every student t
 
 **Aspect: How the assignments of grade works:**
 
-* **Alternative 1 (Current choice):** Use tags to assign the grade
-    * Pros: Easy to implement.
-    * Cons: Not ideal if we want to extend the code for more features.
 * **Alternative 2:** Create new Grade object for each student.
     * Pros: Cleaner and extendable code implementation.
     * Cons: require change of implementation on multiple classes.
@@ -349,33 +368,33 @@ NUS professors who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​       | I want to …​                                               | So that I can…​                                                                                                |
-|----------|---------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `* * *`  | NUS professor | add a new student                                          | track all students taking my course.                                                                           |
-| `* * *`  | NUS professor | add a new graded component                                 | track all graded components in my course thus far.                                                             |
-| `* * *`  | NUS professor | add a new student score                                    | track individual student performance on this module's graded components.                                       |
-| `* * *`  | NUS professor | delete a student                                           | remove students dropping the course/wrongly assigned.                                                          |
-| `* * *`  | NUS professor | delete a graded component                                  | remove a graded component if I feel it is no longer necessary.                                                 |
-| `* * *`  | NUS professor | delete a student score                                     |                                                                                                                |
-| `* * *`  | NUS professor | save changes made                                          | so I can update student grade information throughout the semester.                                             |
-| `* * *`  | NUS professor | load information                                           | so I can update student grade information throughout the semester.                                             |
-| `* *`    | NUS professor | edit a student                                             | update outdated student information or correct mistakes.                                                       |
-| `* *`    | NUS professor | edit a graded component                                    | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
-| `* *`    | NUS professor | edit a student score                                       | regrade student scripts or correct mistakes.                                                                   |
-| `* *`    | NUS professor | find student and associated scores by ID                   | quickly find information about a student and their scores without having to search through the list            |
-| `* *`    | NUS professor | find graded component and associated scores by ID          | quickly find information about a graded component and student scores without having to search through the list |
-| `* *`    | NUS professor | quickly calculate the overall statistics of student grades | have a quick insight of how my students are performing                                                         |
-| `* *`    | NUS professor | sort students with specific order                          | find the top students easily                                                                                   |
-| `* *`    | NUS professor | sort student scores with specific order                    | find the top students with their associated scores easily                                                      |
-|          | NUS professor | **autograde**                                              |                                                                                                                |
-| `*`      | NUS professor | toggle between dark and light mode                         | have a pleasant user experience.                                                                               |
+| Priority | As a …​       | I want to …​                                                                                                                    | So that I can…​                                                                                                |
+|----------|---------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `* * *`  | NUS professor | add a new student                                                                                                               | track all students taking my course.                                                                           |
+| `* * *`  | NUS professor | add a new graded component                                                                                                      | track all graded components in my course thus far.                                                             |
+| `* * *`  | NUS professor | add a new student score                                                                                                         | track individual student performance on this module's graded components.                                       |
+| `* * *`  | NUS professor | delete a student                                                                                                                | remove students dropping the course/wrongly assigned.                                                          |
+| `* * *`  | NUS professor | delete a graded component                                                                                                       | remove a graded component if I feel it is no longer necessary.                                                 |
+| `* * *`  | NUS professor | delete a student score                                                                                                          |                                                                                                                |
+| `* * *`  | NUS professor | save changes made                                                                                                               | so I can update student grade information throughout the semester.                                             |
+| `* * *`  | NUS professor | load information                                                                                                                | so I can update student grade information throughout the semester.                                             |
+| `* *`    | NUS professor | edit a student                                                                                                                  | update outdated student information or correct mistakes.                                                       |
+| `* *`    | NUS professor | edit a graded component                                                                                                         | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
+| `* *`    | NUS professor | edit a student score                                                                                                            | regrade student scripts or correct mistakes.                                                                   |
+| `* *`    | NUS professor | find student and associated scores by ID                                                                                        | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | NUS professor | find graded component and associated scores by ID                                                                               | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | quickly calculate the overall statistics of student grades                                                                      | have a quick insight of how my students are performing                                                         |
+| `* *`    | NUS professor | sort students with specific order                                                                                               | find the top students easily                                                                                   |
+| `* *`    | NUS professor | sort student scores with specific order                                                                                         | find the top students with their associated scores easily                                                      |
+| `* *`    | NUS professor | automatically grade students based on their total score, the grading method I want to use, and the passing value for each grade | significantly reduce the time needed to grade the students and avoid manually grading each student.            |
+| `*`      | NUS professor | toggle between dark and light mode                                                                                              | have a pleasant user experience.                                                                               |
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `ModuLight` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a student **
+**Use case: Add a student**
 
 **MSS**
 
@@ -503,12 +522,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to find a student or students with the specific keywords.
 2.  ModuLight shows a list of students that fulfilling the searching criteria.
+
     Use case ends.
 
 **Extensions**
 
 * 1a. There are some unsupported or incorrect keywords.
     * 1a1. ModuLight shows an error message.
+
       Use case ends.
 
 **Use case: Sort student(s)**
@@ -517,12 +538,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to sort the displayed student list with the specific order.
 2.  ModuLight shows a list of sorted students.
+
     Use case ends.
 
 **Extensions**
 
 * 1a. The given sorting order is unsupported.
     * 1a1. ModuLight shows an error message.
+
       Use case ends.
 
 **Use case: Calculate the overall stats of student performance**
@@ -531,19 +554,52 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to calculate the overall statistics of student performance
 2.  ModuLight shows a summary of statistics
+
     Use case ends.
 
 **Extensions**
 
 * 1a. There is currently no student scores.
     * 1a1. ModuLight shows an error message.
+  
     Use case ends.
 
 * 1b. User requests to calculate a non-supported statistical measure.
     * 1b1. ModuLight shows an error message and a list of supported statistical measures.
+
     Use case ends.
 
+**Use case: Automatically grade students based on their total score**
 
+**MSS**
+
+1. User requests to automatically grade student using AutoGradeCommand.
+2. Modulight automatically grade every student command based on their total score, grading method, and passing value. 
+3. Modulight automatically sort students based on their total score for convenience.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User request to use unsupported grading method.
+  * 1a1. Modulight shows an error message and a list of supported grading method available.
+
+    Use case ends
+
+* 1b. User inputted non-decreasing values for passing value.
+  * 1b1. Modulight shows an error message specifying that the values inputted is non-decreasing.
+
+    Use case ends
+
+* 1c. User inputted passing values outside the bound of 0 and 100 inclusively.
+  * 1c1. Modulight shows an error message specifying that the values must be between 0 and 100 inclusively.
+
+    Use case ends
+
+* 1d. User inputted too many passing values.
+  * 1d1. Modulight shows an error message specifying that there are too many passing values inputted.
+
+    Use case ends
 
 *{More to be added}*
 

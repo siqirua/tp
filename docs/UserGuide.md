@@ -415,6 +415,9 @@ The `PASSING_VALUE` are numbers that determine the boundary for each grade
     * Value `30` given to `B`
     * Any Value below `30` will be given `F`
 
+**Important Note:**
+* The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, please use `findStu` command to display every student.
+
 Example:
 * `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95%` above will be given `A+`, total score below `95%` and `90` above will be given `A`, and so on, while below `20%` will be given `F`.
 
