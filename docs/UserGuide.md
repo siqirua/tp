@@ -23,7 +23,7 @@ Furthermore, we believe that module management should be **efficient**. Therefor
 via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). If you can 
 type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
-> [!NOTE]
+> **Note**
 > * We assume that the professors are already familiar with module structures,
 such as the number and weightage of graded components and the number of students and tutorial groups.
 > * We understand that
@@ -114,8 +114,8 @@ The following section gives an overview of the parameters used for the commands 
 
 <box type="info" seamless>
 
-> [!NOTE] 
->  **Graded Component and Student Score parameters for score calculation**
+> **Note**: Graded Component and Student Score parameters for score calculation
+> 
 > * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
 determine the relative performance of a student for a component. <br> For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
 > * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
@@ -123,9 +123,7 @@ determine the relative performance of a student for a component. <br> For instan
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
 the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
 > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
-
-
-* If a student or graded component has no associated student scores, the average mark will be listed as 0.
+> * If a student or graded component has no associated student scores, the average mark will be listed as 0.
 
 </box>
 
@@ -165,21 +163,15 @@ Here is a summary of each GUI component within ModuLight.
 
 ## Features
 
-> [!IMPORTANT] <br>
+> **Note** <br>
+> 
 > If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
-### Viewing help : `help`
-
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
-
-Format: `help`
 
 ## Add Commands
 Adds a new student or graded component. 
 
-> [!NOTE]
+> **Note** <br>
+> 
 > Student scores will be automatically added when a new student or component is added.
 
 ### Add a student: `addStu`
@@ -211,7 +203,8 @@ Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midt
 
 ## Edit Commands
 Edit a student, student score or graded component.
-> [!NOTE]
+> **Note** <br>
+> 
 > A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
 > For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
 
@@ -267,7 +260,8 @@ Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score 
 
 ## Delete Commands
 Delete a student or graded component from the data base.
-> [!NOTE]
+> **Note** <br>
+> 
 > Student scores will be automatically deleted when a new student or component is deleted.
 > For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
 
@@ -307,7 +301,8 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 | x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism | student has plagiarised |
  | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm              | mid semeter test        |
 
-> [!NOTE]
+> **Note** <br>
+> 
 > * All find commands are case-insensitive
 > * It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
 > * For searching with multiple student parameters of the same type, it will find the objects who satisfy any of the
@@ -461,6 +456,15 @@ Examples:
 * `compStats st/upperQuartile st/lowerQuartile c/Midterm` returns the upper and lower quartile of the 
 student grades in Midterm.
 
+## Other Commands
+### Viewing help : `help`
+
+Shows a message explaining how to access the help page.
+
+![help message](images/helpMessage.png)
+
+Format: `help`
+
 ### List all : `listAll`
 Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
 
@@ -490,11 +494,6 @@ ModuLight data is saved in the hard disk automatically after any command that ch
 ### Loading the previous data
 
 There is no need to manually load data stored on the hard disc. It will be available automatically everytime the program starts.
-
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -48,6 +48,11 @@ title: "Yufei Sun's Project Portfolio Page"
       All student scores related to the component will be displayed as well.
     * **Justification**: Since student score is related to students, they are also displayed so that the user does not need rto do another search for them.
     * **Highlights**: Implementing this feature requires a good design of the algorithm and understanding or the project models to show the correct graded components.
+
+* **New Feature**: `listAll` - list all students, student scores and graded components
+  * **What is does**:  Displays all students, student scores and graded components in the respective lists
+  * **Justification**: This feature is useful in resetting the display after a find command
+  
   
 
 * **Code contributed**:
@@ -68,6 +73,7 @@ title: "Yufei Sun's Project Portfolio Page"
   
     * Developer Guide:
       * Documented implementation of the logic component
+      * Updated UML diagrams for proposed implementation and better oop
 
 
 * **Testing**:
