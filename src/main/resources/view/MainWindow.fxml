@@ -51,7 +51,7 @@
         <VBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="500">
             <VBox VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
               <HBox minHeight="40" maxHeight="40" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                <VBox styleClass="pane-with-border-custom" minWidth="120" prefWidth="220" alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <VBox styleClass="pane-with-border-custom" minWidth="200" prefWidth="300" alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                   <Label text="Graded Components" styleClass="pane-header-text"></Label>
                 </VBox>
                 <VBox styleClass="pane-with-border-custom" minWidth="200" prefWidth="300" alignment="BASELINE_CENTER"  HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
@@ -62,7 +62,7 @@
                 </VBox>
               </HBox>
               <HBox fx:id="ppl2" minWidth="520" prefWidth="820" HBox.hgrow="ALWAYS" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
-                <VBox fx:id="gradedComponentList" styleClass="pane-with-border" minWidth="120"  prefWidth="220" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+                <VBox fx:id="gradedComponentList" styleClass="pane-with-border" minWidth="200"  prefWidth="300" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
                   <padding>
                     <Insets top="10" right="10" bottom="10" left="10" />
                   </padding>

@@ -1,7 +1,5 @@
 package seedu.modulight.ui;
 
-import java.text.DecimalFormat;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -55,10 +53,9 @@ public class GradedComponentCard extends UiPart<Region> {
 
         float meanAbsoluteScore = gradedComponent.getMeanAbsoluteScore();
         float meanRelativeScore = gradedComponent.getMeanRelativeScore();
-        DecimalFormat df = new DecimalFormat("#.#");
-        Label meanScoreLabel =
-                new Label("Mean: " + df.format(meanAbsoluteScore) + "/"
-                        + gradedComponent.getMaxMarks() + " (" + df.format(meanRelativeScore) + "%)");
+
+        Label meanScoreLabel = new Label(String.format("Mean: %.1f", meanAbsoluteScore) + "/"
+                        + gradedComponent.getMaxMarks() + " (" + String.format("%.1f", meanRelativeScore) + "%)");
         meanScoreLabel.getStyleClass().add("cell_small_label");
         gradedComponentBox.getChildren().add(meanScoreLabel);
 
