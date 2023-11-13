@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:User executes compStats command;
+if () then ([given graded component exists\nand there is at least a valid score])
+  :all relevant statistics calculated;
+  :a summary of all statistics displayed;
+else ([else])
+    :a error message shows up;
+endif
+
+:Execution completed;
+
+stop
+
+@enduml

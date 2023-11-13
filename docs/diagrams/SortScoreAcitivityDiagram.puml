@@ -6,12 +6,13 @@ start
 if () then ([given graded component exists])
   :student scores filtered and sorted;
   :students sorted accordingly;
+  :Updated students and student scores list saved to ModuLight;
 else ([else])
     :a error message shows up;
     :user retypes the command;
 endif
 
-:Updated students and student scores list saved to ModuLight;
+: execution completed;
 
 stop
 

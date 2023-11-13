@@ -1,0 +1,62 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ModuLightParser" as ModuLightParser LOGIC_COLOR
+participant ":AutoGradeCommandParser" as AutoGradeCommandParser LOGIC_COLOR
+participant "a:AutoGradeCommand" as AutoGradeCommand LOGIC_COLOR
+end box
+
+[-> LogicManager : execute("autoGrade ...")
+activate LogicManager
+
+LogicManager -> ModuLightParser : parseCommand("autoGrade ...")
+activate ModuLightParser
+
+create AutoGradeCommandParser
+ModuLightParser -> AutoGradeCommandParser
+activate AutoGradeCommandParser
+
+AutoGradeCommandParser --> ModuLightParser
+deactivate AutoGradeCommandParser
+
+ModuLightParser -> AutoGradeCommandParser : parse()
+activate AutoGradeCommandParser
+
+AutoGradeCommandParser -> AutoGradeCommandParser : mapToFloat()
+activate AutoGradeCommandParser
+AutoGradeCommandParser --> AutoGradeCommandParser
+deactivate AutoGradeCommandParser
+
+AutoGradeCommandParser -> AutoGradeCommandParser : checkAutoGradeType()
+activate AutoGradeCommandParser
+AutoGradeCommandParser --> AutoGradeCommandParser
+deactivate AutoGradeCommandParser
+
+create AutoGradeCommand
+AutoGradeCommandParser -> AutoGradeCommand
+activate AutoGradeCommand
+
+AutoGradeCommand --> AutoGradeCommandParser : a
+deactivate AutoGradeCommand
+
+AutoGradeCommandParser --> ModuLightParser : a
+deactivate AutoGradeCommandParser
+AutoGradeCommandParser -[hidden]-> ModuLightParser
+destroy AutoGradeCommandParser
+
+ModuLightParser --> LogicManager : a
+deactivate ModuLightParser
+
+LogicManager -> AutoGradeCommand : execute()
+activate AutoGradeCommand
+
+AutoGradeCommand --> LogicManager : result
+deactivate AutoGradeCommand
+
+[<--LogicManager
+deactivate LogicManager
+
+@enduml

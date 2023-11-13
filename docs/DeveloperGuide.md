@@ -65,7 +65,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -130,7 +130,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="600" />
 
 Note that Student, StudentGrade and GradeComponent classes have similar structures and dependencies, thus, we use Ssc class to represent these three and their related classes in the class diagram above.
 
@@ -190,7 +190,7 @@ The `addStu` function allows the user to add a new student to the database. Modu
 to make sure that there is no duplicates. 
 The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
 
-The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
 
 The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
 ![AddStudentCommand](diagrams/AddStudent.png)
@@ -200,12 +200,16 @@ The `editStu` function allows the user to edit the information of the student in
 The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
 All student scores related to this `Student` will be updated as well.
 
-The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). 
+The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. 
 
 The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
 ![AddStudentCommand](diagrams/EditStudent.png)
 
-### Find Student
+### Find Commands
+The find commands allows users to find the student, student scores and graded components that they are interested in.
+We have three find commands in total: `findStu`, `findScore` and `findComp`. The implementation of these three commands are similar. Here we use the `findStu` command to illustrate how they are executed.
+
+#### Find Student
 The `findStu` function allows the user to find the student that matches the given search criteria.
 
 It displays both the matching students and relevant student scores that belongs to the student.
@@ -219,15 +223,77 @@ The following sequence diagram illustrates the process of execution of an `FindS
 
 ![AddStudentCommand](diagrams/FindStudent.png)
 
+### List Commands
+The `listAll` command lists all student, student scores and graded components in ModuLight.<br>
+Below is an activity diagram that demonstrates how this command works.
+
+![listAllCommand](diagrams/List.png)
+
+### Add Graded Component
+
+<puml src="diagrams/AddGradedComponentSequenceDiagram.puml" width="450" />
+
+The `addComp` command allows users to add a graded component and automaticaly create student scores associated with that component for every student in the database.
+A typical program flow is as follows:
+
+1. User enters a command to add a graded component, for instance `addComp 1 c/Midterms w/30 mm/60`.
+2. `AddGradedComponentCommandParser` attempts to parse the flags `c/`, `mm/` and `w/` which represent the
+   component name, maximum mark and weightage values respectively. It performs several checks, failing which a `ParseCommandException` is thrown:
+    1. All 3 flags have non-empty values.
+    2. The component name, maximum marks and weightage values provided are valid. (eg. `Weightage` is a number between 0 and 100)
+    3. There are no duplicate flags provided.
+3. Assuming all flag values have been successfully parsed, these are used to initialize a `GradedComponent` which is passed into `AddGradedComponentCommand`.
+4. Within `AddGradedComponentCommand`, a second round of checks is initiated, failing which a `CommandException` is thrown:
+    1. There does not exist another `GradedComponent` in the database with the same name as the added one.
+    2. After adding the `GradedComponent`, the total weightage does not exceed 100.
+5. If all checks are successful, the new `GradedComponent` is added into the database.
+6. For every student in the database, the command additionally creates a student score corresponding to that student and the newly created
+   `GradedComponent`, with marks initialized to 0.
+7. The linkages between `Student` and `GradedComponent` are updated accordingly (ie. their corresponding `StudentScores` are added to their score lists)
+
+Alternative Implementations:
+* For step 6, we initially considered letting users add student scores on their own corresponding to an existing student ID and component name.
+  However, we rejected this idea as users would likely find it very troublesome to individually create student scores, and it would also make the
+  calculation of scores more convoluted. (eg. how to calculate mean for components/students with missing scores)
+  se the index provided, checking that it is a valid integer from 1 to the size
+
+### Edit Graded Component
+
+<puml src="diagrams/EditGradedComponent.puml" width="450" />
+
+The `editComp` command allows users to edit a graded component's details based on its 1-based index, which are propagated to the component's associated student scores.
+A typical program flow is as follows:
+
+1. User enters a command to edit a graded component, for instance `editComp 1 c/Midterm Exam w/25 mm/50`.
+2. `EditGradedComponentCommandParser` checks for the  flags c/, mm/ and w/ which represent the component name, maximum mark and weightage values respectively. It performs several checks, failing which a `ParseCommandException` is thrown:
+    1. The index provided is an integer between 1 and the size of the displayed `GradedComponent` list
+    2. The component name, maximum marks and weightage values provided are valid. (eg. Weightage is a number between 0 and 100)
+    3. There are no duplicate flags provided.
+    4. At least one field to be edited must be provided.
+3. An `EditGradedComponentCommandDescriptor` is created using the provided arguments. This is because the graded component list in `GradedComponentBook` is read-only, so to edit a `GradedComponent`, we will need to create a new `GradedComponent` using the descriptor, and call the `setGradedComponent` function to replace the old component with the new one.
+4. An `EditGradedComponentCommand` is created and executed with the `Model`.
+5. In `EditGradedComponentCommand`, more checks are performed, failing which a `CommandException` is thrown:
+    1. There does not exist another `GradedComponent` in the database with the same name as the edited one.
+    2. After editing the `GradedComponent`, the total weightage does not exceed 100.
+    3. After editing the `GradedComponent`, none of the associated student scores exceeds its maximum mark.
+6. This new graded component replaces the old one using  `setGradedComponent` in `GradedComponentBook`.
+7. All associated student scores of the old `GradedComponent` have their linkages updated.
+
+Alternative Implementations:
+* We considered making the lists of `GradedComponentBook` not read-only, but decided against it at
+  the time as it would require refactoring a large part of the codebase. However, this may
+  create some inefficiency as the `Model` has to search through the entire `GradedComponent` list
+  for the appropriate item to replace. Therefore, this is a possible extension that future developers may consider.
+
 ### Sort Commands
 
-The Sort related feature allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
+The Sort related features allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
 
-We will discuss the implementation of sortScore (Sort Student Scores) command here and omit the discussion of the implementation of sortStu command since it is very similar to sortScore command and simpler.
+We will discuss the implementation of `sortScore` (Sort Student Scores) command here and omit the discussion of the implementation of `sortStu` command since it is very similar to `sortScore` command and simpler.
 
 #### Implementation
 
-The `sortScoreCommand` (Sort Student Scores) mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+The `sortScore` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
 
 * `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
 * `studentScoreBook.sortStudentScore(Boolean isReverse)` - Filters the student scores with the given graded component and sort them according to the given reverse order.
@@ -251,44 +317,119 @@ The following sequence diagram shows how the sort student scores operation works
 
 <puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
 
-The following activity diagram summarizes what happens when a user executes a new sortScore command：<br>
+The following activity diagram summarizes what happens when a user executes a new `sortScore` command：<br>
+<puml src="diagrams/SortScoreAcitivityDiagram.puml" alt="SortScoreActivityDiagram" />
+
+### Stats Commands
+
+The Stats related features allows NUS professors to calculate the statistics of student scores effectively. When successfully executed, the relevant statistics will be shown in the result display box of Graphical User Interface. <br>
+
+We will discuss the implementation of `compStats` (calculate the statistics for a specific graded component) command here and omit the discussion of the implementation of `stats` command since it is very similar to `compStats` command and simpler.
+
+#### Implementation
+
+The `compStats` mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentBook.getStudentList()` - Returns the stored list of students.
+* `compStatsCommand.generateOverallStatsSummary(List<Student> students)` - Returns a string represented all the relevant statistics.
+* `statsCalculator` - A class that helps calculate different types of statistical measures.
+
+Given below is an example usage scenario and how the `compStats` mechanism behaves at each step.
+
+Step 1. The user executes `compStats c/Midterm` command to calculate the statistics of student scores of Midterm. The `compStats` command calls CompStatsCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 2. `CompStatsCommandParser#parse()` invokes the creation of a `CompStatsCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `CompStatsCommand` object, an error message will be displayed and user will retype their command.
+
+Step 3. Upon creation and execution of `CompStatsCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentBook.getStudentList()` and `compStatsCommand.generateOverallStatsSummary(List<Student> students)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so statistics will not be calculated and displayed.
+
+Step 4. After successfully calculating the statistics, a `CommandResult` object will be created to show the calculated statistics.
+
+The following sequence diagram shows how the `compStats` operation works:<br>
+
+<puml src="diagrams/CompStatsCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new `compStats` command：<br>
+<puml src="diagrams/CompStatsAcitivityDiagram.puml" alt="CompStatsActivityDiagram" />
 
 
 ### Auto-grading
 
-#### Proposed Implementation
+#### Implementation
 
-Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
+The auto-grading command uses the help of `EditStudentScommand` and `SortStuCommand` to properly assign each grade to the students. 
+The `SortStuCommand` is used to find the grade threshold value for each grade, if the method used is by `percentile` (this will be explained later). 
+Additionally, it creates clearer result as it sorts the students by their total score inversely. 
+In a short manner, the mechanism works by finding the grade threshold for each grade and assigning the grade to each student by comparing
+their total score to the previously found grade threshold.
+
+There are 2 possible method of grading:
+* Percentile Method: `percentile`
+    * Calculate students' grade based on the statistical percentile. This will assign the grade for students above k-th percentile.
+      `SortStuCommand` will be used to sort the students and find the students at the exact position of the grade threshold. 
+      Note that it will **round up** the index to take a more lenient approach. The total score of that student will be used as the grade threshold.
+* Absolute Score Method: `absolute`
+    * Calculate students' grade based on the given passing grade values.
+    * The absolute value is compared directly with the students' total score (in percentage of the maximum score possible).
+
+**Important Note:**
+* The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, `findStu` command can be used to display every student.
+
+
+Given below is an example usage scenario and how the auto-grading mechanism for percentile calculation behaves at each step.
+
 
 Step 1. The user launch the application for the first time.
 
-Step 2. The user creates the desired graded components and adds all the students in the cohort.
+Step 2. The user creates the desired graded components, adds all the students in the cohort, and assign them with scores.
 
-Step 3. The user then executes `autograde ag/percentile pg/5 15 30 50 60 70 80 90 95` to execute the auto-grading system, the 'percentile'
+Step 3. The user then executes `autoGrade ag/percentile pg/95 70 65 50 40 30 20` to execute the auto-grading system, the `percentile`
 keyword indicates that ModuLight grades based on the students' percentile compared to another. The value after `pg/` indicates
 the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-] [B+] ...`.
 
 <box type="info" seamless>
 
-**Note:** The value for `ag/` can be type `score` which determines the grade based on the passing score of the student's total score.
+**Note:** The value for `ag/` can be type `absolute` which determines the grade based on the passing score of the student's total score.
 
 </box>
 
-Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
-Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
-total score. ModuLight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
-`autoGradeCommand`.
+This step will first trigger the parse function and several things will be executed
+1. The string argument will be parsed into the grading method and the passing value.
+2. `AutoGradeCommandParser#checkAutoGradeType()` then will parse the grading method string into AutoGradeType `PERCENTILE`.
+3. `AutoGradeCommandParser#mapToFloat()` will parse the passing value string into an array of float. In this step, string that is not parsable will be checked and an exception will be thrown.
+   Furthermore, values less than zero or more than 100 will cause an exception to be thrown as the total mark of a student is in percentage.
+   Further check on values must be decreasing is also available as lower grades cannot have higher grade threshold.
+4. The parser then will return a new `AutoGradeCommand` object.
 
+Step 4. The `AutoGradeCommand` returned will then be executed and several other things will be executed
+1. This step will first trigger the `sortStuCommand` and causes the filtered student list to be updated into the sorted form. 
+2. A check will be done to ensure that the inputted array of float does not pass the maximum number of values. An exception will be thrown otherwise.
+3. As the grading method used in this example is `PERCENTILE`, it will then trigger `AutoGradeCommand#setGradeThresholdPercentile()` to be executed in order to calculate the
+   grade threshold. 
+4. It will then create an `EditStudentDescriptor` for each student in the filtered list and the assigned grade.
+   The grade is determined by comparing the student's total score and the grade threshold.
+5. `EditStudentCommand` will be created and executed for each student and the grade will be added.
+
+
+The following sequence diagram shows how the auto-grading mechanism works:
+* The parser implementation (Command execution is hidden):
+
+<puml src="diagrams/AutoGradeParserSequenceDiagram.puml" />
+
+* The command implementation :
+
+<puml src="diagrams/AutoGradeCommandSequenceDiagram.puml" />
+
+[//]: # (The following activity diagram shows the logic behind the auto-grade mechanism:)
 
 
 #### Design considerations:
 
 **Aspect: How the assignments of grade works:**
 
-* **Alternative 1 (Current choice):** Use tags to assign the grade
-    * Pros: Easy to implement.
-    * Cons: Not ideal if we want to extend the code for more features.
-* **Alternative 2:** Create new Grade object for each student.
+* Create new Grade object for each student.
     * Pros: Cleaner and extendable code implementation.
     * Cons: require change of implementation on multiple classes.
 
@@ -407,7 +548,7 @@ NUS professors who:
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-* NUS professors need a convenient system to manage students and assessments. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (eg. dropped module, potential TA etc.), alongside general GUI improvements.
+* NUS professors need a convenient system to manage students and assessments. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (e.g. dropped module, potential TA etc.), alongside general GUI improvements.
 
 
 
@@ -415,34 +556,33 @@ NUS professors who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​       | I want to …​                                               | So that I can…​                                                                                                |
-|----------|---------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `* * *`  | NUS professor | add a new student                                          | track all students taking my course.                                                                           |
-| `* * *`  | NUS professor | add a new graded component                                 | track all graded components in my course thus far.                                                             |
-| `* * *`  | NUS professor | add a new student score                                    | track individual student performance on this module's graded components.                                       |
-| `* * *`  | NUS professor | delete a student                                           | remove students dropping the course/wrongly assigned.                                                          |
-| `* * *`  | NUS professor | delete a graded component                                  | remove a graded component if I feel it is no longer necessary.                                                 |
-| `* * *`  | NUS professor | delete a student score                                     |                                                                                                                |
-| `* * *`  | NUS professor | save changes made                                          | so I can update student grade information throughout the semester.                                             |
-| `* * *`  | NUS professor | load information                                           | so I can update student grade information throughout the semester.                                             |
-| `* *`    | NUS professor | edit a student                                             | update outdated student information or correct mistakes.                                                       |
-| `* *`    | NUS professor | edit a graded component                                    | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
-| `* *`    | NUS professor | edit a student score                                       | regrade student scripts or correct mistakes.                                                                   |
-| `* *`    | NUS professor | find student and associated scores                         | quickly find information about a student and their scores without having to search through the list            |
-| `* *`    | NUS professor | find graded component and associated scores                | quickly find information about a graded component and student scores without having to search through the list |
-| `* *`    | NUS professor | list all student, student scores and graded components     | remove the filters that has been applied to the lists                                                          |
-| `* *`    | NUS professor | quickly calculate the overall statistics of student grades | have a quick insight of how my students are performing                                                         |
-| `* *`    | NUS professor | sort students with specific order                          | find the top students easily                                                                                   |
-| `* *`    | NUS professor | sort student scores with specific order                    | find the top students with their associated scores easily                                                      |
-|          | NUS professor | **autograde**                                              |                                                                                                                |
-| `*`      | NUS professor | toggle between dark and light mode                         | have a pleasant user experience.                                                                               |
+| Priority | As a …​       | I want to …​                                                                                                                    | So that I can…​                                                                                                |
+|----------|---------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `* * *`  | NUS professor | add a new student                                                                                                               | track all students taking my course.                                                                           |
+| `* * *`  | NUS professor | add a new graded component                                                                                                      | track all graded components in my course thus far.                                                             |
+| `* * *`  | NUS professor | add a new student score                                                                                                         | track individual student performance on this module's graded components.                                       |
+| `* * *`  | NUS professor | delete a student                                                                                                                | remove students dropping the course/wrongly assigned.                                                          |
+| `* * *`  | NUS professor | delete a graded component                                                                                                       | remove a graded component if I feel it is no longer necessary.                                                 |
+| `* * *`  | NUS professor | delete a student score                                                                                                          |                                                                                                                |
+| `* * *`  | NUS professor | save changes made                                                                                                               | so I can update student grade information throughout the semester.                                             |
+| `* * *`  | NUS professor | load information                                                                                                                | so I can update student grade information throughout the semester.                                             |
+| `* *`    | NUS professor | edit a student                                                                                                                  | update outdated student information or correct mistakes.                                                       |
+| `* *`    | NUS professor | edit a graded component                                                                                                         | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
+| `* *`    | NUS professor | edit a student score                                                                                                            | regrade student scripts or correct mistakes.                                                                   |
+| `* *`    | NUS professor | find student and associated scores by ID                                                                                        | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | NUS professor | find graded component and associated scores by ID                                                                               | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | quickly calculate the overall statistics of student grades                                                                      | have a quick insight of how my students are performing                                                         |
+| `* *`    | NUS professor | sort students with specific order                                                                                               | find the top students easily                                                                                   |
+| `* *`    | NUS professor | sort student scores with specific order                                                                                         | find the top students with their associated scores easily                                                      |
+| `* *`    | NUS professor | automatically grade students based on their total score, the grading method I want to use, and the passing value for each grade | significantly reduce the time needed to grade the students and avoid manually grading each student.            |
+| `*`      | NUS professor | toggle between dark and light mode                                                                                              | have a pleasant user experience.                                                                               |
 
 
 ### Use cases
 
 (For all use cases below, the **System** is the `ModuLight` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a student **
+**Use case: Add a student**
 
 **MSS**
 
@@ -571,19 +711,59 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case resumes at step 2.
 
+**Use case: List all**
+
+**MSS**
+
+1.  User requests to list all students, student scores and graded components.
+2.  ModuLight shows lists of all students, student scores and graded components.
+
+**Use case: Delete a graded component and its associated scores**
+
+**MSS**
+
+1.  User requests to list graded components.
+2.  ModuLight shows a list of graded components.
+3.  User requests to delete a specific graded component in the list.
+4.  ModuLight deletes the graded component.
+5.  ModuLight shows a list of updated graded components.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ModuLight shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The selected graded component has some associated student scores.
+    * 3b1. ModuLight deletes all associated students scores.
+    * 3b2. ModuLight shows a list of updated student scores.
+      Use case resumes at step 4.
+
 **Use case: Find student(s)**
 
 **MSS**
 
 1.  User requests to find a student or students with the specific keywords.
-2.  ModuLight shows a list of students that fulfilling the searching criteria.
+2.  ModuLight shows a list of students that fulfilling the searching criteria and a list of student scores belonging to the listed students.
+
     Use case ends.
 
 **Extensions**
 
 * 1a. There are some unsupported or incorrect keywords.
     * 1a1. ModuLight shows an error message.
+
       Use case ends.
+* 1b. There are no keywords given
+    * 1b1. ModuLight shows all students, scores and graded components.
 
 **Use case: Sort student(s)**
 
@@ -591,12 +771,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to sort the displayed student list with the specific order.
 2.  ModuLight shows a list of sorted students.
+
     Use case ends.
 
 **Extensions**
 
 * 1a. The given sorting order is unsupported.
     * 1a1. ModuLight shows an error message.
+
       Use case ends.
 
 **Use case: Calculate the overall stats of student performance**
@@ -605,19 +787,52 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to calculate the overall statistics of student performance
 2.  ModuLight shows a summary of statistics
+
     Use case ends.
 
 **Extensions**
 
 * 1a. There is currently no student scores.
     * 1a1. ModuLight shows an error message.
+  
     Use case ends.
 
 * 1b. User requests to calculate a non-supported statistical measure.
     * 1b1. ModuLight shows an error message and a list of supported statistical measures.
+
     Use case ends.
 
+**Use case: Automatically grade students based on their total score**
 
+**MSS**
+
+1. User requests to automatically grade student using AutoGradeCommand.
+2. Modulight automatically grade every student command based on their total score, grading method, and passing value. 
+3. Modulight automatically sort students based on their total score for convenience.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User request to use unsupported grading method.
+  * 1a1. Modulight shows an error message and a list of supported grading method available.
+
+    Use case ends
+
+* 1b. User inputted non-decreasing values for passing value.
+  * 1b1. Modulight shows an error message specifying that the values inputted is non-decreasing.
+
+    Use case ends
+
+* 1c. User inputted passing values outside the bound of 0 and 100 inclusively.
+  * 1c1. Modulight shows an error message specifying that the values must be between 0 and 100 inclusively.
+
+    Use case ends
+
+* 1d. User inputted too many passing values.
+  * 1d1. Modulight shows an error message specifying that there are too many passing values inputted.
+
+    Use case ends
 
 *{More to be added}*
 
@@ -692,16 +907,14 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all students using the `listAll` command. Multiple students in the list.
 
-   1. Test case: `deleteStu 1`<br>
-      Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+      1. Test case: `deleteStu 1`<br>
+         Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `deleteStu 0`<br>
-      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
+      1. Test case: `deleteStu 0`<br>
+         Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
+      1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
+         Expected: Similar to previous.
 
 ### Finding a student
 1. Find a student in ModuLight
@@ -711,14 +924,60 @@ testers are expected to do more *exploratory* testing.
    2. Test case: `findStu g/T00`
       Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
    
-   2. Test case: `findStu`
+   3. Test case: `findStu`
       Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
    
-   3. Test case: `findStu n/John n/Amy`
+   4. Test case: `findStu n/John n/Amy`
       Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
    
-   4. Test case: `findStu n/John g/T00`
+   5. Test case: `findStu n/John g/T00`
       Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+
+
+### Sorting Students
+1. Sort students in ModuLight
+    1. Prerequisite: displayed student list is not empty.
+    
+       2. Test case: `sortStu`
+          Expected: The displayed students are sorted by their total scores.
+          
+       3. Test case: `sortStu o/n r/t`
+          Expected: The displayed students are sorted by their names in the reverse alphabetical order.
+          
+       4. Test case: `sortStu o/wrongInput`
+          Expected: An error message that states "Invalid command format!" and the correct usage is shown.
+
+### Sorting Student Scores
+1. Sort student scores in ModuLight
+    1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
+    
+       2. Test case: `sortScore c/Midterm`
+          Expected: Only Midterm student scores are shown, and they are sorted in the ascending order.
+          
+       3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
+          Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
+
+
+### Calculating Statistics
+1. Calculate overall statistics of students' total scores
+    1. Prerequisite: student list and student score list are not empty and there is at least a valid score in Tut `T01`.
+    
+       1. Test case: `stats`
+          Expected: A message that states  all relevant statistical measures (The exhaustive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
+       
+       2. Test case: `stats st/max st/min`
+          Expected: A message that states the max and min is shown.
+       
+       3. Test case: `stats g/T01`
+          Expected: A message that states all relevant statistical measures of Tut `T01` is shown.
+       
+       4. Test case: `stats st/wrongInput`
+          Expected: An error message that states "Some statistic measures are not supported yet." and all supported statistical measures are shown.
+    
+    2. Prerequisite: student score list is empty
+        
+        1. Test case: `stats`
+           Expected: An error message that state "Please have at least one score fulfilling the condition." is shown.
 
 
 ### Saving data
