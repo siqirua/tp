@@ -311,7 +311,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 ### Find students: `findStu`
 
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. However, the displayed list of graded components will remain unchanged.
+Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. All graded components will be displayed as they are relevant.
 
 Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
@@ -327,10 +327,10 @@ all graded components will be displayed as well.
 Format: `findComp [c/COMP_NAME]`
 
 Example: `findComp c/midterm` lists all graded component contains the string midterm  (and their associated scores). 
-All graded students will be shown since they are relevant.
+All students will be shown since they are relevant.
 
 ### Find students : `findScore`
-Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
+Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed.
 Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
