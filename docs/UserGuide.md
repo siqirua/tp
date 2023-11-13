@@ -322,7 +322,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 > **Note** <br>
 > 
-> * All find parameters are case-insensitive, except for tag
+> * All find parameters are case-insensitive, except for tag which needs an exact match
 > * It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
 > * For searching with multiple parameters of the same type, it will find the objects which satisfy any of the
     criteria.
@@ -335,7 +335,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 ### Find students: `findStu`
 
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. However, the displayed list of graded components will remain unchanged.
+Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. All graded components will be displayed as they are relevant.
 
 Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
@@ -348,13 +348,13 @@ Examples:
 Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and 
 all graded components will be displayed as well.
 
-Format: `findComp c/COMP_NAME`
+Format: `findComp [c/COMP_NAME]`
 
 Example: `findComp c/midterm` lists all graded components containing the string midterm  (and their associated scores). 
-All graded students will be shown since they are relevant.
+All students will be shown since they are relevant.
 
 ### Find students : `findScore`
-Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
+Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed.
 Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
@@ -540,7 +540,7 @@ There is no need to manually load data stored on the hard disc. It will be avail
 | **Delete a graded component**                       | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                          |
 | **Delete everything**                               | `clearAll`                                                                                                                            |
 | **Find a student**                                  | `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`<br> e.g., `findStu n/Alice n/Bob g/T01`           |
-| **Find a graded component**                         | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                |
+| **Find a graded component**                         | `findComp [c/COMP_NAME]`<br> e.g., `findComp c/Midterms`                                                                              |
 | **Find a student score**                            | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms` |
 | **List all students, scores and graded components** | `listAll`                                                                                                                             |
 | **Sort student**                                    | `sortStu [o/SORTING_ORDER] [r/REVERSE_ORDER]` <br> e.g., `sortStu o/name r/true`                                                      |

@@ -190,7 +190,7 @@ The `addStu` function allows the user to add a new student to the database. Modu
 to make sure that there is no duplicates. 
 The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
 
-The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
 
 The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
 ![AddStudentCommand](diagrams/AddStudent.png)
@@ -200,12 +200,16 @@ The `editStu` function allows the user to edit the information of the student in
 The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
 All student scores related to this `Student` will be updated as well.
 
-The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). 
+The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. 
 
 The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
 ![AddStudentCommand](diagrams/EditStudent.png)
 
-### Find Student
+### Find Commands
+The find commands allows users to find the student, student scores and graded components that they are interested in.
+We have three find commands in total: `findStu`, `findScore` and `findComp`. The implementation of these three commands are similar. Here we use the `findStu` command to illustrate how they are executed.
+
+#### Find Student
 The `findStu` function allows the user to find the student that matches the given search criteria.
 
 It displays both the matching students and relevant student scores that belongs to the student.
@@ -218,6 +222,12 @@ This only changes the displayed list of students and student scores, stored as `
 The following sequence diagram illustrates the process of execution of an `FindStudentCommand`.
 
 ![AddStudentCommand](diagrams/FindStudent.png)
+
+### List Commands
+The `listAll` command lists all student, student scores and graded components in ModuLight.<br>
+Below is an activity diagram that demonstrates how this command works.
+
+![listAllCommand](diagrams/List.png)
 
 ### Add Graded Component
 
@@ -694,6 +704,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case resumes at step 2.
 
+**Use case: List all**
+
+**MSS**
+
+1.  User requests to list all students, student scores and graded components.
+2.  ModuLight shows lists of all students, student scores and graded components.
 
 **Use case: Delete a graded component and its associated scores**
 
@@ -729,7 +745,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to find a student or students with the specific keywords.
-2.  ModuLight shows a list of students that fulfilling the searching criteria.
+2.  ModuLight shows a list of students that fulfilling the searching criteria and a list of student scores belonging to the listed students.
 
     Use case ends.
 
@@ -739,6 +755,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. ModuLight shows an error message.
 
       Use case ends.
+* 1b. There are no keywords given
+    * 1b1. ModuLight shows all students, scores and graded components.
 
 **Use case: Sort student(s)**
 
