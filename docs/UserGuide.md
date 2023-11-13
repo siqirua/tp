@@ -358,7 +358,8 @@ keywords have the same effect).
 * It is allowed to omit sorting order and reverse order. In this case, the default sorting order is by total score while 
 the default reverse order is false (i.e. increasing).
 * This command will only sort the currently displayed students. If you want to sort all students, please use `listStu`
-command in advance.
+command in advance. If there is no currently displayed student, the command can still execute successfully, but the list of
+students will remain unchanged.
 
 Examples:
 * `sortStu o/name r/true` returns the sorted students whose names are in descending alphabetical order.
@@ -376,7 +377,8 @@ Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
   keywords have the same effect).
 * It is allowed to omit reverse order. In this case, the default reverse order is false (i.e. increasing).
 * This command will only sort the currently displayed students. If you want to sort all students, please use `listAll`
-  command in advance.
+  command in advance. If there is no currently displayed student, the command can still execute successfully, but the lists of
+  students and student scores will remain unchanged.
 
 Examples:
 * `sortScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
@@ -509,7 +511,7 @@ There is no need to manually load data stored on the hard disc. It will be avail
 | **Delete a student**                                | `deleteStu INDEX` <br> e.g., `deleteStu 2`                                                                                            |
 | **Delete a graded component**                       | `deleteComp INDEX` <br> e.g., `deleteComp 1`                                                                                          |
 | **Delete everything**                               | `clearAll`                                                                                                                            |
-| **Find a student**                                  | `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`<br> e.g., `findStu n/Alice n/Bob g/T01`                          |
+| **Find a student**                                  | `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`<br> e.g., `findStu n/Alice n/Bob g/T01`           |
 | **Find a graded component**                         | `findComp c/COMP_NAME`<br> e.g., `findComp c/Midterms`                                                                                |
 | **Find a student score**                            | `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`<br> e.g., `findScore c/Midterms` |
 | **List all students, scores and graded components** | `listAll`                                                                                                                             |

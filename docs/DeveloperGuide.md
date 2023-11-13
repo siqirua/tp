@@ -219,6 +219,41 @@ The following sequence diagram illustrates the process of execution of an `FindS
 
 ![AddStudentCommand](diagrams/FindStudent.png)
 
+### Sort Commands
+
+The Sort related feature allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
+
+We will discuss the implementation of sortScore (Sort Student Scores) command here and omit the discussion of the implementation of sortStu command since it is very similar to sortScore command and simpler.
+
+#### Implementation
+
+The `sortScoreCommand` (Sort Student Scores) mechanism is facilitated by GradedComponentBook, StudentBook and StudentScoreBook. It implements the following operations:
+
+* `GradedComponentBook#hasGc(GcName gcName)` - Returns true if a graded component is already created and in the graded component list.
+* `studentScoreBook.sortStudentScore(Boolean isReverse)` - Filters the student scores with the given graded component and sort them according to the given reverse order.
+* `studentBook.sortStudentScore(GcName gcName, Boolean isReverse)` - Sorts students by their scores in a given graded component.
+
+Given below is an example usage scenario and how the `sortScore` mechanism behaves at each step.
+
+Step 1. The GUI displayed the list of students and their student scores that the user wants to sort after some `find` or `list` commands.
+
+Step 2. The user executes `sortStuScore c/Midterm` command to sort the current displayed lists of students and student scores. The `sortStuScore` command calls SortStudentScoreCommandParser#parse() which parses the string keyed into the command line of the GUI.
+
+Step 3. `SortStudentScoreCommandParser#parse()` invokes the creation of a `SortStudentScoreCommand` object.
+> **Note**: If a command fails its execution due to incorrect command format, it will not create a `SortStudentScoreCommand` object, an error message will be displayed and user will retype their command.
+
+Step 4. Upon creation and execution of `SortStudentScoreCommand` object, `GradedComponentBook#hasGc(GcName gcName)`, `studentScoreBook.sortStudentScore(Boolean isReverse)` and `studentBook.sortStudentScore(GcName gcName, Boolean isReverse)` methods are called.
+> **Note**: If upon invoking `GradedComponentBook#hasGc(GcName gcName)` method and return value is false, it will throw an error and will not call the remaining two methods, so the students and student scores will not be sorted.
+
+Step 5. After successfully sorting student scores and their associated students, a `CommandResult` object will be created to tell the user that the student scores has been successfully sorted.
+
+The following sequence diagram shows how the sort student scores operation works:<br>
+
+<puml src="diagrams/SortScoreCommandSequenceDiagram.puml" alt="SortScoreCommandSequenceDiagram"></puml>
+
+The following activity diagram summarizes what happens when a user executes a new sortScore command：<br>
+
+
 ### Auto-grading
 
 #### Proposed Implementation
