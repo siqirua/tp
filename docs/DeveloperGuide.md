@@ -593,11 +593,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 * 1a. There is some error in the entered data.
+  
   * 1a1. ModuLight shows an error message. <br>
   
     Use case ends.
 
 * 2a. There are already some existing graded components.
+  
   * 2a1. ModuLight creates student scores correspond to the new student for every graded component.
     
      Use case ends.
@@ -624,12 +626,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. ModuLight shows an error message.
 
       Use case resumes at step 2.
+
 * 3b. The given parameter is of invalid format
-   *  3b1. ModuLight shows an error message.
+   
+   * 3b1. ModuLight shows an error message.
   
       Use case resumes at step 2.
+
 * 3c. The edited student number already exists.
-   *  3c1. ModuLight shows an error message.
+   
+   * 3c1. ModuLight shows an error message.
  
       Use case resumes at step 2.
 
@@ -660,6 +666,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3b. The selected student has some associated student scores.
     * 3b1. ModuLight deletes all associated students scores.
     * 3b2. ModuLight shows a list of updated student scores.<br>
+      
       Use case resumes at step 4.
 
 
@@ -676,11 +683,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. There is some error in the entered data.
+  
     * 1a1. ModuLight shows an error message.
       
       Use case ends.
 
 * 2a. There are already some existing students.
+  
     * 2a1. ModuLight creates student scores correspond to the new graded component for every student.
     
       Use case ends.
@@ -769,8 +778,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. ModuLight shows an error message.
 
       Use case ends.
+
 * 1b. There are no keywords given
     * 1b1. ModuLight shows all students, scores and graded components.
+      
       Use case ends.
 
 **Use case: Sort student(s)**
@@ -900,12 +911,12 @@ testers are expected to do more *exploratory* testing.
       Otherwise, a new student with name `John Doe`, student id `A1234567Y`, email `john@gmail.com` and tutorial group `T07` will be created and displayed in the student list.
       If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
 
-   1. Test case: `addStu n/Jane Plain s/A1111111Y e/jane@gmail.com`
+   2. Test case: `addStu n/Jane Plain s/A1111111Y e/jane@gmail.com`
       Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
       Otherwise, a new student with name `Jane Plain`, student id `A1111111Y`, email `jane@gmail.com` and default tutorial group `T00` will be created and displayed in the student list.
       If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
    
-   1. Test case: `addStu n/Amy e/amy@gamil.com`
+   3. Test case: `addStu n/Amy e/amy@gamil.com`
       Expected: An error message of Invalid command format will be displayed in the feedback box, as the student id parameter is missing.
       
    
@@ -918,10 +929,10 @@ testers are expected to do more *exploratory* testing.
       1. Test case: `deleteStu 1`<br>
          Expected: First student is deleted from the student list. All related scores are deleted from the score list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-      1. Test case: `deleteStu 0`<br>
+      2. Test case: `deleteStu 0`<br>
          Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-      1. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
+      3. Other incorrect delete commands to try: `deleteStu`, `deleteStu x`, `...` (where x is larger than the list size)<br>
          Expected: Similar to previous.
 
 ### Finding a student
@@ -929,16 +940,16 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: student list is not empty.
    
-         2. Test case: `findStu g/T00`
-            Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+      1. Test case: `findStu g/T00`
+         Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
          
-         3. Test case: `findStu`
+         1. Test case: `findStu`
             Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
          
-         4. Test case: `findStu n/John n/Amy`
+         2. Test case: `findStu n/John n/Amy`
             Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
          
-         5. Test case: `findStu n/John g/T00`
+         3. Test case: `findStu n/John g/T00`
             Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
       
 
@@ -946,23 +957,23 @@ testers are expected to do more *exploratory* testing.
 1. Sort students in ModuLight
     1. Prerequisite: displayed student list is not empty.
     
-       2. Test case: `sortStu`
+       1. Test case: `sortStu`
           Expected: The displayed students are sorted by their total scores.
           
-       3. Test case: `sortStu o/n r/t`
+       2. Test case: `sortStu o/n r/t`
           Expected: The displayed students are sorted by their names in the reverse alphabetical order.
           
-       4. Test case: `sortStu o/wrongInput`
+       3. Test case: `sortStu o/wrongInput`
           Expected: An error message that states "Invalid command format!" and the correct usage is shown.
 
 ### Sorting Student Scores
 1. Sort student scores in ModuLight
     1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
     
-       2. Test case: `sortScore c/Midterm`
+       1. Test case: `sortScore c/Midterm`
           Expected: Only Midterm student scores are shown, and they are sorted in the ascending order.
           
-       3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
+       2. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
           Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
 
 
@@ -997,7 +1008,7 @@ testers are expected to do more *exploratory* testing.
    2. Run the program. <br>
       Expected: The program will load with the original sample data just like it was run for the first time.
 
-1. Dealing with corrupted files
+2. Dealing with corrupted files
 
     1. Open `studentBook.json`.
 
