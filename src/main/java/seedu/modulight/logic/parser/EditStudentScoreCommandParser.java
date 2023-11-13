@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.modulight.commons.core.index.Index;
-import seedu.modulight.logic.commands.EditStudentCommand;
 import seedu.modulight.logic.commands.EditStudentScoreCommand;
 import seedu.modulight.logic.parser.exceptions.ParseException;
 import seedu.modulight.model.tag.Tag;

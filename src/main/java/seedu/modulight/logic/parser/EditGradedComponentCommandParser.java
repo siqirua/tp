@@ -13,7 +13,6 @@ import java.util.Set;
 import seedu.modulight.commons.core.index.Index;
 import seedu.modulight.logic.commands.EditGradedComponentCommand;
 import seedu.modulight.logic.commands.EditGradedComponentCommand.EditGradedComponentDescriptor;
-import seedu.modulight.logic.commands.EditStudentCommand;
 import seedu.modulight.logic.parser.exceptions.ParseException;
 import seedu.modulight.model.tag.Tag;
 

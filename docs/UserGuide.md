@@ -226,7 +226,7 @@ Examples:
 ### Add a graded component: `addComp`
 Adds a graded component to the database. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
-Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers “A1234567X” and “A1234567Y” in the database, then two student scores are created with titles  “A1234567X - Midterm” and “A1234567Y - Midterm”.
+Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers `A1234567X` and `A1234567Y` in the database, then two student scores are created with titles `A1234567X - Midterm` and `A1234567Y - Midterm`.
 
 * When adding the component, you must ensure that the total weightage of all components does not exceed 100.
 * Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
@@ -301,8 +301,8 @@ criteria.
 * For searching with student parameters of different types, it will find the students who satisfy all the criteria.
 * For searching with multiple student parameters of different types, it will find the students who satisfy at least one
 criterion for each type.
-* If a input of the incorrect format is given, there might be no students found. For example, if you search findStu 
-s/A00000Y, no students will be found since this is not a substring of any valid student number.
+* If a input of the incorrect format is given, there might be no students found. For example, if you search `findStu 
+s/A00000Y`, no students will be found since this is not a substring of any valid student number.
 
 Examples:
 * `findStu n/Alice n/Bob g/T01` returns the data of the students whose name contains 'Alice' or 'Bob' (case-insensitive)
