@@ -134,7 +134,7 @@ the student’s overall score. This is modified as components are added and remo
 ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick run through of the different sections of our GUI, as well as some notes regarding the use of the GUI.
 
 ### Quick Orientation:
-![Ui overview](images/Ui_overview.png)
+![Ui overview](images/Ui_navigate.png)
 
 Here is a summary of each GUI component within ModuLight.
 
