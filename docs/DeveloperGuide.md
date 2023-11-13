@@ -1032,7 +1032,20 @@ testers are expected to do more *exploratory* testing.
     3. Run the program. <br>
        Expected: The program will load with the updated studentName.
 
+## **Appendix: Effort**
+### **Challenges**
+AB-3 mainly deals with one entity type, which is person. The implementation of MuduLight is more complicated as we have three entities:
+student, student score and graded components who related to each other. For example, a student score belongs to a student and a graded components, 
+and every student and graded component entity contains a list of student scores.
+
+In the implementation, we have carefully considered the interconnectedness of the entities and made sure that our features
+addresses the relationships. For example, when a student is deleted from the database, all student scores related to this student will be deleted
+as well, as it is pointless to keep them when they belong to no student.
+
 ## **Appendix: Planned Enhancements**
 
 1. Support special characters in student name parameter as some people's legal name do include some special characters(e.g. "s/o").
 2. Allow the Student List Panel, Student Score List Panel and Graded Component List Panel to automatically scroll down when adding new Student, Student Grade or Graded Component.
+3. Include visualisation of statistics by plotting graphs.
+4. Support more flexible search methods that find the entity of interest despite small inaccuracies(e.g. typo) in the search keyword.
+5. Support storage and display of student photos to help the professors recognise and identify their students.
