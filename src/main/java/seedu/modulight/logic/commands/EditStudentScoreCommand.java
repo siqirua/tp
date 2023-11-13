@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.modulight.commons.core.index.Index;
+import seedu.modulight.commons.util.CollectionUtil;
 import seedu.modulight.commons.util.ToStringBuilder;
 import seedu.modulight.logic.Messages;
 import seedu.modulight.logic.commands.exceptions.CommandException;
@@ -199,6 +200,12 @@ public class EditStudentScoreCommand extends Command {
             setScore(toCopy.score);
             setComment(toCopy.comment);
             setTags(toCopy.tags);
+        }
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(score, comment, tags);
         }
 
         public void setStudentId(StudentId sid) {

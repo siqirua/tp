@@ -185,6 +185,40 @@ Classes used by multiple components are in the `seedu.modulight.commons` package
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Student
+The `addStu` function allows the user to add a new student to the database. ModuLight maintains a `UniqueStudentList` 
+to make sure that there is no duplicates. 
+The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
+
+The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+
+The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
+![AddStudentCommand](diagrams/AddStudent.png)
+
+### Edit Student
+The `editStu` function allows the user to edit the information of the student indicated by index. 
+The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
+All student scores related to this `Student` will be updated as well.
+
+The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). 
+
+The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
+![AddStudentCommand](diagrams/EditStudent.png)
+
+### Find Student
+The `findStu` function allows the user to find the student that matches the given search criteria.
+
+It displays both the matching students and relevant student scores that belongs to the student.
+All graded components are displayed since they are considered relevant to the student.
+
+To find the wanted student, a `StudentMatchPredicate` is created to test whether a student matches the search keywords. A `ScoreMatchPredicate` is created from the `StudentMatchPredicate` to test whether the score belongs to the matched student.
+
+This only changes the displayed list of students and student scores, stored as `filteredStudentList` and `filteredStudentScoreList` in `Model`, without affecting the data stored in ModuLight.
+
+The following sequence diagram illustrates the process of execution of an `FindStudentCommand`.
+
+![AddStudentCommand](diagrams/FindStudent.png)
+
 ### Sort Commands
 
 The Sort related features allows NUS professors to sort the currently displayed students or student scores. When successfully executed, the sorted students or student scores will be shown on the Graphical User Interface. <br>
@@ -257,8 +291,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 ### Auto-grading
 
 #### Proposed Implementation
-
-{Intro}
 
 Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
 
@@ -430,14 +462,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | NUS professor | edit a student                                             | update outdated student information or correct mistakes.                                                       |
 | `* *`    | NUS professor | edit a graded component                                    | make changes to a component (eg. modify weightage) or correct mistakes.                                        |
 | `* *`    | NUS professor | edit a student score                                       | regrade student scripts or correct mistakes.                                                                   |
-| `* *`    | NUS professor | find student and associated scores by ID                   | quickly find information about a student and their scores without having to search through the list            |
-| `* *`    | NUS professor | find graded component and associated scores by ID          | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | find student and associated scores                         | quickly find information about a student and their scores without having to search through the list            |
+| `* *`    | NUS professor | find graded component and associated scores                | quickly find information about a graded component and student scores without having to search through the list |
+| `* *`    | NUS professor | list all student, student scores and graded components     | remove the filters that has been applied to the lists                                                          |
 | `* *`    | NUS professor | quickly calculate the overall statistics of student grades | have a quick insight of how my students are performing                                                         |
 | `* *`    | NUS professor | sort students with specific order                          | find the top students easily                                                                                   |
 | `* *`    | NUS professor | sort student scores with specific order                    | find the top students with their associated scores easily                                                      |
 |          | NUS professor | **autograde**                                              |                                                                                                                |
 | `*`      | NUS professor | toggle between dark and light mode                         | have a pleasant user experience.                                                                               |
-*{More to be added}*
+
 
 ### Use cases
 
@@ -663,6 +696,22 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Adding a student
+1. Adding a student to Modulight
+   1. Test case: `addStu n/John Doe s/A1234567Y e/john@gmail.com g/T07`
+      Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
+      Otherwise, a new student with name `John Doe`, student id `A1234567Y`, email `john@gmail.com` and tutorial group `T07` will be created and displayed in the student list.
+      If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
+
+   1. Test case: `addStu n/Jane Plain s/A1111111Y e/jane@gmail.com`
+      Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
+      Otherwise, a new student with name `Jane Plain`, student id `A1111111Y`, email `jane@gmail.com` and default tutorial group `T00` will be created and displayed in the student list.
+      If there exists graded component in the graded component list, new student scores that belongs to this student will be added.
+   
+   1. Test case: `addStu n/Amy e/amy@gamil.com`
+      Expected: An error message of Invalid command format will be displayed in the feedback box, as the student id parameter is missing.
+      
+   
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
@@ -679,6 +728,19 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
+
+### Finding a student
+1. Find a student in ModuLight
+   1. Prerequisite: student list is not empty.
+   1. Test case: `findStu g/T00`
+      Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+   1. Test case: `findStu`
+      Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
+   2. Test case: `findStu n/John n/Amy`
+      Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
+   3. Test case: `findStu n/John g/T00`
+      Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
+
 
 ### Saving data
 

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/activity-diagram
+
+start
+if () then ([else])
+    :Create a new student;
+    if () then ([else])
+        :Add student to the student book;
+        if () then ([else])
+        else ([graded component book is not empty])
+        :Add score to all GradedComponent;
+        endif
+        : Display acknowledge message to user with information of added student;
+
+    else ([student already exists in student book])
+        :Throw CommandException;
+    endif
+else (given student parameters are invalid)
+    :Throw ParseException;
+endif
+
+stop
+
+@enduml
