@@ -4,7 +4,6 @@ import static seedu.modulight.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.modulight.logic.parser.CliSyntax.PREFIX_COMPONENT_NAME;
 import static seedu.modulight.logic.parser.CliSyntax.PREFIX_REVERSE;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -16,8 +15,6 @@ import seedu.modulight.model.gradedcomponent.GcName;
  * Parses input arguments and creates a new AddCommand object
  */
 public class SortStudentScoreCommandParser implements Parser<SortStudentScoreCommand> {
-    private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
-            "1", "0", "t", "f");
     private static final Boolean IS_REVERSE_DEFAULT = false;
 
     /**
@@ -50,9 +47,10 @@ public class SortStudentScoreCommandParser implements Parser<SortStudentScoreCom
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SortStudentScoreCommand.MESSAGE_USAGE));
         }
-        if (reverses.size() != 1) {
+        if (reverses.isEmpty()) {
             return new SortStudentScoreCommand(gcName, reverse);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_REVERSE);
         switch (reverses.get(0)) {
         case "decreasing":
         case "0":

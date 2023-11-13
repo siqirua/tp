@@ -18,6 +18,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             "e", "email", "g", "tutorial", "tut", "tutGroup", "ts", "totalScore", "score", "overall", "totalscore");
     private static final List<String> REVERSES_ACCEPTABLE = Arrays.asList("increasing", "decreasing", "true", "false",
             "1", "0", "t", "f");
+
     private static final Boolean IS_REVERSE_DEFAULT = false;
     private static final String ORDER_DEFAULT = "o";
 
@@ -38,9 +39,7 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
         List<String> orders = argMultimap.getAllValues(PREFIX_ORDER);
         List<String> reverses = argMultimap.getAllValues(PREFIX_REVERSE);
 
-        if (orders.size() > 1 && reverses.size() > 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
-        }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER, PREFIX_REVERSE);
 
         if (orders.size() == 1 && !ORDERS_ACCEPTABLE.contains(orders.get(0))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
@@ -50,60 +49,65 @@ public class SortStudentCommandParser implements Parser<SortStudentCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortStudentCommand.MESSAGE_USAGE));
         }
 
-        return parsedStringToCommand(orders.get(0), reverses.get(0));
+        return parsedStringToCommand(orders, reverses);
     }
 
-    private SortStudentCommand parsedStringToCommand(String givenOrder, String givenIsReverse) throws ParseException{
+    private SortStudentCommand parsedStringToCommand(List<String> givenOrder, List<String> givenIsReverse)
+            throws ParseException {
         String order = ORDER_DEFAULT;
         boolean isReverse = IS_REVERSE_DEFAULT;
-        switch (givenOrder) {
-        case "n":
-        case "name":
-            order = "n";
-            break;
-        case "s":
-        case "studentId":
-        case "studentID":
-            order = "s";
-            break;
-        case "e":
-        case "email":
-            order = "e";
-            break;
-        case "g":
-        case "tut":
-        case "tutorial":
-        case "tutGroup":
-            order = "g";
-            break;
-        case "overall":
-        case "score":
-        case "ts":
-        case "totalscore":
-        case "totalScore":
-            order = "o";
-            break;
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    SortStudentCommand.MESSAGE_USAGE));
+        if (givenOrder.size() == 1) {
+            switch (givenOrder.get(0)) {
+            case "n":
+            case "name":
+                order = "n";
+                break;
+            case "s":
+            case "studentId":
+            case "studentID":
+                order = "s";
+                break;
+            case "e":
+            case "email":
+                order = "e";
+                break;
+            case "g":
+            case "tut":
+            case "tutorial":
+            case "tutGroup":
+                order = "g";
+                break;
+            case "overall":
+            case "score":
+            case "ts":
+            case "totalscore":
+            case "totalScore":
+                order = "o";
+                break;
+            default:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        SortStudentCommand.MESSAGE_USAGE));
+            }
         }
 
-        switch (givenIsReverse) {
-        case "decreasing":
-        case "0":
-        case "false":
-        case "f":
-            isReverse = false;
-            break;
-        case "increasing":
-        case "1":
-        case "true":
-        case "t":
-            isReverse = true;
-            break;
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    SortStudentCommand.MESSAGE_USAGE));
+        if (givenIsReverse.size() == 1) {
+            switch (givenIsReverse.get(0)) {
+            case "decreasing":
+            case "0":
+            case "false":
+            case "f":
+                isReverse = false;
+                break;
+            case "increasing":
+            case "1":
+            case "true":
+            case "t":
+                isReverse = true;
+                break;
+            default:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        SortStudentCommand.MESSAGE_USAGE));
+            }
         }
         return new SortStudentCommand(order, isReverse);
     }

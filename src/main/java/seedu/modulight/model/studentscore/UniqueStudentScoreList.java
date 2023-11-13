@@ -3,7 +3,6 @@ package seedu.modulight.model.studentscore;
 import static java.util.Objects.requireNonNull;
 import static seedu.modulight.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
