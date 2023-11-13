@@ -67,7 +67,7 @@ title: "Yufei Sun's Project Portfolio Page"
 
 * **Documentation**:
     * User Guide:
-      * Documented the CRUD features fro student and find features
+      * Documented the CRUD features for student and find features
       * Organised and formatted the content
       * Added comprehensive UI demonstration
   
