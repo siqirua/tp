@@ -646,7 +646,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Saving data
+### Saving and Loading data
 
 1. Dealing with missing files
 

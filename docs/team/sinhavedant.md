@@ -11,27 +11,31 @@ perform statistical analysis on the educational records of students.
 Given below are my contributions to the project.
 
 * **Code contributed**:
-  * to be added
-  * Here I will add my code contribution by Monday.
+
+  * Here is my [Code Contributed](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=sinhavedant&breakdown=true)
 
 * **Enhancements implemented**:
-  * to be added
-  * Here I will add my enhancements implemented by Monday
+  * I mainly worked on the Storage component. Our project stores the data in 3 json files namely `studentBook.
+    json`, `gradedComponentBook.json` and `scoreBook.json`. I wrote code for `studentBook.json` and 
+    `gradedComponentBook.json`.
+  * I also edited parts of `scoreBook.json` related code.
+  * The code follows similar style as the AB3 but writing it for multiple storage files required proper 
+    understanding of the AB3 Storage code. 
+  * I implemented complete testing for code related to `studentBook.json` and partial testing for code related to 
+    other storage classes.
 
 * **Contributions to the UG**:
-  * to be added
-  * Here I will add my contribution to the UG after we fill the form on the CS2101 side so that it is the same as that.
+  * Added How to use the guide section.
+  * Added Quick Start Guide.
+  * Added Saving the data and Loading the previous data section.
 
 * **Contributions to the DG**:
-  * To be added
-  * Here I will add my contribution to DG by Monday
+  * Updated the Storage Component
+  * Added 3 puml files all inside Storage Component
+  * Added Instructions for manual testing for Saving and Loading Data.
 
 * **Review contributions**:
-  * To be added
-  * Here I will add my review contribution by Monday.
+  * Reviewed multiple PRs.
+  * There was one instance where I realised a PR had commits with wrong formatting so I requested the teammate to 
+    edit the commit name before merging the PR.
 
-Just so that it surely gets detected by the scripts here I 
-
-am adding some 
-
-extra lines.
