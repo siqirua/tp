@@ -21,7 +21,7 @@ import seedu.modulight.model.tag.Tag;
 public class EditStudentScoreCommandParser implements Parser<EditStudentScoreCommand> {
 
     /**
-     * Parse the string arguments
+     * Parse the string arguments in the context of the EditStudentScoreCommand
      * @param args arguments in string
      * @return EditStudentScoreCommand
      * @throws ParseException an Exception

@@ -29,15 +29,14 @@ import seedu.modulight.model.tag.Tag;
 public class AddStudentCommandParser implements Parser<AddStudentCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AddStudentCommand
+     * and returns an AddStudentCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddStudentCommand parse(String args) throws ParseException, IllegalArgumentException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL,
-                        PREFIX_TUTORIAL_GROUP, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_NAME,
+                PREFIX_EMAIL, PREFIX_TUTORIAL_GROUP, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
