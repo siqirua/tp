@@ -10,7 +10,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 
 Given below are my contributions to the project.
 
-* **New Feature**: `calculate statistics` - Added command to calculate the statistics [76](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/76), [#86](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/86).
+* **New Feature**: `calculate statistics` - Added command to calculate the statistics [#76](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/76), [#86](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/86).
     * What it does: Generates a statistics summary of the overall grades of all students or a selected tutorial group
       * Justification: As a professor or teaching assistant, our target users may be interested in the overall performance 
       of all students in terms of various statistical measures, such as max, min, quartile and standard deviation. This 
