@@ -226,22 +226,40 @@ the top percentile for each corresponding grade threshold, i.e. `pg/[A+] [A] [A-
 </box>
 
 This step will first trigger the parse function and several things will be executed
-1. 
-This step will first trigger the `sortStuCommand` and causes the filtered student list to be updated into the sorted form. 
+1. The string argument will be parsed into the grading method and the passing value.
+2. `AutoGradeCommandParser#checkAutoGradeType()` then will parse the grading method string into AutoGradeType `PERCENTILE`.
+3. `AutoGradeCommandParser#mapToFloat()` will parse the passing value string into an array of float. In this step, string that is not parsable will be checked and an exception will be thrown.
+   Furthermore, values less than zero or more than 100 will cause an exception to be thrown as the total mark of a student is in percentage.
+   Further check on values must be decreasing is also available as lower grades cannot have higher grade threshold.
+4. The parser then will return a new `AutoGradeCommand` object.
+
+Step 4. The `AutoGradeCommand` returned will then be executed and several other things will be executed
+1. This step will first trigger the `sortStuCommand` and causes the filtered student list to be updated into the sorted form. 
+2. A check will be done to ensure that the inputted array of float does not pass the maximum number of values. An exception will be thrown otherwise.
+3. As the grading method used in this example is `PERCENTILE`, it will then trigger `AutoGradeCommand#setGradeThresholdPercentile()` to be executed in order to calculate the
+   grade threshold. 
+4. It will then create an `EditStudentDescriptor` for each student in the filtered list and the assigned grade.
+   The grade is determined by comparing the student's total score and the grade threshold.
+5. `EditStudentCommand` will be created and executed for each student and the grade will be added.
 
 
-Step 4. The command execution will then parse the grade threshold value based on empty space and stores them locally.
-Then, it will call `Model#getStudentBook()` and will calculate for every student, what tag the student will get based on the
-total score. ModuLight will then execute `editStudentCommand` on every student to assign them with the grade tag. All the calculations will be run in the
-`autoGradeCommand`.
+The following sequence diagram shows how the auto-grading mechanism works:
+* The parser implementation (Command execution is hidden):
 
+<puml src="diagrams/AutoGradeParserSequenceDiagram.puml" />
+
+* The command implementation :
+
+<puml src="diagrams/AutoGradeCommandSequenceDiagram.puml" />
+
+[//]: # (The following activity diagram shows the logic behind the auto-grade mechanism:)
 
 
 #### Design considerations:
 
 **Aspect: How the assignments of grade works:**
 
-* **Alternative 2:** Create new Grade object for each student.
+* Create new Grade object for each student.
     * Pros: Cleaner and extendable code implementation.
     * Cons: require change of implementation on multiple classes.
 
