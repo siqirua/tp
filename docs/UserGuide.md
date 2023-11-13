@@ -26,6 +26,7 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
+  * **[How to use this guide](#how-to-use-this-guide)**
   * **[Quick Start](#quick-start)**
   * **[Parameter Information](#parameter-information)**
   * **[Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui)**
@@ -36,6 +37,25 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
   * **[Glossary](#glossary)**
 
 --------------------------------------------------------------------------------------------------------------------
+
+## How to use this guide
+1. For the first time users we recommend to:
+
+   * Start with the [Quick start](#quick-start) to download, setup and run the program.
+   
+   * Go through [Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui) 
+     section to understand the different components of the GUI of the program.
+   
+   * Go through the [Command Format](#command-format) to get an idea of the correct way to understand and input the 
+     commands.
+   
+2. For regular users:
+
+   * We have provided a [command summary](#command-summary) for you to check all the available features.
+   
+   * More detailed explanation of the features can be found under the [Features](#features) section.
+   * An overview of all the parameters used in the commands along with their constraints and such  can be found 
+     under the [Parameter Information](#parameter-information) section.
 
 ## Quick start
 
@@ -109,14 +129,15 @@ The following section gives an overview of the parameters used for the commands 
 
 <box type="info" seamless>
 
-> **Note**: Graded Component and Student Score parameters for score calculation
-> 
-> * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
+ **Note**: Graded Component and Student Score parameters for score calculation
+ 
+ * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
 determine the relative performance of a student for a component. <br> For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
-> * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
+ * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
 **relative to the sum of all other component weightages**. <br> For instance, if there are only 2 components in the system currently, 
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
 the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
+
 > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
 > * If a student or graded component has no associated student scores, the overall score or average mark respectively will be displayed as 0.
 
@@ -344,9 +365,16 @@ Sorts students' data by the given criteria.
 
 Format: `sortStu [o/SORTING_ORDER] [r/REVERSE_ORDER]`
 
-* The sorting order keyword must be one of the acceptable description given below: <br> "n",
-  "name", "s", "studentId", "studentID", "e", "email", "g", "tutorial", "tut", 
-  "tutGroup", "ts", "totalScore", "totalscore", "score".
+* The sorting order keyword must be one of the acceptable description given below: <br>
+
+| Accepted keywords                  | Field to be sorted | Description                                         |
+|------------------------------------|--------------------|-----------------------------------------------------|
+| `n`, `name`                        | `n/`               | Name of the student by alphabetical order           |
+| `s`, `studentId`, `studentID`      | `s/`               | Student ID of the student by alphabetical order     |
+| `e`, `email`                       | `e/`               | Email of the student by alphabetical order          |
+| `g`, `tutorial`, `tut`, `tutGroup` | `g/`               | Tutorial group of the student by alphabetical order |
+| `ts`, `totalScore`, `score`        | NIL                | Total score of the student by numerical value       |
+
 * The reverse order keyword must be one of the acceptable description given below: <br>
 "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4 
 keywords have the same effect).
@@ -421,7 +449,7 @@ Format: `stats [st/STATS] [g/TUTORIAL_GRP]`
 * It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
 supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
-measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+measures: `mean`, `standardDeviation`, `upperQuartile`, `lowerQuartile`, `max`, `min`, `skewness`.
 * For the calculation of upper and lower quartile, we use Method 4 introduced in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
 is meaningless.
@@ -441,7 +469,7 @@ Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
 * It is allowed to omit `[st/STATS]`. In this case, it will return a summary of all statistics that are currently
   supported.
 * For stats keywords, it must be currently supported. Here is an exhaustive list of currently supported statistical
-  measures: mean, standardDeviation, upperQuartile, lowerQuartile, max, min, skewness.
+  measures: `mean`, `standardDeviation`, `upperQuartile`, `lowerQuartile`, `max`, `min`, `skewness`.
 * For the calculation of upper and lower quartile, we use Method 4 introduced 
 in [Wikipedia](https://en.wikipedia.org/wiki/Quartile).
 * If there is only valid score matching the criteria, skewness will be displayed as `NaN` because skewness for one data
