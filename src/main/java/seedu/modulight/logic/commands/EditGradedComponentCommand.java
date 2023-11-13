@@ -45,10 +45,10 @@ public class EditGradedComponentCommand extends Command {
             + PREFIX_COMPONENT_NAME + "Midterm Project "
             + PREFIX_WEIGHTAGE + "20";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited graded component: %1$s";
+    public static final String MESSAGE_EDIT_GC_SUCCESS = "Edited graded component: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_GRADED_COMPONENT = "This graded component already "
-            + "exists in the address book.";
+            + "exists in the database.";
     public static final String MESSAGE_ASSOCIATED_SCORE_EXCEEDS = "Graded component could not be edited."
             + " An associated student score has marks that exceeds the maximum marks provided.";
 
@@ -100,7 +100,7 @@ public class EditGradedComponentCommand extends Command {
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
+        return new CommandResult(String.format(MESSAGE_EDIT_GC_SUCCESS,
                 Messages.formatGradedComponent(editedGradedComponent)));
     }
 
@@ -140,7 +140,7 @@ public class EditGradedComponentCommand extends Command {
      * Creates and returns a {@code GradedComponent} with the details of {@code gradedComponentToEdit}
      * edited with {@code editGradedComponentDescriptor}.
      */
-    private static GradedComponent createEditedGradedComponent(GradedComponent gradedComponentToEdit,
+    public static GradedComponent createEditedGradedComponent(GradedComponent gradedComponentToEdit,
                    EditGradedComponentDescriptor editGradedComponentDescriptor) {
         assert gradedComponentToEdit != null;
 

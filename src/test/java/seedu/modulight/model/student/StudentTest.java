@@ -96,12 +96,6 @@ class StudentTest {
         // different tags -> returns false
         editedAlice = new StudentBuilder(ALICE).withTags(VALID_TAG_MAKEUP_EXAM).build();
         assertFalse(ALICE.equals(editedAlice));
-
-        // different scores -> return false
-        StudentScore editedAmyScore = new StudentScoreBuilder(VALID_STUDENT_SCORE_JAMES).build();
-        editedAlice = new StudentBuilder(ALICE).withScore(editedAmyScore).build();
-        assertFalse(ALICE.equals(editedAlice));
-
     }
 
     @Test

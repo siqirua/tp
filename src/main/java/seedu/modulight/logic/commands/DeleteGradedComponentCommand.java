@@ -29,7 +29,7 @@ public class DeleteGradedComponentCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted GradedComponent: %1$s";
+    public static final String MESSAGE_DELETE_GC_SUCCESS = "Deleted graded component: %1$s";
 
     private final Index targetIndex;
 
@@ -56,14 +56,13 @@ public class DeleteGradedComponentCommand extends Command {
         for (int i = studentScoreList.size() - 1; i >= 0; i--) {
             StudentScore curScore = studentScoreList.get(i);
             if (curScore.getGcName().equals(gradedComponentToDelete.getName())) {
-                // somewhat inefficient, to change
                 Student student = studentBook.getStudentById(curScore.getStudentId());
                 student.deleteScore(curScore);
                 studentBook.setStudent(student, student);
                 studentScoreBook.removeStudentScore(curScore);
             }
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+        return new CommandResult(String.format(MESSAGE_DELETE_GC_SUCCESS,
                 Messages.formatGradedComponent(gradedComponentToDelete)));
     }
 

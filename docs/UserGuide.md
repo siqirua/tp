@@ -11,7 +11,8 @@ pageNav: 3
 _**Min-max your module management!**_
 
 ModuLight is a **desktop app** built for **professors from National University of Singapore to manage students and 
-assessments** for a single module.
+assessments** for a single module. This app is ideally designed for professors with intermediate technical knowledge,
+who are comfortable using the Command Line Interface (CLI).
 
 Here’s an overview of how Modulight can help you to streamline your module management process:
 * Store and edit information about your students and various assessments.
@@ -19,7 +20,7 @@ Here’s an overview of how Modulight can help you to streamline your module man
 * Track qualitative information about your students and assessments using tags and comments.
 
 Furthermore, we believe that module management should be **efficient**. Therefore, Modulight is **optimized for use 
-via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can 
+via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). If you can 
 type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
 > [!NOTE]
@@ -52,7 +53,9 @@ not all professors are familiar with CLI, hence we will provide a comprehensive 
 4. Open a [command terminal](#glossary), `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
    command to run the application. If you are unsure how to open a terminal, please refer to the [FAQ](#faq) section. <br> 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/Ui_initial.png)
+
 
 5. Type the command in the [command box](#navigating-the-graphical-user-interface--gui-) and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -61,8 +64,7 @@ not all professors are familiar with CLI, hence we will provide a comprehensive 
 
    * `addComp c/Midterm Exam w/25 mm/75` : Adds a Graded Component named Midterm Exam.
 
-   * `editStuScore s/A1234567X c/Midterms m/75` : Edits the score of the Midterm Component for the student with the student id A1234567X.
-   
+   * `editScore 1 m/10` : Edits the score of the Midterm Component for the student with the student id A1234567X.
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -73,6 +75,7 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Student Parameters
 
+
 | Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples           |
 |-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|----------------------------|
 | n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준      | 
@@ -80,6 +83,7 @@ The following section gives an overview of the parameters used for the commands 
 | s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
 | t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, Makeup exam    | deans_list                 |
+
 
 
 ### Graded Component Parameters
@@ -101,12 +105,12 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Command Related Parameters
 
-| Parameter | Description                                                                                                                    | Constraints                                                                                                                                                                                                                           | Valid Examples     | Invalid Examples           |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|----------------------------|
-| o/        | Used in the sortStu command, the selected parameter of students to be sorted                                                   | Only parameters in the list (The full list can be found under the description of [sortStu command](#sorting-students-sortstu)) are allowed                                                                                            | n, totalscore, tut | studentName, overall score |
-| r/        | Used in the sortStu and sortStuScore commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu command](#sorting-students-sortstu) and [sortScore command](#sorting-students-scores-sortscore)) are allowed                                | t, f, decreasing   | True, ascending            |
-| st/       | Used in the stats and compStats command, the statistical measures to be calculated                                             | Only parameters in the list (The full list can be found under the description of [stats command](#calculating-overall-statistics-stats) and [compStats command](#calculating-statistics-of-a-graded-component-compstats)) are allowed | max, upperQuartile | quartile, correlation      |
-| pg/       | Used in autograde command, ....                                                                                                |                                                                                                                                                                                                                                       |                    |                            |
+| Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples     | Invalid Examples           |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|----------------------------|
+| o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut | studentName, overall score |
+| r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing   | True, ascending            |
+| st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile | quartile, correlation      |
+| pg/       | Used in autograde command, ....                                                                                                                                                                   |                                                                                                                                                                                                                                |                    |                            |
 
 <box type="info" seamless>
 
@@ -119,6 +123,9 @@ determine the relative performance of a student for a component. <br> For instan
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
 the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
 > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+
+
+* If a student or graded component has no associated student scores, the average mark will be listed as 0.
 
 </box>
 
@@ -194,10 +201,11 @@ Adds a graded component to the database. If successful, an acknowledgement messa
 
 Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers “A1234567X” and “A1234567Y” in the database, then two student scores are created with titles  “A1234567X - Midterm” and “A1234567Y - Midterm”.
 
-Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
+* When adding the component, you must ensure that the total weightage of all components does not exceed 100.
+* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
+* Please refrain from entering numbers with more than 2 decimal places of precision.
 
-* The graded component name (case-sensitve) cannot match any other existing graded component names in the database.
-* Weightage represents how much this component contributes when tabulating students’ total marks, and is calculated relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, and component A has weightage 30, and component B weightage 20, then component A currently represents 60% of the grade. This is modified as components are added and removed.
+Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
 
 Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
 
@@ -223,7 +231,14 @@ Examples:
 
 ### Edit a graded component: `editComp`
 Edits an existing graded component’s details in the database, based on the 1-based index of the graded component shown in the Graded Components list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
-1 or more fields to be edited must be provided in the command. The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list. If the component name is being edited, the component name cannot match the component name of any other graded component already in the database.
+
+* 1 or more fields to be edited must be provided in the command. 
+* The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list. 
+* If the component name is being edited, the component name cannot match the component name of any other graded component already in the database.
+* When editing the component, you must ensure that the total weightage of all components does not exceed 100.
+* If editing the maximum marks, ensure none of the current student scores exceed the new maximum marks.
+* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
+* Please refrain from entering numbers with more than 2 decimal places of precision.
 
 Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
@@ -231,11 +246,17 @@ Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
+
 ### Edit student score: `editScore`
 
 Edits a student’s mark for a certain graded component, based on the 1-based index of the student score shown in the Student Scores list.
 
 Note: a StudentScore will be automatically added when a graded component is created or when a new student is added. Similarly, student scores will be automatically deleted when its associated graded component or student is deleted.
+
+* 1 or more fields to be edited must be provided in the command.
+* The index provided must be more than 0 and not exceed the number of student scores displayed in the Student Scores list.
+* The mark given cannot exceed the maximum marks for that graded component.
+* Please refrain from entering numbers with more than 2 decimal places of precision.
 
 Format: `editScore INDEX [m/SCORE] [x/comment]`
 
@@ -300,9 +321,9 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 ### Find students: `findStu`
 
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and all graded components will be displayed as well.
+Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. However, the displayed list of graded components will remain unchanged.
 
-Format: `findStu [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [t/TAG]`
+Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
 Examples:
 * `findStu s/A000000Y` returns the data of the student whose student ID is A0000000Y.
@@ -320,7 +341,7 @@ All graded students will be shown since they are relevant.
 
 ### Find students : `findScore`
 Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
-Format: `findScore  [s/STUDENT_NO] [n/NAME] [e/EMAIL] [g/TUTORIAL_GRP] [c/COMP_NAME][x/comments][t/tags]...`
+Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
@@ -353,7 +374,7 @@ Examples:
 
 Sorts students score by the given criteria and display its associated students in order.
 
-Format: `sortScore [c/COMP_NAME] [r/REVERSE_ORDER]`
+Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
 
 * The reverse order keyword must be one of the acceptable description given below: <br>
   "decreasing", "0", "false", "f" (These 4 keywords have the same effect), "increasing", "1", "true", "t" (These 4
@@ -503,16 +524,22 @@ _Details coming soon ..._
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
+1. **Q**: How do I transfer my data to another Computer?<br>
+   **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Modulight home folder.
 
-**Q**: How do I open a terminal?<br>
-**A**: It depends on the operating system.
-* **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
-* **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
+2. **Q**: How does the calculation of scores work?<br>
+   **A**: Refer to the [notes on score calculations](#notes-on-score-calculation).
 
-**Q**: What do I do if the app is off-screen when switching between multiple screens?
-**A**: This is a common issue. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+3. **Q**: Does the display update information (eg. name, mean) in real time?<br>
+   **A**: Yes.
+
+4. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?
+   **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
+
+5. **Q**: How do I open a terminal?<br>
+   **A**: It depends on the operating system.
+   * **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
+   * **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary

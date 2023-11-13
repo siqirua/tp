@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import seedu.modulight.logic.commands.EditStudentCommand.EditStudentDescriptor;
 import seedu.modulight.model.student.Student;
 import seedu.modulight.model.student.StudentEmail;
+import seedu.modulight.model.student.StudentGrade;
 import seedu.modulight.model.student.StudentId;
 import seedu.modulight.model.student.StudentName;
 import seedu.modulight.model.student.TutorialGroup;
@@ -94,6 +95,17 @@ public class EditStudentDescriptorBuilder {
      */
     public EditStudentDescriptorBuilder withTg(String tg) {
         descriptor.setTutorialGroup(new TutorialGroup(tg));
+        return this;
+    }
+
+    /**
+     *  Sets the EditStudentDescriptor to have a grade
+     *
+     * @param grade the grade
+     * @return the edit student descriptor builder
+     */
+    public EditStudentDescriptorBuilder withGrade(String grade) {
+        descriptor.setStudentGrade(new StudentGrade(grade));
         return this;
     }
 

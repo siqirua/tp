@@ -14,7 +14,7 @@ import seedu.modulight.model.student.StudentMatchPredicate;
 import seedu.modulight.model.studentscore.ScoreMatchPredicate;
 
 /**
- * Finds the student(s) whose student id is matching the given Student IDs exactly.
+ * Finds the student(s) whose detail is matching the given detail.
  * Keyword matching is case insensitive.
  */
 public class FindStudentCommand extends Command {
@@ -53,7 +53,7 @@ public class FindStudentCommand extends Command {
         String feedback = String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
                 model.getFilteredStudentList().size()) + "\n"
                 + String.format(Messages.MESSAGE_SCORE_LISTED_OVERVIEW,
-            model.getFilteredStudentScoreList().size());
+                model.getFilteredStudentScoreList().size());
         return new CommandResult(feedback);
     }
 

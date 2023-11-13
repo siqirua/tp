@@ -8,7 +8,7 @@ import static seedu.modulight.model.Model.PREDICATE_SHOW_ALL_STUDENT_SCORES;
 import seedu.modulight.model.Model;
 
 /**
- * The type List all command.
+ * Lists all students, student scores and graded components.
  */
 public class ListAllCommand extends Command {
     public static final String COMMAND_WORD = "listAll";
