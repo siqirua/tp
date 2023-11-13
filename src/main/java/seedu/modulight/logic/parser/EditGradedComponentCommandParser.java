@@ -55,6 +55,10 @@ public class EditGradedComponentCommandParser implements Parser<EditGradedCompon
             throw new ParseException(e.getMessage());
         }
 
+        if (!editGradedComponentDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditGradedComponentCommand.MESSAGE_NOT_EDITED);
+        }
+
 
         return new EditGradedComponentCommand(index, editGradedComponentDescriptor);
     }

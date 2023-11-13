@@ -10,9 +10,10 @@ pageNav: 3
 
 _**Min-max your module management!**_
 
-ModuLight is a **desktop app** built for **professors from National University of Singapore to manage students and 
-assessments** for a single module. This app is ideally designed for professors with intermediate technical knowledge,
-who are comfortable using the Command Line Interface (CLI).
+ModuLight is a **desktop app** built for **professors from National University of Singapore from the School of Computing to manage students and 
+assessments** for a single module. This app is ideally designed for professors with at least intermediate technical knowledge,
+who are comfortable using the Command Line Interface (CLI) and terminal. We also assume that the professors are already familiar with module structures,
+such as the number and weightage of graded components and the number of students and tutorial groups.
 
 Here’s an overview of how Modulight can help you to streamline your module management process:
 * Store and edit information about your students and various assessments.
@@ -22,12 +23,6 @@ Here’s an overview of how Modulight can help you to streamline your module man
 Furthermore, we believe that module management should be **efficient**. Therefore, Modulight is **optimized for use 
 via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). If you can 
 type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
-
-> **Note**
-> * We assume that the professors are already familiar with module structures,
-such as the number and weightage of graded components and the number of students and tutorial groups.
-> * We understand that
-not all professors are familiar with CLI, hence we will provide a comprehensive guide on how to use our CLI interface.
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
@@ -191,7 +186,7 @@ Examples:
 ### Add a graded component: `addComp`
 Adds a graded component to the database. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
-Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers “A1234567X” and “A1234567Y” in the database, then two student scores are created with titles  “A1234567X - Midterm” and “A1234567Y - Midterm”.
+Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers `A1234567X` and `A1234567Y` in the database, then two student scores are created with titles `A1234567X - Midterm` and `A1234567Y - Midterm`.
 
 * When adding the component, you must ensure that the total weightage of all components does not exceed 100.
 * Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
