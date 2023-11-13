@@ -58,11 +58,9 @@ public class StudentScore {
 
     }
 
-    private boolean isValidScore(float s) {
+    public static boolean isValidScore(float s, float mm) {
         boolean isLessEqualThanMaxMarks = true;
-        if (this.gc != null) {
-            isLessEqualThanMaxMarks = s <= this.gc.getMaxMarks().maxMarks;
-        }
+        isLessEqualThanMaxMarks = s <= mm;
         return s >= 0 && isLessEqualThanMaxMarks;
     }
 

@@ -1,0 +1,11 @@
+{
+  "gradedComponents" : [ {
+    "gcName" : "Midterm Exam",
+    "gcMaxMarks" : "10001",
+    "gcWeightage" : "25.0"
+  }, {
+    "gcName" : "Final Exam",
+    "gcMaxMarks" : "75.0",
+    "gcWeightage" : "25.0"
+  } ]
+}

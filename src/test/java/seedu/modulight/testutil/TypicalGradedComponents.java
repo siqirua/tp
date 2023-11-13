@@ -18,6 +18,12 @@ public class TypicalGradedComponents {
     public static final GradedComponent QUIZ = new GradedComponentBuilder().withGcName("Quiz").withMaxMarks((float) 50)
             .withWeightage((float) 15).build();
 
+    public static final GradedComponent CA1 = new GradedComponentBuilder().withGcName("CA1").withMaxMarks((float) 100)
+            .withWeightage((float) 15).build();
+
+    public static final GradedComponent CA2 = new GradedComponentBuilder().withGcName("CA2").withMaxMarks((float) 100)
+            .withWeightage((float) 20).build();
+
 
     public static GradedComponentBook getTypicalGradedComponentBook() {
         GradedComponentBook gcb = new GradedComponentBook();

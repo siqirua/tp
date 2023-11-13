@@ -1,0 +1,25 @@
+{
+  "students": [
+    {
+      "studentId": "A0000000Y",
+      "studentName": "Invalid @Name",
+      "studentEmail": "alice@example.com",
+      "tutorialGroup": "T01",
+      "tags": [
+        "friends"
+      ],
+      "studentGrade": ""
+    },
+    {
+      "studentId": "A0000001Y",
+      "studentName": "Benson Meier",
+      "studentEmail": "johnd@example.com",
+      "tutorialGroup": "T01",
+      "tags": [
+        "owesMoney",
+        "friends"
+      ],
+      "studentGrade": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "students": [
+    {
+      "studentId": "A0000000Y",
+      "studentName": "Rachel",
+      "studentEmail": "alexyeoh@example.com",
+      "tutorialGroup": "T03",
+      "tags": [],
+      "studentGrade": ""
+    }, {
+      "studentId": "A0000000Y",
+      "studentName": "Rachel",
+      "studentEmail": "yeohalex@example.com",
+      "tutorialGroup": "T03",
+      "tags": [],
+      "studentGrade": ""
+    }
+  ]
+}

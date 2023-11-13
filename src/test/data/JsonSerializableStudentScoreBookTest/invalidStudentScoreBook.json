@@ -1,0 +1,13 @@
+{
+  "studentScores": [
+    {
+      "studentId": "A0000000Y",
+      "score": "0a",
+      "comment": "",
+      "tags": [],
+      "gcName": "Midterm Exam",
+      "gcMaxMarks": "100",
+      "gcWeightage": "100"
+    }
+  ]
+}
