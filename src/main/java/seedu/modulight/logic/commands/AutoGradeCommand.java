@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import javafx.collections.ObservableList;
 import seedu.modulight.commons.core.index.Index;
+import seedu.modulight.commons.util.ToStringBuilder;
 import seedu.modulight.logic.commands.exceptions.CommandException;
 import seedu.modulight.model.Model;
 import seedu.modulight.model.student.Student;
@@ -145,5 +146,29 @@ public class AutoGradeCommand extends Command {
             new EditStudentCommand(index, editStudentDescriptor).execute(model);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AutoGradeCommand)) {
+            return false;
+        }
+
+        AutoGradeCommand otherEditCommand = (AutoGradeCommand) other;
+        return Arrays.equals(passingGradeValue, otherEditCommand.passingGradeValue)
+                && autoGradeType.equals(otherEditCommand.autoGradeType);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("autoGrade type", autoGradeType)
+                .add("gradeThreshold", Arrays.toString(gradeThreshold))
+                .toString();
     }
 }

@@ -8,7 +8,7 @@ import static seedu.modulight.model.Model.PREDICATE_SHOW_ALL_STUDENT_SCORES;
 import seedu.modulight.model.Model;
 
 /**
- * The type List all command.
+ * Lists all students, student scores and graded components.
  */
 public class ListAllCommand extends Command {
     public static final String COMMAND_WORD = "listAll";
@@ -26,5 +26,18 @@ public class ListAllCommand extends Command {
         model.updateFilteredGradedComponentList(PREDICATE_SHOW_ALL_GRADED_COMPONENTS);
         model.updateFilteredStudentScoreList(PREDICATE_SHOW_ALL_STUDENT_SCORES);
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListAllCommand)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -101,7 +101,7 @@ public class MainApp extends Application {
         Optional<ReadOnlyStudentBook> studentBookOptional;
         Optional<ReadOnlyStudentScoreBook> studentScoreBookOptional;
         Optional<ReadOnlyGradedComponentBook> gradedComponentBookOptional;
-        ReadOnlyStudentBook initialStudentData = new StudentBook();
+        ReadOnlyStudentBook initialStudentData;
         ReadOnlyStudentScoreBook initialStudentScoreData;
         ReadOnlyGradedComponentBook initialGradedComponentData;
         try {
@@ -128,7 +128,7 @@ public class MainApp extends Application {
                 .orElseGet(SampleGcDataUtil::getSampleGcBook);
             checkBookValidity(initialStudentData, initialGradedComponentData, initialStudentScoreData);
 
-        } catch (DataLoadingException e) {
+        } catch (DataLoadingException | RuntimeException e) {
             logger.warning("Data file at " + storage.getStudentBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
             initialStudentData = new StudentBook();
