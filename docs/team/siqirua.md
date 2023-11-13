@@ -45,6 +45,7 @@ Given below are my contributions to the project.
         * Added use cases, non-functional requirements and glossary sections [#10](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/10).
         * Created UML diagrams for most parts [#162](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/162)
         * Did cosmetic tweaks to the proposed `Redo`/`Undo` features [#169](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/169)
+        * Add Implementations of sort related commands and stats related command [#188](https://github.com/AY2324S1-CS2103T-W08-2/tp/pull/188)
 
 * **Contributions to team-based tasks**:
   * Renamed the package, method name and class name from address book related to modulight related
