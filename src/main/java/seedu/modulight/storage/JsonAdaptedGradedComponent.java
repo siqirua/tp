@@ -61,18 +61,34 @@ public class JsonAdaptedGradedComponent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 MaxMarks.class.getSimpleName()));
         }
+
+        try {
+            Float.parseFloat(gcMaxMarks);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(MaxMarks.MESSAGE_CONSTRAINTS);
+        }
+
         if (!MaxMarks.isValidMarks(Float.parseFloat(gcMaxMarks))) {
             throw new IllegalValueException(MaxMarks.MESSAGE_CONSTRAINTS);
         }
+
         final MaxMarks modelMaxMarks = new MaxMarks(Float.parseFloat(gcMaxMarks));
 
         if (gcWeightage == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 Weightage.class.getSimpleName()));
         }
+
+        try {
+            Float.parseFloat(gcWeightage);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(Weightage.MESSAGE_CONSTRAINTS);
+        }
+
         if (!Weightage.isValidWeightage(Float.parseFloat(gcWeightage))) {
             throw new IllegalValueException(Weightage.MESSAGE_CONSTRAINTS);
         }
+
         final Weightage modelWeightage = new Weightage(Float.parseFloat(gcWeightage));
 
         return new GradedComponent(modelGcName, modelMaxMarks, modelWeightage);

@@ -23,18 +23,22 @@ Furthermore, we believe that module management should be **efficient**. Therefor
 via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). If you can 
 type fast, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
-
+> **Note**
+> * We assume that the professors are already familiar with module structures,
+such as the number and weightage of graded components and the number of students and tutorial groups.
+> * We understand that
+not all professors are familiar with CLI, hence we will provide a comprehensive guide on how to use our CLI interface.
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
   * **[Quick Start](#quick-start)**
-  * **[Glossary](#glossary)**
   * **[Parameter Information](#parameter-information)**
   * **[Navigating the Graphical User Interface (GUI)](#navigating-the-graphical-user-interface-gui)**
   * **[Command Format](#command-format)**
   * **[Features](#features)**
   * **[Command Summary](#command-summary)**
   * **[FAQ](#faq)**
+  * **[Glossary](#glossary)**
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -43,15 +47,17 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 1. Ensure you have Java `11` or above installed in your Computer.
 
 2. Download the latest `ModuLight.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-2/tp/releases).
-
+   ![download](images/download_page.png)
 3. Copy the file to the folder you want to use as the _home folder_ for your ModuLight.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
-   command to run the application.<br>
+4. Open a [command terminal](#glossary), `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
+   command to run the application. If you are unsure how to open a terminal, please refer to the [FAQ](#faq) section. <br> 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/initial_Ui.png)
 
-5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+   ![Ui](images/Ui_initial.png)
+
+
+5. Type the command in the [command box](#navigating-the-graphical-user-interface--gui-) and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `addStu s/A1234567X e/e0725856@u.nus.edu g/T02 n/Jamus Lim` : Adds a Student named Jamus Lim.
@@ -62,22 +68,6 @@ type fast, ModuLight can get your student grading tasks done faster than traditi
 
 6. Refer to the [Features](#features) below for details of each command.
 
-## Glossary
-
-### Definitions
-
-| Term                     | Definition                                                                                                                                                                               |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Command                  | An input written by the user to tell Modulight to perform a certain action.                                                                                                              |
-| Parameter                | A value that must be inputted by the user to complete a command.                                                                                                                         |
-| Index                    | A number that refers to the position of the components in an ordering. Modulight uses a 1-based index, which means the first number in an order is 1.                                    |
-| Command Line Interface   | It is a text-based user interface that accepts text inputs to execute commands.                                                                                                          |
-| Graphical User Interface | It is a digital interface where the users interact with the system using graphical components, such as icons and buttons.                                                                |
-| User Interface           | It is the point in which a human user interacts with a computer. It can be a physical device or software program.                                                                        |
-| Component                | A component is a part of the user interface.                                                                                                                                             |
-| JSON file                | JavaScript Object Notation(JSON) is a file used for data storage in ModuLight. For more information, please refer to the guide [here](https://www.oracle.com/sg/database/what-is-json/). |
-| Alphanumeric             | A piece of alphanumeric text should consist of only alphabets and numeric values. For instance,  the text “ABC11” is alphanumeric whereas “(**)” is not.                                 |
-| Domain                   | A domain is a digital address of a website. For emails, domain is the web address that comes after the @ symbol. For example, the domain in the email address 123@gmail.com is gmail.com |
 
 ## Parameter Information
 
@@ -85,13 +75,15 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Student Parameters
 
-| Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples            |
-|-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|-----------------------------|
-| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John1, Lee Xiao Ming         | 晓明, Xiao Ming@Lee, 이준       | 
-| e/        | Email of the student          | Must consist of a alphanumeric prefix, @ symbol and a domain               | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail              |
-| s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567  |
-| g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11         |
-| t/        | Tag of the student            |                                                                            |                              |                             |
+
+| Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples           |
+|-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|----------------------------|
+| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준      | 
+| e/        | Email of the student          | Must consist of a alphanumeric prefix, @ symbol and a domain               | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail             |
+| s/        | Student ID of the student     | Must start and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
+| g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
+| t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, Makeup exam    | deans_list                 |
+
 
 
 ### Graded Component Parameters
@@ -108,7 +100,7 @@ The following section gives an overview of the parameters used for the commands 
 |-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|--------------------|
 | m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve |
 | x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                 |
-| t/        | Tags of the student score                     | **TO BE ADDED**                                                                                                                              |                            |                    |
+| t/        | Tags of the student score                     | Must only contain alphanumeric characters                                                                                                    | Highest score, Makeup exam | @plagiarism        |
 | INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03          |
 
 ### Command Related Parameters
@@ -122,28 +114,25 @@ The following section gives an overview of the parameters used for the commands 
 
 <box type="info" seamless>
 
-## Notes on score calculation
-
-* The maximum marks of a graded component and marks of a student score are both absolute values and are used together to 
-determine the relative performance of a student for a component. For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
-
-* The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
-relative to the sum of all other component weightages. For instance, if there are only 2 components in the system currently, 
+> **Note**: Graded Component and Student Score parameters for score calculation
+> 
+> * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
+determine the relative performance of a student for a component. <br> For instance, if the maximum marks for a component Midterms is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
+> * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
+**relative to the sum of all other component weightages**. <br> For instance, if there are only 2 components in the system currently, 
 and component A has weightage 30, and component B weightage 20, then component A currently represents 20/(20+30) = 60% of 
-the student’s overall score. This is modified as components are added and removed. However, the total weightage of all graded components should be less than or equal to 100, which is enforced as graded components are added/edited/deleted.
-
-* If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
-
-* If a student or graded component has no associated student scores, the average mark will be listed as 0.
+the student’s overall score. This is modified as components are added and removed. <br> Note that the **total weightage of all graded components should be less than or equal to 100**.
+> * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+> * If a student or graded component has no associated student scores, the average mark will be listed as 0.
 
 </box>
 
 ## Navigating the Graphical User Interface (GUI)
 
-ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick runthrough of the different sections of our GUI, as well as some notes regarding the use of the GUI.
+ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick run through of the different sections of our GUI, as well as some notes regarding the use of the GUI.
 
 ### Quick Orientation:
-![Ui overview](images/Ui_overview.png)
+![Ui overview](images/Ui_navigate.png)
 
 Here is a summary of each GUI component within ModuLight.
 
@@ -174,20 +163,16 @@ Here is a summary of each GUI component within ModuLight.
 
 ## Features
 
-<box type="info" seamless>
+> **Note** <br>
+> 
+> If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-**Notes about the command format:**<br>
+## Add Commands
+Adds a new student or graded component. 
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
-
-### Viewing help : `help`
-
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
-
-Format: `help`
+> **Note** <br>
+> 
+> Student scores will be automatically added when a new student or component is added.
 
 ### Add a student: `addStu`
 Adds a student to the database. Throws error if student with same student number already exists. If it succeeds, an acknowledgement message is shown and data is saved. If it fails, an error message is shown instead.
@@ -200,27 +185,8 @@ Format: `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]`
 Examples: 
 * `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` Adds a student with student number A1234567Y, name Andy Ong, with email andy_ong@u.nus.edu belonging to tutorial group T03 to the database.
 
-### Edit a student : `editStu`
-Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
-
-Format: `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​`
-
-* 1 or more fields to be edited must be provided in the command.
-* The index provided must be more than 0 and not exceed the number of students displayed in the Student list.
-* If the student number is being edited, the edited student number must be different from any other student already in the database.**
-
-Examples:
-* `editStu 2 s/A1234567Y g/T03` edits the second student in the Student list to have student number A1234567Y, and have tutorial group T03.
-
-### Delete a student : `deleteStu`
-Deletes an existing student in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
-
-Format: `deleteStu INDEX`
-
-* The index provided must be at least 1 and not exceed the number of students displayed in the Student list.
-
-Examples:
-* `deleteStu 1` deletes the first student in the currently visible Student list.
+![addStu](images/addStu_ui.png
+)
 
 ### Add a graded component: `addComp`
 Adds a graded component to the database. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
@@ -234,6 +200,27 @@ Upon successful creation of a graded component, a corresponding student score wi
 Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
 
 Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
+
+## Edit Commands
+Edit a student, student score or graded component.
+> **Note** <br>
+> 
+> A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
+> For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
+
+### Edit a student : `editStu`
+Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+
+Format: `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​`
+
+* 1 or more fields to be edited must be provided in the command.
+* The index provided must be more than 0 and not exceed the number of students displayed in the Student list.
+* If the student number is being edited, the edited student number must be different from any other student already in the database.**
+
+Examples:
+* `editStu 2 s/A9999999W g/T03` edits the second student in the Student list to have student number A9999999W, and have tutorial group T03.
+
+![editStu](images/editStu_ui.png)
 
 ### Edit a graded component: `editComp`
 Edits an existing graded component’s details in the database, based on the 1-based index of the graded component shown in the Graded Components list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
@@ -252,22 +239,10 @@ Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
-### Delete a graded component: `deleteComp`
-
-Deletes an existing graded component and its associated student scores in the database, based on the 1-based index of the graded component shown in the Graded Components list. 
-If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
-
-* The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list.
-
-Format: `deleteComp INDEX`
-
-* The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list.
-
-Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
 
 ### Edit student score: `editScore`
 
-Edits a student’s mark for a certain graded component, based on the 1-based index of the student score shown in the Student Scores list. 
+Edits a student’s mark for a certain graded component, based on the 1-based index of the student score shown in the Student Scores list.
 
 Note: a StudentScore will be automatically added when a graded component is created or when a new student is added. Similarly, student scores will be automatically deleted when its associated graded component or student is deleted.
 
@@ -283,41 +258,78 @@ Format: `editScore INDEX [m/SCORE] [x/comment]`
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
-### Searching students: `findStu`
+## Delete Commands
+Delete a student or graded component from the data base.
+> **Note** <br>
+> 
+> Student scores will be automatically deleted when a new student or component is deleted.
+> For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
+
+### Delete a student : `deleteStu`
+Deletes an existing student in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+
+Format: `deleteStu INDEX`
+
+* The index provided must be at least 1 and not exceed the number of students displayed in the Student list.
+
+Examples:
+* `deleteStu 7` deletes the seventh student in the currently visible Student list.
+
+![deleteStu](images/deleteStu_ui.png)
+
+### Delete a graded component: `deleteComp`
+
+Deletes an existing graded component in the database, based on the 1-based index of the graded component shown in the displayed Graded Components list. 
+If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+
+Format: `deleteComp INDEX`
+
+* The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list.
+
+Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
+
+## Find Commands
+### Parameters
+
+| Parameter | Relevant Commands   | Description                   | Match Criteria                                 | Search word | Match examples       | No match exmaples       |
+|-----------|---------------------|-------------------------------|------------------------------------------------|-------------|----------------------|-------------------------|
+| n/        | findStu, findScore  | Name of the student           | If student name contains the search keywords   | John        | john, John Snow      | jonathan                |
+| e/        | findStu, findScore  | Email of the student          | If student email contains the search keywords  | @gmail.com  | 1234@GMAIL.COM       | 123@u.nus.edu           |
+| s/        | findStu, findScore  | Student ID of the student     | If student ID contains the search keywords     | a12345      | A1234567W, A1234568W | A2234567W               |
+| g/        | findStu, findScore  | Tutorial group of the student | Exact match                                    | t08         | T08                  | T09                     |
+| t/        | findStu, findScore  | Tag of the student            | Exact match                                    | ta          | TA                   | potential TA            |
+| x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism | student has plagiarised |
+ | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm              | mid semeter test        |
+
+> **Note** <br>
+> 
+> * All find commands are case-insensitive
+> * It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
+> * For searching with multiple student parameters of the same type, it will find the objects who satisfy any of the
+    criteria.
+> * For searching with student parameters of different types, it will find the objects who satisfy all the criteria.
+> * For searching with multiple student parameters of different types, it will find the objects who satisfy at least one
+    criterion for each type.
+> * If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
+    s/A00000Y, no students will be found since this is not a substring of any valid student number.
+> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all--listall).
+
+### Find students: `findStu`
 
 Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. However, the displayed list of graded components will remain unchanged.
 
 Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
-* The search is case-insensitive. e.g. `a0123456` will match `A0123456`
-* You can search based on any of the following attributes: name, student number, email, tutorial group or tag.
-* It is allowed to have 0 searching criteria. In this case, this command will simply list all students.
-* For searching based on tutorial group and tag, it will find the students with exactly the same description
-(case-insensitive). However, for searching based on student ID, name and email, it will find the students as long as the
-description contains the searching keyword.
-* For searching with multiple student parameters of the same type, it will find the students who satisfy any of the
-criteria.
-* For searching with student parameters of different types, it will find the students who satisfy all the criteria.
-* For searching with multiple student parameters of different types, it will find the students who satisfy at least one
-criterion for each type.
-* If a input of the incorrect format is given, there might be no students found. For example, if you search findStu 
-s/A00000Y, no students will be found since this is not a substring of any valid student number.
-
 Examples:
-* `findStu n/Alice n/Bob g/T01` returns the data of the students whose name contains 'Alice' or 'Bob' (case-insensitive)
-while in tutorial group T01.
+* `findStu s/A000000Y` returns the data of the student whose student ID is A0000000Y.
+
+![findStu](images/findStu_ui.png)
 
 ### Find students : `findComp`
 Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and 
 all graded components will be displayed as well.
 
 Format: `findComp c/COMP_NAME`
-
-* Graded components whose name contains the keyword will be found. e.g. when searching using `findComp c/CA` the components with name `CA1`, `CA2` etc will all be matched
-* The search is case-insensitive. e.g. `midterm` will match `Midterm`
-* It is allowed to have 0 searching criteria. In this case, this command will simply list all graded components.
-* For searching with multiple student parameters of the same type, it will find the students who satisfy any of the
-  criteria.
 
 Example: `findComp c/midterm` lists all graded component contains the string midterm  (and their associated scores). 
 All graded students will be shown since they are relevant.
@@ -326,28 +338,10 @@ All graded students will be shown since they are relevant.
 Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed
 Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
-* The search is case-insensitive. e.g. `a0123456` will match `A0123456`
-* You can search based on any of the following attributes: name, student number, email, tutorial group, graded component, comment or tag.
-* It is allowed to have 0 searching criteria. In this case, this command will simply list all scores.
-* For searching based on tutorial group and tag, it will find the scores with exactly the same description
-  (case-insensitive). However, for searching based on student ID, name, email, comment or graded component it will find the scores as long as the
-  description contains the searching keyword.
-* For searching with multiple score parameters of the same type, it will find the students who satisfy any of the
-  criteria.
-* For searching with student parameters of different types, it will find the students who satisfy all the criteria.
-* For searching with multiple student parameters of different types, it will find the students who satisfy at least one
-  criterion for each type.
-* If an input of the incorrect format is given, there might be no students found. For example, if you search findStu
-  s/A00000Y, no students will be found since this is not a substring of any valid student number
-
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
-### List all : `listAll`
-Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
-
-Format: `listAll`
-
-Example: `listAll`
+## Sort Commands
+Sort the lists by a given criteria.
 
 ### Sorting students: `sortStu`
 
@@ -369,6 +363,8 @@ command in advance.
 Examples:
 * `sortStu o/name r/true` returns the sorted students whose names are in descending alphabetical order.
 
+![sortStu](images/sortStu_ui.png)
+
 ### Sorting students scores: `sortScore`
 
 Sorts students score by the given criteria and display its associated students in order.
@@ -385,20 +381,22 @@ Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
 Examples:
 * `sortScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
 
+## Statistics and Auto Grading Commands
 ### Auto grading all the students: `autoGrade`
 
 Automatically assign grades to all students based on their total score and
 the automatic grading method.
 
 Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
-
-* There are 2 possible `METHOD`:
+ 
+There are 2 possible `METHOD`:
   * Percentile Method: `p`, `percentile`, `Percentile`
     * Calculate students' grade based on the statistical percentile.
   * Absolute Score Method: `a`, `absolute`, `Absolute`
     * Calculate students' grade based on the given passing grade values.
     * the absolute value is compared directly with the students' total score (in percentage of the maximum score possible).
-* The `PASSING_VALUE` are numbers that determine the boundary for each grade
+
+The `PASSING_VALUE` are numbers that determine the boundary for each grade
   * The structure of `PASSING_VALUE`: `[A+] [A] [A-] [B+] [B] [B-] [C+] [C] [D+] [D] [F]`
   * Each bracket represents the boundary value for the grade.
     * For `percentile` method, it is the statistical percentile value.
@@ -411,8 +409,11 @@ Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
     * Value `40` given to `B+`
     * Value `30` given to `B`
     * Any Value below `30` will be given `F`
+
 Example:
 * `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95%` above will be given `A+`, total score below `95%` and `90` above will be given `A`, and so on, while below `20%` will be given `F`.
+
+![autoGrade](images/autoGrade_ui.png)
 
 ### Calculating overall statistics: `stats`
 
@@ -431,6 +432,8 @@ is meaningless.
 
 Examples:
 * `stats st/upperQuartile st/lowerQuartile` returns the upper and lower quartile of the overall student grades.
+
+![stats](images/stats_ui.png)
 
 ### Calculating statistics of a graded component : `compStats` 
 
@@ -452,6 +455,22 @@ name keyword.
 Examples:
 * `compStats st/upperQuartile st/lowerQuartile c/Midterm` returns the upper and lower quartile of the 
 student grades in Midterm.
+
+## Other Commands
+### Viewing help : `help`
+
+Shows a message explaining how to access the help page.
+
+![help message](images/helpMessage.png)
+
+Format: `help`
+
+### List all : `listAll`
+Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
+
+Format: `listAll`
+
+Example: `listAll`
 
 ### Clearing all entries : `clearAll`
 
@@ -475,11 +494,6 @@ ModuLight data is saved in the hard disk automatically after any command that ch
 ### Loading the previous data
 
 There is no need to manually load data stored on the hard disc. It will be available automatically everytime the program starts.
-
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -520,3 +534,27 @@ _Details coming soon ..._
 
 4. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?
    **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
+
+5. **Q**: How do I open a terminal?<br>
+   **A**: It depends on the operating system.
+   * **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
+   * **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
+--------------------------------------------------------------------------------------------------------------------
+
+## Glossary
+
+### Definitions
+
+| Term                     | Definition                                                                                                                                                                               |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Command                  | An input written by the user to tell Modulight to perform a certain action.                                                                                                              |
+| Command Terminal         | A text input and output environment that allows us to enter commands that the computer processes.                                                                                        |
+| Parameter                | A value that must be inputted by the user to complete a command.                                                                                                                         |
+| Index                    | A number that refers to the position of the components in an ordering. Modulight uses a 1-based index, which means the first number in an order is 1.                                    |
+| Command Line Interface   | It is a text-based user interface that accepts text inputs to execute commands.                                                                                                          |
+| Graphical User Interface | It is a digital interface where the users interact with the system using graphical components, such as icons and buttons.                                                                |
+| User Interface           | It is the point in which a human user interacts with a computer. It can be a physical device or software program.                                                                        |
+| Component                | A component is a part of the user interface.                                                                                                                                             |
+| JSON file                | JavaScript Object Notation(JSON) is a file used for data storage in ModuLight. For more information, please refer to the guide [here](https://www.oracle.com/sg/database/what-is-json/). |
+| Alphanumeric             | A piece of alphanumeric text should consist of only alphabets and numeric values. For instance,  the text “ABC11” is alphanumeric whereas “(**)” is not.                                 |
+| Domain                   | A domain is a digital address of a website. For emails, domain is the web address that comes after the @ symbol. For example, the domain in the email address 123@gmail.com is gmail.com |
