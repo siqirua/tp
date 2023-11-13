@@ -103,7 +103,7 @@ public class CommandStudentScoreTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book, filtered person list and selected person in {@code actualModel} remain unchanged
+     * - the various books, filtered lists in {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         StudentScoreBook expectedAddressBook = new StudentScoreBook(actualModel.getStudentScoreBook());

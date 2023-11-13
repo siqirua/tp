@@ -4,12 +4,12 @@ skinparam ClassFontColor #000000
 skinparam ClassBorderColor #000000
 skinparam ClassBackgroundColor #FFFFAA
 
-title After command "add n/David"
+title After command "addStu n/David..."
 
 package States <<rectangle>> {
-    class State1 as "<u>ab0:AddressBook</u>"
-    class State2 as "<u>ab1:AddressBook</u>"
-    class State3 as "<u>ab2:AddressBook</u>"
+    class State1 as "<u>sb0:SscBook</u>"
+    class State2 as "<u>sb1:SscBook</u>"
+    class State3 as "<u>sb2:SscBook</u>"
 }
 
 State1 -[hidden]right-> State2

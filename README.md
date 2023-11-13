@@ -2,10 +2,9 @@
 [![codecov](https://codecov.io/gh/AY2324S1-CS2103T-W08-2/tp/graph/badge.svg?token=DAJLBHDPYQ)](https://codecov.io/gh/AY2324S1-CS2103T-W08-2/tp)
 
 # Modulight
-![Ui](docs/images/Ui.png)
+![Ui](docs/images/Ui_overview.png)
 
-Modulight is a **Desktop application for managing student grades**. 
-It is a system to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups.
+Modulight is a **Desktop application for managing student grades**. It is a system to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups.
 
 Modulight interface will mainly use **Command Line Interface (CLI)** as its primary input.
 
