@@ -65,7 +65,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -130,7 +130,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="600" />
 
 Note that Student, StudentGrade and GradeComponent classes have similar structures and dependencies, thus, we use Ssc class to represent these three and their related classes in the class diagram above.
 
@@ -441,7 +441,7 @@ NUS professors who:
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-* NUS professors need a convenient system to manage students and assessments. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (eg. dropped module, potential TA etc.), alongside general GUI improvements.
+* NUS professors need a convenient system to manage students and assessments. We propose a program to track students and their performance on graded components, utility functions to get statistics on the cohort and certain subgroups, ability to tag students (e.g. dropped module, potential TA etc.), alongside general GUI improvements.
 
 
 
@@ -753,7 +753,7 @@ testers are expected to do more *exploratory* testing.
 1. Sort student scores in ModuLight
     1. Prerequisite: displayed student list and student score list are not empty and a graded component with name "Midterm" is created.
        2. Test case: `sortScore c/Midterm`
-          Expected: Only Midterm student scores are shown and they are sorted in the ascending order.
+          Expected: Only Midterm student scores are shown, and they are sorted in the ascending order.
        3. Test case: `sortScore c/Final` (Assuming there is no such graded component with name "Final")
           Expected: An error message that states "This graded component is not created. Please check if the information is correct" is shown.
 
@@ -762,7 +762,7 @@ testers are expected to do more *exploratory* testing.
 1. Calculate overall statistics of students' total scores
     1. Prerequisite: student list and student score list are not empty and there is at least a valid score in Tut `T01`.
        1. Test case: `stats`
-          Expected: A message that states  all relevant statistical measures (The exhausitive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
+          Expected: A message that states  all relevant statistical measures (The exhaustive list can be found in [UG](https://ay2324s1-cs2103t-w08-2.github.io/tp/UserGuide.html#calculating-overall-statistics-stats)) are shown.
        2. Test case: `stats st/max st/min`
           Expected: A message that states the max and min is shown.
        3. Test case: `stats g/T01`
