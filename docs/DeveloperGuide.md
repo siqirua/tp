@@ -185,12 +185,43 @@ Classes used by multiple components are in the `seedu.modulight.commons` package
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Student
+The `addStu` function allows the user to add a new student to the database. ModuLight maintains a `UniqueStudentList` 
+to make sure that there is no duplicates. 
+The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
+
+The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+
+The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
+![AddStudentCommand](diagrams/AddStudent.png)
+
+### Edit Student
+The `editStu` function allows the user to edit the information of the student indicated by index. 
+The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
+All student scores related to this `Student` will be updated as well.
+
+The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). 
+
+The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
+![AddStudentCommand](diagrams/EditStudent.png)
+
+### Find Student
+The `findStu` function allows the user to find the student that matches the given search criteria.
+
+It displays both the matching students and relevant student scores that belongs to the student.
+All graded components are displayed since they are considered relevant to the student.
+
+To find the wanted student, a `StudentMatchPredicate` is created to test whether a student matches the search keywords. A `ScoreMatchPredicate` is created from the `StudentMatchPredicate` to test whether the score belongs to the matched student.
+
+This only changes the displayed list of students and student scores, stored as `filteredStudentList` and `filteredStudentScoreList` in `Model`, without affecting the data stored in ModuLight.
+
+The following sequence diagram illustrates the process of execution of an `FindStudentCommand`.
+
+![AddStudentCommand](diagrams/FindStudent.png)
 
 ### Auto-grading
 
 #### Proposed Implementation
-
-{Intro}
 
 Given below is an example usage scenario and how the Autograding mechanism for percentile calculation behaves at each step.
 
