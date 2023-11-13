@@ -482,7 +482,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. ModuLight shows an error message.
 
       Use case resumes at step 2.
-* 3b. There is some
+* 3b. The given parameter is of invalid format
+   *  3b1. ModuLight shows an error message.
+  
+      Use case resumes at step 2.
+* 3c. The edited student number already exists.
+   *  3c1. ModuLight shows an error message.
+ 
+      Use case resumes at step 2.
 
 **Use case: Delete a student and the associated scores**
 
@@ -664,6 +671,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Adding a student
 1. Adding a student to Modulight
+
    1. Test case: `addStu n/John Doe s/A1234567Y e/john@gmail.com g/T07`
       Expected: If there is already a person with the same student ID in ModuLight an error message will appear in the feedback box.
       Otherwise, a new student with name `John Doe`, student id `A1234567Y`, email `john@gmail.com` and tutorial group `T07` will be created and displayed in the student list.
@@ -697,14 +705,19 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a student
 1. Find a student in ModuLight
+
    1. Prerequisite: student list is not empty.
-   1. Test case: `findStu g/T00`
+   
+   2. Test case: `findStu g/T00`
       Expected: All students from tutorial group `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   1. Test case: `findStu`
+   
+   2. Test case: `findStu`
       Expected: Since there is no search words given, all students, student scores and graded components will be displayed.
-   2. Test case: `findStu n/John n/Amy`
+   
+   3. Test case: `findStu n/John n/Amy`
       Expected: All students whose name contains `John` or `Amy` (case-insensitive) will be displayed. All graded components and all scores related to the displayed students should be displayed.
-   3. Test case: `findStu n/John g/T00`
+   
+   4. Test case: `findStu n/John g/T00`
       Expected: All students whose name contains `John` (case-insensitive) and is from `T00` will be displayed. All graded components and all scores related to the displayed students should be displayed.
 
 
