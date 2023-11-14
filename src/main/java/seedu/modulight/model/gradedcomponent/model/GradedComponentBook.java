@@ -137,6 +137,9 @@ public class GradedComponentBook implements ReadOnlyGradedComponentBook {
         return gradedComponents.hashCode();
     }
 
+    /**
+     * Finds and returns a {@code GradedComponent} based on the given {@code GcName}.
+     */
     public GradedComponent getGradedComponentByName(GcName gcName) {
         requireNonNull(gcName);
         for (GradedComponent gc : gradedComponents) {

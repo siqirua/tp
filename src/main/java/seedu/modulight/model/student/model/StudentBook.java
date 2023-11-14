@@ -120,6 +120,9 @@ public class StudentBook implements ReadOnlyStudentBook {
         students.sortScore(gcName, isReverse);
     }
 
+    /**
+     * Gets the number of students in this {@code StudentBook}.
+     */
     public int getSize() {
         return this.students.getSize();
     }
@@ -158,6 +161,9 @@ public class StudentBook implements ReadOnlyStudentBook {
         return students.hashCode();
     }
 
+    /**
+     * Finds and returns a {@code Student} based on the given {@code StudentId}.
+     */
     public Student getStudentById(StudentId studentId) {
         requireNonNull(studentId);
         for (Student student : students) {
