@@ -18,12 +18,10 @@ ModuLight is a desktop application that uses Command Lined Interface(CLI) to man
 
 * **New Feature**: `editStu` - edit the student information
     * **What it does**: Edit a student's name, student id, email, tutorial group or tag, as indicated by the index. All student scores related to this student wil be updated as well.
-    * **Justification**: There might be changes to a student's information.
 
 
 * **New Feature**: `deleteStu` - delete a student and related student scores from the database
     * **What it does**: Delete a student as all related student scores as indicated by the index.
-    * **Justification**: A student can drop the module.
 
 
 * **New Feature**: `findStu` - find a student based on the keywords
@@ -37,20 +35,14 @@ ModuLight is a desktop application that uses Command Lined Interface(CLI) to man
 * **New Feature**: `findScore` - find a student score based on the keywords
     * **What it does**: Find a student score in the database based on graded component name, student name, student id, tutorial group, email or tag keywords.
       The student and graded component list will be emptied.
-    * **Justification**: A student score is related to one graded component and one student, thus it can ab found by keywords of both classes. 
-  We assume that the user is only interested in the particular student scores when using this command. If they are interested in the students and graded components as well, findStu or findComp should be used instead.
-
 
 * **New Feature**: `findComp` - find a graded component based on the keywords
     * **What it does**:  Find a graded component in the database based on component name. All students are displayed as they are all relevant.
       All student scores related to the component will be displayed as well.
-    * **Justification**: Since student score is related to students, they are also displayed so that the user does not need rto do another search for them.
 
 * **New Feature**: `listAll` - list all students, student scores and graded components
   * **What it does**:  Displays all students, student scores and graded components in the respective lists
-  * **Justification**: This feature is useful in resetting the display after a find command
-  
-  
+
 
 * **Code contributed**:
     * Highlights: designed and implemented tutorial group and student id classes, which are unique to the project
