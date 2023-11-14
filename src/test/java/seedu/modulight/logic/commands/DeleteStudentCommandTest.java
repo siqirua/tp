@@ -35,7 +35,7 @@ public class DeleteStudentCommandTest {
         DeleteStudentCommand deleteCommand = new DeleteStudentCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DeleteStudentCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(studentToDelete));
+                Messages.formatStudent(studentToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getStudentBook(), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());
@@ -67,7 +67,7 @@ public class DeleteStudentCommandTest {
         Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_PERSON.getZeroBased());
         System.out.println(studentToDelete.getName());
         String expectedMessage = String.format(DeleteStudentCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(studentToDelete));
+                Messages.formatStudent(studentToDelete));
         Model expectedModel = new ModelManager(model.getStudentBook(), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());
         expectedModel.getStudentBook().removeStudent(studentToDelete);

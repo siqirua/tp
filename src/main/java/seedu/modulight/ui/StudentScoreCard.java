@@ -50,7 +50,8 @@ public class StudentScoreCard extends UiPart<Region> {
         this.studentScore = studentScore;
         id.setText(displayedIndex + ". ");
         sid.setText(studentScore.getStudentId().sid + " - " + studentScore.getGcName().gcName);
-        score.setText("Score: " + studentScore.getScore() + "/" + studentScore.getGradedComponent().getMaxMarks());
+        score.setText("Score: " + String.format("%.2f", studentScore.getScore())
+                + "/" + String.format("%.2f", studentScore.getGradedComponent().getMaxMarks().maxMarks));
         studentScore.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

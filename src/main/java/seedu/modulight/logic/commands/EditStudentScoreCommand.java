@@ -50,9 +50,6 @@ public class EditStudentScoreCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_SCORE = "This studentScore already "
             + "exists in the address book.";
-    public static final String STUDENT_SCORE_NOT_FOUND = "The student score with provided Student ID "
-            + "and Graded Component name does not exist.";
-
     public static final String SCORE_VALUE_NOT_VALID = "Score should be >= 0 and "
             + "<= the associated component's maximum marks.";
     public static final String MESSAGE_INVALID_SCORE_DISPLAYED_INDEX = "The score index provided is invalid.";

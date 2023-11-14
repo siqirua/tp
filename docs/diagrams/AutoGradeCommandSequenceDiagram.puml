@@ -117,7 +117,7 @@ activate CommandResult
 CommandResult --> AutoGradeCommand
 deactivate CommandResult
 
-AutoGradeCommand -> user : result
+AutoGradeCommand --> user : result
 deactivate AutoGradeCommand
 
 

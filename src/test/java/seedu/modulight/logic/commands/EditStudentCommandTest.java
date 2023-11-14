@@ -44,7 +44,7 @@ public class EditStudentCommandTest {
         EditStudentCommand editStudentCommand = new EditStudentCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = String.format(EditStudentCommand.MESSAGE_EDIT_STUDENT_SUCCESS,
-                Messages.format(editedStudent));
+                Messages.formatStudent(editedStudent));
 
         Model expectedModel = new ModelManager(new StudentBook(model.getStudentBook()), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());
@@ -66,7 +66,7 @@ public class EditStudentCommandTest {
         EditStudentCommand editCommand = new EditStudentCommand(indexLastStudent, descriptor);
 
         String expectedMessage = String.format(EditStudentCommand.MESSAGE_EDIT_STUDENT_SUCCESS,
-                Messages.format(editedStudent));
+                Messages.formatStudent(editedStudent));
 
         Model expectedModel = new ModelManager(new StudentBook(model.getStudentBook()), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());
@@ -81,7 +81,7 @@ public class EditStudentCommandTest {
         Student editedStudent = model.getFilteredStudentList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         String expectedMessage = String.format(EditStudentCommand.MESSAGE_EDIT_STUDENT_SUCCESS,
-                Messages.format(editedStudent));
+                Messages.formatStudent(editedStudent));
 
         Model expectedModel = new ModelManager(new StudentBook(model.getStudentBook()), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());
@@ -97,7 +97,7 @@ public class EditStudentCommandTest {
                 new EditStudentDescriptorBuilder().withName(VALID_NAME_JAMES).build());
 
         String expectedMessage = String.format(EditStudentCommand.MESSAGE_EDIT_STUDENT_SUCCESS,
-                Messages.format(editedStudent));
+                Messages.formatStudent(editedStudent));
 
         Model expectedModel = new ModelManager(new StudentBook(model.getStudentBook()), new StudentScoreBook(),
                 new GradedComponentBook(), new UserPrefs());

@@ -78,8 +78,8 @@ public class ParserUtil {
     public static GcName parseGcName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!StudentName.isValidName(trimmedName)) {
-            throw new ParseException(StudentName.MESSAGE_CONSTRAINTS);
+        if (!GcName.isValidName(trimmedName)) {
+            throw new ParseException(GcName.MESSAGE_CONSTRAINTS);
         }
         return new GcName(trimmedName);
     }
@@ -160,7 +160,10 @@ public class ParserUtil {
      * If not, throws a parse error.
      */
     public static Weightage parseWeightage(String s) throws ParseException {
-        checkStringParsableToFloat(s);
+        checkStringParsableToFloat(s, "Weightage");
+        if (!Weightage.isValidWeightage(Float.parseFloat(s))) {
+            throw new ParseException(Weightage.MESSAGE_CONSTRAINTS);
+        }
         return new Weightage(Float.parseFloat(s));
     }
 
@@ -169,7 +172,10 @@ public class ParserUtil {
      * If not, throws an error with {@code varName}
      */
     public static MaxMarks parseMaxMarks(String s) throws ParseException {
-        checkStringParsableToFloat(s);
+        checkStringParsableToFloat(s, "Max marks");
+        if (!MaxMarks.isValidMarks(Float.parseFloat(s))) {
+            throw new ParseException(MaxMarks.MESSAGE_CONSTRAINTS);
+        }
         return new MaxMarks(Float.parseFloat(s));
     }
 
@@ -180,23 +186,16 @@ public class ParserUtil {
      * @throws ParseException if not Parsable
      */
     public static float parseScore(String s) throws ParseException {
-        checkStringParsableToFloat(s);
+        checkStringParsableToFloat(s, "Score");
         return Float.parseFloat(s);
     }
 
-    private static void checkStringParsableToDouble(String s) throws ParseException {
-        try {
-            Double.parseDouble(s);
-        } catch (NumberFormatException e) {
-            throw new ParseException("A value could not be parsed into a number.");
-        }
-    }
 
-    private static void checkStringParsableToFloat(String s) throws ParseException {
+    private static void checkStringParsableToFloat(String s, String fieldName) throws ParseException {
         try {
             Float.parseFloat(s);
         } catch (NumberFormatException e) {
-            throw new ParseException("A value could not be parsed into a number.");
+            throw new ParseException(String.format("%s needs to be a number.", fieldName));
         }
     }
 
