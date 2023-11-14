@@ -26,6 +26,7 @@ Given below are my contributions to the project.
     * Modified the UI and JavaFX code (`StudentCard`, `GradedComponentCard`, `StudentScoreCard` and other FXML files) to accommodate three entities
     and dynamically update the UI whenever changes are made.
     * Modified the class infrastructure to link `Student`, `GradedComponent`, `StudentScore`  and allow calculation of overall/mean scores.
+  * Testing related to add/edit/delete gradedComponents commands.
   * For more details, refer to the [RepoSense Link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=seraphimstreets&breakdown=false&sort=groupTitle%20dsc&sortWithin=title&since=2023-09-22&timeframe=commit&mergegroup=&groupSelect=groupByRepos)
 
 
