@@ -93,7 +93,7 @@ The following section gives an overview of the parameters used for the commands 
 | Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples           |
 |-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|----------------------------|
 | n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준      | 
-| e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a domain              | 12@gmail.com, e123@u.nus.edu | 12@, 1234gmail             |
+| e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a domain              | 12@<span></span>gmail.com, e123@<span></span>u.nus.edu | 12@, 1234gmail             |
 | s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
 | t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam     | 晓明, Xiao Ming@Lee, 이준      |
@@ -200,7 +200,7 @@ Format: `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]`
 * it is allowed to omit the tutorial group. In this case, the student's tutorial group will be T00 by default.
 
 Examples: 
-* `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` Adds a student with student number A1234567Y, name Andy Ong, with email andy_ong@u.nus.edu belonging to tutorial group T03 to the database.
+* `addStu s/A1234567Y n/Andy Ong g/T03 e/andy_ong@u.nus.edu` Adds a student with student number A1234567Y, name Andy Ong, with email andy_ong@<span></span>u.nus.edu belonging to tutorial group T03 to the database.
 
 ![addStu](images/addStu_ui.png
 )
@@ -310,15 +310,15 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 ## Find Commands
 ### Parameters
 
-| Parameter | Relevant Commands   | Description                   | Match Criteria                                 | Search word | Match examples       | No match examples       |
-|-----------|---------------------|-------------------------------|------------------------------------------------|-------------|----------------------|-------------------------|
-| n/        | findStu, findScore  | Name of the student           | If student name contains the search keywords   | John        | john, John Snow      | jonathan                |
-| e/        | findStu, findScore  | Email of the student          | If student email contains the search keywords  | @gmail.com  | 1234@GMAIL.COM       | 123@u.nus.edu           |
-| s/        | findStu, findScore  | Student ID of the student     | If student ID contains the search keywords     | a12345      | A1234567W, A1234568W | A2234567W               |
-| g/        | findStu, findScore  | Tutorial group of the student | Exact match                                    | t08         | T08                  | T09                     |
-| t/        | findStu, findScore  | Tag of the student            | Exact match                                    | ta          | TA                   | potential TA            |
-| x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism | student has plagiarised |
- | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm              | mid semester test       |
+| Parameter | Relevant Commands   | Description                   | Match Criteria                                 | Search word | Match examples              | No match examples       |
+|-----------|---------------------|-------------------------------|------------------------------------------------|-------------|-----------------------------|-------------------------|
+| n/        | findStu, findScore  | Name of the student           | If student name contains the search keywords   | John        | john, John Snow             | jonathan                |
+| e/        | findStu, findScore  | Email of the student          | If student email contains the search keywords  | @gmail.com  | 1234@<span></span>GMAIL.COM | 123@u.nus.edu           |
+| s/        | findStu, findScore  | Student ID of the student     | If student ID contains the search keywords     | a12345      | A1234567W, A1234568W        | A2234567W               |
+| g/        | findStu, findScore  | Tutorial group of the student | Exact match                                    | t08         | T08                         | T09                     |
+| t/        | findStu, findScore  | Tag of the student            | Exact match                                    | ta          | TA                          | potential TA            |
+| x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism        | student has plagiarised |
+ | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm                     | mid semester test       |
 
 > **Note** <br>
 > 
