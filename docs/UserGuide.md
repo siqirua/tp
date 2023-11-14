@@ -71,7 +71,7 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
    ![Ui](images/Ui_initial.png)
 
 
-5. Type the command in the [command box](#navigating-the-graphical-user-interface--gui-) and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the [command box](#navigating-the-graphical-user-interface-gui) and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `addStu s/A1234567X e/e0725856@u.nus.edu g/T02 n/Jamus Lim` : Adds a Student named Jamus Lim.
@@ -114,18 +114,18 @@ The following section gives an overview of the parameters used for the commands 
 |-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|----------------------------|
 | m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
 | x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
-| t/        | Tags of the student score                     | Must only contain alphanumeric characters and no space                                                                                       | HighestScore, MakeupExam   | @plagiarism, Highest Score |
+| t/        | Tags of the student score                     | Must only contain alphanumeric characters                                                                                                    | Highest Score, Makeup Exam | @plagiarism, Highest_Score |
 | INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
 
 ### Command Related Parameters
 
 
-| Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples                                    | Invalid Examples            |
-|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|-----------------------------|
-| o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut                                | studentName, overall score  |
-| r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing                                  | True, ascending             |
-| st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile                                | quartile, correlation       |
-| pg/       | Used in [autoGrade](#auto-grading-all-the-students-autograde) to determine the passing value of the grade                                                                                         | At most 11 number, with each of them must be an integer. Furthermore, the value must be decreasing and cannot exceed 100 or below 0                                                                                            | 90 80 50 30 20, 0, 100                            | 101, -2, 90 70 75, 90 90 90 |                    |                            |
+| Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples                                   | Invalid Examples            |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------------------------|
+| o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut                               | studentName, overall score  |
+| r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing                                 | True, ascending             |
+| st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile                               | quartile, correlation       |
+| pg/       | Used in [autoGrade](#auto-grading-all-the-students-autograde) to determine the passing value of the grade                                                                                         | At most 11 number, with each of them must be an integer. Furthermore, the value must be decreasing and cannot exceed 100 or below 0                                                                                            | 90 80 50 30 20, 0, 100                           | 101, -2, 90 70 75, 90 90 90 |                    |                            |
 | ag/       | Used in [autoGrade](#auto-grading-all-the-students-autograde) to determine the grading method                                                                                                     | One of the: p, percentile, Percentile, a, absolute, Absolute                                                                                                                                                                   | p, percentile, Percentile, a, absolute, Absolute | Asolut, persentil           |
 
 
@@ -211,7 +211,7 @@ Adds a graded component to the database. If successful, an acknowledgement messa
 Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers `A1234567X` and `A1234567Y` in the database, then two student scores are created with titles `A1234567X - Midterm` and `A1234567Y - Midterm`.
 
 * When adding the component, you must ensure that the total weightage of all components does not exceed 100.
-* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
+* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#command-related-parameters).
 * Please refrain from entering numbers with more than 2 decimal places of precision.
 
 Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
@@ -247,7 +247,7 @@ Edits an existing graded component’s details in the database, based on the 1-b
 * If the component name is being edited, the component name cannot match the component name of any other graded component already in the database.
 * When editing the component, you must ensure that the total weightage of all components does not exceed 100.
 * If editing the maximum marks, ensure none of the current student scores exceed the new maximum marks.
-* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#notes-on-score-calculation).
+* Weightage is a relative value calculated relative to the sum of all other weightage values. For more details, view [the notes on score calculations](#command-related-parameters).
 * Please refrain from entering numbers with more than 2 decimal places of precision.
 
 Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
@@ -557,7 +557,7 @@ There is no need to manually load data stored on the hard disc. It will be avail
    **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ModuLight home folder.
 
 2. **Q**: How does the calculation of scores work?<br>
-   **A**: Refer to the [notes on score calculations](#notes-on-score-calculation).
+   **A**: Refer to the [notes on score calculations](#command-related-parameters).
 
 3. **Q**: Does the display update information (e.g. name, mean) in real time?<br>
    **A**: Yes.

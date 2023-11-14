@@ -159,11 +159,11 @@ Step 4. The `AutoGradeCommand` returned will then be executed and several other 
 The following sequence diagram shows how the auto-grading mechanism works:
 * The parser implementation (Command execution is hidden):
 
-<puml src="diagrams/AutoGradeParserSequenceDiagram.puml" />
+<puml src="diagrams/AutoGradeParserSequenceDiagram.puml"></puml>
 
 * The command implementation :
 
-<puml src="diagrams/AutoGradeCommandSequenceDiagram.puml" />
+<puml src="diagrams/AutoGradeCommandSequenceDiagram.puml"></puml>
 
 
 
