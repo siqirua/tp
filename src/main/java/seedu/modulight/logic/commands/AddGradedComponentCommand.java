@@ -15,9 +15,11 @@ import seedu.modulight.commons.util.ToStringBuilder;
 import seedu.modulight.logic.Messages;
 import seedu.modulight.logic.commands.exceptions.CommandException;
 import seedu.modulight.model.Model;
+import seedu.modulight.model.gradedcomponent.GcName;
 import seedu.modulight.model.gradedcomponent.GradedComponent;
 import seedu.modulight.model.gradedcomponent.model.GradedComponentBook;
 import seedu.modulight.model.student.Student;
+import seedu.modulight.model.student.StudentId;
 import seedu.modulight.model.student.model.StudentBook;
 import seedu.modulight.model.studentscore.StudentScore;
 
@@ -65,14 +67,17 @@ public class AddGradedComponentCommand extends Command {
         StudentBook studentBook = model.getStudentBook();
 
         float weightageToAdd = toAdd.getWeightage().weightage;
-        if (ModelUtil.weightageSum(gradedComponentBook) + weightageToAdd > 100) {
+        float curWeightageSum = ModelUtil.weightageSum(gradedComponentBook);
+        if (curWeightageSum + weightageToAdd > 100) {
             throw new CommandException(MESSAGE_WEIGHTAGES_MORE_THAN_100);
         }
         gradedComponentBook.addGradedComponent(toAdd);
         List<Student> students = studentBook.getStudentList();
 
         for (Student student : students) {
-            StudentScore sc = new StudentScore(student.getStudentId(), toAdd.getName(), 0);
+            GcName name = toAdd.getName();
+            StudentId sid = student.getStudentId();
+            StudentScore sc = new StudentScore(sid, name, 0);
             addCommandUpdateLinks(student, toAdd, sc);
             addCommandUpdateBooks(model, student, toAdd, sc);
         }
