@@ -35,6 +35,7 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
   * **[FAQ](#faq)**
   * **[Glossary](#glossary)**
 
+<div style="page-break-after: always;"></div>
 --------------------------------------------------------------------------------------------------------------------
 
 ## How to use this guide
@@ -82,6 +83,7 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
 
 6. Refer to the [Features](#features) below for details of each command.
 
+<div style="page-break-after: always;"></div>
 
 ## Parameter Information
 
@@ -144,6 +146,8 @@ determine the relative performance of a student for a component. <br> For instan
 
 </box>
 
+<div style="page-break-after: always;"></div>
+
 ## Navigating the Graphical User Interface (GUI)
 
 ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick run through of the different sections of our GUI, as well as some notes regarding the use of the GUI.
@@ -177,6 +181,7 @@ Here is a summary of each GUI component within ModuLight.
 | If a parameter is expected only once and entered multiple times, an error message will be shown                                      | NIL                                                                          | `editStu 1 n/megan n/maegan` results in error message `Multiple values specified for the following single-valued field(s)` |
 | Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` , `listAll` and `clearAll` will be ignored | NIL                                                                          | `help abc` is equivalent to `help`                                                                                         |
 
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -527,6 +532,8 @@ ModuLight data is saved in the hard disk automatically after any command that ch
 
 There is no need to manually load data stored on the hard disc. It will be available automatically everytime the program starts.
 
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -574,6 +581,9 @@ There is no need to manually load data stored on the hard disc. It will be avail
    **A**: It depends on the operating system.
    * **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
    * **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
+
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
