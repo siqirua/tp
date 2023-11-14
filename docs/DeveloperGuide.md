@@ -15,6 +15,7 @@ pageNav: 3
     * **[Others](#documentation-logging-testing-configuration-dev-ops)**
     * **[Appendix: Requirements](#appendix-requirements)**
     * **[Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)**
+    * **[Appendix: Effort](#appendix-effort)**
     * **[Appendix: Planned enhancements](#appendix-planned-enhancements)**
 
 --------------------------------------------------------------------------------------------------------------------
@@ -190,9 +191,10 @@ The `addStu` function allows the user to add a new student to the database. Modu
 to make sure that there is no duplicates. 
 
 A  typical program flow is as follows:
+
 1. User enters a command to create a new student. The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). If the inputs are invalid or if there are required flags missing, a `ParseException` is thrown and error message will be displayed.
-2. Otherwise, a new `Student` object with the given inputs is created. A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
-3. The new `Student` object will be added to the `StudentBook`. If the student already exists in the student book, a `ParseException` is thrown and error message will be displayed
+2. Otherwise, a new `Student` object with the given inputs is created. A default `TutorialGroup` with value `T00` will be assigned to the student if the user did not assign the student to a tutorial group.
+3. The new `Student` object will be added to the `StudentBook`. If the student already exists in the student book, a `CommandException` is thrown and error message will be displayed
 4. If there exists `GradedComponent` in the model. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`. This score will be stored in the `Student` entity as well.
 5. Acknowledgement message is displayed.
 
@@ -205,9 +207,11 @@ The `editStu` function allows the user to edit the information of the student in
 The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
 All student scores related to this `Student` will be updated as well.
 
+A  typical program flow is as follows:
+
 1. User enters a command to edit a student. The student can only be edited if the user entered valid index and inputs for its name, student id, email, tutorial group(optional) and tag(optional). If the index or inputs are invalid, a `ParseException` is thrown and error message will be displayed.
 2. Otherwise, a new edited `Student` object with the given inputs is created. 
-3. The new `Student` object will be added to the `StudentBook` to replace the previous one. If the student already exists in the student book(e.g. the edited `StudentId already exists`), a `ParseException` is thrown and error message will be displayed
+3. The new `Student` object will be added to the `StudentBook` to replace the previous one. If the student already exists in the student book(e.g. the edited `StudentId already exists`), a `CommandException` is thrown and error message will be displayed
 4. The linkage between the edited student and its scores will be updated. The linkage between the scores and their components will be updated as well.
 5. Acknowledgement message is displayed.
 
@@ -228,6 +232,7 @@ To find the wanted student, a `StudentMatchPredicate` is created to test whether
 This only changes the displayed list of students and student scores, stored as `filteredStudentList` and `filteredStudentScoreList` in `Model`, without affecting the data stored in ModuLight.
 
 A typical program flow is as follows:
+
 1. User enters a command to find students, e.g. `findStu g/t01`
 2. `FindStudentCommandParser` attempts to parses the flags present, in this case only `g/`. Note that `FindStudentCommandParser` does not check for invalid inputs, as
 user might use partial keywords to perform the search.
