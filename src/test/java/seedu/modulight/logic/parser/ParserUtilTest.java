@@ -138,7 +138,7 @@ public class ParserUtilTest {
             assertEquals(ParserUtil.parseMaxMarks("abc"), new MaxMarks(100));
             throw new AssertionError("Execution of command in negative test cases should not succeed.");
         } catch (ParseException ce) {
-            ParseException expectedException = new ParseException("A value could not be parsed into a number.");
+            ParseException expectedException = new ParseException("Max marks needs to be a number.");
             assertEquals(expectedException, ce);
         }
     }
