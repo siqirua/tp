@@ -311,15 +311,15 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 ### Parameters
 
 
-| Parameter | Relevant Commands   | Description                   | Match Criteria                                 | Search word | Match examples       | 
-|-----------|---------------------|-------------------------------|------------------------------------------------|-------------|----------------------|
-| n/        | findStu, findScore  | Name of the student           | If student name contains the search keywords   | John        | john, John Snow      | 
-| e/        | findStu, findScore  | Email of the student          | If student email contains the search keywords  | @gmail.com  | 1234@GMAIL.COM       | 
-| s/        | findStu, findScore  | Student ID of the student     | If student ID contains the search keywords     | a12345      | A1234567W, A1234568W | 
-| g/        | findStu, findScore  | Tutorial group of the student | Exact match                                    | t08         | T08                  |
-| t/        | findStu, findScore  | Tag of the student            | Exact match                                    | ta          | TA                   | 
-| x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism | 
- | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm              |
+| Parameter | Relevant Commands   | Description                   | Match Criteria                                 | Search word | Match examples         | 
+|-----------|---------------------|-------------------------------|------------------------------------------------|-------------|------------------------|
+| n/        | findStu, findScore  | Name of the student           | If student name contains the search keywords   | John        | john, John Snow        | 
+| e/        | findStu, findScore  | Email of the student          | If student email contains the search keywords  | @gmail.com  | 1234@<span></span>.COM | 
+| s/        | findStu, findScore  | Student ID of the student     | If student ID contains the search keywords     | a12345      | A1234567W, A1234568W   | 
+| g/        | findStu, findScore  | Tutorial group of the student | Exact match                                    | t08         | T08                    |
+| t/        | findStu, findScore  | Tag of the student            | Exact match                                    | ta          | TA                     | 
+| x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism   | 
+ | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm                |
 
 
 > **Note** <br>
