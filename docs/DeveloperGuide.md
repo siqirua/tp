@@ -231,7 +231,7 @@ Below is an activity diagram that demonstrates how this command works.
 
 ### Add Graded Component
 
-<puml src="diagrams/AddGradedComponentSequenceDiagram.puml" width="450" />
+<puml src="diagrams/AddGradedComponentSequenceDiagram.puml" width="1000" />
 
 The `addComp` command allows users to add a graded component and automaticaly create student scores associated with that component for every student in the database.
 A typical program flow is as follows:
@@ -259,7 +259,7 @@ Alternative Implementations:
 
 ### Edit Graded Component
 
-<puml src="diagrams/EditGradedComponent.puml" width="450" />
+<puml src="diagrams/EditGradedComponent.puml" width="1000" />
 
 The `editComp` command allows users to edit a graded component's details based on its 1-based index, which are propagated to the component's associated student scores.
 A typical program flow is as follows:
@@ -284,6 +284,23 @@ Alternative Implementations:
   the time as it would require refactoring a large part of the codebase. However, this may
   create some inefficiency as the `Model` has to search through the entire `GradedComponent` list
   for the appropriate item to replace. Therefore, this is a possible extension that future developers may consider.
+
+### Delete Graded Component
+
+<puml src="diagrams/DeleteGradedComponentSequenceDiagram.puml" width="1000" />
+
+The `deleteComp` command allows users to delete a graded component alongside its associated student scores based on its 1-based index.
+A typical program flow is as follows:
+
+1. User enters a command to delete a graded component, for instance `deleteComp 2`.
+2. `DeleteGradedComponentCommandParser` checks that the only argument provided is a valid index, which is an integer between 1 and the size of the displayed `GradedComponent` list.
+3. Index is passed into `DeleteGradedComponentCommand`'s constructor which is then executed.
+4. The graded component corresponding to the index in the currently displayed `GradedComponentBook` list is removed.
+5. All associated student scores of that `GradedComponent` are also removed.
+
+Alternative Implementations:
+* We originally considered having users remove graded components based on their unique component name. Ultimately, we decided it would be faster for users to type in an index rather than a name (especially if it is quite lengthy),
+although future developers may want to extend this functionality so that users can choose to remove by either index or component name.
 
 ### Sort Commands
 

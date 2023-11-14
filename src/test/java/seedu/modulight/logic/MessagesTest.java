@@ -31,13 +31,13 @@ public class MessagesTest {
                 new StudentEmail("xyz@nus.edu.sg"), new TutorialGroup("T01"), new ArrayList<>(),
                 new HashSet<>());
         String expectedOutput = "A0123456U; Name: Test Stu; Email: xyz@nus.edu.sg; Tutorial Group: T01";
-        assertEquals(Messages.format(testStu), expectedOutput);
+        assertEquals(Messages.formatStudent(testStu), expectedOutput);
     }
 
     @Test
     public void format_studentScore_success() {
         StudentScore testStuScore = new StudentScore(new StudentId("A0123456U"), new GcName("Midterm"), 40);
-        String expectedOutput = "; Student ID: A0123456U; Graded component name: Midterm; Score: 40.0";
+        String expectedOutput = "Student ID: A0123456U; Graded component name: Midterm; Score: 40.0";
         assertEquals(Messages.formatStudentScore(testStuScore), expectedOutput);
     }
 

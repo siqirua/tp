@@ -44,7 +44,7 @@ public class Messages {
     /**
      * Formats the {@code student} for display to the user.
      */
-    public static String format(Student student) {
+    public static String formatStudent(Student student) {
         final StringBuilder builder = new StringBuilder();
         builder.append(student.getStudentId())
                 .append("; Name: ")
@@ -75,7 +75,7 @@ public class Messages {
      */
     public static String formatStudentScore(StudentScore sc) {
         final StringBuilder builder = new StringBuilder();
-        builder.append("; Student ID: ")
+        builder.append("Student ID: ")
                 .append(sc.getStudentId())
                 .append("; Graded component name: ")
                 .append(sc.getGcName())

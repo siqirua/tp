@@ -106,7 +106,7 @@ public class EditStudentCommand extends Command {
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent)));
+        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.formatStudent(editedStudent)));
     }
 
     /**

@@ -120,7 +120,9 @@ public class Student {
             GradedComponent gc = sc.getGradedComponent();
             Weightage w = gc.getWeightage();
             float weight = w.weightage;
-            totalScore += weight / totalWeightage * sc.calcRelativeScore();
+            if (totalWeightage != 0) {
+                totalScore += weight / totalWeightage * sc.calcRelativeScore();
+            }
         }
         return totalScore;
     }

@@ -60,7 +60,7 @@ public class DeleteStudentCommand extends Command {
                 studentScoreBook.removeStudentScore(studentScoreList.get(i));
             }
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(studentToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.formatStudent(studentToDelete)));
     }
 
     @Override

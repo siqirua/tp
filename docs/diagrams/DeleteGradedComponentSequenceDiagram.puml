@@ -1,0 +1,80 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ModuLightParser" as ModuLightParser LOGIC_COLOR
+participant ":DeleteGradedComponentCommandParser" as DeleteGradedComponentCommandParser LOGIC_COLOR
+participant ":DeleteGradedComponentCommand" as DeleteGradedComponentCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("deleteComp 1")
+activate LogicManager
+
+LogicManager -> ModuLightParser : parseCommand("deleteComp 1")
+activate ModuLightParser
+
+create DeleteGradedComponentCommandParser
+ModuLightParser -> DeleteGradedComponentCommandParser
+activate DeleteGradedComponentCommandParser
+
+DeleteGradedComponentCommandParser --> ModuLightParser
+deactivate DeleteGradedComponentCommandParser
+
+ModuLightParser -> DeleteGradedComponentCommandParser : parse(arguments)
+activate DeleteGradedComponentCommandParser
+
+
+create DeleteGradedComponentCommand
+DeleteGradedComponentCommandParser -> DeleteGradedComponentCommand : new DeleteGradedComponentCommand(index)
+activate DeleteGradedComponentCommand
+
+DeleteGradedComponentCommand --> DeleteGradedComponentCommandParser
+deactivate DeleteGradedComponentCommand
+
+DeleteGradedComponentCommandParser --> ModuLightParser
+deactivate DeleteGradedComponentCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+DeleteGradedComponentCommandParser -[hidden]-> ModuLightParser
+destroy DeleteGradedComponentCommandParser
+
+ModuLightParser --> LogicManager
+deactivate ModuLightParser
+
+LogicManager -> DeleteGradedComponentCommand : execute()
+activate DeleteGradedComponentCommand
+
+DeleteGradedComponentCommand -> Model : removeGradedComponent(gc)
+activate Model
+
+Model --> DeleteGradedComponentCommand
+deactivate Model
+
+loop for all associated studentScores of gc
+    DeleteGradedComponentCommand -> Model :removeStudentScore(studentScore)
+    activate Model
+
+    Model --> DeleteGradedComponentCommand
+    deactivate Model
+end
+
+
+create CommandResult
+DeleteGradedComponentCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> DeleteGradedComponentCommand
+deactivate CommandResult
+
+DeleteGradedComponentCommand --> LogicManager : result
+deactivate DeleteGradedComponentCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

@@ -73,7 +73,7 @@ public class AddStudentCommand extends Command {
             addCommandUpdateLinks(toAdd, gc, sc);
             addCommandUpdateBooks(model, toAdd, gc, sc);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatStudent(toAdd)));
     }
 
     @Override
