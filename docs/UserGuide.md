@@ -90,13 +90,13 @@ The following section gives an overview of the parameters used for the commands 
 ### Student Parameters
 
 
-| Parameter | Description                   | Constraints                                                                | Valid Examples               | Invalid Examples           |
-|-----------|-------------------------------|----------------------------------------------------------------------------|------------------------------|----------------------------|
-| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming          | 晓明, Xiao Ming@Lee, 이준      | 
+| Parameter | Description                   | Constraints                                                                | Valid Examples                                         | Invalid Examples           |
+|-----------|-------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------|----------------------------|
+| n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming                                    | 晓明, Xiao Ming@Lee, 이준      | 
 | e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a domain              | 12@<span></span>gmail.com, e123@<span></span>u.nus.edu | 12@, 1234gmail             |
-| s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                    | a1234567w, a123w, B1234567 |
-| g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                     | T1, t10, T111, @T11        |
-| t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam     | 晓明, Xiao Ming@Lee, 이준      |
+| s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                                              | a1234567w, a123w, B1234567 |
+| g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                                               | T1, t10, T111, @T11        |
+| t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam                               | 晓明, Xiao Ming@Lee, 이준      |
 
 
 
@@ -331,7 +331,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
     criterion for each type.
 > * If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
     s/A00000Y, no students will be found since this is not a substring of any valid student number.
-> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all--listall).
+> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all-listall).
 
 ### Find students: `findStu`
 
