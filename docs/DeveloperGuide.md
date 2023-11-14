@@ -188,9 +188,14 @@ This section describes some noteworthy details on how certain features are imple
 ### Add Student
 The `addStu` function allows the user to add a new student to the database. ModuLight maintains a `UniqueStudentList` 
 to make sure that there is no duplicates. 
-The new `Student` object will be added to the `StudentBook`. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`.
 
-The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+A  typical program flow is as follows:
+1. User enters a command to create a new student. The student can only be added if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). If the inputs are invalid or if there are required flags missing, a `ParseException` is thrown and error message will be displayed.
+2. Otherwise, a new `Student` object with the given inputs is created. A default `TutorialGroup` with value T00 will be assigned to the student if the user did not assign the student to a tutorial group.
+3. The new `Student` object will be added to the `StudentBook`. If the student already exists in the student book, a `ParseException` is thrown and error message will be displayed
+4. If there exists `GradedComponent` in the model. An empty `StudentScore` related to this `Student` will be added to all existing `GradedComponent`. This score will be stored in the `Student` entity as well.
+5. Acknowledgement message is displayed.
+
 
 The following activity diagram illustrates the process of execution of an `AddStudentCommand`.
 ![AddStudentCommand](diagrams/AddStudent.png)
@@ -200,7 +205,11 @@ The `editStu` function allows the user to edit the information of the student in
 The previous `Student` object will be removed from the `StudentBook`. A new student object with the edited information will be added to the database. 
 All student scores related to this `Student` will be updated as well.
 
-The student can only be edited if the user entered valid inputs for its name, student id, email, tutorial group(optional) and tag(optional). Otherwise, a `ParseException` will be thrown and error message will be displayed. 
+1. User enters a command to edit a student. The student can only be edited if the user entered valid index and inputs for its name, student id, email, tutorial group(optional) and tag(optional). If the index or inputs are invalid, a `ParseException` is thrown and error message will be displayed.
+2. Otherwise, a new edited `Student` object with the given inputs is created. 
+3. The new `Student` object will be added to the `StudentBook` to replace the previous one. If the student already exists in the student book(e.g. the edited `StudentId already exists`), a `ParseException` is thrown and error message will be displayed
+4. The linkage between the edited student and its scores will be updated. The linkage between the scores and their components will be updated as well.
+5. Acknowledgement message is displayed.
 
 The following activity diagram illustrates the process of execution of an `EditStudentCommand`.
 ![AddStudentCommand](diagrams/EditStudent.png)
@@ -216,15 +225,34 @@ It displays both the matching students and relevant student scores that belongs 
 All graded components are displayed since they are considered relevant to the student.
 
 To find the wanted student, a `StudentMatchPredicate` is created to test whether a student matches the search keywords. A `ScoreMatchPredicate` is created from the `StudentMatchPredicate` to test whether the score belongs to the matched student.
-
 This only changes the displayed list of students and student scores, stored as `filteredStudentList` and `filteredStudentScoreList` in `Model`, without affecting the data stored in ModuLight.
+
+A typical program flow is as follows:
+1. User enters a command to find students, e.g. `findStu g/t01`
+2. `FindStudentCommandParser` attempts to parses the flags present, in this case only `g/`. Note that `FindStudentCommandParser` does not check for invalid inputs, as
+user might use partial keywords to perform the search.
+3. If the parse is successful, a `StudentMatchPredicate` is created to find the students from tutorial groups that matches `t01`. A `ScoreMatchPredicate` os created by passing this `StudentMatchPredicate` to find the scores that belong to these students.
+4. A new `FindStudentCommand` is created from these predicates and passed back to `LogicManager`.
+5. The command is executed. The `filteredStudentList` and `filteredStudentScoreList` are updated with the predicates passed in to the command. The diagram omits an extra action to show all components in `filteredGradedComponentList`.
+6. The command result is created and passed back to the `LogicManager`.
+
+
 
 The following sequence diagram illustrates the process of execution of an `FindStudentCommand`.
 
 ![AddStudentCommand](diagrams/FindStudent.png)
 
 ### List Commands
-The `listAll` command lists all student, student scores and graded components in ModuLight.<br>
+The `listAll` command lists all student, student scores and graded components in ModuLight. This is often used after filtering the displayed lists with the find commands.<br>
+
+A typical program flow is as follows:
+
+1. User enters a `listAll` command to list all entities
+2. ModuLight updates the  `filteredStudentList` with a pre-determined `StudentMatchPredicate` that returns true for all students.
+3. ModuLight updates the  `filteredStudentScoreList` with a pre-determined `ScoreMatchPredicate` that returns true for all scores.
+4. ModuLight updates the  `filteredGradedComponentList` with a pre-determined `GcMatchPredicate` that returns true for all components.
+5. ModuLight displays all students, student scores, graded components and a acknowledgement message.
+
 Below is an activity diagram that demonstrates how this command works.
 
 ![listAllCommand](diagrams/List.png)
