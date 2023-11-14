@@ -333,7 +333,7 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
     criterion for each type.
 > * If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
     s/A00000Y, no students will be found since this is not a substring of any valid student number.
-> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all--listall).
+> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all-listall).
 
 ### Find students: `findStu`
 
