@@ -246,13 +246,15 @@ Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
 Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
 
 ## Edit Commands
-<<<<<<< HEAD
+
 You can use the following commands to edit a student, student score or graded component.
 
+<div markdown="1" class="alert alert-success" >
 
-<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+**:bulb: Useful tips**:
 A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
 For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
+
 </div>
 
 ### Edit a student : `editStu`
