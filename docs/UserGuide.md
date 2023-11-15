@@ -53,12 +53,15 @@ via a [Command Line Interface](#glossary)** while still having the benefits of a
       * We use link such as [Command Summary Link](#command-summary) to direct you to a specific section in this guide. 
      
       * We also use text with background, such as `code` to highlight text relevant to commands.
-      * We use the following boxes to show important alerts and tips
-> [!NOTE]  
-> Highlights any useful tips
+      * We use the following box to show important tips and alerts
 
-> [!IMPORTANT]  
-> Highlights crucial information that you should know
+<div markdown="block" class="alert alert-primary">**:information_source: Important alert**:
+Important information that you should take note of
+</div>
+
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+Useful tips and additional information that helps you to make better use of ModuLight
+</div>
 
    
 2. For regular users:
@@ -111,7 +114,7 @@ The following section gives an overview of the parameters used for the commands 
 | Parameter | Description                   | Constraints                                                                | Valid Examples                                         | Invalid Examples           |
 |-----------|-------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------|----------------------------|
 | n/        | Name of the student           | Must only contain alphanumeric characters and must not be empty.           | John, Lee Xiao Ming                                    | 晓明, Xiao Ming@Lee, 이준      | 
-| e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a domain              | 12@<span></span>gmail.com, e123@<span></span>u.nus.edu | 12@, 1234gmail             |
+| e/        | Email of the student          | Must consist of an alphanumeric prefix, @ symbol and a [domain](#glossary) | 12@<span></span>gmail.com, e123@<span></span>u.nus.edu | 12@, 1234gmail             |
 | s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                                              | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                                               | T1, t10, T111, @T11        |
 | t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam                               | 晓明, Xiao Ming@Lee, 이준      |
@@ -127,12 +130,12 @@ The following section gives an overview of the parameters used for the commands 
 
 ### Student Score Parameters
 
-| Parameter | Description                                   | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples           |
-|-----------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|----------------------------|
-| m/        | Marks of the Student Score, in absolute terms | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
-| x/        | Comments of the student score                 | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
-| t/        | Tags of the student score                     | Must only contain alphanumeric characters                                                                                                    | Highest Score, Makeup Exam | @plagiarism, Highest_Score |
-| INDEX     | The index of the target student score         | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
+| Parameter | Description                                        | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples           |
+|-----------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|----------------------------|
+| m/        | Marks of the Student Score, in absolute terms      | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
+| x/        | Comments of the student score                      | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
+| t/        | Tags of the student score                          | Must only contain alphanumeric characters                                                                                                    | Highest Score, Makeup Exam | @plagiarism, Highest_Score |
+| INDEX     | The [index](#glossary) of the target student score | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
 
 ### Command Related Parameters
 
@@ -146,19 +149,22 @@ The following section gives an overview of the parameters used for the commands 
 | ag/       | Used in [autoGrade](#auto-grading-all-the-students-autograde) to determine the grading method                                                                                                     | One of the: p, percentile, Percentile, a, absolute, Absolute                                                                                                                                                                   | p, percentile, Percentile, a, absolute, Absolute | Asolut, persentil           |
 
 
-<box type="info" seamless>
 
- **Note**: Graded Component and Student Score parameters for score calculation
- 
- * The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to 
-determine the relative performance of a student for a component. <br> For instance, if the maximum marks for a component `Midterms` is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
- * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
-**relative to the sum of all other component weightages**. <br> For example, in a system with only 2 components, if component A has a weightage of 30 and component B has a weightage of 20, then component A represents 20/(20+30) = 60% of the student’s overall score. This changes as components are added or removed.
-<br> Note that the **total weightage of all graded components should not exceed 100**.
- * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
- * If a student or graded component has no associated student scores, the overall score will be listed as 0.
 
-</box>
+**Graded Component and Student Score parameters for score calculation**
+
+* The maximum marks of a graded component and marks of a student score are both **absolute values** and are used together to
+  determine the relative performance of a student for a component. <br> 
+   * For instance, if the maximum marks for a component `Midterms` is 50, and the marks for the student is 35, then the student scored 35/50 =70% on this graded component.
+* The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated
+  **relative to the sum of all other component weightages**. <br> 
+   * For example, in a system with only 2 components, if component A has a weightage of 30 and component B has a weightage of 20, then component A represents 20/(20+30) = 60% of the student’s overall score. This changes as components are added or removed.
+  <br> Note that the **total weightage of all graded components should not exceed 100**.
+
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+> * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+> * If a student or graded component has no associated student scores, the overall score will be listed as 0.
+</div>
 
 <div style="page-break-after: always;"></div>
 
@@ -199,16 +205,16 @@ Here is a summary of each GUI component within ModuLight.
 
 ## Features
 
-> **Note** <br>
-> 
-> If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+<div markdown="block" class="alert alert-primary">**:information_source: Important alert**:
+If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.  
+</div>
 
 ## Add Commands
 Adds a new student or graded component. 
 
-> **Note** <br>
-> 
-> Student scores will be automatically added when a new student or component is added.
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+Student scores will be automatically added when a new student or component is added.
+</div>
 
 ### Add a student: `addStu`
 Adds a student to the database. Throws error if student with same student number already exists. If successful, an acknowledgement message is shown and data is saved. Otherwise, an error message is shown instead.
@@ -239,10 +245,11 @@ Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midt
 
 ## Edit Commands
 Edits a student, student score or graded component.
-> **Note** <br>
-> 
-> A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
-> For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
+
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
+For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
+</div>
 
 ### Edit a student : `editStu`
 Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
@@ -298,10 +305,11 @@ Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score 
 
 ## Delete Commands
 Deletes a student or graded component from the database.
-> **Note** <br>
-> 
-> Student scores will be automatically deleted when the corresponding student or component is deleted.
-> For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
+
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+Student scores will be automatically deleted when the corresponding student or component is deleted.
+For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
+</div>
 
 ### Delete a student : `deleteStu`
 Deletes an existing student in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
@@ -340,19 +348,19 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 | x/        | findScore           | Comment of the student score  | If the comment contains the search key words   | plagiarism  | Potential plagiarism   | 
  | c/        | findComp, finsScore | Name of the graded components | If component name contains the search keywords | midterm     | Midterm                |
 
+* All find parameters are case-insensitive, except for tag which needs an exact match
+* It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
+* For searching with multiple parameters of the same type, it will find the objects which satisfy any of the
+   criteria.
+* For searching with parameters of different types, it will find the objects which satisfy all the criteria.
+* For searching with multiple parameters of different types, it will find the objects which satisfy at least one
+   criterion for each type.
 
-> **Note** <br>
-> 
-> * All find parameters are case-insensitive, except for tag which needs an exact match
-> * It is allowed to have 0 searching criteria. In this case, this command will simply list all objects.
-> * For searching with multiple parameters of the same type, it will find the objects which satisfy any of the
-    criteria.
-> * For searching with parameters of different types, it will find the objects which satisfy all the criteria.
-> * For searching with multiple parameters of different types, it will find the objects which satisfy at least one
-    criterion for each type.
-> * If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
-    s/A00000Y, no students will be found since this is not a substring of any valid student number.
-> * If you would like to see the complete lists again, please use the [`listAll` command](#list-all-listall).
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+* If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
+   s/A00000Y, no students will be found since this is not a substring of any valid student number.<br>
+* If you would like to see the complete lists again, please use the [`listAll` command](#list-all-listall).
+</div>
 
 ### Find students: `findStu`
 
@@ -459,8 +467,9 @@ The `PASSING_VALUE` are numbers that determine the boundary for each grade
     * Value `30` given to `B`
     * Any Value below `30` will be given `F`
 
-**Important Note:**
-* The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, please use `findStu` command to display every student.
+<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, please use `findStu` command to display every student.
+</div>
 
 Example:
 * `autoGrade ag/absolute pg/95 80 70 55 40 20`. This would automatically grade student by using absolute grade threshold. Student with total score `95%` above will be given `A+`, total score below `95%` and `90` above will be given `A`, and so on, while below `20%` will be given `F`.
