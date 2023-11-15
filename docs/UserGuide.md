@@ -614,8 +614,6 @@ There is no need to manually load data stored on the hard disc. It will be avail
 
 <div style="page-break-after: always;"></div>
 
---------------------------------------------------------------------------------------------------------------------
-
 ## Command summary
 
 | Action                                              | Format, Examples                                                                                                                      |
@@ -639,7 +637,6 @@ There is no need to manually load data stored on the hard disc. It will be avail
 | **Calculate component statistics**                  | `compStats [c/COMP_NAME] [st/STATS] [g/TUTORIAL_GRP]` <br> e.g., `compStats c/midterm st/upperQuartile st/lowerQuartile`              |
 | **Help**                                            | `help`                                                                                                                                |
 
---------------------------------------------------------------------------------------------------------------------
 
 <div style="page-break-after: always;"></div>
 
@@ -659,8 +656,8 @@ There is no need to manually load data stored on the hard disc. It will be avail
 5. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?<br>
    **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
 
-6. **Q**: How do I verify the java version installed in my computer?
-   **A**: You can pen a terminal and enter "java -version". The java version installed will be displayed in the terminal window.
+6. **Q**: How do I verify the java version installed in my computer? <br>
+   **A**: You can open a terminal and enter "java -version". The java version installed will be displayed in the terminal window.
 
 7. **Q**: How do I open a terminal?<br>
    **A**: It depends on the operating system.
@@ -671,22 +668,20 @@ There is no need to manually load data stored on the hard disc. It will be avail
 
 <div style="page-break-after: always;"></div>
 
---------------------------------------------------------------------------------------------------------------------
-
 ## Glossary
 
 ### Definitions
 
-| Term                     | Definition                                                                                                                                                                               |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Command                  | An input written by the user to tell Modulight to perform a certain action.                                                                                                              |
-| Command Terminal         | A text input and output environment that allows us to enter commands that the computer processes.                                                                                        |
-| Parameter                | A value that must be inputted by the user to complete a command.                                                                                                                         |
-| Index                    | A number that refers to the position of the components in an ordering. Modulight uses a 1-based index, which means the first number in an order is 1.                                    |
-| Command Line Interface   | It is a text-based user interface that accepts text inputs to execute commands.                                                                                                          |
-| Graphical User Interface | It is a digital interface where the users interact with the system using graphical components, such as icons and buttons.                                                                |
-| User Interface           | It is the point in which a human user interacts with a computer. It can be a physical device or software program.                                                                        |
-| Component                | A component is a part of the user interface.                                                                                                                                             |
-| JSON file                | JavaScript Object Notation(JSON) is a file used for data storage in ModuLight. For more information, please refer to the guide [here](https://www.oracle.com/sg/database/what-is-json/). |
-| Alphanumeric             | A piece of alphanumeric text should consist of only alphabets and numeric values. For instance,  the text “ABC11” is alphanumeric whereas “(**)” is not.                                 |
-| Domain                   | A domain is a digital address of a website. For emails, domain is the web address that comes after the @ symbol. For example, the domain in the email address 123@gmail.com is gmail.com |
+| Term                     | Definition                                                                                                                                                                                            |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Alphanumeric             | A piece of alphanumeric text should consist of only alphabets and numeric values. For instance,  the text “ABC11” is alphanumeric whereas “(**)” is not.                                              |
+| Command                  | An input written by the user to tell Modulight to perform a certain action.                                                                                                                           |
+| Command Line Interface   | It is a text-based user interface that accepts text inputs to execute commands.                                                                                                                       |
+| Command Terminal         | A text input and output environment that allows us to enter commands that the computer processes.                                                                                                     |
+| Component                | A component is a part of the user interface.                                                                                                                                                          |
+| Domain                   | A domain is a digital address of a website. For emails, domain is the web address that comes after the @ symbol. For example, the domain in the email address 123@<span></span>gmail.com is gmail.com |
+| Graphical User Interface | It is a digital interface where the users interact with the system using graphical components, such as icons and buttons.                                                                             |
+| Index                    | A number that refers to the position of the components in an ordering. Modulight uses a 1-based index, which means the first number in an order is 1.                                                 |
+| JSON file                | JavaScript Object Notation(JSON) is a file used for data storage in ModuLight. For more information, please refer to the guide [here](https://www.oracle.com/sg/database/what-is-json/).              |
+| Parameter                | A value that must be inputted by the user to complete a command.                                                                                                                                      |
+| User Interface           | It is the point in which a human user interacts with a computer. It can be a physical device or software program.                                                                                     |
