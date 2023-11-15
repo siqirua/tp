@@ -317,6 +317,7 @@ Format: `editComp INDEX [c/COMP_NAME] [w/WEIGHTAGE] [mm/MAX_MARKS]`
 
 Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in the Graded Components list to have a name of “Midterm Exam”, and a maximum mark of 55.
 
+<div style="page-break-after: always;"></div>
 
 ### Edit student score: `editScore`
 
@@ -361,6 +362,8 @@ Examples:
 * `deleteStu 7` deletes the seventh student in the currently visible Student list.
 
 ![deleteStu](images/deleteStu_ui.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Delete a graded component: `deleteComp`
 
