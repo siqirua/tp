@@ -210,14 +210,15 @@ If you are using a PDF version of this document, be careful when copying and pas
 </div>
 
 ## Add Commands
-Adds a new student or graded component. 
+You can use the following commands to add a new student or graded component. 
 
 <div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
 Student scores will be automatically added when a new student or component is added.
 </div>
 
 ### Add a student: `addStu`
-Adds a student to the database. Throws error if student with same student number already exists. If successful, an acknowledgement message is shown and data is saved. Otherwise, an error message is shown instead.
+You can use this command to add a student to the database so that you can track all students taking the course. <br>
+Throws error if student with same student number already exists. If successful, an acknowledgement message is shown and data is saved. Otherwise, an error message is shown instead.
 
 Format: `addStu s/STUDENT_NO n/NAME e/EMAIL [g/TUTORIAL_GRP] [t/tags…]`
 
@@ -231,7 +232,8 @@ Examples:
 )
 
 ### Add a graded component: `addComp`
-Adds a graded component to the database. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+You can use this command to add a graded component to the database so that you can track all graded components in my course thus far. <br>
+If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 Upon successful creation of a graded component, a corresponding student score will be created for each student in the database. For instance, if a graded component with name “Midterms” is created and there are two students with student numbers `A1234567X` and `A1234567Y` in the database, then two student scores are created with titles `A1234567X - Midterm` and `A1234567Y - Midterm`.
 
@@ -244,15 +246,20 @@ Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
 Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
 
 ## Edit Commands
-Edits a student, student score or graded component.
 
-<div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
+You can use the following commands to edit a student, student score or graded component.
+
+<div markdown="1" class="alert alert-success" >
+
+**:bulb: Useful tips**:
 A student score is related to a student and a graded component. Thus, when one entity is edited, its information in all related entities will be edited as well.
 For instance, when a student's student ID is edited, the change will be reflected in all scores that belong to this student.
+
 </div>
 
 ### Edit a student : `editStu`
-Edits an existing student’s details in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+You can use this command to edit an existing student’s details in the database so that you can update outdated student information or correct mistakes, based on the 1-based index of the student shown in the currently visible Student list. <br>
+If successful, an acknowledgement message will be shown in the result display and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 Format: `editStu INDEX [s/STUDENT_NO] [g/TUTORIAL_GRP] [n/NAME] [e/EMAIL] [t/tags…]​`
 
@@ -266,7 +273,8 @@ Examples:
 ![editStu](images/editStu_ui.png)
 
 ### Edit a graded component: `editComp`
-Edits an existing graded component’s details in the database, based on the 1-based index of the graded component shown in the Graded Components list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+You can use this command to edit an existing graded component’s details in the database so that you can make changes to a component (e.g. modify weightage) or correct mistakes, based on the 1-based index of the graded component shown in the Graded Components list. <br>
+If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 * 1 or more fields to be edited must be provided in the command. 
 * The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list. 
@@ -287,7 +295,7 @@ Examples: `editComp 4 c/Midterm Exam mm/55` edits the fourth graded component in
 
 ### Edit student score: `editScore`
 
-Edits a student’s mark for a certain graded component, based on the 1-based index of the student score shown in the Student Scores list.
+You can use this command to edit a student’s mark for a certain graded component so that you can regrade student scripts or correct mistakes, based on the 1-based index of the student score shown in the Student Scores list.
 
 Note: a StudentScore will be automatically added when a graded component is created or when a new student is added. Similarly, student scores will be automatically deleted when its associated graded component or student is deleted.
 
@@ -304,15 +312,24 @@ Format: `editScore INDEX [m/SCORE] [x/comment] [t/tags]`
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
 ## Delete Commands
+<<<<<<< HEAD
+You can use the following commands to delete a student or graded component from the database.
+> **Note** <br>
+> 
+> Student scores will be automatically deleted when the corresponding student or component is deleted.
+> For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
+=======
 Deletes a student or graded component from the database.
 
 <div markdown="block" class="alert alert-success">**:bulb: Useful tips **:
 Student scores will be automatically deleted when the corresponding student or component is deleted.
 For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
 </div>
+>>>>>>> master
 
 ### Delete a student : `deleteStu`
-Deletes an existing student in the database, based on the 1-based index of the student shown in the currently visible Student list. If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
+You can use this command to delete an existing student in the database so that you can remove students dropping the course/wrongly assigned, based on the 1-based index of the student shown in the currently visible Student list. <br>
+If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 Format: `deleteStu INDEX`
 
@@ -325,7 +342,7 @@ Examples:
 
 ### Delete a graded component: `deleteComp`
 
-Deletes an existing graded component in the database, based on the 1-based index of the graded component shown in the displayed Graded Components list. 
+You can use this command to delete an existing graded component in the database so that you can remove a graded component when it is deemed unnecessary, based on the 1-based index of the graded component shown in the displayed Graded Components list. <br>
 If successful, an acknowledgement message will be shown in the output box and data is saved. Otherwise, a failure message is shown instead specifying the cause of failure.
 
 Format: `deleteComp INDEX`
@@ -335,6 +352,9 @@ Format: `deleteComp INDEX`
 Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
 
 ## Find Commands
+
+You can use the following commands to filter and show the interested students.
+
 ### Parameters
 
 
@@ -364,7 +384,8 @@ Examples: `deleteComp 2` deletes the second graded component in the displayed Gr
 
 ### Find students: `findStu`
 
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores will be displayed as well. All graded components will be displayed as they are relevant.
+You can use this command to shows all students who match the given search keyword of the specific parameter.<br>
+All the relevant student scores will be displayed as well so that you can quickly find information about a student and their scores without having to search through the list. All graded components will be displayed as they are relevant.
 
 Format: `findStu [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [t/TAG...]`
 
@@ -374,8 +395,8 @@ Examples:
 ![findStu](images/findStu_ui.png)
 
 ### Find graded components : `findComp`
-Shows all students who match the given search keyword of the specific parameter. All the relevant student scores and 
-all graded components will be displayed as well.
+You can use this command to show all graded components who match the given search keyword of the specific parameter. All the relevant student scores and 
+all students will be displayed as well so that you can quickly find information about a graded component and the scores without having to search through the list.
 
 Format: `findComp [c/COMP_NAME]`
 
@@ -383,17 +404,17 @@ Example: `findComp c/midterm` lists all graded components containing the string 
 All students will be shown since they are relevant.
 
 ### Find student scores : `findScore`
-Shows all student scores that matches the given search keyword of the specific parameter. No student or graded components will be displayed.
+You can use this command to show all student scores that matches the given search keyword of the specific parameter so that you can quickly find information about a student score without having to search through the list. No student or graded components will be displayed.
 Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP...] [c/COMP_NAME...][x/comments...][t/tags...]`
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
 ## Sort Commands
-Sorts the lists by a given criteria.
+You can use the following commands to sort the students or student scores by a given criteria.
 
 ### Sorting students: `sortStu`
 
-Sorts student data by the given criteria.
+You can use this command to sort student data by the given criteria so that you can find the top students easily.
 
 Format: `sortStu [o/SORTING_ORDER] [r/REVERSE_ORDER]`
 
@@ -423,7 +444,7 @@ Examples:
 
 ### Sorting students scores: `sortScore`
 
-Sorts students score by the given criteria and display its associated students in order.
+You can use this command to sort students score by the given criteria and display its associated students in order so that you can find the top students with their associated scores easily .
 
 Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
 
@@ -441,8 +462,8 @@ Examples:
 ## Statistics and Auto Grading Commands
 ### Auto grading all the students: `autoGrade`
 
-Automatically assigns grades to all students based on their total score and
-the automatic grading method.
+You can use this command to automatically assigns grades to all students based on their total score and
+the automatic grading method so that you can significantly reduce the time needed to grade the students and avoid manually grading each student.
 
 Format: `autoGrade ag/METHOD pg/PASSING_VALUE`
  
@@ -478,7 +499,7 @@ Example:
 
 ### Calculating overall statistics: `stats`
 
-Calculates overall statistics of all students.
+You can use this command to calculate overall statistics of all students so that you can have a quick insight of how your students are performing.
 
 Format: `stats [st/STATS] [g/TUTORIAL_GRP]`
 
@@ -497,7 +518,7 @@ Examples:
 
 ### Calculating statistics of a graded component : `compStats` 
 
-Calculates statistics of all student scores of a specific graded component.
+You can calculate statistics of all student scores of a specific graded component so that you can have a quick insight of how my students are performing in a specific assignment.
 
 Format: `compStats c/COMP_NAME [st/STATS] [g/TUTORIAL_GRP]`
 
@@ -519,14 +540,14 @@ student grades in Midterm.
 ## Other Commands
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+You can use this command to show a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
 ### List all : `listAll`
-Shows all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
+You can use this command to show all students, student scores and graded components in their lists respectively. This removes all the filter applied from the find command.
 
 Format: `listAll`
 
@@ -534,7 +555,7 @@ Example: `listAll`
 
 ### Clearing all entries : `clearAll`
 
-Clears all data from ModuLight.
+You can use this command to clear all data from ModuLight.
 
 Format: `clearAll`
 
@@ -543,13 +564,13 @@ Format: `clearAll`
 
 ### Exiting the program : `exit`
 
-Exits the program.
+You can use this command to exit the program.
 
 Format: `exit`
 
 ### Saving the data
 
-ModuLight data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+ModuLight data is saved in the hard disk automatically after any command that changes the data. There is no need for you to save manually.
 
 ### Loading the previous data
 
@@ -586,10 +607,10 @@ There is no need to manually load data stored on the hard disc. It will be avail
 
 ## FAQ
 1. **Q**: How do I transfer my data to another Computer?<br>
-   **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ModuLight home folder.
+   **A**: You can install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ModuLight home folder.
 
 2. **Q**: How does the calculation of scores work?<br>
-   **A**: Refer to the [notes on score calculations](#command-related-parameters).
+   **A**: You may refer to the [notes on score calculations](#command-related-parameters).
 
 3. **Q**: Does the display update information (e.g. name, mean) in real time?<br>
    **A**: Yes.
