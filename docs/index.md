@@ -8,7 +8,7 @@
 [![CI Status](https://github.com/AY2324S1-CS2103T-W08-2/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2324S1-CS2103T-W08-2/tp/actions)
 [![codecov](https://codecov.io/gh/AY2324S1-CS2103T-W08-2/tp/graph/badge.svg?token=DAJLBHDPYQ)](https://codecov.io/gh/AY2324S1-CS2103T-W08-2/tp)
 
-![Ui](images/Ui_navigate.png)
+![Ui](images/Ui_initial.png)
 
 **ModuLight is a desktop student grades system application.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
