@@ -141,13 +141,14 @@ The following section gives an overview of the parameters used for the commands 
 | m/        | Marks of the Student Score, in absolute terms      | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
 | x/        | Comments of the student score                      | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
 | t/        | Tags of the student score                          | Must only contain alphanumeric characters                                                                                                    | Highest Score, Makeup Exam | @plagiarism, Highest_Score |
-| INDEX     | The [index](#glossary) of the target student score | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
+
 
 ### Command Related Parameters
 
 
 | Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples                                   | Invalid Examples            |
 |-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------------------------|
+| INDEX     | Used in the [delete](#delete-commands) and [edit](#edit-commands) commands, the [index](#glossary) of the target object in the currently displayed list                                           | Positive integer                                                                                                                                                                                                               | 1, 10, 21                                        | -2, 0                       |
 | o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut                               | studentName, overall score  |
 | r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing                                 | True, ascending             |
 | st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile                               | quartile, correlation       |
@@ -182,7 +183,7 @@ The following section gives an overview of the parameters used for the commands 
 ModuLight comes with a GUI to allow for nice visual feedback for our users. Here is a quick run through of the different sections of our GUI, as well as some notes regarding the use of the GUI.
 
 ### Quick Orientation:
-![Ui overview](images/Ui_navigate.png)
+![Ui overview](images/Ui.png)
 
 Here is a summary of each GUI component within ModuLight.
 
