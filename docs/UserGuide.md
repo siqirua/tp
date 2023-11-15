@@ -55,12 +55,18 @@ via a [Command Line Interface](#glossary)** while still having the benefits of a
       * We also use text with background, such as `code` to highlight text relevant to commands.
       * We use the following box to show important tips and alerts
 
-<div markdown="1" class="alert alert-primary">**:information_source: Important alert**:
+<div markdown="1" class="alert alert-primary">
+
+**:information_source: Important alert**:
 Important information that you should take note of
+
 </div>
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 Useful tips and additional information that helps you to make better use of ModuLight
+
 </div>
 
    
@@ -161,9 +167,12 @@ The following section gives an overview of the parameters used for the commands 
    * For example, in a system with only 2 components, if component A has a weightage of 30 and component B has a weightage of 20, then component A represents 20/(20+30) = 60% of the student’s overall score. This changes as components are added or removed.
   <br> Note that the **total weightage of all graded components should not exceed 100**.
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
 > * If a student or graded component has no associated student scores, the overall score will be listed as 0.
+
 </div>
 
 <div style="page-break-after: always;"></div>
@@ -205,15 +214,21 @@ Here is a summary of each GUI component within ModuLight.
 
 ## Features
 
-<div markdown="1" class="alert alert-primary">**:information_source: Important alert**:
+<div markdown="1" class="alert alert-primary">
+
+**:information_source: Important alert**:
 If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.  
+
 </div>
 
 ## Add Commands
 You can use the following commands to add a new student or graded component. 
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 Student scores will be automatically added when a new student or component is added.
+
 </div>
 
 ### Add a student: `addStu`
@@ -321,9 +336,12 @@ You can use the following commands to delete a student or graded component from 
 =======
 Deletes a student or graded component from the database.
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 Student scores will be automatically deleted when the corresponding student or component is deleted.
 For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
+
 </div>
 >>>>>>> master
 
@@ -376,10 +394,13 @@ You can use the following commands to filter and show the interested students.
 * For searching with multiple parameters of different types, it will find the objects which satisfy at least one
    criterion for each type.
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 * If a student number of the incorrect format is given, there might be no entity found. For example, if you search findStu
    s/A00000Y, no students will be found since this is not a substring of any valid student number.<br>
 * If you would like to see the complete lists again, please use the [`listAll` command](#list-all-listall).
+
 </div>
 
 ### Find students: `findStu`
@@ -488,8 +509,11 @@ The `PASSING_VALUE` are numbers that determine the boundary for each grade
     * Value `30` given to `B`
     * Any Value below `30` will be given `F`
 
-<div markdown="1" class="alert alert-success">**:bulb: Useful tips **:
+<div markdown="1" class="alert alert-success">
+
+**:bulb: Useful tips**:
 The `autoGrade` command works on the filtered student list. This would allow for example, to grade students only compared to their own tutorial group. To automatically grade every student in the module, please use `findStu` command to display every student.
+
 </div>
 
 Example:
