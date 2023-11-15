@@ -21,7 +21,7 @@ Here’s an overview of how ModuLight can help you to streamline your module man
 * Track qualitative information about your students and assessments using tags and comments.
 
 Furthermore, we believe that module management should be **efficient**. Therefore, ModuLight is **optimized for use 
-via a Command Line Interface** while still having the benefits of a Graphical User Interface (GUI). For those proficient in typing, ModuLight can get your student grading tasks done faster than traditional GUI apps.
+via a [Command Line Interface](#glossary)** while still having the benefits of a [Graphical User Interface (GUI)](#glossary). For those proficient in typing, ModuLight can get your student grading tasks done faster than traditional GUI apps.
 
 --------------------------------------------------------------------------------------------------------------------
 * Table of Contents
@@ -49,6 +49,18 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
    * Go through the [Command Format](#command-format) to get an idea of the correct way to understand and input the 
      commands.
    
+   * Look out for the following text box and text styles.
+      * We use link such as [Command Summary Link](#command-summary) to direct you to a specific section in this guide. 
+     
+      * We also use text with background, such as `code` to highlight text relevant to commands.
+      * We use the following boxes to show important alerts and tips
+> [!NOTE]  
+> Highlights any useful tips
+
+> [!IMPORTANT]  
+> Highlights crucial information that you should know
+
+   
 2. For regular users:
 
    * We have provided a [command summary](#command-summary) for you to check all the available features.
@@ -59,18 +71,18 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have Java `11` or above installed in your Computer. If you are unsure about how to verify your java version, you can refer to the [FAQ](#faq) section.
 
 2. Download the latest `ModuLight.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-2/tp/releases).
    ![download](images/download_page.png)
+
 3. Copy the file to the folder you want to use as the _home folder_ for your ModuLight.
 
-4. Open a [command terminal](#glossary), `cd` into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
-   command to run the application. If you are unsure how to open a terminal, please refer to the [FAQ](#faq) section. <br> 
+4. Open a [command terminal](#glossary). Type `cd` and press enter to move into the folder you put the jar file in, and use the `java -jar ModuLight.jar` 
+   command to run the application. If you are unsure about how to open a terminal, please refer to the [FAQ](#faq) section. <br> 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
 
    ![Ui](images/Ui_initial.png)
-
 
 5. Type the command in the [command box](#navigating-the-graphical-user-interface-gui) and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -87,10 +99,14 @@ via a Command Line Interface** while still having the benefits of a Graphical Us
 
 ## Parameter Information
 
-The following section gives an overview of the parameters used for the commands related to Student, StudentScore and GradedComponent, as well as the constraints of these parameters.
+ModuLight keeps track of a lists of students, a list of student scores and a list of graded components. 
+   * A student contains the basic personal information of a student, such as student id, email and tutorial group.
+   * A graded component is an assignment or assessment, for example a research report or midterm. It has a maximum mark and a weightage.
+   * A student score is a score that a student obtained for a particular graded component. 
+
+The following section gives an overview of the parameters used for the commands related to student, student score and graded component, as well as the constraints of these parameters.
 
 ### Student Parameters
-
 
 | Parameter | Description                   | Constraints                                                                | Valid Examples                                         | Invalid Examples           |
 |-----------|-------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------|----------------------------|
@@ -99,7 +115,6 @@ The following section gives an overview of the parameters used for the commands 
 | s/        | Student ID of the student     | Must begin and end with a capital letter and have 7 digits in between them | A1234567W                                              | a1234567w, a123w, B1234567 |
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                                               | T1, t10, T111, @T11        |
 | t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam                               | 晓明, Xiao Ming@Lee, 이준      |
-
 
 
 ### Graded Component Parameters
@@ -140,9 +155,8 @@ determine the relative performance of a student for a component. <br> For instan
  * The weightage of a graded component is used to determine its contribution to a student’s overall score, and is calculated 
 **relative to the sum of all other component weightages**. <br> For example, in a system with only 2 components, if component A has a weightage of 30 and component B has a weightage of 20, then component A represents 20/(20+30) = 60% of the student’s overall score. This changes as components are added or removed.
 <br> Note that the **total weightage of all graded components should not exceed 100**.
- 
- > * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
- > * If a student or graded component has no associated student scores, the overall score will be listed as 0.
+ * If a graded component has a maximum mark of 0, the relative score for any associated student scores will be 0.
+ * If a student or graded component has no associated student scores, the overall score will be listed as 0.
 
 </box>
 
@@ -577,10 +591,15 @@ There is no need to manually load data stored on the hard disc. It will be avail
 5. **Q**: What should I do if the application GUI opens off-screen when switching from multiple screens to a single screen?<br>
    **A**: If you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. To resolve this issue, delete the `preferences.json` file created by the application before running it again. This ensures that the GUI is properly displayed on the primary screen.
 
-6. **Q**: How do I open a terminal?<br>
+6. **Q**: How do I verify the java version installed in my computer?
+   **A**: You can pen a terminal and enter "java -version". The java version installed will be displayed in the terminal window.
+
+7. **Q**: How do I open a terminal?<br>
    **A**: It depends on the operating system.
    * **Mac**: Open launchpad and search for terminal. Click the app icon to open terminal.
    * **Windows**: In Windows Search, search for terminal and select Windows Terminal from the search results.
+
+
 
 <div style="page-break-after: always;"></div>
 
