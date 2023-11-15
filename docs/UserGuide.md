@@ -36,7 +36,7 @@ via a [Command Line Interface](#glossary)** while still having the benefits of a
   * **[Glossary](#glossary)**
 
 <div style="page-break-after: always;"></div>
---------------------------------------------------------------------------------------------------------------------
+
 
 ## How to use this guide
 1. For the first time users we recommend to:
@@ -77,6 +77,8 @@ Useful tips and additional information that helps you to make better use of Modu
    * More detailed explanation of the features can be found under the [Features](#features) section.
    * An overview of all the parameters used in the commands along with their constraints and such  can be found 
      under the [Parameter Information](#parameter-information) section.
+
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -125,6 +127,7 @@ The following section gives an overview of the parameters used for the commands 
 | g/        | Tutorial group of the student | Must consist of a capital letter followed by 2 digits                      | T06, L10                                               | T1, t10, T111, @T11        |
 | t/        | Tag of the student            | Must only contain alphanumeric characters                                  | Potential TA, MakeupExam                               | 晓明, Xiao Ming@Lee, 이준      |
 
+<div style="page-break-after: always;"></div>
 
 ### Graded Component Parameters
 
@@ -134,6 +137,8 @@ The following section gives an overview of the parameters used for the commands 
 | w/        | Weightage of the graded component                         | Must be a non-negative number, including decimals, less than or equal to 100. | 0, 0.25, 20         | -0.3, 1/2, (20), 1000.8, NIL |
 | mm/       | Maximum marks for the graded component, in absolute terms | Must be a non-negative number less than or equal to 10000.                    | 0.0, 28, 100, 200.0 | -0.3, 1/2, (20), NIL         |
 
+<div style="page-break-after: always;"></div>
+
 ### Student Score Parameters
 
 | Parameter | Description                                        | Constraints                                                                                                                                  | Valid Examples             | Invalid Examples           |
@@ -141,13 +146,15 @@ The following section gives an overview of the parameters used for the commands 
 | m/        | Marks of the Student Score, in absolute terms      | Must be a non-negative number, though decimals are allowed. Cannot exceed the maximum marks of the graded component this score is related to | 0, 0.23, 30.00, 20         | -1, ⅔, 2^3, twelve         |
 | x/        | Comments of the student score                      | Must only contain alphanumeric characters                                                                                                    | Nice work!, Check number 2 | 好的                         |
 | t/        | Tags of the student score                          | Must only contain alphanumeric characters                                                                                                    | Highest Score, Makeup Exam | @plagiarism, Highest_Score |
-| INDEX     | The [index](#glossary) of the target student score | Positive integer                                                                                                                             | 1, 10, 21                  | -2, 0, 03                  |
+
+<div style="page-break-after: always;"></div>
 
 ### Command Related Parameters
 
 
 | Parameter | Description                                                                                                                                                                                       | Constraints                                                                                                                                                                                                                    | Valid Examples                                   | Invalid Examples            |
 |-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------------------------|
+| INDEX     | Used in [edit commands](#edit-commands) and [delete commands](#delete-commands), The [index](#glossary) of the target student, score or component                                                 | Positive integer                                                                                                                                                                                                               | 1, 10, 21                                        | -2, 0, 03                   |
 | o/        | Used in the [sortStu](#sorting-students-sortstu) command, the selected parameter of students to be sorted                                                                                         | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) command) are allowed                                                                                     | n, totalscore, tut                               | studentName, overall score  |
 | r/        | Used in the [sortStu](#sorting-students-sortstu) and [sortStuScore](#sorting-students-scores-sortscore) commands, the reverse order (to arrange the list either in ascending or descending order) | Only parameters in the list (The full list can be found under the description of [sortStu](#sorting-students-sortstu) and [sortScore](#sorting-students-scores-sortscore) commands) are allowed                                | t, f, decreasing                                 | True, ascending             |
 | st/       | Used in the [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands, the statistical measures to be calculated           | Only parameters in the list (The full list can be found under the description of [stats](#calculating-overall-statistics-stats) and [compStats](#calculating-statistics-of-a-graded-component-compstats) commands) are allowed | max, upperQuartile                               | quartile, correlation       |
@@ -198,6 +205,7 @@ Here is a summary of each GUI component within ModuLight.
 | Student Score List    | Shows a list of Student Score Cards. This list can be manipulated through commands. Upon starting the app, this list will reflect all StudentsScores stored.               |
 | Student Score Card    | Displays key information about student scores such as graded component name for which the student is given the score and the student score itself.                         |
 
+<div style="page-break-after: always;"></div>
 
 ## Command Format
 
@@ -259,6 +267,8 @@ Upon successful creation of a graded component, a corresponding student score wi
 Format: `addComp c/COMP_NAME w/WEIGHTAGE mm/MAX_MARKS`
 
 Examples: `addComp c/Midterm w/30 mm/70`  adds a graded component called “Midterm” with a weightage of 30 and a maximum mark of 70.
+
+<div style="page-break-after: always;"></div>
 
 ## Edit Commands
 
@@ -326,15 +336,10 @@ Format: `editScore INDEX [m/SCORE] [x/comment] [t/tags]`
 
 Examples: `editScore 7 m/57` assigns a mark of 57 for the seventh student score in the Student Scores list.
 
+<div style="page-break-after: always;"></div>
+
 ## Delete Commands
-<<<<<<< HEAD
 You can use the following commands to delete a student or graded component from the database.
-> **Note** <br>
-> 
-> Student scores will be automatically deleted when the corresponding student or component is deleted.
-> For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
-=======
-Deletes a student or graded component from the database.
 
 <div markdown="1" class="alert alert-success">
 
@@ -343,7 +348,6 @@ Student scores will be automatically deleted when the corresponding student or c
 For instance, when a student is deleted, all scores that belong to this student will be deleted. They will be deleted from the graded components as well.
 
 </div>
->>>>>>> master
 
 ### Delete a student : `deleteStu`
 You can use this command to delete an existing student in the database so that you can remove students dropping the course/wrongly assigned, based on the 1-based index of the student shown in the currently visible Student list. <br>
@@ -368,6 +372,8 @@ Format: `deleteComp INDEX`
 * The index provided must be more than 0 and not exceed the number of graded components displayed in the Graded Components list.
 
 Examples: `deleteComp 2` deletes the second graded component in the displayed Graded Components List
+
+<div style="page-break-after: always;"></div>
 
 ## Find Commands
 
@@ -430,6 +436,8 @@ Format: `findScore  [s/STUDENT_NO...] [n/NAME...] [e/EMAIL...] [g/TUTORIAL_GRP..
 
 Example: `findScore g/T02 c/midterm` lists all midterm scores in tutorial group T02. The graded component and student list will be emptied.
 
+<div style="page-break-after: always;"></div>
+
 ## Sort Commands
 You can use the following commands to sort the students or student scores by a given criteria.
 
@@ -479,6 +487,8 @@ Format: `sortScore c/COMP_NAME [r/REVERSE_ORDER]`
 
 Examples:
 * `sortScore c/Midterm r/true` returns the sorted students whose midterm scores are in descending order.
+
+<div style="page-break-after: always;"></div>
 
 ## Statistics and Auto Grading Commands
 ### Auto grading all the students: `autoGrade`
@@ -561,6 +571,8 @@ Examples:
 * `compStats st/upperQuartile st/lowerQuartile c/Midterm` returns the upper and lower quartile of the 
 student grades in Midterm.
 
+<div style="page-break-after: always;"></div>
+
 ## Other Commands
 ### Viewing help : `help`
 
@@ -628,6 +640,8 @@ There is no need to manually load data stored on the hard disc. It will be avail
 | **Help**                                            | `help`                                                                                                                                |
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 1. **Q**: How do I transfer my data to another Computer?<br>
